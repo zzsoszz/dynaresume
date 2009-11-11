@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+			http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+
+
+	
+<!--
+<osgi:reference id="agenceService2" interface="org.akrogen.dynaresume.service.IAgenceService" />
+
+<osgi:reference id="competenceService" interface="org.akrogen.dynaresume.service.ICompetenceService"/>
+ 
+  
+ <osgi:reference id="userService" interface="org.akrogen.dynaresume.service.IUserService"/>
+
+ <bean id="warDeployer" class="org.springframework.osgi.web.deployer.jetty.JettyWarDeployer"/>
+ --> 
+ 
+	<bean name="/UserService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+  <property name="service" ref="userService"/>
+  <property name="serviceInterface" value="org.akrogen.dynaresume.service.IUserService"/>
+</bean>
+
+
+<bean name="/AgenceService"  class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+  <property name="service" ref="agenceService"/>
+  <property name="serviceInterface" value="org.akrogen.dynaresume.service.IAgenceService"/>
+  <property name="remoteInvocationExecutor" ref="myRemoteInvocationExecutor" ></property>
+</bean>
+
+
+<bean id="myRemoteInvocationExecutor" class="org.akrogen.dynaresume.remoting.http.RemoteInvocationExecutor"/>
+
+<bean name="/CompetenceService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+  <property name="service" ref="competenceService"/>
+  <property name="serviceInterface" value="org.akrogen.dynaresume.service.ICompetenceService"/>
+</bean>
+ 
+	<bean id="scalpa" class="org.akrogen.dynaresume.remoting.http.Scalpa"
+		init-method="start">
+	<property name="agenceService" ref="agenceService"></property>	
+		</bean>
+ 
+</beans>
