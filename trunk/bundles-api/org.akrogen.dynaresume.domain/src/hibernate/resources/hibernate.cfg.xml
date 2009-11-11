@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory name="dynaresume">
+		<mapping package="org.akrogen.dynaresume.domain" />
+		<mapping class="org.akrogen.dynaresume.domain.Agence" />
+		<mapping class="org.akrogen.dynaresume.domain.Collaborateur" />
+		<mapping class="org.akrogen.dynaresume.domain.TableReference" />
+		<mapping class="org.akrogen.dynaresume.domain.CollaborateurCompetence" />
+		<mapping class="org.akrogen.dynaresume.domain.Rubrique" />
+		<mapping class="org.akrogen.dynaresume.domain.RubriqueType" />
+		<mapping class="org.akrogen.dynaresume.domain.Competence" />
+		<mapping class="org.akrogen.dynaresume.domain.Domaine" />
+		<mapping class="org.akrogen.dynaresume.domain.CollaborateurFormation" />
+		<mapping class="org.akrogen.dynaresume.domain.ModeleRTF" />
+		<mapping class="org.akrogen.dynaresume.domain.BaseBean" />
+	</session-factory>
+</hibernate-configuration>
