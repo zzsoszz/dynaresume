@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<target name="DynaResume OSGi TP Client">
+<locations>
+<location id="org.eclipse.rcp.source" path="${eclipse_home}" type="Feature"/>
+<location id="org.eclipse.rcp" path="${eclipse_home}" type="Feature"/>
+<location path="${workspace_loc:/org.akrogen.dynaresume.targetplatform/target/targetPlatform}" type="Directory">
+<includeBundles>
+<plugin id="org.springframework.context.support"/>
+<plugin id="com.springsource.org.apache.commons.lang"/>
+<plugin id="org.springframework.osgi.io"/>
+<plugin id="org.springframework.osgi.web.extender"/>
+<plugin id="com.springsource.org.apache.commons.logging"/>
+<plugin id="org.springframework.osgi.extender"/>
+<plugin id="org.springframework.beans"/>
+<plugin id="com.springsource.org.apache.commons.beanutils"/>
+<plugin id="com.springsource.org.apache.log4j"/>
+<plugin id="com.springsource.org.apache.commons.collections"/>
+<plugin id="com.springsource.org.dom4j"/>
+<plugin id="org.springframework.osgi.web"/>
+<plugin id="com.springsource.javax.servlet"/>
+<plugin id="org.springframework.osgi.core"/>
+<plugin id="org.springframework.web.servlet"/>
+<plugin id="slf4j.api"/>
+<plugin id="com.springsource.org.apache.commons.dbcp"/>
+<plugin id="org.springframework.web"/>
+<plugin id="com.springsource.org.apache.commons.pool"/>
+<plugin id="org.springframework.aop"/>
+<plugin id="org.springframework.core"/>
+<plugin id="com.springsource.slf4j.log4j"/>
+<plugin id="com.springsource.org.aopalliance"/>
+<plugin id="org.springframework.context"/>
+<plugin id="com.springsource.slf4j.api"/>
+</includeBundles>
+</location>
+</locations>
+<targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+<launcherArgs>
+<vmArgs>-Dosgi.requiredJavaVersion=1.5 -Xms40m -Xmx512m</vmArgs>
+</launcherArgs>
+</target>
