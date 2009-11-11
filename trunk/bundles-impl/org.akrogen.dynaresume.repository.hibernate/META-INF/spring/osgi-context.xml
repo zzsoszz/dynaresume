@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+			http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+
+	<osgi:reference id="dynaresumeDataSource" interface="javax.sql.DataSource"  />
+
+    <osgi:service ref="agenceDAO" interface="org.akrogen.dynaresume.repository.IAgenceDAO" >
+   	<service-properties><osgi:entry key="desk" value="london" /></service-properties>
+    </osgi:service>
+ 
+	<osgi:service ref="collaborateurCompetenceDAO" interface="org.akrogen.dynaresume.repository.ICollaborateurCompetenceDAO" />
+	
+	<osgi:service ref="collaborateurFormationDAO" interface="org.akrogen.dynaresume.repository.ICollaborateurFormationDAO"/>
+	
+	<osgi:service ref="collaborateurDAO" interface="org.akrogen.dynaresume.repository.ICollaborateurDAO"/>
+	
+	<osgi:service ref="competenceDAO" interface="org.akrogen.dynaresume.repository.ICompetenceDAO"/>
+	
+	<osgi:service ref="modeleRTFDAO" interface="org.akrogen.dynaresume.repository.IModeleRTFDAO"/>
+	
+	<osgi:service ref="userDAO" interface="org.akrogen.dynaresume.repository.IUserDAO" />
+	
+	<osgi:service ref="tableReferenceDAO" interface="org.akrogen.dynaresume.repository.ITableReferenceDAO"/>
+	 <!--  -->
+</beans>           

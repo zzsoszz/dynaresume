@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+   xmlns="http://www.springframework.org/schema/osgi"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:beans="http://www.springframework.org/schema/beans"
+   xsi:schemaLocation="http://www.springframework.org/schema/osgi  
+       http://www.springframework.org/schema/osgi/spring-osgi-1.0.xsd
+       http://www.springframework.org/schema/beans   
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+       
+<service ref="agenceService" interface="org.akrogen.dynaresume.service.IAgenceService" />
+
+<service ref="competenceService" interface="org.akrogen.dynaresume.service.ICompetenceService"/>
+ 
+  
+ <service ref="userService" interface="org.akrogen.dynaresume.service.IUserService" />
+ 
+  <reference id="myTransactionManager" interface="org.springframework.transaction.PlatformTransactionManager" />
+ <!--   -->
+  
+  
+<reference id="agenceDAO" interface="org.akrogen.dynaresume.repository.IAgenceDAO" filter="(desk=london)" />
+
+	<reference id="collaborateurCompetenceDAO" interface="org.akrogen.dynaresume.repository.ICollaborateurCompetenceDAO" />
+	
+	<reference id="tableReferenceDAO" interface="org.akrogen.dynaresume.repository.ITableReferenceDAO"/>
+	
+	<reference id="modeleRTFDAO" interface="org.akrogen.dynaresume.repository.IModeleRTFDAO"/>
+	
+	
+	<reference id="competenceDAO" interface="org.akrogen.dynaresume.repository.ICompetenceDAO"/>
+	
+	
+	<reference id="userDAO" interface="org.akrogen.dynaresume.repository.IUserDAO"/>
+	
+	<reference id="collaborateurDAO" interface="org.akrogen.dynaresume.repository.ICollaborateurDAO"/>
+	
+	<reference id="collaborateurFormationDAO" interface="org.akrogen.dynaresume.repository.ICollaborateurFormationDAO"/>
+	
+</beans:beans>           
