@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: H2 dynaresume fragment
+Bundle-SymbolicName: org.akrogen.dynaresume.infrastructure.db.h2
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: org.akrogen.dynaresume.infrastructure.db;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: com.springsource.org.h2
