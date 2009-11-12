@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+  
+ <!--  
+ add the corresponding fragment (and Its corresponding driver) to the equinox launcher to provide a correct place holder.
+ -->
+	<bean  id="dynaresumeDataSource" class="org.apache.commons.dbcp.BasicDataSource" p:url="${jdbc.url}" p:username="${jdbc.username}" 
+        p:password="${jdbc.password}" p:driverClassName="${jdbc.driverClassName}" init-method="createDataSource" destroy-method="close"/>
+
+</beans>
