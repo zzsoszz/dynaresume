@@ -5,7 +5,7 @@
 <locations>
 <location id="org.eclipse.rcp.source" path="${eclipse_home}" type="Feature"/>
 <location id="org.eclipse.rcp" path="${eclipse_home}" type="Feature"/>
-<location path="${workspace_loc:/org.dynaresume.targetplatform/target/targetPlatform}" type="Directory">
+<location path="${workspace_loc:/org.dynaresume.targetplatform/target/targetPlatform/plugins}" type="Directory">
 <includeBundles>
 <plugin id="org.springframework.context.support"/>
 <plugin id="com.springsource.org.apache.commons.lang"/>

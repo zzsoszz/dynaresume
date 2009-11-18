@@ -3,7 +3,7 @@
 
 <target name="DynaResume  OSGi TP Server only">
 <locations>
-<location path="${workspace_loc:/org.dynaresume.targetplatform/target/targetPlatform}" type="Directory"/>
+<location path="${workspace_loc:/org.dynaresume.targetplatform/target/targetPlatform/plugins}" type="Directory"/>
 <location id="org.eclipse.rcp.source" path="${eclipse_home}" type="Feature">
 <includeBundles>
 <plugin id="org.eclipse.osgi.services.source"/>
