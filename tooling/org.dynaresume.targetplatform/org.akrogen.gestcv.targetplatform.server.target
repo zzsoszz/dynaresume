@@ -4,13 +4,9 @@
 <target name="DynaResume  OSGi TP Server only">
 <locations>
 <location path="${workspace_loc:/org.dynaresume.targetplatform/target/targetPlatform/plugins}" type="Directory"/>
-<location id="org.eclipse.rcp.source" path="${eclipse_home}" type="Feature">
-<includeBundles>
-<plugin id="org.eclipse.osgi.services.source"/>
-<plugin id="org.eclipse.osgi.source"/>
-</includeBundles>
-</location>
-<location id="org.eclipse.rcp" path="${eclipse_home}" type="Feature">
+<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
+<unit id="org.eclipse.platform.feature.group" version="3.5.1.R35x_v20090910-9gEeG1_FthkNDSP2odXdThaOu9GFDPn83DGB7"/>
+<repository location="http://download.eclipse.org/releases/galileo"/>
 <includeBundles>
 <plugin id="org.eclipse.osgi.services"/>
 <plugin id="org.eclipse.osgi"/>
