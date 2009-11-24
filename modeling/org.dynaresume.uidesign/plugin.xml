@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="org.akrogen.proto.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="Perspective"
+            class="org.akrogen.proto.Perspective"
+            id="org.akrogen.proto.perspective">
+      </perspective>
+     
+      <perspective
+            class="org.akrogen.proto.maquette.Collaborateurs"
+            id="org.akrogen.proto.maquette.Collaborateurs"
+            name="Collaborateurs">
+      </perspective>
+      <perspective
+            class="org.akrogen.proto.maquette.AssistanteDirectionPerpective"
+            id="org.akrogen.proto.maquette.AssistanteDirectionPerpective"
+            name="Assistante Direction">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="View"
+            class="org.akrogen.proto.View"
+            id="org.akrogen.proto.view">
+      </view>
+      <view
+            class="org.akrogen.proto.maquette.ListeAgence"
+            id="org.akrogen.proto.maquette.ListeAgence"
+            name="Agences">
+      </view>
+      <view
+            class="org.akrogen.proto.maquette.ListeCollaborateurs"
+            id="org.akrogen.proto.maquette.ListeCollaborateurs"
+            name="Collaborateurs">
+      </view>
+      <view
+            class="org.akrogen.proto.maquette.CoWorkersSearch"
+            id="org.akrogen.proto.maquette.CoWorkersSearch"
+            name="Recherche multi-critère">
+      </view>
+      <view
+            class="org.akrogen.proto.maquette.ResultatRecherche"
+            id="org.akrogen.proto.maquette.ResultatRecherche"
+            name="Resultat">
+      </view>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.akrogen.proto.application"
+            name="RCP Application">
+         <property
+               name="windowImages"
+               value="icons/alt_window_16.gif,icons/alt_window_32.gif">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.akrogen.proto.maquette.CollaborateurFormEditor"
+            default="false"
+            id="org.akrogen.proto.maquette.CollaborateurFormEditor"
+            name="Collaborateur">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="org.akrogen.proto.commands.category"
+            name="Sample Category">
+      </category>
+      <command
+            categoryId="org.akrogen.proto.commands.category"
+            id="org.akrogen.proto.commands.sampleCommand"
+            name="Sample Command">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.akrogen.proto.handlers.OpenCollaborateurEditor"
+            commandId="org.akrogen.proto.commands.sampleCommand">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.akrogen.proto.commands.sampleCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+6">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               id="org.akrogen.proto.menus.sampleMenu"
+               label="Sample Menu"
+               mnemonic="M">
+            <command
+                  commandId="org.akrogen.proto.commands.sampleCommand"
+                  id="org.akrogen.proto.menus.sampleCommand"
+                  mnemonic="S">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="org.akrogen.proto.toolbars.sampleToolbar">
+            <command
+                  commandId="org.akrogen.proto.commands.sampleCommand"
+                  icon="icons/sample.gif"
+                  id="org.akrogen.proto.toolbars.sampleCommand"
+                  tooltip="Say hello world">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+
+</plugin>
