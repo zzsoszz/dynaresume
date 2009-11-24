@@ -4,6 +4,7 @@
 		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory name="dynaresume">
+	<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 		<mapping package="org.dynaresume.domain" />
 		<mapping class="org.dynaresume.domain.Agence" />
 		<mapping class="org.dynaresume.domain.Collaborateur" />

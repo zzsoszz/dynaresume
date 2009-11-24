@@ -1,11 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+	  <groupId>org.dynaresume</groupId>
+  <artifactId>api</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+	
+	</parent>
 	<groupId>org.dynaresume</groupId>
 	<artifactId>org.dynaresume.domain</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
-<description>This pom is mafe to provide a ddl generation (schema structure)</description>
+<description>This pom is made to provide a ddl generation (schema structure)</description>
 
 	<build>
 		<resources>
@@ -21,7 +27,7 @@
         <artifactId>tycho-maven-plugin</artifactId>
         <version>0.5.0</version>
         <extensions>true</extensions>
-      </plugin><!--
+      </plugin>
   
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -52,17 +58,9 @@
 					</componentProperties>
 				</configuration>
 			</plugin>
-		--></plugins>
+		<!---->
+		</plugins>
 	</build>
-	<pluginRepositories>
-	<pluginRepository>
-	<id>stage</id>
-	<url>http://repository.sonatype.org/content/repositories/all-003/</url>
-	</pluginRepository>
-	</pluginRepositories>
-	<!-- 
-	<properties>
-	<driver></driver>
-	</properties>
-	 -->
+	
+	
 </project>
