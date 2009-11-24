@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Domain
 Bundle-SymbolicName: org.dynaresume.domain
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .,
  target/classes/
 Export-Package: org.dynaresume.domain,
