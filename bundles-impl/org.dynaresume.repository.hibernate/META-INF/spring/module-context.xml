@@ -34,10 +34,10 @@
 
 	<context:annotation-config />
 
-	<context:component-scan base-package="org.dynaresume.repository.hibernate" />
-<!--
-	<bean id="scalpa" class="org.dynaresume.repository.hibernate.Scalpa"
+	<context:component-scan base-package="org.dynaresume.repository.internal" />
+
+	<bean id="scalpa" class="org.dynaresume.repository.internal.Scalpa"
 		init-method="start"></bean>
 
-	-->	
+<!--	-->	
 </beans>
