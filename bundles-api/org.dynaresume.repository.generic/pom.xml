@@ -8,10 +8,8 @@
 	
 	</parent>
 	<groupId>org.dynaresume</groupId>
-	<artifactId>org.dynaresume.util</artifactId>
+	<artifactId>org.dynaresume.repository.generic</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
-
-	
 	
 </project>
