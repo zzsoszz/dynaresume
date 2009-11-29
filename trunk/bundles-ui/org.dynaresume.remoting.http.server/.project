@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>org.dynaresume.remoting.http.server</name>
+	<name>org.dynaresume.httpexporter</name>
 	<comment></comment>
 	<projects>
 	</projects>
