@@ -5,9 +5,9 @@ import java.util.Iterator;
 
 import javax.annotation.Resource;
 
-import org.dynaresume.domain.Agence;
-import org.dynaresume.repository.IAgenceDAO;
-import org.dynaresume.service.IAgenceService;
+import org.dynaresume.domain.Agency;
+import org.dynaresume.repository.AgencyRepository;
+import org.dynaresume.service.AgenceService;
 
 
 public class Scalpa {
@@ -17,33 +17,33 @@ public class Scalpa {
 	
 
 	@Resource
-	private IAgenceService agenceService;
+	private AgenceService agenceService;
 	
 	
 	public void start() {
 
 		System.out.println(agenceService);
 		assert agenceService !=null;
-		Collection subject=agenceService.findAllAgence();
-		for (Iterator iterator = subject.iterator(); iterator.hasNext();) {
-			Object object = (Object) iterator.next();
-			System.err.println(object);
+		Collection<Agency> subject=agenceService.findAllAgence();
+		for (Iterator<Agency> iterator = subject.iterator(); iterator.hasNext();) {
+			Agency agence =iterator.next();
+			System.err.println(agence);
 		}
 	}
 	
 
 	@Resource
-	private IAgenceDAO<Agence> agenceDAO;
+	private AgencyRepository agencyRepository;
 	public void start2(){
 		System.out.println("coucou");
 		
-		System.out.println(agenceDAO);
+		System.out.println(agencyRepository);
 		try{
-		Collection<Agence> o=agenceDAO.findAll();
+		Collection<Agency> o=agencyRepository.findAll();
 		System.out.println(o);
-		for (Iterator iterator = o.iterator(); iterator.hasNext();) {
-			Agence agence = (Agence) iterator.next();
-			System.out.println(agence.getRaisonSociale());
+		for (Iterator<Agency> iterator = o.iterator(); iterator.hasNext();) {
+			Agency agence =iterator.next();
+			System.out.println(agence);
 		}
 		} catch (Throwable e){
 			e.printStackTrace();

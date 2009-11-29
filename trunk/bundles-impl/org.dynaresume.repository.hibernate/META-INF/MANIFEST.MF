@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Hibernate
-Bundle-SymbolicName: org.dynaresume.repository.hibernate
+Bundle-SymbolicName: org.dynaresume.repository.internal
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: javax.annotation,
@@ -9,12 +9,15 @@ Import-Package: javax.annotation,
  javax.persistence.spi;version="1.99.0",
  javax.transaction,
  javax.transaction.xa,
- org.commons.repository,
+ org.dynaresume.basebean,
  org.dynaresume.domain,
  org.dynaresume.dto.criteria,
  org.dynaresume.repository,
  org.dynaresume.util,
+ org.generic.repository,
+ org.generic.repository.jpa,
  org.hibernate;version="3.2.6.ga",
+ org.hibernate.criterion,
  org.hibernate.ejb,
  org.hibernate.hql.ast,
  org.hibernate.jdbc,
@@ -33,7 +36,7 @@ Import-Package: javax.annotation,
  org.springframework.orm.jpa.vendor;version="2.5.6.A",
  org.springframework.stereotype,
  org.springframework.transaction;version="2.5.6.A"
-Bundle-ClassPath: target/classes/,
- .
+Bundle-ClassPath: .,
+ target/classes/
 Require-Bundle: org.springframework.orm;bundle-version="2.5.6",
  atomikos.essentials;bundle-version="1.0.0"

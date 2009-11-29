@@ -15,14 +15,10 @@ package org.dynaresume.service.impl;
 import java.util.Collection;
 import java.util.List;
 
-import javax.annotation.Resource;
-
-import org.dynaresume.domain.Agence;
+import org.dynaresume.domain.Agency;
 import org.dynaresume.dto.criteria.TableReferenceCriteria;
-import org.dynaresume.repository.IAgenceDAO;
-import org.dynaresume.repository.IModeleRTFDAO;
-import org.dynaresume.repository.ITableReferenceDAO;
-import org.dynaresume.service.IAgenceService;
+import org.dynaresume.repository.AgencyRepository;
+import org.dynaresume.service.AgenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,20 +32,20 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional(readOnly=true)
 @Service("agenceService")
-public class AgenceServiceImpl  implements IAgenceService {
+public class AgenceServiceImpl  implements AgenceService {
 
-	public static final String TREF_TYPE_SITUATION_FAMILIALE = "SITUATION_FAMILIALE";
+	//public static final String TREF_TYPE_SITUATION_FAMILIALE = "SITUATION_FAMILIALE";
 	
 	@Autowired
-	private IAgenceDAO agenceDAO;
-	@Resource
-	private ITableReferenceDAO tableReferenceDAO;
-	@Resource
-	private IModeleRTFDAO modeleRTFDAO;
-	
-	public List<Agence> findAllAgence() {
+	private AgencyRepository agencyRepository;
+//	@Resource
+//	private ITableReferenceDAO tableReferenceDAO;
+//	@Resource
+//	private IModeleRTFDAO modeleRTFDAO;
+//	
+	public List<Agency> findAllAgence() {
 		
-		return agenceDAO.findAll();
+		return agencyRepository.findAll();
 	}
 	
 //	public Collection findAllAgence(Sort sort) {
@@ -65,19 +61,19 @@ public class AgenceServiceImpl  implements IAgenceService {
 //		paginatedList.update(page);
 //	}
 
-	///////////// TABLE REFERENCE
-	
-	public Collection findAllSituationFamiliale() {
-		TableReferenceCriteria criteria = new TableReferenceCriteria();
-		criteria.setType(TREF_TYPE_SITUATION_FAMILIALE);
-		Collection tableReferenceBeanList = tableReferenceDAO.findByCriteria(criteria);
-		return tableReferenceBeanList; 
-	}
-	
-	public Collection findAllModeleRTF() {
-		Collection modeleRTFBeanList = modeleRTFDAO.findAll();
-		return modeleRTFBeanList; 
-	}
+//	///////////// TABLE REFERENCE
+//	
+//	public Collection findAllSituationFamiliale() {
+//		TableReferenceCriteria criteria = new TableReferenceCriteria();
+//		criteria.setType(TREF_TYPE_SITUATION_FAMILIALE);
+//		Collection tableReferenceBeanList = tableReferenceDAO.findByCriteria(criteria);
+//		return tableReferenceBeanList; 
+//	}
+//	
+//	public Collection findAllModeleRTF() {
+//		Collection modeleRTFBeanList = modeleRTFDAO.findAll();
+//		return modeleRTFBeanList; 
+//	}
 	
 	
 
