@@ -7,11 +7,12 @@ Bundle-Activator: org.dynaresume.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.springframework.beans;bundle-version="2.5.6",
- org.dynaresume.domain;bundle-version="1.0.0",
- org.dynaresume.services;bundle-version="1.0.0"
+ org.dynaresume.services;bundle-version="1.0.0",
+ org.dynaresume.util;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: org.eclipse.springframework.util,
+Import-Package: org.dynaresume.domain,
+ org.eclipse.springframework.util,
  org.springframework.context.annotation,
  org.springframework.stereotype
 Service-Component: component.xml

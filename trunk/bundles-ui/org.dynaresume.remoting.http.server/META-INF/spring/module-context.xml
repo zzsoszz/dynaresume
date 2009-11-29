@@ -22,28 +22,29 @@
  <osgi:reference id="userService" interface="org.dynaresume.service.IUserService"/>
 
  <bean id="warDeployer" class="org.springframework.osgi.web.deployer.jetty.JettyWarDeployer"/>
- --> 
+
  
 	<bean name="/UserService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
   <property name="service" ref="userService"/>
   <property name="serviceInterface" value="org.dynaresume.service.IUserService"/>
 </bean>
-
+ --> 
 
 <bean name="/AgenceService"  class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
   <property name="service" ref="agenceService"/>
-  <property name="serviceInterface" value="org.dynaresume.service.IAgenceService"/>
+  <property name="serviceInterface" value="org.dynaresume.service.AgenceService"/>
   <property name="remoteInvocationExecutor" ref="myRemoteInvocationExecutor" ></property>
 </bean>
 
 
-<bean id="myRemoteInvocationExecutor" class="org.dynaresume.remoting.http.RemoteInvocationExecutor"/>
+<bean id="myRemoteInvocationExecutor" class="org.dynaresume.remoting.http.RemoteInvocationExecutor"/><!--
 
 <bean name="/CompetenceService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
   <property name="service" ref="competenceService"/>
   <property name="serviceInterface" value="org.dynaresume.service.ICompetenceService"/>
 </bean>
  
+	-->
 	<bean id="scalpa" class="org.dynaresume.remoting.http.Scalpa"
 		init-method="start">
 	<property name="agenceService" ref="agenceService"></property>	

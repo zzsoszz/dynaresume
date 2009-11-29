@@ -15,7 +15,7 @@
 	
 <!-- -->
 	
-<osgi:reference id="agenceService" interface="org.dynaresume.service.IAgenceService"  />
+<osgi:reference id="agenceService" interface="org.dynaresume.service.AgenceService"  /><!--
   
 <osgi:reference id="competenceService" interface="org.dynaresume.service.ICompetenceService"/>
  
@@ -23,4 +23,4 @@
  <osgi:reference id="userService" interface="org.dynaresume.service.IUserService"/>
 
  
-</beans>
+--></beans>

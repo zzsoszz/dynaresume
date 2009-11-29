@@ -14,8 +14,8 @@ package org.dynaresume;
 
 import java.util.Collection;
 
-import org.dynaresume.domain.Agence;
-import org.dynaresume.service.IAgenceService;
+import org.dynaresume.domain.Agency;
+import org.dynaresume.service.AgenceService;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -38,10 +38,10 @@ import org.springframework.stereotype.Component;
 public class View extends ViewPart {
 	public static final String ID = "org.demo.simpleclient.view";
 	
-	private IAgenceService agenceService;
+	private AgenceService agenceService;
 	
 	@Autowired
-	public void setAgenceService(IAgenceService agenceService){
+	public void setAgenceService(AgenceService agenceService){
 		this.agenceService=agenceService;
 		System.out.println(agenceService);
 	}
@@ -75,9 +75,9 @@ public class View extends ViewPart {
 			ITableLabelProvider {
 		public String getColumnText(Object obj, int index) {
 			
-			Agence agence=(Agence)obj;
+			Agency agence=(Agency)obj;
 			
-			return agence.getRaisonSociale();
+			return agence.getName();
 		}
 
 		public Image getColumnImage(Object obj, int index) {
@@ -116,9 +116,9 @@ public class View extends ViewPart {
 		viewer.setSorter(new ViewerSorter() {
 			@Override
 			public int compare(Viewer viewer, Object e1, Object e2) {
-				Agence agence1=(Agence)e1;
-				Agence agence2=(Agence)e2;
-				return agence1.getRaisonSociale().compareTo(agence2.getRaisonSociale());
+				Agency agence1=(Agency)e1;
+				Agency agence2=(Agency)e2;
+				return agence1.getName().compareTo(agence1.getName());
 			}
 		});
 	}
