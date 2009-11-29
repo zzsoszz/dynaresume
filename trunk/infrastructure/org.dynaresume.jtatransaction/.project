@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>org.dynaresume.jtatransaction</name>
+	<name>org.dynaresume.infrastructure.jtatransaction</name>
 	<comment></comment>
 	<projects>
 	</projects>

@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jta Transaction
-Bundle-SymbolicName: org.dynaresume.jtatransaction
+Bundle-SymbolicName: org.dynaresume.infrastructure.jtatransaction
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: atomikos.essentials;bundle-version="1.0.0",
