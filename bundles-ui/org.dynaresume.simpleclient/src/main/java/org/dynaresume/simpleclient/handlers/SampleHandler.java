@@ -1,6 +1,6 @@
 package org.dynaresume.simpleclient.handlers;
 
-import org.dynaresume.service.IAgenceService;
+import org.dynaresume.service.AgenceService;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class SampleHandler extends AbstractHandler {
 	@Autowired
-	private IAgenceService agenceService;
+	private AgenceService agenceService;
 
 	
 	

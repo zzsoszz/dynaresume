@@ -3,7 +3,7 @@ package org.dynaresume.remoting.http;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.dynaresume.service.IAgenceService;
+import org.dynaresume.service.AgenceService;
 
 
 public class Scalpa {
@@ -13,7 +13,7 @@ public class Scalpa {
 	
 
 	
-	private IAgenceService agenceService;
+	private AgenceService agenceService;
 	
 	
 	public void start() {
@@ -27,7 +27,7 @@ public class Scalpa {
 		}
 	}
 	
-	public void setAgenceService(IAgenceService agenceService) {
+	public void setAgenceService(AgenceService agenceService) {
 		this.agenceService = agenceService;
 	}
 

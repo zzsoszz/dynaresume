@@ -16,6 +16,6 @@
 	<context:annotation-config />
 
 	<osgi:reference id="agenceService"
-		interface="org.dynaresume.service.IAgenceService" />
+		interface="org.dynaresume.service.AgenceService" />
 
 </beans>
