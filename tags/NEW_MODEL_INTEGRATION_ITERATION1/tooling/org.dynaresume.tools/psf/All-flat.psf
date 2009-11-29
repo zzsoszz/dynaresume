@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<psf version="2.0">
+<provider id="org.tigris.subversion.subclipse.core.svnnature">
+<project reference="0.9.3,https://gestcvosgi.googlecode.com/svn/trunk/third-parties/atomikos.essentials,atomikos.essentials"/>
+<project reference="0.9.3,https://gestcvosgi.googlecode.com/svn/trunk/third-parties/net.sourceforge.beanlib,net.sourceforge.beanlib"/>
+<project reference="0.9.3,https://gestcvosgi.googlecode.com/svn/trunk/infrastructure/org.akrogen.config.log4j,org.akrogen.config.log4j"/>
+<project reference="0.9.3,https://gestcvosgi.googlecode.com/svn/trunk/bundles-api/org.akrogen.gestcv.dao,org.akrogen.gestcv.dao"/>
+<project reference="0.9.3,https://gestcvosgi.googlecode.com/svn/trunk/infrastructure/org.akrogen.gestcv.infrastructure.mysql,org.akrogen.gestcv.infrastructure.mysql"/>
+<project reference="0.9.3,https://gestcvosgi.googlecode.com/svn/trunk/infrastructure/org.akrogen.gestcv.jtatransaction,org.akrogen.gestcv.jtatransaction"/>
+<project reference="0.9.3,https://gestcvosgi.googlecode.com/svn/trunk/bundles-api/org.akrogen.gestcv.services,org.akrogen.gestcv.services"/>
+<project reference="0.9.3,https://gestcvosgi.googlecode.com/svn/trunk/bundles-impl/org.akrogen.gestcv.services.impl,org.akrogen.gestcv.services.impl"/>
+<project reference="0.9.3,https://gestcvosgi.googlecode.com/svn/trunk/bundles-ui/org.akrogen.gestcv.simpleclient,org.akrogen.gestcv.simpleclient"/>
+<project reference="0.9.3,https://gestcvosgi.googlecode.com/svn/trunk/tooling/org.akrogen.gestcv.targetplatform,org.akrogen.gestcv.targetplatform"/>
+<project reference="0.9.3,https://gestcvosgi.googlecode.com/svn/trunk/bundles-api/org.akrogen.gestcv.util,org.akrogen.gestcv.util"/>
+<project reference="0.9.3,https://gestcvosgi.googlecode.com/svn/trunk/bundles-ui/org.akrogen.gestcv.web,org.akrogen.gestcv.web"/>
+<project reference="0.9.3,https://gestcvosgi.googlecode.com/svn/trunk/bundles-api/org.akrogen.getstcv.domain,org.akrogen.getstcv.domain"/>
+</provider>
+</psf>
