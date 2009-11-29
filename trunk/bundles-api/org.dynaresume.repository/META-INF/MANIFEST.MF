@@ -2,10 +2,11 @@ Manifest-Version: 1.0
 Bundle-Version: 1.0.0
 Bundle-Name: Dao
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.dynaresume.repository
+Bundle-SymbolicName: org.dynaresume.common.repository
 Bundle-ClassPath: .
-Export-Package: org.commons.repository;uses:="org.dynaresume.dto.criteria",
- org.dynaresume.repository;uses:="org.commons.dao"
+Export-Package: org.dynaresume.repository;uses:="org.commons.dao"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: org.dynaresume.dto.criteria
+Import-Package: org.dynaresume.domain,
+ org.dynaresume.dto.criteria,
+ org.generic.repository
 
