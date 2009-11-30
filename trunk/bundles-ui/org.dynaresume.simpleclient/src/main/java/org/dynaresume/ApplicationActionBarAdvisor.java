@@ -12,8 +12,13 @@
 
 package org.dynaresume;
 
+import org.eclipse.jface.action.ICoolBarManager;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.ToolBarContributionItem;
+import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.actions.ActionFactory;
@@ -32,6 +37,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	// them
 	// in the fill methods. This ensures that the actions aren't recreated
 	// when fillActionBars is called with FILL_PROXY.
+	private IWorkbenchAction newAction;
+
 	private IWorkbenchAction exitAction;
 
 	public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
@@ -45,7 +52,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		// file.
 		// Registering also provides automatic disposal of the actions when
 		// the window is closed.
-
+		newAction= ActionFactory.NEW.create(window);
+		register(newAction);
 		exitAction = ActionFactory.QUIT.create(window);
 		register(exitAction);
 	}
@@ -54,7 +62,15 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		MenuManager fileMenu = new MenuManager("&File",
 				IWorkbenchActionConstants.M_FILE);
 		menuBar.add(fileMenu);
+		fileMenu.add(newAction);
 		fileMenu.add(exitAction);
 	}
+	@Override
+	protected void fillCoolBar(ICoolBarManager coolBar) {
+		 IToolBarManager toolbar = new ToolBarManager(SWT.FLAT | SWT.RIGHT);
+	        coolBar.add(new ToolBarContributionItem(toolbar, "main"));   
+	        toolbar.add(newAction);
+	}
+	
 
 }
