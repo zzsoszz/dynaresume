@@ -17,4 +17,12 @@ public class Group extends LegalEntity {
 	@OneToMany
 	@JoinColumn(name="group_id")
 	private Set<Agency> subsidiaries;
+	public Set<Agency> getSubsidiaries() {
+		return subsidiaries;
+	}
+	public void setSubsidiaries(Set<Agency> subsidiaries) {
+		Object oldValue = this.subsidiaries;
+		this.subsidiaries = subsidiaries;
+		firePropertyChange("subsidiaries", oldValue, subsidiaries);
+	}
 }

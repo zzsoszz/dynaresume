@@ -79,6 +79,16 @@ public class Address extends BaseBean {
 		firePropertyChange("telephone", oldValue, telephone);
 	}
 
+	public Country getCountry() {
+		return country;
+	}
+
+	public void setCountry(Country country) {
+		Object oldValue = this.country;
+		this.country = country;
+		firePropertyChange("country", oldValue, country);
+	}
+
 
 	
 }

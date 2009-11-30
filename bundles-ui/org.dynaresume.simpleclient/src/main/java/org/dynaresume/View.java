@@ -118,7 +118,7 @@ public class View extends ViewPart {
 			public int compare(Viewer viewer, Object e1, Object e2) {
 				Agency agence1=(Agency)e1;
 				Agency agence2=(Agency)e2;
-				return agence1.getName().compareTo(agence1.getName());
+				return agence1.getName().compareTo(agence2.getName());
 			}
 		});
 	}

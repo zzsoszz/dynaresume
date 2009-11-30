@@ -13,9 +13,13 @@
 
 
 	
-<!-- -->
-	
-<osgi:reference id="agenceService" interface="org.dynaresume.common.service.AgenceService"  /><!--
+<osgi:reference id="agenceService" interface="org.dynaresume.common.service.AgenceService"  />
+
+<osgi:reference id="hrService" interface="org.dynaresume.hr.service.HRService"  />
+
+
+<!--
+
   
 <osgi:reference id="competenceService" interface="org.dynaresume.service.ICompetenceService"/>
  
