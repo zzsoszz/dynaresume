@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Impl
-Bundle-SymbolicName: org.dynaresume.services.impl
+Bundle-SymbolicName: org.dynaresume.common.services.impl
 Bundle-Version: 1.0.0
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: javax.annotation;version="1.0.0",
