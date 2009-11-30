@@ -86,5 +86,15 @@
             commandId="org.dynaresume.simpleclient.commands.sampleCommand">
       </handler>
    </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            canFinishEarly="true"
+            class="org.dynaresume.common.group.WizardGroup"
+            hasPages="true"
+            id="org.dynaresume.common.simpleclient.groupwizard"
+            name="group">
+      </wizard>
+   </extension>
 
 </plugin>

@@ -7,4 +7,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.sprin
 
 <osgi:service ref="agenceService" interface="org.dynaresume.common.service.AgenceService"/>
 
+
+<osgi:service ref="hrService" interface="org.dynaresume.hr.service.HRService"  />
+
 </beans>
