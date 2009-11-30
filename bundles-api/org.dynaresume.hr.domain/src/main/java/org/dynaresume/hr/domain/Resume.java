@@ -18,7 +18,7 @@ public class Resume extends BaseBean{
 
 
 	@Id
-	private Integer id;
+	private long id;
 
 	
 	@Column
@@ -27,14 +27,14 @@ public class Resume extends BaseBean{
 	@Column
 	private byte[] picture;
 
-	public Integer getId() {
+	
+
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
-		Object oldValue = this.id;
+	public void setId(long id) {
 		this.id = id;
-		firePropertyChange("id", oldValue, id);
 	}
 
 	public String getTitle() {
