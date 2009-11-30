@@ -1,4 +1,4 @@
-package org.dynaresume.domain;
+package org.dynaresume.common.domain;
 
 import java.util.Set;
 
@@ -18,9 +18,22 @@ public class NaturalPerson extends Person {
 	 * 
 	 */
 	private static final long serialVersionUID = -1233890503792715089L;
+	public NaturalPerson() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public NaturalPerson(long id) {
+		this.id=id;
+	}
+	
 	@Id
 	private long id;
 	
+	public void setId(long id) {
+	
+		this.id = id;
+	
+	}
 	@Enumerated(EnumType.STRING)
 	@Column(length=10)
 	private MaritalStatus maritalStatus;

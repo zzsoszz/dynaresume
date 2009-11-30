@@ -1,4 +1,4 @@
-package org.dynaresume.domain;
+package org.dynaresume.common.domain;
 
 import java.util.Date;
 

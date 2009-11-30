@@ -4,26 +4,15 @@
 		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory name="dynaresume">
-	<property name="dialect">org.hibernate.dialect.MySQLDialect</property><!--
-		<mapping package="org.dynaresume.domain" />
-		<mapping class="org.dynaresume.domain.Agence" />
-		<mapping class="org.dynaresume.domain.Collaborateur" />
-		<mapping class="org.dynaresume.domain.TableReference" />
-		<mapping class="org.dynaresume.domain.CollaborateurCompetence" />
-		<mapping class="org.dynaresume.domain.Rubrique" />
-		<mapping class="org.dynaresume.domain.RubriqueType" />
-		<mapping class="org.dynaresume.domain.Competence" />
-		<mapping class="org.dynaresume.domain.Domaine" />
-		<mapping class="org.dynaresume.domain.CollaborateurFormation" />
-		<mapping class="org.dynaresume.domain.ModeleRTF" />
-		-->
-		<mapping class="org.dynaresume.domain.Address" />
-		<mapping class="org.dynaresume.domain.Collaboration" />
-		<mapping class="org.dynaresume.domain.Country"/>
-		<mapping class="org.dynaresume.domain.Group"/>
-		<mapping class="org.dynaresume.domain.LegalEntity" />
-		<mapping class="org.dynaresume.domain.Agency" />
-		<mapping class="org.dynaresume.domain.NaturalPerson" />
+	<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<mapping class="org.dynaresume.common.domain.Address" />
+		<mapping class="org.dynaresume.common.domain.Collaboration" />
+		<mapping class="org.dynaresume.common.domain.Country"/>
+		<mapping class="org.dynaresume.common.domain.Group"/>
+		<mapping class="org.dynaresume.common.domain.LegalEntity" />
+		<mapping class="org.dynaresume.common.domain.Agency" />
+		<mapping class="org.dynaresume.common.domain.NaturalPerson" />
+		<!-- basebean -->
 		<mapping class="org.dynaresume.basebean.BaseBean" />
 		
 	</session-factory>

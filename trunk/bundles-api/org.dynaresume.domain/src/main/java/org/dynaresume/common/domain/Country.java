@@ -1,4 +1,4 @@
-package org.dynaresume.domain;
+package org.dynaresume.common.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
