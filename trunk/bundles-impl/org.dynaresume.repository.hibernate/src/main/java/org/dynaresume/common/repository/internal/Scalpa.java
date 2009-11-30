@@ -1,7 +1,7 @@
 package org.dynaresume.common.repository.internal;
 
-import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import org.dynaresume.common.domain.Agency;
 import org.dynaresume.common.repository.AgencyRepository;
@@ -17,10 +17,10 @@ public class Scalpa {
 		
 		System.out.println(agencyRepository);
 		try{
-		Collection<Agency> o=agencyRepository.findAll();
+		List<Agency> o=agencyRepository.findAll();
 		System.out.println(o);
-		for (Iterator iterator = o.iterator(); iterator.hasNext();) {
-			Agency agence = (Agency) iterator.next();
+		for (Iterator<Agency> iterator = o.iterator(); iterator.hasNext();) {
+			Agency agence =  iterator.next();
 			System.out.println(agence);
 		}
 		} catch (Throwable e){

@@ -12,7 +12,6 @@
 
 package org.dynaresume.common.service;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.dynaresume.common.domain.Agency;

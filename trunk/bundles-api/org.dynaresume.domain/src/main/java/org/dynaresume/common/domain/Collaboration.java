@@ -38,5 +38,45 @@ public class Collaboration extends BaseBean {
 	  @ManyToOne
 	  @PrimaryKeyJoinColumn( referencedColumnName="ID")
 	  private Agency agency;
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		Object oldValue = this.id;
+		this.id = id;
+		firePropertyChange("id", oldValue, id);
+	}
+	public Date getStart() {
+		return start;
+	}
+	public void setStart(Date start) {
+		Object oldValue = this.start;
+		this.start = start;
+		firePropertyChange("start", oldValue, start);
+	}
+	public Date getEnd() {
+		return end;
+	}
+	public void setEnd(Date end) {
+		Object oldValue = this.end;
+		this.end = end;
+		firePropertyChange("end", oldValue, end);
+	}
+	public NaturalPerson getEmployee() {
+		return employee;
+	}
+	public void setEmployee(NaturalPerson employee) {
+		Object oldValue = this.employee;
+		this.employee = employee;
+		firePropertyChange("employee", oldValue, employee);
+	}
+	public Agency getAgency() {
+		return agency;
+	}
+	public void setAgency(Agency agency) {
+		Object oldValue = this.agency;
+		this.agency = agency;
+		firePropertyChange("agency", oldValue, agency);
+	}
 	
 }
