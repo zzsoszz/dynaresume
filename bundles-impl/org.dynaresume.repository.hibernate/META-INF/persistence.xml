@@ -3,25 +3,25 @@
 
 	<persistence-unit name="dynaresume" transaction-type="RESOURCE_LOCAL">
 		<!-- exclude-unlisted-classes>true</exclude-unlisted-classes--><!--
-    		<class>org.dynaresume.domain.Agence</class>
-				<class>org.dynaresume.domain.Collaborateur</class>
-				<class>org.dynaresume.domain.TableReference</class>
-				<class>org.dynaresume.domain.CollaborateurCompetence</class>
-				<class>org.dynaresume.domain.Rubrique</class>
-				<class>org.dynaresume.domain.RubriqueType</class>
-				<class>org.dynaresume.domain.Competence</class>
-				<class>org.dynaresume.domain.Domaine</class>
-				<class>org.dynaresume.domain.CollaborateurFormation</class>
-				<class>org.dynaresume.domain.ModeleRTF</class>
+    		<class>org.dynaresume.common.domain.Agence</class>
+				<class>org.dynaresume.common.domain.Collaborateur</class>
+				<class>org.dynaresume.common.domain.TableReference</class>
+				<class>org.dynaresume.common.domain.CollaborateurCompetence</class>
+				<class>org.dynaresume.common.domain.Rubrique</class>
+				<class>org.dynaresume.common.domain.RubriqueType</class>
+				<class>org.dynaresume.common.domain.Competence</class>
+				<class>org.dynaresume.common.domain.Domaine</class>
+				<class>org.dynaresume.common.domain.CollaborateurFormation</class>
+				<class>org.dynaresume.common.domain.ModeleRTF</class>
 				<class>org.dynaresume.basebean.BaseBean</class>
 				 -->
-				 	 <class>org.dynaresume.domain.Address</class>
-				 <class>org.dynaresume.domain.Collaboration</class>
-		<class>org.dynaresume.domain.Country</class>
-		<class>org.dynaresume.domain.Group</class>
-		<class>org.dynaresume.domain.LegalEntity</class>
-		<class>org.dynaresume.domain.Agency</class>
-		<class>org.dynaresume.domain.NaturalPerson</class>
+				 	 <class>org.dynaresume.common.domain.Address</class>
+				 <class>org.dynaresume.common.domain.Collaboration</class>
+		<class>org.dynaresume.common.domain.Country</class>
+		<class>org.dynaresume.common.domain.Group</class>
+		<class>org.dynaresume.common.domain.LegalEntity</class>
+		<class>org.dynaresume.common.domain.Agency</class>
+		<class>org.dynaresume.common.domain.NaturalPerson</class>
 		<class>org.dynaresume.basebean.BaseBean</class>
 				 <properties>
          <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>

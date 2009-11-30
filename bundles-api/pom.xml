@@ -14,10 +14,14 @@
   <modules>
     <module>org.dynaresume.util</module>
     <module>org.dynaresume.domain</module>
-    <module>org.dynaresume.repository.generic</module><!--
+    
+    <module>org.dynaresume.repository.generic</module>
+    <module>org.dynaresume.hr.domain</module>
     <module>org.dynaresume.repository</module>
+    
     <module>org.dynaresume.services</module>
-  --></modules>
+    <!--  -->
+  </modules>
 
   
 </project>

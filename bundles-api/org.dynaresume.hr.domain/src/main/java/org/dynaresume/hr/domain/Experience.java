@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import org.dynaresume.basebean.BaseBean;
 
 @Entity
-@Table(name = "T_EXPERIENCE", schema = "HR")
+@Table(name = "T_EXPERIENCE", schema = "hr")
 public class Experience extends BaseBean {
 
 	/**

@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: HR Repository
+Bundle-SymbolicName: org.dynaresume.hr.repository
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Import-Package: org.dynaresume.hr.domain,
+ org.generic.repository
+Export-Package: org.dynaresume.hr.repository

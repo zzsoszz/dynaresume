@@ -15,7 +15,7 @@
 	-->
 
 
-	<context:component-scan base-package="org.dynaresume.service.impl" />
+	<context:component-scan base-package="org.dynaresume.common.service.impl" />
 
 	<!--
 		Instructs Spring to perform declarative transaction management on
@@ -23,7 +23,7 @@
 	-->
 	<tx:annotation-driven transaction-manager="myTransactionManager" />
 
-	<bean id="scalpa" class="org.dynaresume.service.impl.Scalpa"
+	<bean id="scalpa" class="org.dynaresume.common.service.impl.Scalpa"
 		init-method="start"></bean>
 
 <!----></beans>

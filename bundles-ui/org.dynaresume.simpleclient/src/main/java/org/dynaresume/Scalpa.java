@@ -1,6 +1,6 @@
 package org.dynaresume;
 
-import org.dynaresume.service.AgenceService;
+import org.dynaresume.common.service.AgenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class Scalpa {

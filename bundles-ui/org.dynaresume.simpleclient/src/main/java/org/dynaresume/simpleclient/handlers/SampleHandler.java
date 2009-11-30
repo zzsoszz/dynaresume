@@ -1,6 +1,6 @@
 package org.dynaresume.simpleclient.handlers;
 
-import org.dynaresume.service.AgenceService;
+import org.dynaresume.common.service.AgenceService;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
