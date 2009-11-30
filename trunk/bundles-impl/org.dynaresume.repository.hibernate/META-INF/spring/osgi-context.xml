@@ -13,7 +13,7 @@
 
 	<osgi:reference id="dynaresumeDataSource" interface="javax.sql.DataSource"  />
 
-    <osgi:service ref="agencyRepository" interface="org.dynaresume.repository.AgencyRepository" />
+    <osgi:service ref="agencyRepository" interface="org.dynaresume.common.repository.AgencyRepository" />
    	
 	 <!-- 
 	<osgi:service ref="collaborateurCompetenceDAO" interface="org.dynaresume.repository.ICollaborateurCompetenceDAO" />

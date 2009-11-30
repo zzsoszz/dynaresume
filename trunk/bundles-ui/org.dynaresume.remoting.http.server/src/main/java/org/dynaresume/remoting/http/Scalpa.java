@@ -3,7 +3,7 @@ package org.dynaresume.remoting.http;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.dynaresume.service.AgenceService;
+import org.dynaresume.common.service.AgenceService;
 
 
 public class Scalpa {

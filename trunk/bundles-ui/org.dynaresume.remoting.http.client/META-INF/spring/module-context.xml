@@ -19,7 +19,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.sprin
 			<value>http://${serverName}:${httpPort}${contextPath}/remoting/AgenceService</value>
 		</property>
 		<property name="serviceInterface">
-			<value>org.dynaresume.service.AgenceService</value>
+			<value>org.dynaresume.common.service.AgenceService</value>
 		</property>
 	</bean><!--
 	

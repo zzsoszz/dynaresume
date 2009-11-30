@@ -8,7 +8,7 @@
        http://www.springframework.org/schema/beans   
        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
        
-<service ref="agenceService" interface="org.dynaresume.service.AgenceService" />
+<service ref="agenceService" interface="org.dynaresume.common.service.AgenceService" />
  <!-- 
 <service ref="competenceService" interface="org.dynaresume.service.ICompetenceService"/>
  
@@ -19,7 +19,7 @@
 
   
   
-	<reference id="agencyRepository" interface="org.dynaresume.repository.AgencyRepository"  />
+	<reference id="agencyRepository" interface="org.dynaresume.common.repository.AgencyRepository"  />
 <!--
 
 	<reference id="collaborateurCompetenceDAO" interface="org.dynaresume.repository.ICollaborateurCompetenceDAO" />

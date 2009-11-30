@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 import org.dynaresume.basebean.BaseBean;
 @Entity
-@Table(name = "T_DIPLOMA",schema="HR")
+@Table(name = "T_DIPLOMA",schema="hr")
 public class Diploma extends BaseBean{
 
 	/**

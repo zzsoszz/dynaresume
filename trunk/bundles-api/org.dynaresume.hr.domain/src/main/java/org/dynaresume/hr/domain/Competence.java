@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 import org.dynaresume.basebean.BaseBean;
 @Entity
-@Table(name = "T_COMPETENCE",schema="HR")
+@Table(name = "T_COMPETENCE",schema="hr")
 public class Competence  extends BaseBean{
 
 	/**

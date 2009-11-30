@@ -14,8 +14,8 @@ package org.dynaresume;
 
 import java.util.Collection;
 
-import org.dynaresume.domain.Agency;
-import org.dynaresume.service.AgenceService;
+import org.dynaresume.common.domain.Agency;
+import org.dynaresume.common.service.AgenceService;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;

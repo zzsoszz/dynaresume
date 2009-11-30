@@ -4,11 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.dynaresume.basebean.BaseBean;
+import org.dynaresume.common.domain.NaturalPerson;
 
 @Entity
-@Table(name = "T_RESUME",schema="HR")
+@Table(name = "T_RESUME",schema="hr")
 public class Resume extends BaseBean{
 
 	/**
@@ -27,6 +29,11 @@ public class Resume extends BaseBean{
 	@Column
 	private byte[] picture;
 
+	@Column(name="owner_id",unique=true)
+	private Long ownerId;
+
+	@Transient
+	private NaturalPerson owner;
 	
 
 	public long getId() {
@@ -56,6 +63,27 @@ public class Resume extends BaseBean{
 		this.picture = picture;
 		firePropertyChange("picture", oldValue, picture);
 	}
+
+	public NaturalPerson getOwner() {
+		return owner;
+	}
+
+	public void setOwner(NaturalPerson owner) {
+		Object oldValue = this.owner;
+		this.owner = owner;
+		firePropertyChange("owner", oldValue, owner);
+	}
+
+	public long getOwnerId() {
+		return ownerId;
+	}
+	
+	public void setOwnerId(Long ownerId) {
+		Object oldValue = this.ownerId;
+		this.ownerId = ownerId;
+		firePropertyChange("ownerId", oldValue, ownerId);
+	}
+	
 	
 	
 }

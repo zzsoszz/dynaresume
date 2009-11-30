@@ -4,9 +4,8 @@ Bundle-Name: Dao
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.dynaresume.common.repository
 Bundle-ClassPath: .
-Export-Package: org.dynaresume.repository;uses:="org.commons.dao"
+Export-Package: org.dynaresume.common.repository;uses:="org.commons.dao"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: org.dynaresume.domain,
- org.dynaresume.dto.criteria,
+Import-Package: org.dynaresume.common.domain,
  org.generic.repository
 
