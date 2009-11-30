@@ -5,8 +5,7 @@ Bundle-SymbolicName: org.dynaresume.common.domain
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .,
  target/classes/
-Export-Package: org.dynaresume.domain,
- org.dynaresume.dto.criteria
+Export-Package: org.dynaresume.common.domain
 Import-Package: javassist.util.proxy;version="3.3.0.ga",
  javax.persistence;version="1.0.0",
  net.sf.cglib.proxy;version="2.1.3",
