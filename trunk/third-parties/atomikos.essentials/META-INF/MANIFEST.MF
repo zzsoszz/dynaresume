@@ -127,4 +127,5 @@ Export-Package: com.atomikos.beans;
  com.atomikos.util;uses:="javax.naming,javax.naming.spi"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: javax.transaction;version="1.1.0",
- javax.transaction.xa;version="1.1.0"
+ javax.transaction.xa;version="1.1.0",
+ org.hibernate.transaction;version="3.2.6.ga"
