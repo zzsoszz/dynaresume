@@ -11,25 +11,81 @@
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
 			http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
+	<bean id="userTransactionService" class="com.atomikos.icatch.config.UserTransactionServiceImp"
+		init-method="init" destroy-method="shutdownForce">
+		<constructor-arg>
+			<!-- IMPORTANT: specify all Atomikos properties here -->
+			<props>
+				<prop key="com.atomikos.icatch.service">
+					com.atomikos.icatch.standalone.UserTransactionServiceFactory
+                </prop>
+				<prop key="com.atomikos.icatch.default_jta_timeout">
+					300000
+                </prop>
+				<!-- Need this for long running transactions. -->
+				<prop key="com.atomikos.icatch.max_timeout">
+					172800000
+                </prop>
+				<!-- Max number of active transactions. -->
+				<prop key="com.atomikos.icatch.max_actives">
+					-1
+                </prop>
+				<prop key="com.atomikos.icatch.force_shutdown_on_vm_exit">
+					true
+                </prop>
+				<!--
+					Work around for this MySQL bug:
+					http://bugs.mysql.com/bug.php?id=27832 NOTE: Only needed for XA
+					Datasource.
+				-->
+				<!--
+					<prop key="com.atomikos.icatch.serial_jta_transactions"> false
+					</prop>
+				-->
+			</props>
+		</constructor-arg>
 
-	<bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager"
+	</bean>
+
+
+	<bean id="AtomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager"
 		init-method="init" destroy-method="close">
-		<property name="forceShutdown" value="true"/>
+
+		<!--
+			when close is called, should we force transactions to terminate or
+			not?
+		-->
+		<property name="forceShutdown" value="false" />
 	</bean>
 
-	<bean id="atomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp" >
-	 <property name="transactionTimeout" value="300" />
+	<!--
+		Also use Atomikos UserTransactionImp, needed to configure Spring
+	-->
+	<bean id="AtomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp">
+
+		<property name="transactionTimeout" value="30000" />
 	</bean>
 
-
+	<!--
+		Configure the Spring framework to use JTA transactions from Atomikos
+	-->
 	<bean id="myTransactionManager"
 		class="org.springframework.transaction.jta.JtaTransactionManager">
-		<property name="userTransaction" ref="atomikosUserTransaction"/>
-		<property name="transactionManager" ref="atomikosTransactionManager"></property>
-		<property name="transactionSynchronizationName" value="SYNCHRONIZATION_ON_ACTUAL_TRANSACTION" />
+		<property name="transactionManager" ref="AtomikosTransactionManager" />
+		<property name="userTransaction" ref="AtomikosUserTransaction" />
 	</bean>
 
-
+	<bean id="jndi"
+		class="org.apache.xbean.spring.jndi.SpringInitialContextFactory"
+		factory-method="makeInitialContext">
+		<property name="entries">
+			<map>
+				<entry key="java:comp/TransactionManager" value-ref="AtomikosTransactionManager" />
+				<entry key="java:comp/UserTransaction" value-ref="AtomikosUserTransaction" />
+				<entry key="java:comp/UserTransactionService" value-ref="userTransactionService" />
+			</map>
+		</property>
+	</bean>
 
 
 </beans>
