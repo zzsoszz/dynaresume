@@ -2,10 +2,12 @@ package org.dynaresume.common.service.impl;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.dynaresume.common.domain.Agency;
+import org.dynaresume.common.domain.Group;
 import org.dynaresume.common.repository.AgencyRepository;
 import org.dynaresume.common.service.AgenceService;
 
@@ -20,7 +22,28 @@ public class Scalpa {
 	private AgenceService agenceService;
 	
 	
-	public void start() {
+	public void start(){
+		System.out.println("coucou");
+		
+		
+		try{
+		
+
+		Group newGroup =new Group();
+		newGroup.setCode("12");
+		newGroup.setEmail("scalpa12");
+		
+		newGroup.setName("dfsd");
+		
+		Group other=agenceService.createGroup(newGroup);
+		System.out.println(other);
+		} catch (Throwable e){
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void start3() {
 
 		System.out.println(agenceService);
 		assert agenceService !=null;

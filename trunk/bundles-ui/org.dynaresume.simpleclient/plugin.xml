@@ -90,7 +90,7 @@
          point="org.eclipse.ui.newWizards">
       <wizard
             canFinishEarly="true"
-            class="org.dynaresume.common.group.WizardGroup"
+            class="org.eclipse.springframework.util.SpringExtensionFactory:newGroupWizard"
             hasPages="true"
             id="org.dynaresume.common.simpleclient.groupwizard"
             name="group">

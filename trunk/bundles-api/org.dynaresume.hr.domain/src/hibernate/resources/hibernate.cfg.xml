@@ -4,7 +4,7 @@
 		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory name="dynaresume">
-	<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+	<property name="dialect">org.hibernate.dialect.H2Dialect</property>
 		<mapping class="org.dynaresume.hr.domain.Competence" />
 		<mapping class="org.dynaresume.hr.domain.CompetenceCategory" />
 		<mapping class="org.dynaresume.hr.domain.Diploma"/>

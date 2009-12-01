@@ -20,6 +20,8 @@
   
   
 	<reference id="agencyRepository" interface="org.dynaresume.common.repository.AgencyRepository"  />
+	    <reference id="groupRepository" interface="org.dynaresume.common.repository.GroupRepository" />
+	
 <!--
 
 	<reference id="collaborateurCompetenceDAO" interface="org.dynaresume.repository.ICollaborateurCompetenceDAO" />

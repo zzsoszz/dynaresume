@@ -12,9 +12,6 @@
 			http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
 
-	<osgi:reference id="dynaresumeDataSource" interface="javax.sql.DataSource" />
-
-	
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dynaresumeDataSource" />
@@ -24,20 +21,21 @@
 				<property name="databasePlatform" value="org.hibernate.dialect.H2Dialect" />
 				<property name="generateDdl" value="false" />
 				<property name="showSql" value="true" />
-				
 			</bean>
-			
 		</property>
-		
 	</bean>
 	
+
 
 	<context:annotation-config />
 
 	<context:component-scan base-package="org.dynaresume.common.repository.internal" />
-
+	
+<!--
 	<bean id="scalpa" class="org.dynaresume.common.repository.internal.Scalpa"
-		init-method="start"></bean>
-
-<!--	-->	
+		init-method="start">
+		<property name="agencyRepository" ref="agencyRepository"></property>
+		<property name="groupRepository" ref="groupRepository"></property>
+		</bean>
+	-->	
 </beans>
