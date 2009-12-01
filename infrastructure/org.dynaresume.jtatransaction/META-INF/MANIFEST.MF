@@ -4,6 +4,12 @@ Bundle-Name: Jta Transaction
 Bundle-SymbolicName: org.dynaresume.infrastructure.jtatransaction
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: atomikos.essentials;bundle-version="1.0.0",
- com.springsource.javax.transaction;bundle-version="1.1.0",
- org.springframework.transaction;bundle-version="2.5.6"
+Require-Bundle: com.springsource.javax.transaction;bundle-version="1.1.0",
+ org.springframework.transaction;bundle-version="2.5.6",
+ com.atomikos.essentials;bundle-version="3.5.9"
+Import-Package: org.apache.xbean.spring.jndi;version="3.6.0",
+ org.springframework.beans.factory;version="2.5.6.SEC01",
+ org.springframework.jndi;version="2.5.6.SEC01",
+ org.springframework.orm.jpa;version="2.5.6.SEC01",
+ org.springframework.orm.jpa.persistenceunit;version="2.5.6.SEC01",
+ org.springframework.orm.jpa.vendor;version="2.5.6.SEC01"

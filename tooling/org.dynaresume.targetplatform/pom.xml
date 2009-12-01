@@ -228,7 +228,6 @@
 
 
 	<dependencies>
-		
 
 		<dependency>
 			<groupId>javax.annotation</groupId>
@@ -246,7 +245,7 @@
 			<artifactId>spring-osgi-extender</artifactId>
 			<version>1.2.0</version>
 		</dependency>
-		
+
 		<dependency>
 
 			<groupId>org.springframework.osgi</groupId>
@@ -283,7 +282,7 @@
 			<artifactId>com.springsource.javax.xml.stream</artifactId>
 			<version>1.0.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>com.springsource.javax.servlet</artifactId>
@@ -323,6 +322,20 @@
 			<artifactId>com.springsource.org.jgroups</artifactId>
 			<version>2.2.8</version>
 		</dependency>
-
+		<dependency>
+			<groupId>javax.resource</groupId>
+			<artifactId>com.springsource.javax.resource</artifactId>
+			<version>1.5.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.jms</groupId>
+			<artifactId>com.springsource.javax.jms</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xbean</groupId>
+			<artifactId>com.springsource.org.apache.xbean.spring</artifactId>
+			<version>3.6.0</version>
+		</dependency>
 	</dependencies>
 </project>
