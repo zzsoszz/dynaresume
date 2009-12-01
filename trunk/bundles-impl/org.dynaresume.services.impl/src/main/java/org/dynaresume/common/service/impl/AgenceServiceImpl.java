@@ -51,7 +51,7 @@ public class AgenceServiceImpl  implements AgenceService {
 		
 		return agencyRepository.findAll();
 	}
-	@Transactional(readOnly=false,propagation=Propagation.REQUIRES_NEW)
+	@Transactional(readOnly=false)
 public Group  createGroup(Group newGroup) {
 		
 		

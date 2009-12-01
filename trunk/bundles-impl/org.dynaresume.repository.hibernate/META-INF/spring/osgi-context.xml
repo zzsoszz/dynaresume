@@ -17,9 +17,7 @@
     
     <osgi:service ref="groupRepository" interface="org.dynaresume.common.repository.GroupRepository" />
    	
-   	<!-- 
-	<osgi:service ref="myTransactionManager" interface="org.springframework.transaction.PlatformTransactionManager"/>
-	 -->
+   	
 	 <!-- 
 	<osgi:service ref="collaborateurCompetenceDAO" interface="org.dynaresume.repository.ICollaborateurCompetenceDAO" />
 	
