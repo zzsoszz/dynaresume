@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Customtransactionmanagerlookup
+Bundle-SymbolicName: org.dynaresume.customtransactionmanagerlookup
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: com.springsource.org.hibernate;bundle-version="3.2.6"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Import-Package: com.atomikos.beans,
+ org.slf4j
+Export-Package: com.atomikos.icatch.jta.hibernate3.dynaresume
+Require-Bundle: com.atomikos.essentials;bundle-version="3.5.9"

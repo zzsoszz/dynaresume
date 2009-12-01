@@ -15,6 +15,7 @@ package org.dynaresume.common.service;
 import java.util.List;
 
 import org.dynaresume.common.domain.Agency;
+import org.dynaresume.common.domain.Group;
 
 //import org.commons.dao.Sort;
 
@@ -23,6 +24,9 @@ public interface AgenceService {
 
 	// ------------ Agence
 	public List<Agency> findAllAgence();
+	
+	
+	public Group  createGroup(Group newGroup);
 	/**
 	 * @return
 	 */

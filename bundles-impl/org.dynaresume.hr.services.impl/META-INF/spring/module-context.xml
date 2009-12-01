@@ -22,8 +22,8 @@
 		annotated classes
 	-->
 	<tx:annotation-driven transaction-manager="myTransactionManager" />
-
+<!-- 
 	<bean id="scalpa" class="org.dynaresume.hr.service.impl.Scalpa"
 		init-method="start"></bean>
-
+ -->
 </beans>
