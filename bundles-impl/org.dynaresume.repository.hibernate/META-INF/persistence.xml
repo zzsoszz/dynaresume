@@ -2,20 +2,7 @@
 	version="1.0">
 
 	<persistence-unit name="dynaresume" transaction-type="JTA">
-	<jta-data-source>java:dynaDS</jta-data-source>
-		<!-- exclude-unlisted-classes>true</exclude-unlisted-classes--><!--
-    		<class>org.dynaresume.common.domain.Agence</class>
-				<class>org.dynaresume.common.domain.Collaborateur</class>
-				<class>org.dynaresume.common.domain.TableReference</class>
-				<class>org.dynaresume.common.domain.CollaborateurCompetence</class>
-				<class>org.dynaresume.common.domain.Rubrique</class>
-				<class>org.dynaresume.common.domain.RubriqueType</class>
-				<class>org.dynaresume.common.domain.Competence</class>
-				<class>org.dynaresume.common.domain.Domaine</class>
-				<class>org.dynaresume.common.domain.CollaborateurFormation</class>
-				<class>org.dynaresume.common.domain.ModeleRTF</class>
-				<class>org.dynaresume.basebean.BaseBean</class>
-				 -->
+	<!--<jta-data-source>java:dynaDS2</jta-data-source>	-->
 				 	 <class>org.dynaresume.common.domain.Address</class>
 				 <class>org.dynaresume.common.domain.Collaboration</class>
 		<class>org.dynaresume.common.domain.Country</class>
@@ -28,24 +15,8 @@
          <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
           
           <property name="hibernate.current_session_context_class" value="jta"/>
-        <!--   
-         <property name="hibernate.transaction.factory_class"  value="com.atomikos.icatch.jta.hibernate3.dynaresume.AtomikosJTATransactionFactory"/>
-        --> 
         <property name="hibernate.transaction.manager_lookup_class" value="com.atomikos.icatch.jta.hibernate3.dynaresume.TransactionManagerLookup"/>
-        
         <property name="hibernate.jndi.class" value="org.apache.xbean.spring.jndi.SpringInitialContextFactory"/>
-        <!-- 
-        tr><td><tt>hibernate.jndi.url</tt></td><td>JNDI initial context URL</td></tr>
- * <tr><td><tt>hibernate.jndi.class</tt></td><td>JNDI provider class</td></tr>
- * <tr><td><tt>jta.UserTransaction</tt></td><td>JNDI name</td></tr>
-  -->
-         <!--
-         TODO ?
-         
-          
-         <property name="hibernate.transaction.manager_lookup_class"    value="org.hibernate.transaction.JBossTransactionManagerLookup"/>
-        
-         --> 
       </properties>
 	</persistence-unit>
 
