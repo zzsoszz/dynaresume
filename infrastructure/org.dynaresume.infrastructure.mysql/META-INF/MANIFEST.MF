@@ -6,6 +6,7 @@ Bundle-SymbolicName: org.dynaresume.infrastructure.db
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: com.atomikos.jdbc;resolution:=optional,
  com.atomikos.jdbc.nonxa;resolution:=optional,
- org.apache.commons.dbcp;version="1.2.2.osgi"
+ org.apache.commons.dbcp;version="1.2.2.osgi",
+ org.apache.xbean.spring.jndi;version="3.6.0",
+ org.h2.jdbcx;version="1.0.71"
 Bundle-ClassPath: .
-Require-Bundle: com.springsource.org.h2;bundle-version="1.0.71"

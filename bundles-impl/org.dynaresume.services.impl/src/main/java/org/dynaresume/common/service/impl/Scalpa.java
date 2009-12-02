@@ -26,9 +26,8 @@ public class Scalpa {
 		System.out.println("coucou");
 		
 		
-		try{
 		
-
+			System.err.println(agenceService.findAllGroups().size());
 		Group newGroup =new Group();
 		newGroup.setCode("12");
 		newGroup.setEmail("scalpa12");
@@ -36,10 +35,9 @@ public class Scalpa {
 		newGroup.setName("dfsd");
 		
 		Group other=agenceService.createGroup(newGroup);
+		
+		System.out.println(agenceService.findAllGroups().size());
 		System.out.println(other);
-		} catch (Throwable e){
-			e.printStackTrace();
-		}
 		
 	}
 	

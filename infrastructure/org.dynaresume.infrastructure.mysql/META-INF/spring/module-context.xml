@@ -18,7 +18,19 @@
         p:password="${jdbc.password}" p:driverClassName="${jdbc.driverClassName}" init-method="createDataSource" destroy-method="close"/>
         
        
-        <!--
+      <!---->
+       
+      <!--  
+       
+       <bean id="dynaresumeDataSource" class="org.h2.jdbcx.JdbcDataSource" >
+	       <property name="URL"><value>${jdbc.url}</value></property>
+    	   <property name="user"><value>${jdbc.username}</value></property>
+       		<property name="password"><value>${jdbc.password}</value></property>
+       </bean>
+
+       -->
+       
+       <!--  DOES NOT SEEM To WORK PROPERLY...
 <bean id="dynaresumeDataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init" destroy-method="close">
 	<property name="uniqueResourceName"><value>dynaDS2</value></property>
 	<property name="xaDataSourceClassName"><value>org.h2.jdbcx.JdbcDataSource</value></property>
@@ -29,7 +41,9 @@
 		<prop key="URL">${jdbc.url}</prop>
 	    </props>
 	</property>
+	
 	<property name="minPoolSize"><value>1</value></property>
 </bean>
--->
+  -->
+ 
 </beans>

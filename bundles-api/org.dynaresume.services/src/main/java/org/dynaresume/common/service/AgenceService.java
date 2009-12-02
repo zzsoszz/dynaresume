@@ -27,6 +27,8 @@ public interface AgenceService {
 	
 	
 	public Group  createGroup(Group newGroup);
+	
+	public List<Group> findAllGroups();
 	/**
 	 * @return
 	 */

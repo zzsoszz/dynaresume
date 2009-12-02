@@ -24,8 +24,8 @@
 	<tx:annotation-driven transaction-manager="myTransactionManager"  />
 	
 	
-<!---->
+<!--
 	<bean id="scalpa" class="org.dynaresume.common.service.impl.Scalpa"
 		init-method="start"></bean>
-
+-->
 </beans>

@@ -1,11 +1,13 @@
 package org.dynaresume.common.group;
 
+import org.dynaresume.View;
 import org.dynaresume.common.domain.Address;
 import org.dynaresume.common.domain.Group;
 import org.dynaresume.common.service.AgenceService;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -42,11 +44,13 @@ public class WizardGroup extends Wizard implements INewWizard{
 		Group aGroup=agenceService.createGroup(newGroup);
 		System.out.println(aGroup.getId());
 		
+		View viewGroup=(View)workbench.getActiveWorkbenchWindow().getActivePage().findView(View.ID);
+		viewGroup.refresh();
 		return true;
 	}
-
+	private IWorkbench workbench;
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		// TODO Auto-generated method stub
+		this.workbench=workbench;
 		
 	}
 	
