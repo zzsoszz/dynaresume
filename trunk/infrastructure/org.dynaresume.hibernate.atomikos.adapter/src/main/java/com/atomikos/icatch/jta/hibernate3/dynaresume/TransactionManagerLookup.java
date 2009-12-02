@@ -30,7 +30,6 @@ package com.atomikos.icatch.jta.hibernate3.dynaresume;
 
 import java.util.Properties;
 
-import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.transaction.Transaction;
@@ -38,8 +37,6 @@ import javax.transaction.TransactionManager;
 
 import org.hibernate.HibernateException;
 import org.hibernate.util.NamingHelper;
-
-import com.atomikos.icatch.jta.UserTransactionManager;
 
 /**
  * 
@@ -55,7 +52,7 @@ import com.atomikos.icatch.jta.UserTransactionManager;
 public class TransactionManagerLookup implements org.hibernate.transaction.TransactionManagerLookup
 {
 
-	//private UserTransactionManager utm;
+//	private UserTransactionManager utm;
 	
 	public TransactionManagerLookup()
 	{
@@ -71,13 +68,14 @@ public class TransactionManagerLookup implements org.hibernate.transaction.Trans
     	TransactionManager tm=null;
     try {
 		InitialContext	context = NamingHelper.getInitialContext(props);
-		//System.out.println(context.lookup("java:comp/TransactionManager"));
+		
 		 tm = (TransactionManager)context.lookup("java:comp/TransactionManager");
 	} catch (NamingException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
         return tm;
+    	//return utm;
     }
 
     public String getUserTransactionName()

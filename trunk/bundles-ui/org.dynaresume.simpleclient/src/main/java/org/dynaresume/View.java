@@ -14,7 +14,8 @@ package org.dynaresume;
 
 import java.util.Collection;
 
-import org.dynaresume.common.domain.Agency;
+//import org.dynaresume.common.domain.Agency;
+import org.dynaresume.common.domain.Group;
 import org.dynaresume.common.service.AgenceService;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -38,13 +39,9 @@ import org.springframework.stereotype.Component;
 public class View extends ViewPart {
 	public static final String ID = "org.demo.simpleclient.view";
 	
-	private AgenceService agenceService;
-	
 	@Autowired
-	public void setAgenceService(AgenceService agenceService){
-		this.agenceService=agenceService;
-		System.out.println(agenceService);
-	}
+	private AgenceService agenceService;
+
 	
 	private TableViewer viewer;
 
@@ -75,9 +72,9 @@ public class View extends ViewPart {
 			ITableLabelProvider {
 		public String getColumnText(Object obj, int index) {
 			
-			Agency agence=(Agency)obj;
+			Group group=(Group)obj;
 			
-			return agence.getName();
+			return group.getName();
 		}
 
 		public Image getColumnImage(Object obj, int index) {
@@ -90,14 +87,11 @@ public class View extends ViewPart {
 		}
 	}
 
-	//private IAgenceService agenceService;
-
 	@Override
 	public void init(IViewSite site) throws PartInitException {
-		// TODO Auto-generated method stub
+		
 		super.init(site);
 
-		//agenceService=(IAgenceService)getViewSite().getService(IAgenceService.class);
 
 	}
 
@@ -111,14 +105,14 @@ public class View extends ViewPart {
 
 		viewer.setContentProvider(new ViewContentProvider());
 		viewer.setLabelProvider(new ViewLabelProvider());
-		viewer.setInput(agenceService.findAllAgence());
-		
+		//viewer.setInput(agenceService.findAllGroups());
+		refresh();
 		viewer.setSorter(new ViewerSorter() {
 			@Override
 			public int compare(Viewer viewer, Object e1, Object e2) {
-				Agency agence1=(Agency)e1;
-				Agency agence2=(Agency)e2;
-				return agence1.getName().compareTo(agence2.getName());
+				Group group1=(Group)e1;
+				Group group2=(Group)e2;
+				return group1.getName().compareTo(group2.getName());
 			}
 		});
 	}
@@ -128,5 +122,10 @@ public class View extends ViewPart {
 	 */
 	public void setFocus() {
 		viewer.getControl().setFocus();
+	}
+	
+	public void refresh(){
+		//XXX Mmmm...
+		viewer.setInput(agenceService.findAllGroups());
 	}
 }
