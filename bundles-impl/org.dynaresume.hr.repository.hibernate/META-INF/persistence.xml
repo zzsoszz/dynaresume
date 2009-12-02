@@ -2,7 +2,7 @@
 	version="1.0">
 
 	<persistence-unit name="hr" transaction-type="JTA">
-		<jta-data-source>java:dynaDS</jta-data-source>
+		<!--<jta-data-source>java:dynaDS</jta-data-source>	-->
 		<class>org.dynaresume.hr.domain.Resume</class>
 
 		<class>org.dynaresume.hr.domain.Competence</class>
