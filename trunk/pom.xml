@@ -31,23 +31,6 @@
 		</plugins>
 	</build>
 
-	<!--<dependencyManagement>
-		<dependencies>
-			
-			<dependency>
-				
-				<groupId>eclipse.org</groupId>
-				<artifactId>installation</artifactId>
-				<version>0.0.0</version>
-
-			
-				<type>eclipse-installation</type>
-				<scope>system</scope>
-				<systemPath>H:\devtools\workspaces\ws1\dynaresume\tooling\org.dynaresume.targetplatform\target\targetPlatform</systemPath>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-	-->
 	<repositories>
 		<!--<repository>
 			<id>p2</id>
@@ -59,14 +42,12 @@
 			<id>springdm</id>
 			<layout>p2</layout>
 <!-- TODO find a host... -->
-			<url>file:H:\devtools\workspaces\ws1\parent-p2\SpringP2\target\site</url>
+			<url>http://p2repository.free.fr/dynaresume</url>
 		</repository>
 	</repositories>
 	<properties>
 		<p2.repo>http://download.eclipse.org/releases/galileo</p2.repo>
 
 		<tycho-version>0.5.0</tycho-version>
-
-		<!--<targetPlatform>H:\devtools\workspaces\ws1\dynaresume\tooling\org.dynaresume.targetplatform\target\targetPlatform</targetPlatform>
-	--></properties>
+</properties>
 </project>

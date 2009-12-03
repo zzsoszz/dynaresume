@@ -7,12 +7,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
-public class DefaultPage extends WizardPage {
+public class GroupPage extends WizardPage {
 
 	/**
 	 * Create the wizard.
 	 */
-	public DefaultPage() {
+	public GroupPage() {
 		super("New Group");
 		setTitle("Wizard Page title");
 		setDescription("Create a new Group in your system (might be done only once)");
