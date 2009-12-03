@@ -1,13 +1,13 @@
 package org.dynaresume.common.group;
 
 import org.dynaresume.View;
+import org.dynaresume.common.address.AddressPage;
 import org.dynaresume.common.domain.Address;
 import org.dynaresume.common.domain.Group;
 import org.dynaresume.common.service.AgenceService;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
-import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbench;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -34,9 +34,11 @@ public class WizardGroup extends Wizard implements INewWizard{
 
 	@Override
 	public void addPages() {
-		DefaultPage page1 = new DefaultPage();
+		GroupPage page1 = new GroupPage();
 		addPage(page1);
 		page1.setGroup(newGroup);
+		AddressPage page2 = new AddressPage();
+		addPage(page2);
 	}
 
 	@Override
