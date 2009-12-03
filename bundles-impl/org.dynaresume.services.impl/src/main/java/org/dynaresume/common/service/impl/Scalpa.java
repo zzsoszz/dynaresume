@@ -27,7 +27,7 @@ public class Scalpa {
 		
 		
 		
-			System.err.println(agenceService.findAllGroups().size());
+			System.err.println(agenceService.getAllGroups().size());
 		Group newGroup =new Group();
 		newGroup.setCode("12");
 		newGroup.setEmail("scalpa12");
@@ -36,39 +36,10 @@ public class Scalpa {
 		
 		Group other=agenceService.createGroup(newGroup);
 		
-		System.out.println(agenceService.findAllGroups().size());
+		System.out.println(agenceService.getAllGroups().size());
 		System.out.println(other);
 		
 	}
 	
-	public void start3() {
 
-		System.out.println(agenceService);
-		assert agenceService !=null;
-		Collection<Agency> subject=agenceService.findAllAgence();
-		for (Iterator<Agency> iterator = subject.iterator(); iterator.hasNext();) {
-			Agency agence =iterator.next();
-			System.err.println(agence);
-		}
-	}
-	
-
-	@Resource
-	private AgencyRepository agencyRepository;
-	public void start2(){
-		System.out.println("coucou");
-		
-		System.out.println(agencyRepository);
-		try{
-		Collection<Agency> o=agencyRepository.findAll();
-		System.out.println(o);
-		for (Iterator<Agency> iterator = o.iterator(); iterator.hasNext();) {
-			Agency agence =iterator.next();
-			System.out.println(agence);
-		}
-		} catch (Throwable e){
-			e.printStackTrace();
-		}
-		
-	}
 }

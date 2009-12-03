@@ -14,7 +14,7 @@ public class GroupPage extends WizardPage {
 	 */
 	public GroupPage() {
 		super("New Group");
-		setTitle("Wizard Page title");
+		setTitle("Create a new group");
 		setDescription("Create a new Group in your system (might be done only once)");
 	}
 	private Group newGroup;

@@ -89,11 +89,11 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            canFinishEarly="true"
+            canFinishEarly="false"
             class="org.eclipse.springframework.util.SpringExtensionFactory:newGroupWizard"
             hasPages="true"
             id="org.dynaresume.common.simpleclient.groupwizard"
-            name="group">
+            name="Group">
       </wizard>
    </extension>
 

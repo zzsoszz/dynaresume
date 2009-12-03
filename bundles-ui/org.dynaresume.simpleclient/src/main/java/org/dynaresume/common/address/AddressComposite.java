@@ -10,12 +10,12 @@ import org.eclipse.swt.widgets.Text;
 
 public class AddressComposite extends Composite {
 
-	private AddressCompositeController m_controller;
+
 	private Text cityText;
 	private Text faxText;
 	private Text telephoneText;
 	private Text zipCodeText;
-	private CCombo country;
+	private CCombo countryCombo;
 	public AddressComposite(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
@@ -43,11 +43,11 @@ public class AddressComposite extends Composite {
 				false));
 
 		new Label(this, SWT.NONE).setText("Country:");
-		country = new CCombo(this, SWT.BORDER | SWT.SINGLE);
-		country.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+		countryCombo = new CCombo(this, SWT.BORDER | SWT.SINGLE);
+		countryCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
 				false));
 		
-		m_controller = new AddressCompositeController(this);
+	
 	}
 
 	@Override
@@ -71,4 +71,8 @@ public class AddressComposite extends Composite {
 		return zipCodeText;
 	}
 
+	public CCombo getCountryCombo() {
+		return countryCombo;
+	}
+	
 }

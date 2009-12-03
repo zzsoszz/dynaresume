@@ -1,11 +1,13 @@
 package org.dynaresume.common.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 import org.dynaresume.basebean.BaseBean;
+
 @MappedSuperclass
 public abstract class Person extends BaseBean{
 
@@ -16,7 +18,7 @@ public abstract class Person extends BaseBean{
 	@Column(length=100,nullable=false)
 	private String email;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	private Address address;
 
 	public String getEmail() {

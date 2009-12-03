@@ -126,6 +126,6 @@ public class View extends ViewPart {
 	
 	public void refresh(){
 		//XXX Mmmm...
-		viewer.setInput(agenceService.findAllGroups());
+		viewer.setInput(agenceService.getAllGroups());
 	}
 }

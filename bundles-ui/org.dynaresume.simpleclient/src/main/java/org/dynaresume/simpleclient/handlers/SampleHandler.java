@@ -35,7 +35,7 @@ public class SampleHandler extends AbstractHandler {
 				.getActiveWorkbenchWindowChecked(event);
 		System.out.println(agenceService);
 		MessageDialog.openInformation(window.getShell(), "Simpleclient",
-				"Hello, Eclipse world " + agenceService.findAllAgence());
+				"Hello, Eclipse world " + agenceService.getAllCountries());
 		return null;
 	}
 }
