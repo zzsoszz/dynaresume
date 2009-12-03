@@ -15,7 +15,10 @@
 <unit id="org.eclipse.platform.feature.group" version="3.5.1.R35x_v20090910-9gEeG1_FthkNDSP2odXdThaOu9GFDPn83DGB7"/>
 <repository location="http://download.eclipse.org/releases/galileo"/>
 </location>
-<location path="${workspace_loc:/org.dynaresume.tooling.targetplatform/target/targetPlatform}" type="Directory"/>
+<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
+<unit id="org.dynaresume.springfeature.feature.group" version="1.0.0.200912032304"/>
+<repository location="http://p2repository.free.fr/dynaresume/"/>
+</location>
 </locations>
 <targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 <launcherArgs>

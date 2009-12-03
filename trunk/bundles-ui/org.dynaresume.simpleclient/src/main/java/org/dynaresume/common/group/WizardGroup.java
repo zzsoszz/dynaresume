@@ -39,6 +39,8 @@ public class WizardGroup extends Wizard implements INewWizard{
 		page1.setGroup(newGroup);
 		AddressPage page2 = new AddressPage();
 		addPage(page2);
+		page2.setAddress(newGroup.getAddress());
+		page2.setCountries(agenceService.getAllCountries());
 	}
 
 	@Override

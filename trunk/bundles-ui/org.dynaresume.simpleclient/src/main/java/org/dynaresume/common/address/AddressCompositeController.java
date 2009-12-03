@@ -1,21 +1,22 @@
 package org.dynaresume.common.address;
-import org.dynaresume.common.service.AgenceService;
+import java.util.Collection;
+import java.util.List;
+
+import org.dynaresume.common.domain.Country;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeansObservables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
-@Component(value="AddressCompositeController")
-@Scope("prototype")
+
 public class AddressCompositeController {
-	@Autowired
-	private AgenceService agenceService;
-
 	private AddressComposite m_addressComposite;
+	private ComboViewer countryViewer;
 	private DataBindingContext m_bindingContext;
 	private org.dynaresume.common.domain.Address address = new org.dynaresume.common.domain.Address();
 
@@ -26,12 +27,13 @@ public class AddressCompositeController {
 
 	public AddressCompositeController(AddressComposite addressComposite) {
 		m_addressComposite = addressComposite;
-		if (address != null) {
-			m_bindingContext = initDataBindings();
-		}
+		
+		
+		
 	}
 
-	private DataBindingContext initDataBindings() {
+	
+	public DataBindingContext initDataBindings() {
 		IObservableValue cityObserveWidget = SWTObservables.observeText(m_addressComposite.getCityText(), SWT.Modify);
 		IObservableValue cityObserveValue = BeansObservables.observeValue(address, "city");
 		IObservableValue faxObserveWidget = SWTObservables.observeText(m_addressComposite.getFaxText(), SWT.Modify);
@@ -40,6 +42,10 @@ public class AddressCompositeController {
 		IObservableValue telephoneObserveValue = BeansObservables.observeValue(address, "telephone");
 		IObservableValue zipCodeObserveWidget = SWTObservables.observeText(m_addressComposite.getZipCodeText(), SWT.Modify);
 		IObservableValue zipCodeObserveValue = BeansObservables.observeValue(address, "zipCode");
+		//PLQ hand coded
+		IObservableValue countryObserveWidget = ViewersObservables.observeSingleSelection(countryViewer);
+		IObservableValue countryObserveValue = BeansObservables.observeValue(address, "country");
+		//PLQ
 		//
 		DataBindingContext bindingContext = new DataBindingContext();
 		//
@@ -47,6 +53,7 @@ public class AddressCompositeController {
 		bindingContext.bindValue(faxObserveWidget, faxObserveValue, null, null);
 		bindingContext.bindValue(telephoneObserveWidget, telephoneObserveValue, null, null);
 		bindingContext.bindValue(zipCodeObserveWidget, zipCodeObserveValue, null, null);
+		bindingContext.bindValue(countryObserveWidget, countryObserveValue, null, null);
 		//
 		return bindingContext;
 	}
@@ -70,5 +77,26 @@ public class AddressCompositeController {
 				m_bindingContext = initDataBindings();
 			}
 		}
+	}
+	
+	public void initCountryViewer(List<Country> countries){
+		countryViewer = new ComboViewer(	m_addressComposite.getCountryCombo());
+		countryViewer.setContentProvider(new ArrayContentProvider() {
+			@Override
+			public Object[] getElements(Object inputElement) {
+				Collection res=(Collection)inputElement;
+				
+				return res.toArray();
+				
+			}
+		});
+		countryViewer.setLabelProvider(new LabelProvider() {
+			@Override
+			public String getText(Object element) {
+			Country country= (Country)element;
+				return country.getLabel();
+			}
+		});
+		countryViewer.setInput(countries);
 	}
 }

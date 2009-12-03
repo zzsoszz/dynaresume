@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "T_LEGAL_ENTITY",schema="common")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@SequenceGenerator(name = "ESTADO_ID", sequenceName = "SCALPA_SEQ", allocationSize = 1, initialValue = 1) 
+@SequenceGenerator(name="DEFAULT", sequenceName="SCALPA_SEQ" )
 public class LegalEntity extends Person {
 
 	/**
@@ -21,7 +21,7 @@ public class LegalEntity extends Person {
 	 */
 	private static final long serialVersionUID = -8975049737136593445L;
 	@Id
-	 @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =  "ESTADO_ID") 
+	 @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="DEFAULT") 
 	private Long id;
 	
 	@Column

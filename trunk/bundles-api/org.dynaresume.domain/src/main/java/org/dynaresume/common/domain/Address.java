@@ -2,13 +2,17 @@ package org.dynaresume.common.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.dynaresume.basebean.BaseBean;
 @Entity
 @Table(name = "T_ADDRESS",schema="common")
+@SequenceGenerator(name="DEFAULT", sequenceName="SCALPA_SEQ" ) 
 public class Address extends BaseBean {
 
 	/**
@@ -16,7 +20,8 @@ public class Address extends BaseBean {
 	 */
 	private static final long serialVersionUID = 9217187221005720810L;
 	@Id
-	private long id;
+	 @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="DEFAULT") 
+	private Long id;
 	@Column
 	private String zipCode;
 	@Column
@@ -29,11 +34,11 @@ public class Address extends BaseBean {
 	@ManyToOne
 	private Country country;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		Object oldValue = this.id;
 		this.id = id;
 		firePropertyChange("id", oldValue, id);

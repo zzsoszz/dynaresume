@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Text;
 
 public class GroupComposite extends Composite {
 
-	private GroupCompositeController m_controller;
+//	private GroupCompositeController m_controller;
 	private Text codeText;
 	private Text emailText;
 	private Text nameText;
@@ -34,7 +34,7 @@ public class GroupComposite extends Composite {
 		nameText = new Text(this, SWT.BORDER | SWT.SINGLE);
 		nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-		m_controller = new GroupCompositeController(this);
+//		m_controller = new GroupCompositeController(this);
 	}
 
 	@Override

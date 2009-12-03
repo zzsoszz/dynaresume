@@ -15,13 +15,14 @@ package org.dynaresume.common.service.impl;
 import java.util.List;
 
 import org.dynaresume.common.domain.Agency;
+import org.dynaresume.common.domain.Country;
 import org.dynaresume.common.domain.Group;
 import org.dynaresume.common.repository.AgencyRepository;
+import org.dynaresume.common.repository.CountryRepository;
 import org.dynaresume.common.repository.GroupRepository;
 import org.dynaresume.common.service.AgenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -32,75 +33,42 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:angelo.zerr@gmail.com">Angelo ZERR</a>
  * 
  */
-@Transactional
+@Transactional(readOnly=true)
 @Service("agenceService")
 public class AgenceServiceImpl implements AgenceService {
 
-	// public static final String TREF_TYPE_SITUATION_FAMILIALE =
-	// "SITUATION_FAMILIALE";
 
 	@Autowired
 	private AgencyRepository agencyRepository;
 	@Autowired
 	private GroupRepository groupRepository;
 
-	// @Resource
-	// private ITableReferenceDAO tableReferenceDAO;
-	// @Resource
-	// private IModeleRTFDAO modeleRTFDAO;
-	//	
-	@Transactional(readOnly=true)
-	public List<Agency> findAllAgence() {
+	@Autowired
+	private CountryRepository countryRepository;
+
+
+	public List<Agency> getAllAgencies() {
 
 		return agencyRepository.findAll();
 	}
 
-	@Transactional(readOnly=true)
-	public List<Group> findAllGroups() {
 
+	public List<Group> getAllGroups() {
 		return  groupRepository.findAll();
 	}
 
 	@Transactional(readOnly = false)
 	public Group createGroup(Group newGroup) {
-
-//		List<Group> aGroup = groupRepository.findAll();
-//		System.out.println(aGroup.size());
-		Group newGroup2 = groupRepository.save(newGroup);
-//		aGroup = groupRepository.findAll();
-//		System.out.println(aGroup.size());
-		//throw new RuntimeException("bidon");
-		return newGroup2;
+		return groupRepository.save(newGroup);
 
 	}
 
-	// public Collection findAllAgence(Sort sort) {
-	// Collection agenceBeanList = agenceDAO.findAll(sort);
-	// //return AgenceAssembleur.parseAgenceBeanToDTO(agenceBeanList);
-	// return agenceBeanList;
-	// }
+	public List<Agency> getAgenciesForGroup(Group group) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	// public void findAllAgence(Collection paginatedList) {
-	// //FIXME :
-	// IPage page = agenceDAO.findAll(paginatedList.getSort(),
-	// paginatedList.getPageNumber() - 1, paginatedList.getObjectsPerPage() );
-	// AgenceAssembleur.parseAgenceBeanToDTO(page);
-	// paginatedList.update(page);
-	// }
-
-	// ///////////// TABLE REFERENCE
-	//	
-	// public Collection findAllSituationFamiliale() {
-	// TableReferenceCriteria criteria = new TableReferenceCriteria();
-	// criteria.setType(TREF_TYPE_SITUATION_FAMILIALE);
-	// Collection tableReferenceBeanList =
-	// tableReferenceDAO.findByCriteria(criteria);
-	// return tableReferenceBeanList;
-	// }
-	//	
-	// public Collection findAllModeleRTF() {
-	// Collection modeleRTFBeanList = modeleRTFDAO.findAll();
-	// return modeleRTFBeanList;
-	// }
-
+	public List<Country> getAllCountries() {
+		return countryRepository.findAll();
+	}
 }
