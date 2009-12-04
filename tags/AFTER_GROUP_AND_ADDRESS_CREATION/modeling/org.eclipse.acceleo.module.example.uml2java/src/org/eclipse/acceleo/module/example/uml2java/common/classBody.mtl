@@ -1,0 +1,154 @@
+[comment]
+  Copyright � 2008 Obeo
+  All rights reserved.  This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License 1.0
+  
+  Any license can be applied to the files generated with this template.
+  
+  author <a href="mailto:stephane.bouchet@obeo.fr">Stephane Bouchet</a>
+[/comment]
+[module classBody('http://www.eclipse.org/uml2/2.1.0/UML')/]
+[import common/]
+
+[template public generateClassBody(c : Class)]
+
+@Entity
+@Table(name = "T_[c.name.toUpper()/]")
+public[if (c.isAbstract)] abstract[/if] class [c.name.toUpperFirst()/][for (superC : Class | c.superClass) before(' extends ') separator(',')] [superC.name/][/for][for (interf : Interface | c.getImplementedInterfaces()) before(' implements ') separator(',')] [interf.name/][/for] {
+[for (p : Property | c.attribute)]
+[if (p.upper = -1 or p.upper > 1)]
+    /**
+     * the [p.name/] attribute.
+     */
+  [if p.isOrdered]
+   	 private List<[p.type.name/]> [p.name/] = new ArrayList<[p.type.name/]>();
+  [else]
+    private Set<[p.type.name/]> [p.name/] = new HashSet<[p.type.name/]>();
+  [/if]
+[else]
+    /**
+     * the [p.name/] attribute.
+     */
+     @Column(name="C_[p.name.toUpper()/]")
+    private [p.type.name/] [p.name/];
+[/if]
+[/for]
+[for (p : Property | c.attribute)]
+    /**
+     * the [p.name/] getter.
+     * @return the [p.name/].
+     */
+    public [if (p.upper = -1 or p.upper > 1)]List<[p.type.name/]>[else][p.type.name/][/if] get[p.name.toUpperFirst()/]() {
+        return this.[p.name/];
+    }
+
+    /**
+     * the [p.name/] setter.
+     * @param [p.name/] the [p.name/] to set.
+     */
+    public void set[p.name.toUpperFirst()/]([if (p.upper = -1 or p.upper > 1)]List<[p.type.name/]>[else][p.type.name/][/if] [p.name/]) {
+        this.[p.name/] = [p.name/];
+    }
+[/for]
+
+[for (a : Association |   c.getAssociations())]
+ 
+	
+
+[for (p : Property |   a.member)]
+[comment]
+PLQ
+[/comment]
+
+[if (p.type<>c or p.isComposite)] 
+[if (p.name<>'')] 
+[if (p.upper = -1 or p.upper > 1)]
+    /**
+     * the [p.name/] attribute.
+     */
+    
+    [if p.isOrdered]
+    @OneToMany(mappedBy="[c.name.toLower()/]")
+    private List<[p.type.name/]> [p.name/] = new ArrayList<[p.type.name/]>();
+    /**
+     * the [p.name/] setter.
+     * @param [p.name/] the [p.name/] to set.
+     */
+    public void set[p.name.toUpperFirst()/]([if (p.upper = -1 or p.upper > 1)]List<[p.type.name/]>[else][p.type.name/][/if] [p.name/]) {
+        this.[p.name/] = [p.name/];
+     }    
+      /**
+     * the [p.name/] getter.
+     * @return the [p.name/].
+     */
+    public [if (p.upper = -1 or p.upper > 1)]List<[p.type.name/]>[else][p.type.name/][/if] get[p.name.toUpperFirst()/]() {
+        return this.[p.name/];
+    }    
+    [else]
+    @OneToMany(mappedBy="[c.name.toLower()/]")
+    private Set<[p.type.name/]> [p.name/] = new HashSet<[p.type.name/]>();
+    /**
+     * the [p.name/] setter.
+     * @param [p.name/] the [p.name/] to set.
+     */
+    public void set[p.name.toUpperFirst()/]([if (p.upper = -1 or p.upper > 1)]Set<[p.type.name/]>[else][p.type.name/][/if] [p.name/]) {
+        this.[p.name/] = [p.name/];
+        }
+      /**
+     * the [p.name/] getter.
+     * @return the [p.name/].
+     */
+    public [if (p.upper = -1 or p.upper > 1)]Set<[p.type.name/]>[else][p.type.name/][/if] get[p.name.toUpperFirst()/]() {
+        return this.[p.name/];
+    }  
+    [/if]
+[else]
+	
+    /**
+     * the [p.name/] attribute.
+     */
+    private [p.type.name/] [p.name/];
+[/if]
+[/if]
+[/if]
+[/for]
+[/for]
+
+
+[for (o : Operation | c.getOperations())]
+[o.operationBody()/]
+[/for]
+[for (interf : Interface | c.getImplementedInterfaces())]
+[for (o : Operation | interf.ownedOperation)]
+[o.operationBody()/]
+[/for]
+[/for]
+}
+
+[/template]
+
+[template private operationBody(o : Operation)]
+    /**
+     *[for (cmt : Comment | o.ownedComment)] [cmt.body/][/for]
+[for (p : Parameter | o.ownedParameter) ? (p.direction <> ParameterDirectionKind::return)]
+[paramOperationComment(p)/]
+[/for]
+[if (not o.type.name.oclIsUndefined())]
+[returnOperationComment()/]
+[/if]
+     */
+    public [o.returnTypeOperation()/]([o.getInParameter()/]) {
+[if (not o.type.name.oclIsUndefined())]
+        // [protected ('for operation '.concat(o.name))]
+        // TODO should be implemented
+        return null;
+        // [/protected]
+[else]
+        // [protected ('for operation '.concat(o.name))]
+        // TODO should be implemented
+        // [/protected]
+[/if]
+    }
+    
+    
+[/template]
