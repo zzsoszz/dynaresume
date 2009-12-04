@@ -7,23 +7,13 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>org.dynaresume</groupId>
-	<artifactId>api</artifactId>
+	<artifactId>third-parties</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>com.atomikos.essentials</module>
 
-		<module>org.dynaresume.common.domain</module>
-
-
-
-		<module>org.dynaresume.common.repository</module>
-
-		<module>org.dynaresume.common.services</module>
-		<module>org.dynaresume.hr.domain</module>
-
-		<module>org.dynaresume.hr.repository</module>
-		<module>org.dynaresume.hr.services</module>
 
 	</modules>
 

@@ -7,7 +7,8 @@
 	<packaging>pom</packaging>
 
 	<modules>
-
+		<module>third-parties</module>
+		<module>infrastructure</module>
 		<module>bundles-api</module>
 	</modules>
 

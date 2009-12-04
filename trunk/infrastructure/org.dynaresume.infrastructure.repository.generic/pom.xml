@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 	  <groupId>org.dynaresume</groupId>
-  <artifactId>api</artifactId>
+  <artifactId>infrastructure</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 	
 	</parent>
 	<groupId>org.dynaresume</groupId>
-	<artifactId>org.dynaresume.repository.generic</artifactId>
+	<artifactId>org.dynaresume.infrastructure.repository.generic</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 	
