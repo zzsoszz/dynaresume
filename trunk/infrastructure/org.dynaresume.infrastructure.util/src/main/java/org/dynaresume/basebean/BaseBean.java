@@ -7,6 +7,8 @@
  *
  * Contributors:
  *     Angelo Zerr <angelo.zerr@gmail.com>
+ *     Jawher Moussa <jawher.moussa@gmail.com>
+ *     Nicolas Inchauspe <nicolas.inchauspe@gmail.com>
  *     Pascal Leclercq <pascal.leclercq@gmail.com>
  *******************************************************************************/
 package org.dynaresume.basebean;
