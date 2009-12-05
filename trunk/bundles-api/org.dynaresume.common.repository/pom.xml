@@ -30,6 +30,26 @@
 	<url>http://repository.sonatype.org/content/repositories/all-003/</url>
 	</pluginRepository>
 	</pluginRepositories>
+	
+	<dependencies>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>com.springsource.javax.persistence</artifactId>
+			<version>1.99.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.dynaresume</groupId>
+			<artifactId>org.dynaresume.infrastructure.util</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<!--<type>eclipse-plugin</packaging>
+		--></dependency>
+		<dependency>
+		<groupId>org.dynaresume</groupId>
+	<artifactId>org.dynaresume.common.domain</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+	</dependencies>
 	<!-- 
 	<properties>
 	<driver></driver>

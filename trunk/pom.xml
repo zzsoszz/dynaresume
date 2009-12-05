@@ -9,6 +9,7 @@
 	<modules>
 		<module>infrastructure</module>
 		<module>bundles-api</module>
+		<module>bundles-impl</module>
 	</modules>
 
 
