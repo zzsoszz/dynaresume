@@ -11,10 +11,7 @@ Require-Bundle: org.eclipse.ui,
  org.dynaresume.infrastructure.util;bundle-version="1.0.0",
  org.eclipse.core.databinding,
  org.eclipse.core.databinding.beans,
- org.eclipse.core.databinding.observable,
- org.eclipse.core.databinding.property,
- org.eclipse.jface.databinding,
- com.ibm.icu
+ org.eclipse.jface.databinding
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.dynaresume.common.domain,
