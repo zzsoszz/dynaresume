@@ -92,6 +92,7 @@
             canFinishEarly="false"
             class="org.eclipse.springframework.util.SpringExtensionFactory:newGroupWizard"
             hasPages="true"
+            icon="icons/agence_flat_48x48.png"
             id="org.dynaresume.common.simpleclient.groupwizard"
             name="Group">
       </wizard>
