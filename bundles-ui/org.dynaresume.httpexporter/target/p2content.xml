@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='1'>
+  <unit id='org.dynaresume.httpexporter' version='1.0.0.200912051817'>
+    <update id='org.dynaresume.httpexporter' range='[0.0.0,1.0.0.200912051817)' severity='0'/>
+    <properties size='4'>
+      <property name='org.eclipse.equinox.p2.name' value='Web'/>
+      <property name='maven-artifactId' value='org.dynaresume.httpexporter'/>
+      <property name='maven-groupId' value='org.dynaresume'/>
+      <property name='maven-version' value='0.0.1-SNAPSHOT'/>
+    </properties>
+    <provides size='3'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.dynaresume.httpexporter' version='1.0.0.200912051817'/>
+      <provided namespace='osgi.bundle' name='org.dynaresume.httpexporter' version='1.0.0.200912051817'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+    </provides>
+    <requires size='16'>
+      <required namespace='java.package' name='javax.annotation' range='0.0.0'/>
+      <required namespace='java.package' name='net.sf.beanlib.hibernate' range='0.0.0'/>
+      <required namespace='java.package' name='net.sf.beanlib.hibernate3' range='0.0.0'/>
+      <required namespace='java.package' name='net.sf.beanlib.spi' range='0.0.0'/>
+      <required namespace='java.package' name='org.aopalliance.aop' range='1.0.0'/>
+      <required namespace='java.package' name='org.dynaresume.common.domain' range='0.0.0'/>
+      <required namespace='java.package' name='org.dynaresume.common.service' range='0.0.0'/>
+      <required namespace='java.package' name='org.dynaresume.hr.service' range='0.0.0'/>
+      <required namespace='java.package' name='org.slf4j' range='0.0.0'/>
+      <required namespace='java.package' name='org.springframework.aop' range='2.5.6.SEC01'/>
+      <required namespace='java.package' name='org.springframework.aop.framework' range='2.5.6.SEC01'/>
+      <required namespace='java.package' name='org.springframework.osgi.web.context.support' range='1.2.0'/>
+      <required namespace='java.package' name='org.springframework.remoting' range='2.5.6.SEC01'/>
+      <required namespace='java.package' name='org.springframework.remoting.httpinvoker' range='2.5.6.SEC01'/>
+      <required namespace='java.package' name='org.springframework.remoting.support' range='0.0.0'/>
+      <required namespace='java.package' name='org.springframework.web.servlet' range='2.5.6.SEC01'/>
+    </requires>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='org.dynaresume.httpexporter' version='1.0.0.200912051817'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-ManifestVersion: 2&#xA;Bundle-RequiredExecutionEnvironment: J2SE-1.5&#xA;Bundle-Name: Web&#xA;Bundle-ClassPath: WEB-INF/classes/,.&#xA;Archiver-Version: Plexus Archiver&#xA;Build-Jdk: 1.5.0_22&#xA;Web-ContextPath: dynaresume&#xA;MavenArtifact-BaseVersion: 0.0.1-SNAPSHOT&#xA;Created-By: Apache Maven&#xA;Manifest-Version: 1.0&#xA;Bundle-Version: 1.0.0.200912051817&#xA;Built-By: Pascal&#xA;Bundle-SymbolicName: org.dynaresume.httpexporter;singleton:=true&#xA;MavenArtifact-GroupId: org.dynaresume&#xA;Import-Package: javax.annotation,net.sf.beanlib.hibernate,net.sf.beanlib.hibernate3,net.sf.beanlib.spi,org.aopalliance.aop;version=&quot;1.0.0&quot;,org.dynaresume.common.domain,org.dynaresume.common.service,org.dynaresume.hr.service,org.slf4j,org.springframework.aop;version=&quot;2.5.6.SEC01&quot;,org.springframework.aop.framework;version=&quot;2.5.6.SEC01&quot;,org.springframework.osgi.web.context.support;version=&quot;1.2.0&quot;,org.springframework.remoting;version=&quot;2.5.6.SEC01&quot;,org.springframework.remoting.httpinvoker;version=&quot;2.5.6.SEC01&quot;,org.springframework.remoting.support,org.springframework.web.servlet;version=&quot;2.5.6.SEC01&quot;&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+</units>
