@@ -12,6 +12,10 @@
  *     Pascal Leclercq <pascal.leclercq@gmail.com>
  *******************************************************************************/
 package org.dynaresume.hr.service.impl;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 import org.dynaresume.hr.repository.ResumeRepository;
@@ -22,13 +26,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 @Service(value="hrService")
 public class HRServiceImpl implements HRService {
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = LoggerFactory.getLogger(HRServiceImpl.class);
 
 	@Autowired
 	private ResumeRepository resumeRepository;
 
 	public List<Resume> findAll() {
+		logger.debug("findAll() - start"); //$NON-NLS-1$
 		
-		return resumeRepository.findAll();
+
+		List<Resume> returnList = resumeRepository.findAll();
+		logger.debug("findAll() - end"); //$NON-NLS-1$
+		return returnList;
 	}
 
 }

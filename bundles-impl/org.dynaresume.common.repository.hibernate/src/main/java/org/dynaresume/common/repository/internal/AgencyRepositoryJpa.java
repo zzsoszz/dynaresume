@@ -13,6 +13,7 @@
  *******************************************************************************/
 package org.dynaresume.common.repository.internal;
 
+
 import org.dynaresume.common.domain.Agency;
 import org.dynaresume.common.repository.AgencyRepository;
 import org.generic.repository.jpa.GenericJpaRepository;
