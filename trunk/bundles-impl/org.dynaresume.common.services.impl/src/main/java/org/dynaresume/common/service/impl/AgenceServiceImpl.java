@@ -14,6 +14,9 @@
 
 package org.dynaresume.common.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 import org.dynaresume.common.domain.Agency;
@@ -38,6 +41,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly=true)
 @Service("agenceService")
 public class AgenceServiceImpl implements AgenceService {
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = LoggerFactory.getLogger(AgenceServiceImpl.class);
 
 
 	@Autowired
@@ -50,27 +57,46 @@ public class AgenceServiceImpl implements AgenceService {
 
 
 	public List<Agency> getAllAgencies() {
+		logger.debug("getAllAgencies() - start"); //$NON-NLS-1$
 
-		return agencyRepository.findAll();
+		List<Agency> returnList = agencyRepository.findAll();
+		logger.debug("getAllAgencies() - end"); //$NON-NLS-1$
+		return returnList;
 	}
 
 
 	public List<Group> getAllGroups() {
-		return  groupRepository.findAll();
+		logger.debug("getAllGroups() - start"); //$NON-NLS-1$
+
+		List<Group> returnList = groupRepository.findAll();
+		logger.debug("getAllGroups() - end"); //$NON-NLS-1$
+		return  returnList;
 	}
 
 	@Transactional(readOnly = false)
 	public Group createGroup(Group newGroup) {
-		return groupRepository.save(newGroup);
+		logger.debug("createGroup(Group) - start"); //$NON-NLS-1$
+
+		Group returnGroup = groupRepository.save(newGroup);
+		logger.debug("createGroup(Group) - end"); //$NON-NLS-1$
+		return returnGroup;
 
 	}
 
 	public List<Agency> getAgenciesForGroup(Group group) {
+		logger.debug("getAgenciesForGroup(Group) - start"); //$NON-NLS-1$
+
 		// TODO Auto-generated method stub
+
+		logger.debug("getAgenciesForGroup(Group) - end"); //$NON-NLS-1$
 		return null;
 	}
 
 	public List<Country> getAllCountries() {
-		return countryRepository.findAll();
+		logger.debug("getAllCountries() - start"); //$NON-NLS-1$
+
+		List<Country> returnList = countryRepository.findAll();
+		logger.debug("getAllCountries() - end"); //$NON-NLS-1$
+		return returnList;
 	}
 }

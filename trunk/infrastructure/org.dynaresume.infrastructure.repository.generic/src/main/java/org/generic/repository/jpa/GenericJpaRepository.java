@@ -1,5 +1,8 @@
 package org.generic.repository.jpa;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -29,6 +32,10 @@ import org.springframework.beans.factory.annotation.Required;
  */
 public class GenericJpaRepository<T, ID extends Serializable> implements
 		GenericRepository<T, ID> {
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = LoggerFactory.getLogger(GenericJpaRepository.class);
 
 	// ~ Instance fields
 	// --------------------------------------------------------
@@ -80,11 +87,15 @@ public class GenericJpaRepository<T, ID extends Serializable> implements
 	
 	@SuppressWarnings("unchecked")
 	public List<T> findAll() {
+		logger.debug("findAll() - start"); //$NON-NLS-1$
 		
 		
 			Query q=getEntityManager().createQuery("from "+persistentClass.getSimpleName());
 			
-			return q.getResultList();
+
+		List<T> returnList = q.getResultList();
+		logger.debug("findAll() - end"); //$NON-NLS-1$
+			return returnList;
 			
 		
 	}
@@ -104,7 +115,11 @@ public class GenericJpaRepository<T, ID extends Serializable> implements
 	 * @see be.bzbit.framework.domain.repository.GenericRepository#findById(java.io.Serializable)
 	 */
 	public T findById(final ID id) {
+		logger.debug("findById(ID) - start"); //$NON-NLS-1$
+
 		final T result = getEntityManager().find(persistentClass, id);
+
+		logger.debug("findById(ID) - end"); //$NON-NLS-1$
 		return result;
 	}
 
@@ -114,6 +129,8 @@ public class GenericJpaRepository<T, ID extends Serializable> implements
 	 */
 	@SuppressWarnings("unchecked")
 	public List<T> findByNamedQuery(final String name, Object... params) {
+		logger.debug("findByNamedQuery(String, Object) - start"); //$NON-NLS-1$
+
 		javax.persistence.Query query = getEntityManager().createNamedQuery(
 				name);
 
@@ -122,6 +139,8 @@ public class GenericJpaRepository<T, ID extends Serializable> implements
 		}
 
 		final List<T> result = (List<T>) query.getResultList();
+
+		logger.debug("findByNamedQuery(String, Object) - end"); //$NON-NLS-1$
 		return result;
 	}
 
@@ -132,6 +151,8 @@ public class GenericJpaRepository<T, ID extends Serializable> implements
 	@SuppressWarnings("unchecked")
 	public List<T> findByNamedQueryAndNamedParams(final String name,
 			final Map<String, ? extends Object> params) {
+		logger.debug("findByNamedQueryAndNamedParams(String, Map<String,? extends Object>) - start"); //$NON-NLS-1$
+
 		javax.persistence.Query query = getEntityManager().createNamedQuery(
 				name);
 
@@ -141,6 +162,8 @@ public class GenericJpaRepository<T, ID extends Serializable> implements
 		}
 
 		final List<T> result = (List<T>) query.getResultList();
+
+		logger.debug("findByNamedQueryAndNamedParams(String, Map<String,? extends Object>) - end"); //$NON-NLS-1$
 		return result;
 	}
 
@@ -221,7 +244,11 @@ public class GenericJpaRepository<T, ID extends Serializable> implements
 	 * @see be.bzbit.framework.domain.repository.GenericRepository#delete(java.lang.Object)
 	 */
 	public void delete(T entity) {
+		logger.debug("delete(T) - start"); //$NON-NLS-1$
+
 		getEntityManager().remove(entity);
+
+		logger.debug("delete(T) - end"); //$NON-NLS-1$
 	}
 
 	/**
@@ -229,7 +256,11 @@ public class GenericJpaRepository<T, ID extends Serializable> implements
          * #save(java.lang.Object)
 	 */
 	public T save(T entity) {
+		logger.debug("save(T) - start"); //$NON-NLS-1$
+
 		final T savedEntity = getEntityManager().merge(entity);
+
+		logger.debug("save(T) - end"); //$NON-NLS-1$
 		return savedEntity;
 	}
 }
