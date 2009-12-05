@@ -10,6 +10,7 @@
 		<module>infrastructure</module>
 		<module>bundles-api</module>
 		<module>bundles-impl</module>
+		<module>bundles-ui</module>
 	</modules>
 
 
@@ -33,22 +34,21 @@
 	</build>
 
 	<repositories>
-		<!--<repository>
-			<id>p2</id>
-			<layout>p2</layout>
-			<url>${p2.repo}</url>
-		</repository>
-		-->
+		<!---->
 		<repository>
-			<id>springdm</id>
+			<id>gallileo</id>
 			<layout>p2</layout>
-<!-- TODO find a host... -->
+			<url>http://download.eclipse.org/releases/galileo</url>
+		</repository>
+
+		<repository>
+			<id>dynaresume</id>
+			<layout>p2</layout>
+			<!-- TODO find a host... -->
 			<url>http://p2repository.free.fr/dynaresume</url>
 		</repository>
 	</repositories>
 	<properties>
-		<p2.repo>http://download.eclipse.org/releases/galileo</p2.repo>
-
 		<tycho-version>0.5.0</tycho-version>
-</properties>
+	</properties>
 </project>
