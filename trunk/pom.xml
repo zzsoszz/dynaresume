@@ -17,13 +17,13 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.tycho</groupId>
+				<groupId>org.sonatype.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<extensions>true</extensions>
 			</plugin>
 			<plugin>
-				<groupId>org.codehaus.tycho</groupId>
+				<groupId>org.sonatype.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
@@ -34,21 +34,38 @@
 	</build>
 
 	<repositories>
-		<!---->
+		<repository>
+			<id>dynaresume</id>
+			<layout>p2</layout>
+			<!-- TODO find a host... 
+			<url>file:H:\devtools\workspaces\ws1\parent-p2\SpringP2\target\site</url>
+			-->
+			<url>http://p2repository.free.fr/dynaresume</url> 
+			<!-- -->		
+		</repository>
 		<repository>
 			<id>gallileo</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/releases/galileo</url>
 		</repository>
 
-		<repository>
-			<id>dynaresume</id>
-			<layout>p2</layout>
-			<!-- TODO find a host... -->
-			<url>http://p2repository.free.fr/dynaresume</url>
-		</repository>
+
 	</repositories>
 	<properties>
-		<tycho-version>0.5.0</tycho-version>
+		<tycho-version>0.6.0</tycho-version>
 	</properties>
-</project>
+	<!--<pluginRepositories>
+		<pluginRepository>
+			<releases>
+				<updatePolicy>daily</updatePolicy>
+				<checksumPolicy>ignore</checksumPolicy>
+			</releases>
+			<snapshots>
+				<updatePolicy>always</updatePolicy>
+				<checksumPolicy>ignore</checksumPolicy>
+			</snapshots>
+			<id>forge</id>
+			<url>http://repository.sonatype.org/content/groups/public</url>
+		</pluginRepository>
+	</pluginRepositories>
+--></project>
