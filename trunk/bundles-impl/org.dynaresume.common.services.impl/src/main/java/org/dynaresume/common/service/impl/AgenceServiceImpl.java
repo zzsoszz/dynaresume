@@ -14,9 +14,6 @@
 
 package org.dynaresume.common.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.List;
 
 import org.dynaresume.common.domain.Agency;
@@ -26,6 +23,8 @@ import org.dynaresume.common.repository.AgencyRepository;
 import org.dynaresume.common.repository.CountryRepository;
 import org.dynaresume.common.repository.GroupRepository;
 import org.dynaresume.common.service.AgenceService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
