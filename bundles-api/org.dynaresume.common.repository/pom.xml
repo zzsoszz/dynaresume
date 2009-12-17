@@ -12,7 +12,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 
-	<build>
+	<!--<build>
 		<plugins>
 	
       <plugin>
@@ -24,14 +24,14 @@
   
 		</plugins>
 	</build>
-	<pluginRepositories>
+	--><!--<pluginRepositories>
 	<pluginRepository>
 	<id>stage</id>
 	<url>http://repository.sonatype.org/content/repositories/all-003/</url>
 	</pluginRepository>
 	</pluginRepositories>
 	
-	<dependencies>
+	--><!--<dependencies>
 		<dependency>
 			<groupId>javax.persistence</groupId>
 			<artifactId>com.springsource.javax.persistence</artifactId>
@@ -41,8 +41,8 @@
 			<groupId>org.dynaresume</groupId>
 			<artifactId>org.dynaresume.infrastructure.util</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-			<!--<type>eclipse-plugin</packaging>
-		--></dependency>
+			<type>eclipse-plugin</packaging>
+		</dependency>
 		<dependency>
 		<groupId>org.dynaresume</groupId>
 	<artifactId>org.dynaresume.common.domain</artifactId>
@@ -50,7 +50,7 @@
 		</dependency>
 
 	</dependencies>
-	<!-- 
+	--><!-- 
 	<properties>
 	<driver></driver>
 	</properties>
