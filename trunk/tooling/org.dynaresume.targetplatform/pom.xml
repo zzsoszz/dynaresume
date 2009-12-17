@@ -243,14 +243,14 @@
 		<dependency>
 			<groupId>org.springframework.osgi</groupId>
 			<artifactId>spring-osgi-extender</artifactId>
-			<version>1.2.0</version>
+			<version>1.2.1</version>
 		</dependency>
 
 		<dependency>
 
 			<groupId>org.springframework.osgi</groupId>
 			<artifactId>spring-osgi-annotation</artifactId>
-			<version>1.2.0</version>
+			<version>1.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.transaction</groupId>
@@ -289,10 +289,13 @@
 			<version>2.5.0</version>
 		</dependency>
 
-		<dependency>
+		<dependency><!--
 			<groupId>org.springframework.osgi</groupId>
 			<artifactId>org.springframework.osgi.web.extender</artifactId>
-			<version>1.2.0</version>
+			-->
+			<groupId>org.springframework.osgi</groupId>
+  			<artifactId>spring-osgi-web-extender</artifactId>
+			<version>1.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
