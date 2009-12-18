@@ -17,7 +17,7 @@
 </location>
 <location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 <unit id="org.dynaresume.springfeature.feature.group" version="1.0.0.200912170600"/>
-<repository location="file:/H:/devtools/workspaces/ws1/parent-p2/SpringP2/target/site/"/>
+<repository location="http://p2repository.free.fr/dynaresume/"/>
 </location>
 </locations>
 <targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
