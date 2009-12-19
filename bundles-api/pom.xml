@@ -13,13 +13,13 @@
 
 	<modules>
 
-		<module>org.dynaresume.common.domain</module>
+		<module>org.dynaresume.core.domain</module>
 
 
 
-		<module>org.dynaresume.common.repository</module>
+		<module>org.dynaresume.core.repository</module>
 
-		<module>org.dynaresume.common.services</module>
+		<module>org.dynaresume.core.services</module>
 		<module>org.dynaresume.hr.domain</module>
 
 		<module>org.dynaresume.hr.repository</module>
