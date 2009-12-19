@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Services
-Bundle-SymbolicName: org.dynaresume.common.services
+Bundle-SymbolicName: org.dynaresume.core.services
 Bundle-Version: 1.0.0
 Export-Package: org.dynaresume.common.service
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
