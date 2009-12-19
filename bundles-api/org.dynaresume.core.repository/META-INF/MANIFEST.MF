@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-Version: 1.0.0
 Bundle-Name: Dao
 Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.dynaresume.common.repository
+Bundle-SymbolicName: org.dynaresume.core.repository
 Bundle-ClassPath: .
 Export-Package: org.dynaresume.common.repository;uses:="org.commons.dao"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
