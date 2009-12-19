@@ -7,7 +7,7 @@ Bundle-Activator: org.dynaresume.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.springframework.beans;bundle-version="2.5.6",
- org.dynaresume.common.services;bundle-version="1.0.0",
+ org.dynaresume.core.services;bundle-version="1.0.0",
  org.dynaresume.infrastructure.util;bundle-version="1.0.0",
  org.eclipse.core.databinding,
  org.eclipse.core.databinding.beans,
