@@ -1,0 +1,53 @@
+/*****************************************************************************
+ * Copyright (c) 2009
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Angelo Zerr <angelo.zerr@gmail.com>
+ *     Jawher Moussa <jawher.moussa@gmail.com>
+ *     Nicolas Inchauspe <nicolas.inchauspe@gmail.com>
+ *     Pascal Leclercq <pascal.leclercq@gmail.com>
+ *******************************************************************************/
+package org.dynaresume.common.service;
+
+import java.util.List;
+
+import org.dynaresume.common.domain.Agency;
+import org.dynaresume.common.domain.Country;
+import org.dynaresume.common.domain.Group;
+
+//import org.commons.dao.Sort;
+
+
+public interface AgenceService {
+
+	// ------------ Agence
+	//public List<Agency> getAllAgencies();
+	
+	
+	public Group  createGroup(Group newGroup);
+	
+	public List<Group> getAllGroups();
+	
+	
+	public List<Country> getAllCountries();
+	
+	
+	public List<Agency> getAgenciesForGroup(Group group);
+	/**
+	 * @return
+	 */
+//	public Collection findAllAgence(Sort sort);
+	
+	//public void findAllAgence(PaginatedListImpl paginatedAgenceList);
+//	public void findAllAgence(Collection paginatedAgenceList);
+	// ------------ Table Reference
+//	public Collection findAllSituationFamiliale();
+//	
+//	// ------------ Modele RTF
+//	public Collection findAllModeleRTF();
+	
+}
