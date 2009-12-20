@@ -11,5 +11,18 @@
 	<artifactId>org.dynaresume.infrastructure.db</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
+	<dependencies>
 	
+	
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
+			<version>1.2.2.osgi</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xbean</groupId>
+			<artifactId>com.springsource.org.apache.xbean.spring</artifactId>
+			<version>3.6.0</version>
+		</dependency>
+	</dependencies>
 </project>
