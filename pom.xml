@@ -6,11 +6,17 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
+
+
 	<modules>
+
+
 		<module>infrastructure</module>
 		<module>bundles-api</module>
 		<module>bundles-impl</module>
+		<!-- TODO :
 		<module>bundles-ui</module>
+		 -->
 	</modules>
 
 
@@ -28,6 +34,7 @@
 				<version>${tycho-version}</version>
 				<configuration>
 					<resolver>p2</resolver>
+					<pomDependencies>consider</pomDependencies>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -35,37 +42,20 @@
 
 	<repositories>
 		<repository>
-			<id>dynaresume</id>
-			<layout>p2</layout>
-			<!-- TODO find a host... 
-			<url>file:H:\devtools\workspaces\ws1\parent-p2\SpringP2\target\site</url>
-			-->
-			<url>http://p2repository.free.fr/dynaresume</url> 
-			<!-- -->		
-		</repository>
-		<repository>
 			<id>gallileo</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/releases/galileo</url>
 		</repository>
-
-
 	</repositories>
 	<properties>
 		<tycho-version>0.6.0</tycho-version>
 	</properties>
-	<!--<pluginRepositories>
-		<pluginRepository>
-			<releases>
-				<updatePolicy>daily</updatePolicy>
-				<checksumPolicy>ignore</checksumPolicy>
-			</releases>
-			<snapshots>
-				<updatePolicy>always</updatePolicy>
-				<checksumPolicy>ignore</checksumPolicy>
-			</snapshots>
-			<id>forge</id>
-			<url>http://repository.sonatype.org/content/groups/public</url>
-		</pluginRepository>
-	</pluginRepositories>
---></project>
+	<profiles>
+		<profile>
+			<id>third-parties</id>
+			<modules>
+				<module>third-parties</module>
+			</modules>
+		</profile>
+	</profiles>
+</project>
