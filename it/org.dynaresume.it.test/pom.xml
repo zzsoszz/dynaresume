@@ -1,0 +1,109 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.dynaresume</groupId>
+	<artifactId>org.dynaresume.common.services.test</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<!--<packaging>eclipse-test-plugin</packaging>
+
+	-->
+
+	<build>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<!--
+		<build> <plugins> <plugin> <groupId>org.codehaus.tycho</groupId> <artifactId>tycho-maven-plugin</artifactId>
+		<version>${tycho-version}</version> <extensions>true</extensions> </plugin> <plugin>
+		<groupId>org.codehaus.tycho</groupId> <artifactId>target-platform-configuration</artifactId>
+		<version>${tycho-version}</version> <configuration> <resolver>p2</resolver> </configuration> </plugin> </plugins>
+		</build>
+	-->
+	<!--
+		<dependencyManagement> <dependencies> <dependency> <groupId>eclipse.org</groupId>
+		<artifactId>installation</artifactId> <version>0.0.0</version> <type>eclipse-installation</type> <scope>system</scope>
+		<systemPath>H:\devtools\workspaces\ws1\parent-p2\P2TestSite\target\site </systemPath> </dependency> </dependencies>
+		</dependencyManagement>
+	-->
+	<!--
+		<repositories> <repository> <id>dynaresume</id> <layout>p2</layout>
+
+		<url>file:H:\devtools\workspaces\ws1\parent-p2\P2TestSite\target\site</url> </repository> </repositories> <properties>
+		<tycho-version>0.5.0</tycho-version> </properties>
+	-->
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.osgi</groupId>
+			
+			<artifactId>spring-osgi-test</artifactId>
+			<version>1.2.1</version>
+
+		</dependency>
+		<dependency>
+			<groupId>org.objectweb.asm</groupId>
+			<artifactId>com.springsource.org.objectweb.asm</artifactId>
+			<version>2.2.3</version>
+
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>org.eclipse.osgi</artifactId>
+			<version>3.5.0.v20090520</version>
+		</dependency>
+
+		
+		<!--<dependency>
+			<groupId>org.dynaresume</groupId>
+			<artifactId>org.dynaresume.common.domain</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+		<groupId>org.dynaresume</groupId>
+	<artifactId>org.dynaresume.common.repository</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+	<dependency>
+			<groupId>org.dynaresume</groupId>
+			<artifactId>org.dynaresume.common.services</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.dynaresume</groupId>
+			<artifactId>org.dynaresume.common.services.impl</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		--><!--
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.beans</artifactId>
+
+			<version>2.5.6.SEC01</version>
+
+		</dependency>
+		-->
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>com.springsource.javax.annotation</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		
+		<!--<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+		</dependency>
+	--></dependencies>
+
+
+</project>
