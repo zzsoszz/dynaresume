@@ -3,7 +3,7 @@
 		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
 		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-	<session-factory name="dynaresume">
+	<session-factory name="core">
 	<property name="dialect">org.hibernate.dialect.H2Dialect</property>
 		<mapping class="org.dynaresume.common.domain.Address" />
 		<mapping class="org.dynaresume.common.domain.Collaboration" />
