@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.dynaresume.springfeature"
+      id="org.dynaresume.tp.base.feature"
       label="org.dynaresume.springfeature"
       version="1.0.0.qualifier">
 
@@ -122,13 +122,6 @@
          unpack="false"/>
 
    <plugin
-         id="com.springsource.org.h2"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="com.springsource.org.hibernate"
          download-size="0"
          install-size="0"
@@ -167,20 +160,6 @@
 
    <plugin
          id="com.springsource.org.jgroups"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="com.springsource.org.mortbay.jetty.server"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="com.springsource.org.mortbay.util"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -230,13 +209,6 @@
 
    <plugin
          id="com.springsource.javax.resource"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="com.springsource.javax.servlet"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -349,28 +321,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.springframework.osgi.io"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.springframework.osgi.jetty.start.osgi"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.springframework.osgi.jetty.web.extender.fragment.osgi"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
          id="org.springframework.osgi.web"
          download-size="0"
          install-size="0"
@@ -406,25 +356,10 @@
          unpack="false"/>
 
    <plugin
-         id="com.atomikos.essentials"
+         id="com.springsource.javax.servlet"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <plugin
-         id="net.sourceforge.beanlib"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.springframework.util"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
 
 </feature>
