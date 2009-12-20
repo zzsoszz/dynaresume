@@ -11,7 +11,7 @@
 	<parent>
 
 		<groupId>org.dynaresume</groupId>
-	<artifactId>org.dynaresume.tooling</artifactId>
+		<artifactId>org.dynaresume.tooling</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>org.dynaresume</groupId>

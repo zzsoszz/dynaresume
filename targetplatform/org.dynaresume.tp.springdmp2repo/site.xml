@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.dynaresume.springfeature_1.0.0.qualifier.jar" id="org.dynaresume.springfeature" version="1.0.0.qualifier">
+   <feature url="features/org.dynaresume.tp.tomcat.feature_1.0.0.qualifier.jar" id="org.dynaresume.tp.tomcat.feature" version="1.0.0.qualifier">
+      <category name="spring"/>
+   </feature>
+   <feature url="features/org.dynaresume.tp.base.feature_1.0.0.qualifier.jar" id="org.dynaresume.tp.base.feature" version="1.0.0.qualifier">
+      <category name="spring"/>
+   </feature>
+   <feature url="features/org.dynaresume.tp.h2.feature_1.0.0.qualifier.jar" id="org.dynaresume.tp.h2.feature" version="1.0.0.qualifier">
+      <category name="spring"/>
+   </feature>
+   <feature url="features/org.dynaresume.tp.jetty.feature_1.0.0.qualifier.jar" id="org.dynaresume.tp.jetty.feature" version="1.0.0.qualifier">
       <category name="spring"/>
    </feature>
    <category-def name="spring" label="spring"/>

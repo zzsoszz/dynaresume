@@ -8,12 +8,11 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>org.dynaresume</groupId>
-	<artifactId>org.dynaresume.tp.base.feature</artifactId>
+	<artifactId>org.dynaresume.tp.jetty.feature</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-feature</packaging>
 
-
-	<dependencyManagement>
+<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<!-- needed to make maven core happy only, not used by tycho -->
