@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<site>
-   <feature url="features/org.dynaresume.springfeature_1.0.0.qualifier.jar" id="org.dynaresume.springfeature" version="1.0.0.qualifier">
-      <category name="spring"/>
-   </feature>
-   <category-def name="spring" label="spring"/>
-</site>
