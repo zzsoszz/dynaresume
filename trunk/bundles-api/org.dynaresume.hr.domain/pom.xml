@@ -43,7 +43,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>hibernate3-maven-plugin</artifactId>
 				<version>2.2</version>
-				<executions>
+				<!--<executions>
 					<execution>
 						<phase>process-classes</phase>
 						<goals>
@@ -51,7 +51,7 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
+				--><configuration>
 					<components>
 						<component>
 							<name>hbm2ddl</name>
