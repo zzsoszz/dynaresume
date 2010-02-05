@@ -14,6 +14,7 @@
 package org.dynaresume.hr.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -27,7 +28,8 @@ public class Diploma extends BaseBean{
 	 */
 	private static final long serialVersionUID = 2452995207655152758L;
 	@Id
-	private long id;
+	@GeneratedValue
+	private Long id;
 
 	
 	
@@ -40,7 +42,7 @@ public class Diploma extends BaseBean{
 	@Column
 	private String period;
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 	

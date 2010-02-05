@@ -20,7 +20,7 @@ import org.dynaresume.GestcvUser;
 
 public class UserUtil {
 
-private static ThreadLocal thread = new ThreadLocal();
+private static ThreadLocal<GestcvUser> thread = new ThreadLocal<GestcvUser>();
 	
 	public static void setGestcvUser(GestcvUser gestcvUser) {			
 		// Save this safari user in thread local

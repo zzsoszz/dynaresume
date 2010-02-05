@@ -13,7 +13,7 @@
  *******************************************************************************/
 package org.dynaresume.common.group;
 
-import org.dynaresume.common.domain.Group;
+import org.dynaresume.core.domain.Group;
 import org.eclipse.jface.databinding.wizard.WizardPageSupport;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;

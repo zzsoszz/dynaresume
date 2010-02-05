@@ -14,12 +14,12 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.sprin
 
 	<!-- Proxy for the HTTP-invoker-exported OrderService -->
 	<!-- Spring's HTTP invoker uses Java serialization via HTTP  -->
-	<bean id="agenceService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+	<bean id="coreService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
 		<property name="serviceUrl">
-			<value>http://${serverName}:${httpPort}${contextPath}/remoting/AgenceService</value>
+			<value>http://${serverName}:${httpPort}${contextPath}/remoting/CoreService</value>
 		</property>
 		<property name="serviceInterface">
-			<value>org.dynaresume.common.service.AgenceService</value>
+			<value>org.dynaresume.core.service.CoreService</value>
 		</property>
 	</bean>
 	

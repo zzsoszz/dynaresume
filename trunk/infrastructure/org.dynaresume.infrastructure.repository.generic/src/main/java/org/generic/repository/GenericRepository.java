@@ -81,7 +81,14 @@ public interface  GenericRepository <T, ID extends Serializable> {
         final String queryName,
         final Map<String, ?extends Object> params
     );
-
+    
+    
+    public   List<T> findByQuery(String query,String name,Object value);
+    
+    
+    public List<T> findByQuery(String query,final Map<String,  Object> params);
+    
+    
 //    /**
 //     * Count all entities.
 //     *

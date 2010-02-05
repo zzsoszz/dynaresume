@@ -13,18 +13,9 @@
 
 
 	
-<osgi:reference id="agenceService" interface="org.dynaresume.common.service.AgenceService"  />
+<osgi:reference id="coreService" interface="org.dynaresume.core.service.CoreService"  />
 
-<osgi:reference id="hrService" interface="org.dynaresume.hr.service.HRService"  />
-
-
-<!--
-
-  
-<osgi:reference id="competenceService" interface="org.dynaresume.service.ICompetenceService"/>
- 
-  
- <osgi:reference id="userService" interface="org.dynaresume.service.IUserService"/>
+<osgi:reference id="remoteInvocationExecutor" interface="org.springframework.remoting.support.RemoteInvocationExecutor"/>
 
  
---></beans>
+</beans>

@@ -1,13 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Client
-Bundle-SymbolicName: org.dynaresume.httpimporter
+Bundle-SymbolicName: org.dynaresume.core.httpimporter
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.aopalliance.aop;version="1.0.0",
  org.apache.commons.logging;version="1.1.1",
- org.dynaresume.common.domain,
- org.dynaresume.common.service,
+ org.dynaresume.core.service,
+ org.dynaresume.core.domain,
  org.dynaresume.hr.domain,
  org.dynaresume.hr.service,
  org.osgi.framework;version="1.5.0",
@@ -19,7 +19,5 @@ Import-Package: org.aopalliance.aop;version="1.0.0",
  org.springframework.core;version="2.5.6.SEC01",
  org.springframework.remoting.httpinvoker;version="2.5.6.SEC01",
  org.springframework.remoting.support;version="2.5.6.SEC01"
-Bundle-ClassPath: target/classes/,
- .
 
 

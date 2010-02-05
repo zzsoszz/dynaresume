@@ -15,8 +15,8 @@ package org.dynaresume.common.address;
 
 import java.util.List;
 
-import org.dynaresume.common.domain.Address;
-import org.dynaresume.common.domain.Country;
+import org.dynaresume.core.domain.Address;
+import org.dynaresume.core.domain.Country;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;

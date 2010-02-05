@@ -13,15 +13,16 @@
  *******************************************************************************/
 package org.dynaresume.hr.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.List;
 
-import org.dynaresume.hr.repository.ResumeRepository;
+import org.dynaresume.hr.domain.Competence;
+import org.dynaresume.hr.domain.Diploma;
+import org.dynaresume.hr.domain.Experience;
 import org.dynaresume.hr.domain.Resume;
+import org.dynaresume.hr.repository.ResumeRepository;
 import org.dynaresume.hr.service.HRService;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 @Service(value="hrService")
@@ -41,6 +42,23 @@ public class HRServiceImpl implements HRService {
 		List<Resume> returnList = resumeRepository.findAll();
 		logger.debug("findAll() - end"); //$NON-NLS-1$
 		return returnList;
+	}
+
+	public Resume saveResume(Resume resume) {
+		
+		return resumeRepository.save(resume);
+	}
+
+	public List<Resume> searchByCriteria(List<Competence> competences, List<Diploma> diplomas,
+			List<Experience> experiences) {
+		String query="select r FROM Resume r"+ 
+" join r.competences c"+ 
+" join r.diplomas d"+
+" join r.experiences e"+
+" where c.label like '%toto%' ";
+		List<Resume> res = resumeRepository.findByQuery(query, "label", "farceur");
+
+		return res;
 	}
 
 }

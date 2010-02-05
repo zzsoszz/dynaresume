@@ -15,19 +15,5 @@
 
     <osgi:service ref="resumeRepository" interface="org.dynaresume.hr.repository.ResumeRepository" />
    	
-	 <!-- 
-	<osgi:service ref="collaborateurCompetenceDAO" interface="org.dynaresume.repository.ICollaborateurCompetenceDAO" />
 	
-	<osgi:service ref="collaborateurFormationDAO" interface="org.dynaresume.repository.ICollaborateurFormationDAO"/>
-	
-	<osgi:service ref="collaborateurDAO" interface="org.dynaresume.repository.ICollaborateurDAO"/>
-	
-	<osgi:service ref="competenceDAO" interface="org.dynaresume.repository.ICompetenceDAO"/>
-	
-	<osgi:service ref="modeleRTFDAO" interface="org.dynaresume.repository.IModeleRTFDAO"/>
-	
-	<osgi:service ref="userDAO" interface="org.dynaresume.repository.IUserDAO" />
-	
-	<osgi:service ref="tableReferenceDAO" interface="org.dynaresume.repository.ITableReferenceDAO"/>
-  	-->
 </beans>           

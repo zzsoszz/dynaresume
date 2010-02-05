@@ -11,10 +11,14 @@ Require-Bundle: org.eclipse.ui,
  org.dynaresume.infrastructure.util;bundle-version="1.0.0",
  org.eclipse.core.databinding,
  org.eclipse.core.databinding.beans,
- org.eclipse.jface.databinding
+ org.eclipse.jface.databinding,
+ org.eclipse.core.databinding.property,
+ com.ibm.icu,
+ org.eclipse.core.resources,
+ org.eclipse.ui.forms;bundle-version="3.4.1"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: org.dynaresume.common.domain,
+Import-Package: org.dynaresume.core.domain,
  org.eclipse.springframework.util,
  org.springframework.context.annotation,
  org.springframework.stereotype

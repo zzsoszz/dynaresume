@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: HR Reposotory  Hibernate Impl
-Bundle-SymbolicName: org.dynaresume.hr.repository.hibernate
+Bundle-SymbolicName: org.dynaresume.hr.repository.jpa
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: javax.annotation,
@@ -11,8 +11,8 @@ Import-Package: javax.annotation,
  javax.transaction.xa,
  org.apache.xbean.spring.jndi;version="3.6.0",
  org.dynaresume.basebean,
- org.dynaresume.common.domain,
- org.dynaresume.common.repository,
+ org.dynaresume.core.domain,
+ org.dynaresume.core.repository,
  org.dynaresume.hr.domain,
  org.dynaresume.hr.repository,
  org.generic.repository,

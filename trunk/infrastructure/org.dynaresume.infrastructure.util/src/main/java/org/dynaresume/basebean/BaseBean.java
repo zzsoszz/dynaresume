@@ -23,6 +23,9 @@ import javax.persistence.Transient;
 @MappedSuperclass
 public abstract class BaseBean implements Serializable {
 
+	
+	
+	public abstract Serializable getId();
 	/**
 	 * 
 	 */
