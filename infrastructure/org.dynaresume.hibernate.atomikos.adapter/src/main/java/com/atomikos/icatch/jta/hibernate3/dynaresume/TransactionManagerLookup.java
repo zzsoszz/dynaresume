@@ -56,6 +56,8 @@ public class TransactionManagerLookup implements org.hibernate.transaction.Trans
 	
 	public TransactionManagerLookup()
 	{
+		
+		
 	//	utm = new UserTransactionManager();
 		
 		

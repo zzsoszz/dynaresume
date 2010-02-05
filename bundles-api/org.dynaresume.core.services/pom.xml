@@ -8,7 +8,7 @@
 	
 	</parent>
 	<groupId>org.dynaresume</groupId>
-	<artifactId>org.dynaresume.common.services</artifactId>
+	<artifactId>org.dynaresume.core.services</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 <dependencies>

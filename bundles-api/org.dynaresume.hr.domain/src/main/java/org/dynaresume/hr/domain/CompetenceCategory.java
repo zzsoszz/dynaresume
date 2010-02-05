@@ -29,15 +29,15 @@ public class CompetenceCategory  extends BaseBean{
 	private static final long serialVersionUID = -2603000363466573076L;
 
 	@Id
-	private long id;
+	private Long id;
 	@Column
 	private String label;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		
 		this.id = id;
 		

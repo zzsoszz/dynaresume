@@ -13,6 +13,6 @@
 
 	<context:annotation-config />
 
-	<osgi:reference id="agenceService" interface="org.dynaresume.common.service.AgenceService" />
+	<osgi:reference id="coreService" interface="org.dynaresume.core.service.CoreService" cardinality="0..1" timeout="2000" />
 
 </beans>

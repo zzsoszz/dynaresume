@@ -13,9 +13,9 @@
 
 	<modules>
 
-		<module>org.dynaresume.common.repository.hibernate</module>
+		<module>org.dynaresume.core.repository.hibernate</module>
 		<module>org.dynaresume.hr.repository.hibernate</module>
-		<module>org.dynaresume.common.services.impl</module>
+		<module>org.dynaresume.core.services.impl</module>
 		<module>org.dynaresume.hr.services.impl</module>
 	</modules>
 

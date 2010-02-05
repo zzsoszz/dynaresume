@@ -1,18 +1,20 @@
 package org.generic.repository.jpa;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.dynaresume.basebean.BaseBean;
 import org.generic.repository.GenericRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Required;
 
 /**
@@ -239,13 +241,42 @@ public class GenericJpaRepository<T, ID extends Serializable> implements
 //		return (Integer) crit.list().get(0);
 //	}
 
+	@SuppressWarnings("unchecked")
+	public   List<T> findByQuery(String query,String name,Object value){
+		
+		Query q=	getEntityManager().createQuery(query);
+		if (name!=null){
+			q.setParameter(name, value);	
+		}
+		
+		return (List<T>) q.getResultList();
+		
+		}
+	@SuppressWarnings("unchecked")
+	public List<T> findByQuery(String query,final Map<String, Object> params){
+		
+	Query q=	getEntityManager().createQuery(query);
+	
+	for (Iterator<Entry<String,Object>> iterator = params.entrySet().iterator(); iterator.hasNext();) {
+		Entry<String,Object> item =  iterator.next();
+		q.setParameter(item.getKey(), item.getValue());
+		
+	}
+	
+	return (List<T>)q.getResultList();
+	}
 
 	/**
 	 * @see be.bzbit.framework.domain.repository.GenericRepository#delete(java.lang.Object)
 	 */
 	public void delete(T entity) {
-		logger.debug("delete(T) - start"); //$NON-NLS-1$
+		if(!getEntityManager().contains(entity))
+		{
+			
+			
+			entity = getEntityManager().getReference(persistentClass, ((BaseBean)entity).getId());
 
+		}
 		getEntityManager().remove(entity);
 
 		logger.debug("delete(T) - end"); //$NON-NLS-1$

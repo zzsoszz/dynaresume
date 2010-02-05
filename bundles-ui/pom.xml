@@ -13,10 +13,8 @@
 
 	<modules>
 		<module>org.dynaresume.httpexporter</module>
-
-
 		<module>org.dynaresume.httpimporter</module>
-
+		<module>org.eclipse.springframework.util</module>
 		<module>org.dynaresume.common.simpleclient</module>
 
 	</modules>

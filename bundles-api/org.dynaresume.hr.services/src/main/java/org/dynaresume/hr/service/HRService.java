@@ -14,8 +14,17 @@
 package org.dynaresume.hr.service;
 
 import java.util.List;
+
+import org.dynaresume.hr.domain.Competence;
+import org.dynaresume.hr.domain.Diploma;
+import org.dynaresume.hr.domain.Experience;
 import org.dynaresume.hr.domain.Resume;
 public interface HRService {
 
-	public List<Resume> findAll();
+	//public List<Resume> findAll();
+	
+	public Resume saveResume(Resume resume);
+	
+	
+	public List<Resume> searchByCriteria(List<Competence> competences,List<Diploma> diplomas, List<Experience> experiences);
 }

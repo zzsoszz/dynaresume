@@ -15,9 +15,9 @@ package org.dynaresume.common.group;
 
 import org.dynaresume.View;
 import org.dynaresume.common.address.AddressPage;
-import org.dynaresume.common.domain.Address;
-import org.dynaresume.common.domain.Group;
-import org.dynaresume.common.service.AgenceService;
+import org.dynaresume.core.domain.Address;
+import org.dynaresume.core.domain.Group;
+import org.dynaresume.core.service.CoreService;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
@@ -30,12 +30,12 @@ import org.springframework.stereotype.Component;
 public class WizardGroup extends Wizard implements INewWizard{
 	
 	@Autowired
-	private AgenceService agenceService;
+	private CoreService coreService;
 	private Group  newGroup ;
 	public WizardGroup() {
 		setWindowTitle("New Group");
 		newGroup = new Group();
-		newGroup.setAddress(new Address());
+		//newGroup.setAddress(new Address());
 		
 	}
 
@@ -50,15 +50,15 @@ public class WizardGroup extends Wizard implements INewWizard{
 		GroupPage page1 = new GroupPage();
 		addPage(page1);
 		page1.setGroup(newGroup);
-		AddressPage page2 = new AddressPage();
-		addPage(page2);
-		page2.setAddress(newGroup.getAddress());
-		page2.setCountries(agenceService.getAllCountries());
+//		AddressPage page2 = new AddressPage();
+//		addPage(page2);
+//		page2.setAddress(newGroup.getAddress());
+//		page2.setCountries(coreService.getAllCountries());
 	}
 
 	@Override
 	public boolean performFinish() {
-		Group aGroup=agenceService.createGroup(newGroup);
+		Group aGroup=coreService.saveGroup(newGroup);
 		System.out.println(aGroup.getId());
 		
 		View viewGroup=(View)workbench.getActiveWorkbenchWindow().getActivePage().findView(View.ID);

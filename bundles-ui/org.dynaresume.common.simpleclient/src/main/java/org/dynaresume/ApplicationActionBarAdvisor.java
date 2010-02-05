@@ -40,6 +40,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 	// when fillActionBars is called with FILL_PROXY.
 	private IWorkbenchAction newAction;
 
+	private IWorkbenchAction saveAction;
 	private IWorkbenchAction exitAction;
 
 	public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
@@ -55,6 +56,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		// the window is closed.
 		newAction= ActionFactory.NEW.create(window);
 		register(newAction);
+		saveAction= ActionFactory.SAVE.create(window);
+		register(saveAction);
 		exitAction = ActionFactory.QUIT.create(window);
 		register(exitAction);
 	}
@@ -64,6 +67,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 				IWorkbenchActionConstants.M_FILE);
 		menuBar.add(fileMenu);
 		fileMenu.add(newAction);
+		fileMenu.add(saveAction);
 		fileMenu.add(exitAction);
 	}
 	@Override
@@ -71,6 +75,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 		 IToolBarManager toolbar = new ToolBarManager(SWT.FLAT | SWT.RIGHT);
 	        coolBar.add(new ToolBarContributionItem(toolbar, "main"));   
 	        toolbar.add(newAction);
+	        toolbar.add(saveAction);
+	        toolbar.add(exitAction);
 	}
 	
 

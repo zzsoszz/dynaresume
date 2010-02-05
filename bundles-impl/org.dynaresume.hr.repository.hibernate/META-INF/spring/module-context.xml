@@ -21,7 +21,7 @@
 		<property name="persistenceUnitName" value="hr" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<property name="databasePlatform" value="org.hibernate.dialect.H2Dialect" />
+				<property name="databasePlatform" value="org.hibernate.dialect.DerbyDialect" />
 				<property name="generateDdl" value="false" />
 				<property name="showSql" value="true" />
 				
@@ -35,9 +35,9 @@
 	<context:annotation-config />
 
 	<context:component-scan base-package="org.dynaresume.hr.repository.internal" />
-
+<!--
 	<bean id="scalpa" class="org.dynaresume.hr.repository.internal.Scalpa"
 		init-method="start"></bean>
 
-<!--	-->	
+	-->	
 </beans>

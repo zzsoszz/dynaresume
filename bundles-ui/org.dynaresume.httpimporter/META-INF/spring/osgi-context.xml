@@ -5,9 +5,7 @@ xmlns:osgi="http://www.springframework.org/schema/osgi"
 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
          http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-<osgi:service ref="agenceService" interface="org.dynaresume.common.service.AgenceService"/>
+<osgi:service ref="coreService" interface="org.dynaresume.core.service.CoreService"/>
 
-
-<osgi:service ref="hrService" interface="org.dynaresume.hr.service.HRService"  />
 
 </beans>

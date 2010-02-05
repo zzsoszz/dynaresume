@@ -8,9 +8,68 @@
 	
 	</parent>
 	<groupId>org.dynaresume</groupId>
-	<artifactId>org.dynaresume.hr.repository.hibernate</artifactId>
+	<artifactId>org.dynaresume.hr.repository.jpa</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
+
+<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}</directory>
+				<includes>
+					<include>META-INF/persistence.xml</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>hibernate3-maven-plugin</artifactId>
+				<version>2.2</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>hbm2ddl</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<components>
+						<component>
+							<name>hbm2ddl</name>
+							<implementation>jpaconfiguration</implementation>
+						</component>
+					</components>
+					<componentProperties>
+
+						<outputfilename>${project.artifactId}.ddl</outputfilename>
+						<drop>true</drop>
+						<create>true</create>
+						<export>false</export>
+						<format>true</format>
+					</componentProperties>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.dynaresume</groupId>
+						<artifactId>org.dynaresume.infrastructure.util</artifactId>
+						<version>0.0.1-SNAPSHOT</version>
+					</dependency>
+					<dependency>
+						<groupId>org.dynaresume</groupId>
+						<artifactId>org.dynaresume.core.domain</artifactId>
+						<version>0.0.1-SNAPSHOT</version>
+					</dependency>
+					<dependency>
+						<groupId>org.dynaresume</groupId>
+						<artifactId>org.dynaresume.hr.domain</artifactId>
+						<version>0.0.1-SNAPSHOT</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
 
 	<dependencies>
 		<dependency>

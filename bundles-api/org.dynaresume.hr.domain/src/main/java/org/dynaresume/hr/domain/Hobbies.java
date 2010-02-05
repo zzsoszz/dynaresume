@@ -15,6 +15,7 @@ package org.dynaresume.hr.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -28,11 +29,12 @@ public class Hobbies  extends BaseBean{
 	 */
 	private static final long serialVersionUID = -4919566195826675295L;
 	@Id
-	private long id;
+	@GeneratedValue
+	private Long id;
 	@Column
 	private String label;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 

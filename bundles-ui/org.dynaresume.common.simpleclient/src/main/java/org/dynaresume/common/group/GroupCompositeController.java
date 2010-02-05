@@ -12,6 +12,10 @@
  *     Pascal Leclercq <pascal.leclercq@gmail.com>
  *******************************************************************************/
 package org.dynaresume.common.group;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeansObservables;
@@ -23,13 +27,12 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 
-
 public class GroupCompositeController {
 	private GroupComposite m_groupComposite;
 	private DataBindingContext m_bindingContext;
-	private org.dynaresume.common.domain.Group group = new org.dynaresume.common.domain.Group();
+	private org.dynaresume.core.domain.Group group = new org.dynaresume.core.domain.Group();
 
-	public GroupCompositeController(GroupComposite groupComposite, org.dynaresume.common.domain.Group newGroup) {
+	public GroupCompositeController(GroupComposite groupComposite, org.dynaresume.core.domain.Group newGroup) {
 		m_groupComposite = groupComposite;
 		setGroup(newGroup);
 	}
@@ -45,7 +48,7 @@ public class GroupCompositeController {
 		IObservableValue codeObserveWidget = SWTObservables.observeText(m_groupComposite.getCodeText(), SWT.Modify);
 		IObservableValue codeObserveValue = BeansObservables.observeValue(group, "code");
 		IObservableValue emailObserveWidget = SWTObservables.observeText(m_groupComposite.getEmailText(), SWT.Modify);
-		
+
 		IObservableValue emailObserveValue = BeansObservables.observeValue(group, "email");
 		IObservableValue nameObserveWidget = SWTObservables.observeText(m_groupComposite.getNameText(), SWT.Modify);
 		IObservableValue nameObserveValue = BeansObservables.observeValue(group, "name");
@@ -53,38 +56,42 @@ public class GroupCompositeController {
 		DataBindingContext bindingContext = new DataBindingContext();
 		//
 		bindingContext.bindValue(codeObserveWidget, codeObserveValue, null, null);
-		//PLQ hand coded
+		// PLQ hand coded
 		UpdateValueStrategy emailUpdateValueStrategy = new UpdateValueStrategy();
 		emailUpdateValueStrategy.setAfterConvertValidator(new IValidator() {
-			
+
 			public IStatus validate(Object value) {
-				if(value!=null)
-				{
-					String value2=(String)value;
-					if(value2.length()>5)
-						return ValidationStatus
-						.error("this is not a valid email");
+				if (value != null) {
+					String input = (String) value;
+
+					Pattern p = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$");
+					Matcher m = p.matcher(input.toUpperCase());
+					boolean result= m.matches();
+					
+					if (!result)
+						// if(value2.length()>5)
+						return ValidationStatus.error("please enter a valid email");
 				}
 				return Status.OK_STATUS;
 			}
 		});
-		
-		//end PLQ hand coded
+
+		// end PLQ hand coded
 		bindingContext.bindValue(emailObserveWidget, emailObserveValue, emailUpdateValueStrategy, null);
 		bindingContext.bindValue(nameObserveWidget, nameObserveValue, null, null);
 		//
 		return bindingContext;
 	}
 
-	public org.dynaresume.common.domain.Group getGroup() {
+	public org.dynaresume.core.domain.Group getGroup() {
 		return group;
 	}
 
-	public void setGroup(org.dynaresume.common.domain.Group newGroup) {
+	public void setGroup(org.dynaresume.core.domain.Group newGroup) {
 		setGroup(newGroup, true);
 	}
 
-	public void setGroup(org.dynaresume.common.domain.Group newGroup, boolean update) {
+	public void setGroup(org.dynaresume.core.domain.Group newGroup, boolean update) {
 		group = newGroup;
 		if (update) {
 			if (m_bindingContext != null) {
@@ -96,6 +103,7 @@ public class GroupCompositeController {
 			}
 		}
 	}
+
 	public DataBindingContext getBindingContext() {
 		return m_bindingContext;
 	}

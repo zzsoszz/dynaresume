@@ -24,9 +24,7 @@
 
 		<module>org.dynaresume.hr.repository</module>
 		<module>org.dynaresume.hr.services</module>
-		<!--
-<module>org.dynaresume.common.services.test</module>
-	--></modules>
+	</modules>
 
 
 </project>

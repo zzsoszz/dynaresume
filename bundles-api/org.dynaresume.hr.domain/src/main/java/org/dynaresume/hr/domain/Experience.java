@@ -17,6 +17,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -31,17 +32,18 @@ public class Experience extends BaseBean {
 	 */
 	private static final long serialVersionUID = 8846754655040768127L;
 	@Id
-	private long id;
+	@GeneratedValue
+	private Long id;
 	@Column
-	private Date start;
+	private Date startDate;
 	@Column
-	private Date end;
+	private Date endDate;
 	@Column
 	private String context;
 	@Column
 	private String mission;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -51,24 +53,26 @@ public class Experience extends BaseBean {
 
 	}
 
-	public Date getStart() {
-		return start;
+	
+
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setStart(Date start) {
-		Object oldValue = this.start;
-		this.start = start;
-		firePropertyChange("start", oldValue, start);
+	public void setStartDate(Date startDate) {
+		Object oldValue = this.startDate;
+		this.startDate = startDate;
+		firePropertyChange("startDate", oldValue, startDate);
 	}
 
-	public Date getEnd() {
-		return end;
+	public Date getEndDate() {
+		return endDate;
 	}
 
-	public void setEnd(Date end) {
-		Object oldValue = this.end;
-		this.end = end;
-		firePropertyChange("end", oldValue, end);
+	public void setEndDate(Date endDate) {
+		Object oldValue = this.endDate;
+		this.endDate = endDate;
+		firePropertyChange("endDate", oldValue, endDate);
 	}
 
 	public String getContext() {

@@ -15,7 +15,7 @@ package org.dynaresume.common.address;
 import java.util.Collection;
 import java.util.List;
 
-import org.dynaresume.common.domain.Country;
+import org.dynaresume.core.domain.Country;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeansObservables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -31,9 +31,9 @@ public class AddressCompositeController {
 	private AddressComposite m_addressComposite;
 	private ComboViewer countryViewer;
 	private DataBindingContext m_bindingContext;
-	private org.dynaresume.common.domain.Address address = new org.dynaresume.common.domain.Address();
+	private org.dynaresume.core.domain.Address address = new org.dynaresume.core.domain.Address();
 
-	public AddressCompositeController(AddressComposite addressComposite, org.dynaresume.common.domain.Address newAddress) {
+	public AddressCompositeController(AddressComposite addressComposite, org.dynaresume.core.domain.Address newAddress) {
 		m_addressComposite = addressComposite;
 		setAddress(newAddress);
 	}
@@ -71,15 +71,15 @@ public class AddressCompositeController {
 		return bindingContext;
 	}
 
-	public org.dynaresume.common.domain.Address getAddress() {
+	public org.dynaresume.core.domain.Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(org.dynaresume.common.domain.Address newAddress) {
+	public void setAddress(org.dynaresume.core.domain.Address newAddress) {
 		setAddress(newAddress, true);
 	}
 
-	public void setAddress(org.dynaresume.common.domain.Address newAddress, boolean update) {
+	public void setAddress(org.dynaresume.core.domain.Address newAddress, boolean update) {
 		address = newAddress;
 		if (update) {
 			if (m_bindingContext != null) {

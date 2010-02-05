@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>org.dynaresume.hr.repository.hibernate</name>
+	<name>org.dynaresume.hr.repository.jpa</name>
 	<comment></comment>
 	<projects>
 	</projects>

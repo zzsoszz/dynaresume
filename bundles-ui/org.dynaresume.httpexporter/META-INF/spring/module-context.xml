@@ -10,24 +10,11 @@
 			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
 			http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+	<bean name="/CoreService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="coreService" />
+		<property name="serviceInterface" value="org.dynaresume.core.service.CoreService" />
+		<property name="remoteInvocationExecutor" ref="remoteInvocationExecutor" />
+	</bean>
 
-
-	
- 
-
-<bean name="/AgenceService"  class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-  <property name="service" ref="agenceService"/>
-  <property name="serviceInterface" value="org.dynaresume.common.service.AgenceService"/>
-  <property name="remoteInvocationExecutor" ref="myRemoteInvocationExecutor" ></property>
-</bean>
-
-<bean name="/HRService"  class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-  <property name="service" ref="hrService"/>
-  <property name="serviceInterface" value="org.dynaresume.hr.service.HRService"/>
-  <property name="remoteInvocationExecutor" ref="myRemoteInvocationExecutor" ></property>
-</bean>
-
-
-<bean id="myRemoteInvocationExecutor" class="org.dynaresume.remoting.http.RemoteInvocationExecutor"/>
- 
 </beans>

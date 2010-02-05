@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product application="org.eclipse.ui.ide.workbench" useFeatures="false" includeLaunchers="true">
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <programArgs>-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl}  -console</programArgs>
+      <vmArgs>-Declipse.ignoreApp=true -Dosgi.noShutdown=true</vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+   </launcherArgs>
+
+   <vm>
+      <windows>org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5</windows>
+   </vm>
+
+   <plugins>
+      <plugin id="com.atomikos.transactions"/>
+      <plugin id="com.atomikos.transactions-api"/>
+      <plugin id="com.atomikos.transactions-hibernate3"/>
+      <plugin id="com.atomikos.transactions-jdbc"/>
+      <plugin id="com.atomikos.transactions-jdbc.derby.fragment" fragment="true"/>
+      <plugin id="com.atomikos.transactions-jta"/>
+      <plugin id="com.atomikos.transactions.datasource.xa.fragment" fragment="true"/>
+      <plugin id="com.atomikos.util"/>
+      <plugin id="com.ibm.icu"/>
+      <plugin id="com.springsource.antlr"/>
+      <plugin id="com.springsource.com.thoughtworks.xstream"/>
+      <plugin id="com.springsource.javassist"/>
+      <plugin id="com.springsource.javax.annotation"/>
+      <plugin id="com.springsource.javax.jms"/>
+      <plugin id="com.springsource.javax.persistence"/>
+      <plugin id="com.springsource.javax.resource"/>
+      <plugin id="com.springsource.javax.servlet"/>
+      <plugin id="com.springsource.javax.transaction"/>
+      <plugin id="com.springsource.javax.xml.stream"/>
+      <plugin id="com.springsource.net.jcip.annotations"/>
+      <plugin id="com.springsource.net.sf.beanlib"/>
+      <plugin id="com.springsource.net.sf.beanlib.hibernate"/>
+      <plugin id="com.springsource.net.sf.cglib"/>
+      <plugin id="com.springsource.org.aopalliance"/>
+      <plugin id="com.springsource.org.apache.commons.collections"/>
+      <plugin id="com.springsource.org.apache.commons.dbcp"/>
+      <plugin id="com.springsource.org.apache.commons.lang"/>
+      <plugin id="com.springsource.org.apache.commons.logging"/>
+      <plugin id="com.springsource.org.apache.commons.pool"/>
+      <plugin id="com.springsource.org.apache.derby"/>
+      <plugin id="com.springsource.org.apache.log4j"/>
+      <plugin id="com.springsource.org.apache.xbean.spring"/>
+      <plugin id="com.springsource.org.dom4j"/>
+      <plugin id="com.springsource.org.hibernate"/>
+      <plugin id="com.springsource.org.hibernate.annotations" fragment="true"/>
+      <plugin id="com.springsource.org.hibernate.annotations.common"/>
+      <plugin id="com.springsource.org.hibernate.ejb" fragment="true"/>
+      <plugin id="com.springsource.org.objectweb.asm"/>
+      <plugin id="com.springsource.org.objectweb.asm.attrs"/>
+      <plugin id="com.springsource.org.xmlpull"/>
+      <plugin id="com.springsource.slf4j.api"/>
+      <plugin id="com.springsource.slf4j.log4j" fragment="true"/>
+      <plugin id="javax.servlet"/>
+      <plugin id="org.dynaresume.core.domain"/>
+      <plugin id="org.dynaresume.core.httpexporter"/>
+      <plugin id="org.dynaresume.core.repository"/>
+      <plugin id="org.dynaresume.core.repository.jpa"/>
+      <plugin id="org.dynaresume.core.services"/>
+      <plugin id="org.dynaresume.core.services.impl"/>
+      <plugin id="org.dynaresume.hibernate.atomikos.adapter" fragment="true"/>
+      <plugin id="org.dynaresume.hr.domain"/>
+      <plugin id="org.dynaresume.hr.repository"/>
+      <plugin id="org.dynaresume.hr.repository.jpa"/>
+      <plugin id="org.dynaresume.hr.services"/>
+      <plugin id="org.dynaresume.hr.services.impl"/>
+      <plugin id="org.dynaresume.infrastructure.db"/>
+      <plugin id="org.dynaresume.infrastructure.db.derby" fragment="true"/>
+      <plugin id="org.dynaresume.infrastructure.httptransport"/>
+      <plugin id="org.dynaresume.infrastructure.jtatransaction"/>
+      <plugin id="org.dynaresume.infrastructure.log4j" fragment="true"/>
+      <plugin id="org.dynaresume.infrastructure.util"/>
+      <plugin id="org.dynaresume.repository.generic"/>
+      <plugin id="org.eclipse.core.commands"/>
+      <plugin id="org.eclipse.core.contenttype"/>
+      <plugin id="org.eclipse.core.databinding"/>
+      <plugin id="org.eclipse.core.databinding.beans"/>
+      <plugin id="org.eclipse.core.databinding.observable"/>
+      <plugin id="org.eclipse.core.databinding.property"/>
+      <plugin id="org.eclipse.core.expressions"/>
+      <plugin id="org.eclipse.core.jobs"/>
+      <plugin id="org.eclipse.core.runtime"/>
+      <plugin id="org.eclipse.core.runtime.compatibility.registry" fragment="true"/>
+      <plugin id="org.eclipse.equinox.app"/>
+      <plugin id="org.eclipse.equinox.common"/>
+      <plugin id="org.eclipse.equinox.preferences"/>
+      <plugin id="org.eclipse.equinox.registry"/>
+      <plugin id="org.eclipse.help"/>
+      <plugin id="org.eclipse.jface"/>
+      <plugin id="org.eclipse.jface.databinding"/>
+      <plugin id="org.eclipse.osgi"/>
+      <plugin id="org.eclipse.springframework.util"/>
+      <plugin id="org.eclipse.swt"/>
+      <plugin id="org.eclipse.swt.win32.win32.x86" fragment="true"/>
+      <plugin id="org.eclipse.ui"/>
+      <plugin id="org.eclipse.ui.workbench"/>
+      <plugin id="org.mortbay.jetty.server"/>
+      <plugin id="org.mortbay.jetty.util"/>
+      <plugin id="org.springframework.aop"/>
+      <plugin id="org.springframework.beans"/>
+      <plugin id="org.springframework.context"/>
+      <plugin id="org.springframework.core"/>
+      <plugin id="org.springframework.jdbc"/>
+      <plugin id="org.springframework.orm"/>
+      <plugin id="org.springframework.osgi.core"/>
+      <plugin id="org.springframework.osgi.extender"/>
+      <plugin id="org.springframework.osgi.io"/>
+      <plugin id="org.springframework.osgi.jetty.start.osgi"/>
+      <plugin id="org.springframework.osgi.jetty.web.extender.fragment.osgi" fragment="true"/>
+      <plugin id="org.springframework.osgi.web"/>
+      <plugin id="org.springframework.osgi.web.extender"/>
+      <plugin id="org.springframework.transaction"/>
+      <plugin id="org.springframework.web"/>
+      <plugin id="org.springframework.web.servlet"/>
+   </plugins>
+
+   <configurations>
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.osgi" autoStart="true" startLevel="-1" />
+      <plugin id="org.springframework.osgi.extender" autoStart="false" startLevel="5" />
+   </configurations>
+
+</product>

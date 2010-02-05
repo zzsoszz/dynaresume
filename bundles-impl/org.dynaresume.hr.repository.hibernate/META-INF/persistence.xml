@@ -2,7 +2,8 @@
 	version="1.0">
 
 	<persistence-unit name="hr" transaction-type="JTA">
-		<!--<jta-data-source>java:dynaDS</jta-data-source>	-->
+		
+		<jta-data-source>java:dynaDS2</jta-data-source>
 		<class>org.dynaresume.hr.domain.Resume</class>
 
 		<class>org.dynaresume.hr.domain.Competence</class>
@@ -13,7 +14,7 @@
 
 		<class>org.dynaresume.basebean.BaseBean</class>
 		<properties>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect" />
 			<property name="hibernate.current_session_context_class"
 				value="jta" />
 			<property name="hibernate.transaction.manager_lookup_class"
