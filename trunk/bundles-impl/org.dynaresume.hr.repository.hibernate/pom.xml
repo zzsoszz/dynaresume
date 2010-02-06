@@ -1,0 +1,107 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+	  <groupId>org.dynaresume</groupId>
+  <artifactId>impl</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+	
+	</parent>
+	<groupId>org.dynaresume</groupId>
+	<artifactId>org.dynaresume.hr.repository.jpa</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>eclipse-plugin</packaging>
+
+<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}</directory>
+				<includes>
+					<include>META-INF/persistence.xml</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>hibernate3-maven-plugin</artifactId>
+				<version>2.2</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>hbm2ddl</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<components>
+						<component>
+							<name>hbm2ddl</name>
+							<implementation>jpaconfiguration</implementation>
+						</component>
+					</components>
+					<componentProperties>
+
+						<outputfilename>${project.artifactId}.ddl</outputfilename>
+						<drop>true</drop>
+						<create>true</create>
+						<export>false</export>
+						<format>true</format>
+					</componentProperties>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.dynaresume</groupId>
+						<artifactId>org.dynaresume.infrastructure.util</artifactId>
+						<version>0.0.1-SNAPSHOT</version>
+					</dependency>
+					<dependency>
+						<groupId>org.dynaresume</groupId>
+						<artifactId>org.dynaresume.core.domain</artifactId>
+						<version>0.0.1-SNAPSHOT</version>
+					</dependency>
+					<dependency>
+						<groupId>org.dynaresume</groupId>
+						<artifactId>org.dynaresume.hr.domain</artifactId>
+						<version>0.0.1-SNAPSHOT</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.orm</artifactId>
+
+			<version>2.5.6.SEC01</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xbean</groupId>
+			<artifactId>com.springsource.org.apache.xbean.spring</artifactId>
+			<version>3.6.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>com.springsource.org.hibernate</artifactId>
+			<version>3.2.6.ga</version>
+
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>com.springsource.slf4j.log4j</artifactId>
+			<version>1.5.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>com.springsource.org.hibernate.annotations.common</artifactId>
+			<version>3.3.0.ga</version>
+
+		</dependency>
+	</dependencies>
+	
+	
+</project>

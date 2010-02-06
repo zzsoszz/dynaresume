@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory name="core">
+	<property name="dialect">org.hibernate.dialect.DerbyDialect</property>
+		<mapping class="org.dynaresume.core.domain.Address" />
+		<mapping class="org.dynaresume.core.domain.Collaboration" />
+		<mapping class="org.dynaresume.core.domain.Country"/>
+		<mapping class="org.dynaresume.core.domain.Group"/>
+		<mapping class="org.dynaresume.core.domain.LegalEntity" />
+		<mapping class="org.dynaresume.core.domain.Agency" />
+		<mapping class="org.dynaresume.core.domain.NaturalPerson" />
+		<!-- basebean -->
+		<mapping class="org.dynaresume.basebean.BaseBean" />
+		
+	</session-factory>
+</hibernate-configuration>
