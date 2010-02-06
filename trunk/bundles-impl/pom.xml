@@ -13,8 +13,8 @@
 
 	<modules>
 
-		<module>org.dynaresume.core.repository.hibernate</module>
-		<module>org.dynaresume.hr.repository.hibernate</module>
+		<module>org.dynaresume.core.repository.jpa</module>
+		<module>org.dynaresume.hr.repository.jpa</module>
 		<module>org.dynaresume.core.services.impl</module>
 		<module>org.dynaresume.hr.services.impl</module>
 	</modules>
