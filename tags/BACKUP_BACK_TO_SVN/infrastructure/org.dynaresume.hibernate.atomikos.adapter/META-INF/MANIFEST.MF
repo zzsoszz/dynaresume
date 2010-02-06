@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: hibernate atomikos adapter
+Bundle-SymbolicName: org.dynaresume.hibernate.atomikos.adapter
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: com.springsource.org.hibernate;bundle-version="3.2.6"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: com.atomikos.icatch.jta.hibernate3.dynaresume
