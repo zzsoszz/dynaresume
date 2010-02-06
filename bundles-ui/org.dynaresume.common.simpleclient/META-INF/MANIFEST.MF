@@ -14,7 +14,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.databinding,
  org.eclipse.core.databinding.property,
  com.ibm.icu,
- org.eclipse.core.resources
+ org.eclipse.core.resources,
+ org.eclipse.ui.forms;bundle-version="3.4.1"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.dynaresume.core.domain,

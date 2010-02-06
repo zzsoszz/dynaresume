@@ -64,31 +64,6 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
-         <menu
-               id="org.dynaresume.simpleclient.menus.sampleMenu"
-               label="Sample Menu"
-               mnemonic="M">
-            <command
-                  commandId="org.dynaresume.simpleclient.commands.sampleCommand"
-                  id="org.dynaresume.simpleclient.menus.sampleCommand"
-                  mnemonic="S">
-            </command>
-         </menu>
-      </menuContribution>
-      <menuContribution
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="org.dynaresume.simpleclient.toolbars.sampleToolbar">
-            <command
-                  commandId="org.dynaresume.simpleclient.commands.sampleCommand"
-                  icon="icons/sample.gif"
-                  id="org.dynaresume.simpleclient.toolbars.sampleCommand"
-                  tooltip="Say hello world">
-            </command>
-         </toolbar>
-      </menuContribution>
-      <menuContribution
             locationURI="toolbar:org.demo.simpleclient.view">
          <command
                commandId="org.dynaresume.common.simpleclient.refreshListCommand"
@@ -130,6 +105,15 @@
             id="org.dynaresume.common.simpleclient.agencywizard"
             name="Agency">
       </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.eclipse.springframework.util.SpringExtensionFactory:agencyEditor"
+            default="false"
+            id="org.dynaresume.common.agency.editor.AgencyEditor"
+            name="Agency">
+      </editor>
    </extension>
 
 </plugin>
