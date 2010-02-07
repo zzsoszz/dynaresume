@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="org.dynaresume.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="Perspective"
+            class="org.dynaresume.Perspective"
+            id="org.demo.simpleclient.perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.eclipse.springframework.util.SpringExtensionFactory:myview"
+            id="org.demo.simpleclient.view"
+            name="View"
+            restorable="true">
+      </view>
+   </extension>
+  
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="org.dynaresume.simpleclient.commands.category"
+            name="Sample Category">
+      </category>
+      <command
+            categoryId="org.dynaresume.simpleclient.commands.category"
+            id="org.dynaresume.simpleclient.commands.sampleCommand"
+            name="Sample Command">
+      </command>
+      <command
+            defaultHandler="org.dynaresume.RefreshListHandler"
+            id="org.dynaresume.common.simpleclient.refreshListCommand"
+            name="Refresh">
+      </command>
+      <command
+            defaultHandler="org.demo.simpleclient.handlers.NewAgency"
+            id="org.dynaresume.common.simpleclient.newAgency"
+            name="New Agency">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.dynaresume.simpleclient.commands.sampleCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+6">
+      </key>
+     
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.demo.simpleclient.view">
+         <command
+               commandId="org.dynaresume.common.simpleclient.refreshListCommand"
+               id="org.dynaresume.common.simpleclient.refreshListCommand"
+               mnemonic="S">
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.demo.simpleclient.view?after=additions">
+         <command
+               commandId="org.dynaresume.common.simpleclient.newAgency"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+     
+      <handler
+            class="org.eclipse.springframework.util.SpringExtensionFactory:sampleHandler"
+            commandId="org.dynaresume.simpleclient.commands.sampleCommand">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            canFinishEarly="false"
+            class="org.eclipse.springframework.util.SpringExtensionFactory:newGroupWizard"
+            hasPages="true"
+            icon="icons/agence_flat_48x48.png"
+            id="org.dynaresume.common.simpleclient.groupwizard"
+            name="Group">
+      </wizard>
+      <wizard
+            canFinishEarly="false"
+            class="org.eclipse.springframework.util.SpringExtensionFactory:newAgencyWizard"
+            hasPages="true"
+            icon="icons/agence_flat_48x48.png"
+            id="org.dynaresume.common.simpleclient.agencywizard"
+            name="Agency">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.eclipse.springframework.util.SpringExtensionFactory:agencyEditor"
+            default="false"
+            id="org.dynaresume.common.agency.editor.AgencyEditor"
+            name="Agency">
+      </editor>
+   </extension>
+
+</plugin>
