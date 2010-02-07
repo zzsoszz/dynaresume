@@ -270,16 +270,11 @@ public class GenericJpaRepository<T, ID extends Serializable> implements
 	 * @see be.bzbit.framework.domain.repository.GenericRepository#delete(java.lang.Object)
 	 */
 	public void delete(T entity) {
-		if(!getEntityManager().contains(entity))
-		{
-			
-			
-			entity = getEntityManager().getReference(persistentClass, ((BaseBean)entity).getId());
-
-		}
-		getEntityManager().remove(entity);
-
-		logger.debug("delete(T) - end"); //$NON-NLS-1$
+		Query query = getEntityManager().createQuery("delete from "+persistentClass.getName() +" where id=:id");
+		query.setParameter("id", ((BaseBean)entity).getId());
+		int deleted = query.executeUpdate();
+		//System.out.println("deleted "+deleted);
+		logger.debug("deleted "+deleted); //$NON-NLS-1$
 	}
 
 	/**
