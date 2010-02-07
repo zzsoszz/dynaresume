@@ -125,6 +125,6 @@
 	</properties>
 
 	<scm>
-		<url>https://dynaresume.googlecode.com/hg</url>
+		<url>http://dynaresume.googlecode.com/svn/trunk</url>
 	</scm>
 </project>
