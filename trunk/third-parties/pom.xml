@@ -6,7 +6,7 @@
 		<artifactId>parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>org.dynaresume</groupId>
+	<groupId>org.dynaresume.repack</groupId>
 	<artifactId>third-parties</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
