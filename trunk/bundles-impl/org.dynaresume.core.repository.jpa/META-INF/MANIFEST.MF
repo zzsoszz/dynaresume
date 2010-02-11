@@ -4,8 +4,7 @@ Bundle-Name: Hibernate
 Bundle-SymbolicName: org.dynaresume.core.repository.jpa
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: javax.annotation,
- javax.persistence,
+Import-Package: javax.persistence,
  javax.persistence.spi;version="1.99.0",
  javax.transaction,
  javax.transaction.xa,

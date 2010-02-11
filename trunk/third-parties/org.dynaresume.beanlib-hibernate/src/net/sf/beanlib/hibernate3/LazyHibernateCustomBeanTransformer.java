@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.dynaresume.beanlib.hibernate.beantransformer;
+package net.sf.beanlib.hibernate3;
 
 import net.sf.beanlib.PropertyInfo;
 import net.sf.beanlib.spi.BeanTransformerSpi;
@@ -35,10 +35,10 @@ import org.hibernate.Hibernate;
  */
 public class LazyHibernateCustomBeanTransformer implements CustomBeanTransformerSpi 
 {
-//    public boolean isTransformable(Object from, Class<?> toClass, PropertyInfo propertyInfo)
-//    {   // apply custom transformation for the uninitialized properties 
-//        return !Hibernate.isInitialized(from); 
-//    } 
+    public boolean isTransformable(Object from, Class<?> toClass, PropertyInfo propertyInfo)
+    {   // apply custom transformation for the uninitialized properties 
+        return !Hibernate.isInitialized(from); 
+    } 
 
     public <T> T transform(Object in, Class<T> toClass, PropertyInfo propertyInfo) { return null; }
     
@@ -48,10 +48,4 @@ public class LazyHibernateCustomBeanTransformer implements CustomBeanTransformer
             return new LazyHibernateCustomBeanTransformer();
         }
     }
-
-	public <T> boolean isTransformable(Object from, Class<T> arg1,
-			PropertyInfo arg2) {
-		// TODO Auto-generated method stub
-		 return !Hibernate.isInitialized(from);
-	}
 }
