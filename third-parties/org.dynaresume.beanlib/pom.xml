@@ -7,8 +7,8 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.dynaresume.repack.net.sf.beanlib</groupId>
-	<artifactId>org.dynaresume.beanlib</artifactId>
+	<groupId>org.dynaresume</groupId>
+	<artifactId>net.sf.beanlib.beanlib</artifactId>
 	<packaging>eclipse-plugin</packaging>
 	<version>5.0.2beta</version>
 	<dependencies>
