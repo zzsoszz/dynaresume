@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.dynaresume beanlib osgi repack
+Bundle-SymbolicName: org.dynaresume.beanlib
+Bundle-Version: 5.0.2.qualifier
+Import-Package: com.thoughtworks.xstream,
+ net.jcip.annotations,
+ net.sf.cglib.proxy,
+ org.aopalliance.intercept,
+ org.apache.commons.lang;version="2.1.0",
+ org.apache.commons.lang.builder;version="2.4.0",
+ org.apache.log4j
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: net.sf.beanlib,
+ net.sf.beanlib.provider,
+ net.sf.beanlib.provider.collector,
+ net.sf.beanlib.provider.replicator,
+ net.sf.beanlib.spi,
+ net.sf.beanlib.spi.replicator,
+ net.sf.beanlib.utils
+Require-Bundle: com.springsource.org.apache.commons.lang;bundle-version="2.4.0"
