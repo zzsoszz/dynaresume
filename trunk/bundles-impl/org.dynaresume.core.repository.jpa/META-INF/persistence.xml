@@ -1,0 +1,28 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	version="1.0">
+
+	<persistence-unit name="core" transaction-type="JTA">
+		
+		<!---->
+		<jta-data-source>java:dynaDS2</jta-data-source>
+		<class>org.dynaresume.core.domain.Address</class>
+		<class>org.dynaresume.core.domain.Collaboration</class>
+		<class>org.dynaresume.core.domain.Country</class>
+		<class>org.dynaresume.core.domain.Group</class>
+		<class>org.dynaresume.core.domain.LegalEntity</class>
+		<class>org.dynaresume.core.domain.Agency</class>
+		<class>org.dynaresume.core.domain.NaturalPerson</class>
+		<class>org.dynaresume.basebean.BaseBean</class>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect" />
+
+			<property name="hibernate.current_session_context_class"
+				value="jta" />
+			<property name="hibernate.transaction.manager_lookup_class"
+				value="com.atomikos.icatch.jta.hibernate3.dynaresume.TransactionManagerLookup" />
+			<property name="hibernate.jndi.class"
+				value="org.apache.xbean.spring.jndi.SpringInitialContextFactory" />
+		</properties>
+	</persistence-unit>
+
+</persistence>
