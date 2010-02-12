@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <T_COUNTRY ISO3="FRA" LABEL="France"/>
+  <T_COUNTRY ISO3="TUN" LABEL="Tunisie"/>
+   <T_GROUP ID="0"   NAME="Proxiad"/>
+  <T_GROUP ID="1"  NAME="Sodifrance"/>
+  <T_AGENCY ID="0" EMAIL="nord1@proxiad.com" NAME="Proxiad Nord 1" GROUP_ID="0"/>
+  <T_AGENCY ID="1" EMAIL="nord2@proxiad.com" NAME="Proxiad Nord 2" GROUP_ID="0"/>
+  <T_AGENCY ID="2" EMAIL="nord3@proxiad.com" NAME="Proxiad Nord 3" GROUP_ID="0"/>
+  <T_AGENCY ID="4" EMAIL="idf@proxiad.com" NAME="Proxiad IDF" GROUP_ID="0"/>
+  <T_AGENCY ID="5" EMAIL="contact@sodifrance.com" NAME="Sodifrance Lyon" GROUP_ID="1"/>
+  <T_ADDRESS ID="327680" CITY="Dunkerque" COUNTRY_ISO3="FRA"/>
+</dataset>
