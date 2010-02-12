@@ -1,0 +1,29 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	version="1.0">
+
+	<persistence-unit name="hr" transaction-type="JTA">
+		
+		<jta-data-source>java:dynaDS2</jta-data-source>
+		<class>org.dynaresume.hr.domain.Resume</class>
+
+		<class>org.dynaresume.hr.domain.Competence</class>
+		<class>org.dynaresume.hr.domain.CompetenceCategory</class>
+		<class>org.dynaresume.hr.domain.Diploma</class>
+		<class>org.dynaresume.hr.domain.Experience</class>
+		<class>org.dynaresume.hr.domain.Hobbies</class>
+
+		<class>org.dynaresume.basebean.BaseBean</class>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect" />
+			<property name="hibernate.current_session_context_class"
+				value="jta" />
+			<property name="hibernate.transaction.manager_lookup_class"
+				value="com.atomikos.icatch.jta.hibernate3.dynaresume.TransactionManagerLookup" />
+
+			<property name="hibernate.jndi.class"
+				value="org.apache.xbean.spring.jndi.SpringInitialContextFactory" />
+
+		</properties>
+	</persistence-unit>
+
+</persistence>
