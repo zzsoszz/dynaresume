@@ -8,5 +8,6 @@ Export-Package: org.generic.repository;uses:="org.dynaresume.dto.criteria",
  org.generic.repository.jpa
 Import-Package: javax.persistence,
  org.dynaresume.basebean,
+ org.hibernate.hql.ast;version="3.2.6.ga",
  org.slf4j,
  org.springframework.beans.factory.annotation

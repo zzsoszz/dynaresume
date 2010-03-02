@@ -4,7 +4,7 @@ Bundle-Name: HR Reposotory  Hibernate Impl
 Bundle-SymbolicName: org.dynaresume.hr.repository.jpa
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: javax.persistence,
+Import-Package: javax.sql,javax.persistence,
  javax.persistence.spi;version="1.99.0",
  javax.transaction,
  javax.transaction.xa,
@@ -21,20 +21,20 @@ Import-Package: javax.persistence,
  org.hibernate.hql.ast,
  org.hibernate.jdbc,
  org.hibernate.proxy,
- org.springframework.aop;version="2.5.6.A",
- org.springframework.aop.framework;version="2.5.6.A",
- org.springframework.beans.factory;version="2.5.6.A",
- org.springframework.beans.factory.annotation;version="2.5.6.SEC01",
- org.springframework.core;version="2.5.6.A",
- org.springframework.dao.support;version="2.5.6.A",
- org.springframework.jdbc.datasource.lookup;version="2.5.6.SEC01",
- org.springframework.orm.hibernate3;version="2.5.6.SEC01",
- org.springframework.orm.hibernate3.annotation;version="2.5.6.SEC01",
- org.springframework.orm.jpa;version="2.5.6.A",
- org.springframework.orm.jpa.support;version="2.5.6.A",
- org.springframework.orm.jpa.vendor;version="2.5.6.A",
+ org.springframework.aop,
+ org.springframework.aop.framework,
+ org.springframework.beans.factory,
+ org.springframework.beans.factory.annotation;version="3",
+ org.springframework.core,
+ org.springframework.dao.support,
+ org.springframework.jdbc.datasource.lookup;version="3",
+ org.springframework.orm.hibernate3;version="3",
+ org.springframework.orm.hibernate3.annotation;version="3",
+ org.springframework.orm.jpa,
+ org.springframework.orm.jpa.support,
+ org.springframework.orm.jpa.vendor,
  org.springframework.stereotype,
- org.springframework.transaction;version="2.5.6.A"
+ org.springframework.transaction
 Bundle-ClassPath: .,
  target/classes/
-Require-Bundle: org.springframework.orm;bundle-version="2.5.6"
+Require-Bundle: org.springframework.orm

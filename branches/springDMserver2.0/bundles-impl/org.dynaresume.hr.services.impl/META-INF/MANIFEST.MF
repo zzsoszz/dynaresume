@@ -13,11 +13,11 @@ Import-Package: javax.annotation;version="1.0.0",
  org.generic.repository,
  org.hibernate.hql.ast;version="3.2.6.ga",
  org.slf4j,
- org.springframework.aop;version="2.5.6.SEC01",
- org.springframework.aop.framework;version="2.5.6.SEC01",
+ org.springframework.aop;version="3",
+ org.springframework.aop.framework;version="3",
  org.springframework.beans.factory.annotation,
- org.springframework.stereotype;version="2.5.6.SEC01",
- org.springframework.transaction;version="2.5.6.SEC01",
- org.springframework.transaction.annotation;version="2.5.6.SEC01"
+ org.springframework.stereotype;version="3",
+ org.springframework.transaction;version="3",
+ org.springframework.transaction.annotation;version="3"
 Bundle-ClassPath: .,
  target/classes/
