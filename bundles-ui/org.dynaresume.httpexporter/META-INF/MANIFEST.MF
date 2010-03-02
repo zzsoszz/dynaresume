@@ -7,14 +7,16 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: WEB-INF/classes/,
  .
 Web-ContextPath: dynaresume
-Import-Package: org.aopalliance.aop;version="1.0.0",
+Import-Package: com.springsource.server.web.dm;version="[2.0.0,3.0.0)";resolution:=optional,
+ org.aopalliance.aop;version="1.0.0",
  org.dynaresume.core.domain,
  org.dynaresume.core.service,
  org.dynaresume.springremoting.http,
- org.springframework.aop;version="2.5.6.SEC01",
- org.springframework.aop.framework;version="2.5.6.SEC01",
+ org.hibernate.hql.ast;version="3.2.6.ga",
+ org.springframework.aop;version="3.0.0",
+ org.springframework.aop.framework;version="3.0.0",
  org.springframework.osgi.web.context.support;version="1.2.1",
- org.springframework.remoting;version="2.5.6.SEC01",
- org.springframework.remoting.httpinvoker;version="2.5.6.SEC01",
+ org.springframework.remoting;version="3.0.0",
+ org.springframework.remoting.httpinvoker;version="3.0.0",
  org.springframework.remoting.support,
- org.springframework.web.servlet;version="2.5.6.SEC01"
+ org.springframework.web.servlet;version="3.0.0"

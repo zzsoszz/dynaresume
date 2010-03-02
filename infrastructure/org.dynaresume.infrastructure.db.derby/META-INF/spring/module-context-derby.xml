@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="
-			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
-			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:osgi-compendium="http://www.springframework.org/schema/osgi-compendium"
+  xsi:schemaLocation="http://www.springframework.org/schema/osgi 
+    http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd
+    http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-2.5.xsd
+    http://www.springframework.org/schema/osgi-compendium 
+    http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium-1.2.xsd">
 
-<!-- use this if you choosed jetty, derby--><!--
-  
+<!-- use this if you choosed jetty, derby-->
+<!--  -->
     <context:property-placeholder location="classpath:org/dynaresume/infrastructure/derby.properties"  />
  
-    --><context:property-placeholder location="classpath:org/dynaresume/infrastructure/derby.properties"  />
+    
+    <!--<context:property-placeholder  location="classpath:org/dynaresume/infrastructure/derby.properties"  />-->
+    <!-- Define the other the old-fashioned way, with 'ignoreUnresolvablePlaceholders' set to TRUE -->
+<!--<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:org/dynaresume/infrastructure/derby.properties</value>
+                <ref local="dbProperties"/>
+            </list>
+        </property>
+       <property name="ignoreUnresolvablePlaceholders" value="true"/>
+</bean>-->
  
-
+	<context:property-placeholder
+		properties-ref="dbProperties"  />
+		
+	<osgi-compendium:cm-properties id="dbProperties" 
+		persistent-id="app-properties" />
+		 
 </beans>
