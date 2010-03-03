@@ -17,8 +17,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import net.sf.beanlib.hibernate.HibernateBeanReplicator;
 import net.sf.beanlib.hibernate3.Hibernate3BeanReplicator;
+import net.sf.beanlib.hibernate3.LazyHibernateCustomBeanTransformer;
 
-import org.dynaresume.beanlib.hibernate.beantransformer.LazyHibernateCustomBeanTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.remoting.support.DefaultRemoteInvocationExecutor;

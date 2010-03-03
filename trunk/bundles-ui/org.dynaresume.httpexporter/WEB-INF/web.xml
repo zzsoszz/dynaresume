@@ -14,9 +14,12 @@
 			<param-value>META-INF/spring/*.xml</param-value>
 		</init-param>
 		<init-param>
-		<param-name>contextClass</param-name>
+			<param-name>contextClass</param-name>
+			<param-name>contextClass</param-name>
 		<param-value>org.springframework.osgi.web.context.support.OsgiBundleXmlWebApplicationContext</param-value>
-	</init-param>
+			<!-- Spring DM server -->
+			<param-value>com.springsource.server.web.dm.ServerOsgiBundleXmlWebApplicationContext</param-value>
+		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
@@ -25,5 +28,5 @@
 		<url-pattern>/remoting/*</url-pattern>
 
 	</servlet-mapping>
-	
+
 </web-app>

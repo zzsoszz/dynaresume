@@ -8,73 +8,17 @@
 			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
 
-	<!--
-		add the corresponding fragment (and Its corresponding driver) to the
-		equinox launcher to provide a correct place holder.
-	--><!---->  
- 
-	<!---->
-
-	<!--
-		<bean id="dynaresumeDataSource"
-		class="org.apache.commons.dbcp.BasicDataSource" p:url="${jdbc.url}"
-		p:username="${jdbc.username}" p:password="${jdbc.password}"
-		p:driverClassName="${jdbc.driverClassName}"
-		init-method="createDataSource" destroy-method="close"/>
-	-->
-        
-       
-      <!---->
-
-	<!--
-
-		<bean id="dynaresumeDataSource" class="org.h2.jdbcx.JdbcDataSource" >
-		<property name="URL"><value>${jdbc.url}</value></property> <property
-		name="user"><value>${jdbc.username}</value></property> <property
-		name="password"><value>${jdbc.password}</value></property> </bean>
-	-->
-
-	<!--
-		<bean id="dynaresumeDataSource"
-		class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init"
-		destroy-method="close"> <property
-		name="uniqueResourceName"><value>dynaDS2</value></property> <property
-		name="xaDataSourceClassName"><value>org.h2.jdbcx.JdbcDataSource</value></property>
-		<property name="xaProperties"> <props> <prop
-		key="user">${jdbc.username}</prop> <prop
-		key="password">${jdbc.password}</prop> <prop
-		key="URL">${jdbc.url}</prop> </props> </property> <property
-		name="minPoolSize"><value>1</value></property> </bean>
-	-->
-
-	<!--
-	<bean id="dynaresumeDataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean"
-		init-method="init" destroy-method="close">
-		<property name="uniqueResourceName" value="dynaDS2" />
-		<property name="xaDataSourceClassName" value="org.apache.derby.jdbc.EmbeddedXADataSource" />
-		<property name="xaProperties">
-			<props>
-				<prop key="user">${jdbc.username}</prop>
-				<prop key="password">${jdbc.password}</prop>
-				<prop key="URL">${jdbc.url}</prop>
-			</props>
-		</property>
-	</bean>
--->
-
 	<!-- configure an Atomikos JTA-aware datasource -->
 	<bean id="dynaresumeDataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean"
 		init-method="init" destroy-method="close">
 		<!-- set an arbitrary but unique name for the datasource -->
 		<property name="uniqueResourceName" value="dynaDS2" />
 
-		<property name="xaDataSourceClassName" value="org.apache.derby.jdbc.EmbeddedXADataSource" />
-		 <property	name="minPoolSize"><value>1</value></property>
-		 		 <property	name="maxPoolSize"><value>5</value></property>
+		<property name="xaDataSourceClassName" value="${jdbc.driverClassName}" />
+		
 		<property name="xaProperties">
 			<props>
-				<prop key="databaseName">${user.home}/dynaresume</prop>
-				
+				<prop key="databaseName">${databaseName}</prop>
 			</props>
 		</property>
 		

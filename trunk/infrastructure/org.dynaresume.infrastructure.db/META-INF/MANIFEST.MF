@@ -5,5 +5,7 @@ Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.dynaresume.infrastructure.db
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: com.atomikos.jdbc;resolution:=optional,
- com.atomikos.jdbc.nonxa;resolution:=optional
+ com.atomikos.jdbc.nonxa;resolution:=optional,
+ javax.sql,
+ org.osgi.service.cm;version="1.2.1"
 Bundle-ClassPath: .
