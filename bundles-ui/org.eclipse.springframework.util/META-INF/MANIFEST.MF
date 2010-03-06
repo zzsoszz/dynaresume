@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Utility Bundle for Spring and Extensions
 Bundle-SymbolicName: org.eclipse.springframework.util
-Bundle-Version: 1.0.3
+Bundle-Version: 0.0.1.qualifier
 Bundle-Activator: org.eclipse.springframework.util.Activator
 Bundle-Vendor: Martin Lippert
 Export-Package: org.eclipse.springframework.util

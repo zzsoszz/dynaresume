@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mysql2
 Bundle-SymbolicName: org.dynaresume.infrastructure.db.derby
-Bundle-Version: 1.0.0.qualifier
-Fragment-Host: org.dynaresume.infrastructure.db;bundle-version="1.0.0"
+Bundle-Version: 0.0.1.qualifier
+Fragment-Host: org.dynaresume.infrastructure.db
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.apache.derby.jdbc,
  org.springframework.beans.factory.config

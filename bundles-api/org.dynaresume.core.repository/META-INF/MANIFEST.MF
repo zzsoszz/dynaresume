@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bundle-Version: 1.0.0
+Bundle-Version: 0.0.1.qualifier
 Bundle-Name: Dao
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.dynaresume.core.repository
