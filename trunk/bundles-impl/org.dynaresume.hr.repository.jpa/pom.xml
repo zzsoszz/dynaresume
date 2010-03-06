@@ -12,24 +12,20 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 
-	<build>
-		<resources>
-			<resource>
-				<directory>${project.basedir}</directory>
-				<includes>
-					<include>META-INF/persistence.xml</include>
-				</includes>
-			</resource>
-		</resources>
 
-	</build>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>org.springframework.orm</artifactId>
 
-			<version>2.5.6.SEC01</version>
+			<version>3.0.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.context</artifactId>
+
+			<version>3.0.0.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.xbean</groupId>
@@ -59,6 +55,14 @@
 		<profile>
 			<id>generate-ddl</id>
 			<build>
+				<resources>
+					<resource>
+						<directory>${project.basedir}</directory>
+						<includes>
+							<include>META-INF/persistence.xml</include>
+						</includes>
+					</resource>
+				</resources>
 				<plugins>
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>

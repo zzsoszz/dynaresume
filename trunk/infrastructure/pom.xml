@@ -12,8 +12,9 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<!---->
+		<!--
 		<module>com.atomikos.transactions-jdbc.derby.fragment</module>
+		-->
 		<module>com.atomikos.transactions.datasource.xa.fragment</module>
 		<module>org.dynaresume.infrastructure.httptransport</module>
 		<module>org.dynaresume.infrastructure.util</module>

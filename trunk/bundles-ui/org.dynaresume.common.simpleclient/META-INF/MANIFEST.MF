@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Simpleclient
 Bundle-SymbolicName: org.dynaresume.common.simpleclient;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.0.1.qualifier
 Bundle-Activator: org.dynaresume.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.springframework.beans,
- org.dynaresume.core.services;bundle-version="1.0.0",
- org.dynaresume.infrastructure.util;bundle-version="1.0.0",
+ org.dynaresume.core.services,
+ org.dynaresume.infrastructure.util,
  org.eclipse.core.databinding,
  org.eclipse.core.databinding.beans,
  org.eclipse.jface.databinding,

@@ -2,15 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Hibernate
 Bundle-SymbolicName: org.dynaresume.core.repository.jpa
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.0.1.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: javax.annotation,
- javax.persistence,
+Import-Package: javax.persistence,
  javax.persistence.spi;version="1.99.0",
  javax.sql,
  javax.transaction,
  javax.transaction.xa,
- org.apache.xbean.spring.jndi;version="3.6.0",
+ org.apache.xbean.spring.jndi,
  org.dynaresume.basebean,
  org.dynaresume.core.domain,
  org.dynaresume.core.repository,
