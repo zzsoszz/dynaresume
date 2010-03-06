@@ -227,7 +227,7 @@
 			<url>http://maven.springframework.org/osgi</url>
 		</repository>
 
-		<!---->
+		
 		<repository>
 			<id>com.springsource.repository.libraries.release</id>
 			<name>SpringSource Enterprise Bundle Repository - SpringSource
@@ -248,7 +248,11 @@
 			<url>http://repository.springsource.com/maven/libraries/external
 			</url>
 		</repository>
-
+<repository>
+			<id>atomikos</id>
+			<name>Atmikos</name>
+			<url>http://localhost:8081/nexus/content/repositories/atomikos/</url>
+		</repository>
 	</repositories>
 
 
@@ -382,7 +386,7 @@
 		<dependency>
 			<groupId>com.atomikos</groupId>
 			<artifactId>transactions-hibernate3</artifactId>
-			<version>3.6.0</version>
+			<version>3.6.2</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.hibernate</groupId>
