@@ -80,6 +80,7 @@ public class TransactionManagerLookup implements org.hibernate.transaction.Trans
     	//return utm;
     }
 
+    
     public String getUserTransactionName()
     {
         return "java:comp/TransactionManager";

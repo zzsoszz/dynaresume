@@ -24,18 +24,8 @@
 			</bean>
 		</property>
 	</bean>
-	
-
 
 	<context:annotation-config />
-
 	<context:component-scan base-package="org.dynaresume.core.repository.jpa.internal" />
 	
-<!--
-	<bean id="scalpa" class="org.dynaresume.core.repository.internal.Scalpa"
-		init-method="start">
-		<property name="agencyRepository" ref="agencyRepository"></property>
-		<property name="groupRepository" ref="groupRepository"></property>
-		</bean>
-	-->	
 </beans>

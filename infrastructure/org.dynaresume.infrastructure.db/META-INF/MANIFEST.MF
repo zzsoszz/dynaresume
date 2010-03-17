@@ -9,3 +9,4 @@ Import-Package: com.atomikos.jdbc;resolution:=optional,
  javax.sql,
  org.osgi.service.cm;version="1.2.1"
 Bundle-ClassPath: .
+Bundle-ActivationPolicy: lazy

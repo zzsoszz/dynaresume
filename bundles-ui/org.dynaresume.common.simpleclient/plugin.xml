@@ -115,5 +115,17 @@
             name="Agency">
       </editor>
    </extension>
+   <extension
+         id="dynaresume"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.dynaresume.common.simpleclient.application"
+            name="org.dynaresume.product.richclient">
+         <property
+               name="appName"
+               value="org.dynaresume.product.richclient">
+         </property>
+      </product>
+   </extension>
 
 </plugin>

@@ -11,68 +11,8 @@
 	<artifactId>org.dynaresume.hr.domain</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
-	<dependencies>
-
-		<dependency>
-			<groupId>org.jboss.javassist</groupId>
-			<artifactId>com.springsource.javassist</artifactId>
-			<version>3.3.0.ga</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sourceforge.cglib</groupId>
-			<artifactId>com.springsource.net.sf.cglib</artifactId>
-			<version>2.1.3</version>
-		</dependency>
-
-	</dependencies>
 	
-	<build>
-		<resources>
-			<resource>
-				<directory>src/hibernate/resources</directory>
-				<filtering>true</filtering>
-			</resource>
 
-		</resources>
-		<plugins>
-			<!--
-				<plugin> <groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId> <configuration>
-				<source>1.5</source> <target>1.5</target> </configuration> </plugin>
-			-->
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>hibernate3-maven-plugin</artifactId>
-				<version>2.2</version>
-				<!--<executions>
-					<execution>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>hbm2ddl</goal>
-						</goals>
-					</execution>
-				</executions>
-				--><configuration>
-					<components>
-						<component>
-							<name>hbm2ddl</name>
-							<implementation>annotationconfiguration</implementation>
-						</component>
-					</components>
-					<componentProperties>
-						<configurationfile>src/hibernate/resources/hibernate.cfg.xml</configurationfile>
-						<outputfilename>schema.ddl</outputfilename>
-						<drop>false</drop>
-						<create>true</create>
-						<export>false</export>
-						<format>true</format>
-					</componentProperties>
-				</configuration>
-			</plugin>
-		<!---->
-		</plugins>
-	</build>
 
 
 </project>

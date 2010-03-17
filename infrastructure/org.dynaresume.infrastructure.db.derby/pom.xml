@@ -13,117 +13,11 @@
 	<packaging>eclipse-plugin</packaging>
 
 	<dependencies>
-<dependency>
+		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>com.springsource.org.apache.derby</artifactId>
 			<version>10.5.1000001.764942</version>
 		</dependency>
-		
-		<!--<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
-			<version>1.2.2.osgi</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xbean</groupId>
-			<artifactId>com.springsource.org.apache.xbean.spring</artifactId>
-			<version>3.6.0</version>
-		</dependency>
-	--></dependencies>
 
-
-
-	<!--<profiles>
-		<profile>
-			<id>test</id>
-			<build>
-				<plugins>
-
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>sql-maven-plugin</artifactId>
-						<version>1.2</version>
-
-						<dependencies>
-							 specify the dependent jdbc driver here 
-							<dependency>
-								<groupId>com.h2database</groupId>
-								<artifactId>com.springsource.org.h2</artifactId>
-								<version>1.0.71</version>
-							</dependency>
-						</dependencies>
-
-						 common configuration shared by all executions 
-						<configuration>
-							<driver>org.h2.Driver</driver>
-							<url>jdbc:h2:~/.dynaresume/h2</url>
-							<username>sa</username>
-
-							
-								<password>password</password> You can comment out username/password configurations and have maven to look them
-								up in your settings.xml using ${settingsKey}
-							
-							<settingsKey>sensibleKey</settingsKey>
-							all executions are ignored if -Dmaven.test.skip=true
-							<skip>${maven.test.skip}</skip>
-							
-						</configuration>
-
-						<executions>
-
-
-
-							<execution>
-								<id>create-core-schema</id>
-								<phase>process-test-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<autocommit>true</autocommit>
-									<srcFiles>
-										<srcFile>src/main/resources/core.ddl</srcFile>
-									</srcFiles>
-								</configuration>
-							</execution>
-
-							<execution>
-								<id>create-hr-schema</id>
-								<phase>process-test-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<autocommit>true</autocommit>
-									<srcFiles>
-										<srcFile>src/main/resources/hr.ddl</srcFile>
-									</srcFiles>
-								</configuration>
-							</execution>
-
-							<execution>
-								<id>create-data</id>
-								<phase>process-test-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<orderFile>ascending</orderFile>
-									<fileset>
-										<basedir>${basedir}</basedir>
-										<includes>
-											<include>test/sql/test-data2.sql</include>
-											<include>test/sql/test-data1.sql</include>
-										</includes>
-									</fileset>
-								</configuration>
-							</execution>
-
-
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>-->
+	</dependencies>
 </project>
