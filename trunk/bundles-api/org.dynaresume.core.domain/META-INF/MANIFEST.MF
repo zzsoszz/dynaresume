@@ -6,9 +6,7 @@ Bundle-Version: 0.0.1.qualifier
 Bundle-ClassPath: .,
  target/classes/
 Export-Package: org.dynaresume.core.domain
-Import-Package: javassist.util.proxy;version="3.3.0.ga",
- javax.persistence;version="1.0.0",
- net.sf.cglib.proxy;version="2.1.3",
+Import-Package: javax.persistence;version="1.0.0",
  org.dynaresume.basebean,
  org.hibernate.proxy;resolution:=optional
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

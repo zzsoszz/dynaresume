@@ -45,17 +45,17 @@ public class GroupCompositeController {
 	}
 
 	private DataBindingContext initDataBindings() {
-		IObservableValue codeObserveWidget = SWTObservables.observeText(m_groupComposite.getCodeText(), SWT.Modify);
-		IObservableValue codeObserveValue = BeansObservables.observeValue(group, "code");
-		IObservableValue emailObserveWidget = SWTObservables.observeText(m_groupComposite.getEmailText(), SWT.Modify);
-
-		IObservableValue emailObserveValue = BeansObservables.observeValue(group, "email");
+//		IObservableValue codeObserveWidget = SWTObservables.observeText(m_groupComposite.getCodeText(), SWT.Modify);
+//		IObservableValue codeObserveValue = BeansObservables.observeValue(group, "code");
+//		IObservableValue emailObserveWidget = SWTObservables.observeText(m_groupComposite.getEmailText(), SWT.Modify);
+//
+//		IObservableValue emailObserveValue = BeansObservables.observeValue(group, "email");
 		IObservableValue nameObserveWidget = SWTObservables.observeText(m_groupComposite.getNameText(), SWT.Modify);
 		IObservableValue nameObserveValue = BeansObservables.observeValue(group, "name");
 		//
 		DataBindingContext bindingContext = new DataBindingContext();
 		//
-		bindingContext.bindValue(codeObserveWidget, codeObserveValue, null, null);
+//		bindingContext.bindValue(codeObserveWidget, codeObserveValue, null, null);
 		// PLQ hand coded
 		UpdateValueStrategy emailUpdateValueStrategy = new UpdateValueStrategy();
 		emailUpdateValueStrategy.setAfterConvertValidator(new IValidator() {
@@ -77,7 +77,7 @@ public class GroupCompositeController {
 		});
 
 		// end PLQ hand coded
-		bindingContext.bindValue(emailObserveWidget, emailObserveValue, emailUpdateValueStrategy, null);
+	//	bindingContext.bindValue(emailObserveWidget, emailObserveValue, emailUpdateValueStrategy, null);
 		bindingContext.bindValue(nameObserveWidget, nameObserveValue, null, null);
 		//
 		return bindingContext;

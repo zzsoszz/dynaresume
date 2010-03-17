@@ -13,35 +13,12 @@
 	<packaging>eclipse-plugin</packaging>
 
 	<dependencies>
-		<!--
-			<dependency> <groupId>javax.transaction</groupId>
-			<artifactId>com.springsource.javax.transaction</artifactId>
-			<version>1.1.0</version> </dependency> <dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.transaction</artifactId>
-			<version>3.0.0.RELEASE</version> </dependency>
-		-->
-		<!-- atomikos -->
+		
 		<dependency>
 			<groupId>com.atomikos</groupId>
 			<artifactId>transactions</artifactId>
 			<version>3.6.2</version>
 		</dependency>
-		<!--
-			<dependency> <groupId>javax.resource</groupId>
-			<artifactId>com.springsource.javax.resource</artifactId>
-
-			<version>1.5.0</version> </dependency> <dependency>
-			<groupId>org.apache.xbean</groupId>
-			<artifactId>com.springsource.org.apache.xbean.spring</artifactId>
-			<version>3.6.0</version> </dependency> <dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.orm</artifactId>
-
-			<version>3.0.0.RELEASE</version> </dependency> <dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>com.springsource.slf4j.log4j</artifactId>
-			<version>1.5.6</version> </dependency>
-		-->
+		
 	</dependencies>
 </project>

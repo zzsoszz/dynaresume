@@ -35,9 +35,5 @@
 	<context:annotation-config />
 
 	<context:component-scan base-package="org.dynaresume.hr.repository.internal" />
-<!--
-	<bean id="scalpa" class="org.dynaresume.hr.repository.internal.Scalpa"
-		init-method="start"></bean>
 
-	-->	
 </beans>
