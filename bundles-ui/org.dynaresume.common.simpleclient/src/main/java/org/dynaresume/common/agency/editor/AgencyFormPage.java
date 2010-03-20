@@ -72,26 +72,26 @@ public class AgencyFormPage extends FormPage {
 		form.setText("Agency "+agency.getName());
 		Composite body = form.getBody();
 		toolkit.decorateFormHeading(form.getForm());
-		toolkit.paintBordersFor(body);
+		//toolkit.paintBordersFor(body);
 		managedForm.getForm().getBody().setLayout(new FillLayout(SWT.VERTICAL));
 
 		Section sctnAgency = managedForm.getToolkit().createSection(managedForm.getForm().getBody(), Section.TWISTIE | Section.TITLE_BAR);
-		managedForm.getToolkit().paintBordersFor(sctnAgency);
+		//managedForm.getToolkit().paintBordersFor(sctnAgency);
 		sctnAgency.setText("Global informations");
 
 		agencyComposite = new AgencyComposite(sctnAgency, SWT.NONE);
 		sctnAgency.setClient(agencyComposite);
 		managedForm.getToolkit().adapt(agencyComposite);
-		managedForm.getToolkit().paintBordersFor(agencyComposite);
+		//managedForm.getToolkit().paintBordersFor(agencyComposite);
 		sctnAgency.setExpanded(true);
 
 		Section sctnAddress = managedForm.getToolkit().createSection(managedForm.getForm().getBody(), Section.TWISTIE | Section.TITLE_BAR);
-		managedForm.getToolkit().paintBordersFor(sctnAddress);
+		//managedForm.getToolkit().paintBordersFor(sctnAddress);
 		sctnAddress.setText("Address");
 
 		addressComposite = new AddressComposite(sctnAddress, SWT.NONE);
 		managedForm.getToolkit().adapt(addressComposite);
-		managedForm.getToolkit().paintBordersFor(addressComposite);
+		//managedForm.getToolkit().paintBordersFor(addressComposite);
 		sctnAddress.setClient(addressComposite);
 		sctnAddress.setExpanded(true);
 
