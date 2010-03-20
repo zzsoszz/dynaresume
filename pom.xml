@@ -39,13 +39,25 @@
 				<configuration>
 					<resolver>p2</resolver>
 					<pomDependencies>consider</pomDependencies>
-					<!--
-						<environments> <environment> <os>linux</os> <ws>gtk</ws>
-						<arch>x86_64</arch> </environment> <environment> <os>win32</os>
-						<ws>win32</ws> <arch>x86</arch> </environment> <environment>
-						<os>macosx</os> <ws>carbon</ws> <arch>x86</arch> </environment>
-						</environments>
-					-->
+					<!---->
+					<environments>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>carbon</ws>
+							<arch>x86</arch>
+						</environment>
+					</environments>
+
 				</configuration>
 			</plugin>
 		</plugins>
@@ -54,12 +66,17 @@
 
 
 	<repositories>
+		<!---->
 		<repository>
 			<id>gallileo</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/releases/galileo</url>
 		</repository>
-
+		<repository>
+			<id>update35</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/eclipse/updates/3.5</url>
+		</repository>
 		<!--
 			use with Nexus repository manager <repository> <id>atomikos</id>
 			<name>Atomikos</name>
@@ -102,7 +119,7 @@
 	<pluginRepositories>
 		<pluginRepository>
 			<id>tycho</id>
-			<url>http://repository.sonatype.org/content/repositories/all-005/
+			<url> http://repository.sonatype.org/content/repositories/all-001/
 			</url>
 		</pluginRepository>
 	</pluginRepositories>
@@ -207,7 +224,17 @@
 				</artifactId>
 				<version>3.3.0.ga</version>
 			</dependency>
+			<dependency>
+				<groupId>javax.transaction</groupId>
+				<artifactId>com.springsource.javax.transaction</artifactId>
+				<version>1.1.0</version>
+			</dependency>
+			<dependency>
 
+				<groupId>com.atomikos</groupId>
+				<artifactId>transactions-hibernate3</artifactId>
+				<version>3.6.3</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
