@@ -10,7 +10,8 @@
 
 	<!-- configure an Atomikos JTA-aware datasource -->
 	<!--
-	  set an arbitrary but unique name for the datasource  
+	  set an arbitrary but unique name for the datasource
+	  -->  
 	<bean id="dynaresumeDataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean"
 		init-method="init" destroy-method="close">
 		
@@ -25,8 +26,8 @@
 		</property>
 		
 	</bean>
-	-->
-	 <!---->
+	
+	 <!--
 	 <bean id="dynaresumeDataSource" class="com.atomikos.jdbc.nonxa.AtomikosNonXADataSourceBean" init-method="init" destroy-method="close">
         <property name="uniqueResourceName" value="dynaDS2" />
         <property name="driverClassName" value="${jdbc.driverClassName}" />
@@ -34,5 +35,6 @@
         <property name="poolSize" value="1" />
         <property name="borrowConnectionTimeout" value="60" />
     </bean>
+    -->
 </beans>
 
