@@ -4,41 +4,18 @@ Bundle-Name: Simpleclient
 Bundle-SymbolicName: org.dynaresume.common.simpleclient;singleton:=true
 Bundle-Version: 0.0.1.qualifier
 Bundle-Activator: org.dynaresume.Activator
-Require-Bundle: org.springframework.beans,
- org.dynaresume.core.services,
- org.eclipse.core.databinding,
- org.eclipse.core.databinding.beans,
- org.eclipse.rap.ui.workbench;resolution:=optional,
- org.eclipse.ui.workbench;bundle-version="3.5.1"
+Require-Bundle: org.eclipse.rap.ui.workbench;resolution:=optional,
+ org.eclipse.ui.workbench;resolution:=optional
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: org.dynaresume.basebean,
- org.dynaresume.core.domain,
- org.eclipse.core.commands,
- org.eclipse.core.commands.common,
- org.eclipse.core.runtime,
+Import-Package: org.eclipse.core.runtime,
  org.eclipse.equinox.app,
  org.eclipse.jface.action,
- org.eclipse.jface.databinding.swt,
- org.eclipse.jface.databinding.viewers,
- org.eclipse.jface.databinding.wizard,
- org.eclipse.jface.dialogs,
  org.eclipse.jface.resource,
- org.eclipse.jface.viewers,
- org.eclipse.jface.window,
- org.eclipse.jface.wizard,
- org.eclipse.springframework.util,
  org.eclipse.swt,
- org.eclipse.swt.custom,
  org.eclipse.swt.graphics,
- org.eclipse.swt.layout,
  org.eclipse.swt.widgets,
- org.eclipse.ui.forms,
- org.eclipse.ui.forms.editor,
- org.eclipse.ui.forms.widgets,
- org.osgi.framework,
- org.springframework.context.annotation,
- org.springframework.stereotype
+ org.osgi.framework
 Service-Component: component.xml
 Bundle-ClassPath: .,
  target/classes/
