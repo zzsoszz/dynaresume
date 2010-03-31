@@ -24,7 +24,7 @@ public class Perspective implements IPerspectiveFactory {
 		layout.setFixed(true);
 		
 		//layout.addStandaloneView(View.ID,  true, IPageLayout.LEFT, 1.0f, editorArea);
-		layout.addView(View.ID,   IPageLayout.LEFT, 0.3f, editorArea);
+		layout.addView("org.demo.simpleclient.view",   IPageLayout.LEFT, 0.3f, editorArea);
 		
 	}
 
