@@ -116,13 +116,6 @@
 	</distributionManagement>
 
 
-	<pluginRepositories>
-		<pluginRepository>
-			<id>tycho</id>
-			<url> http://repository.sonatype.org/content/repositories/all-001/
-			</url>
-		</pluginRepository>
-	</pluginRepositories>
 	<dependencyManagement>
 
 		<dependencies>
