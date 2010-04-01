@@ -16,7 +16,8 @@
 		<module>org.dynaresume.httpimporter</module>
 		<module>org.eclipse.springframework.util</module>
 		<module>org.dynaresume.common.simpleclient</module>
-
+		<module>org.dynaresume.core.ui</module>
+		<module>org.dynaresume.swtdesigner.rcp</module>
 	</modules>
 
 
