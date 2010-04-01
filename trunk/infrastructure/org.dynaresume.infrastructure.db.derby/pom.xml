@@ -18,6 +18,11 @@
 			<artifactId>com.springsource.org.apache.derby</artifactId>
 			<version>10.5.1000001.764942</version>
 		</dependency>
+		<dependency>
+			<groupId>com.atomikos</groupId>
+			<artifactId>transactions-jdbc</artifactId>
+			<version>3.6.3</version>
 
+		</dependency>
 	</dependencies>
 </project>
