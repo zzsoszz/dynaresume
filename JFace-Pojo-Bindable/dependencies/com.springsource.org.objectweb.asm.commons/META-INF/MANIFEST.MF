@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Export-Package: org.objectweb.asm.commons;version="3.2.0";uses:="org.o
+ bjectweb.asm,org.objectweb.asm.signature,org.objectweb.asm.tree"
+Implementation-Title: ASM commons
+Implementation-Version: 3.2
+Tool: Bundlor 1.0.0.CI-B166
+Bundle-Name: ObjectWeb ASM Commons
+Created-By: 1.6.0-beta2-b86 (Sun Microsystems Inc.)
+Bundle-Vendor: SpringSource
+Implementation-Vendor: France Telecom R&D
+Ant-Version: Apache Ant 1.7.0
+Bundle-Version: 3.2.0
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.springsource.org.objectweb.asm.commons
+Import-Package: org.objectweb.asm;version="[3.2.0, 3.2.0]",org.objectw
+ eb.asm.signature;version="[3.2.0, 3.2.0]",org.objectweb.asm.tree;vers
+ ion="[3.2.0, 3.2.0]"
+
