@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/org.eclipse.core.examples.databinding.pojo.bindable/src/org/eclipse/core/examples/databinding/pojo/bindable/snippets/HelloWorldWithBeansObservablesWithBindableAgent.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.core.examples.databinding.pojo.bindable.snippets.HelloWorldWithBeansObservablesWithBindableAgent"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.core.examples.databinding.pojo.bindable"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-javaagent:lib/org.eclipse.core.databinding.pojo.bindable_1.0.0.jar -Dbindable.packages=org.eclipse.core.examples.databinding.pojo.bindable.model"/>
+</launchConfiguration>
