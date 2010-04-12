@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Equinox Plug-in
+Bundle-SymbolicName: org.eclipse.core.databinding.pojo.bindable.equinox
+Bundle-Version: 1.0.0
+Bundle-Activator: org.eclipse.core.databinding.pojo.bindable.internal.equinox.Activator
+Import-Package: org.eclipse.core.databinding.pojo.bindable,
+ org.eclipse.core.databinding.pojo.bindable.equinox.weaving,
+ org.eclipse.core.databinding.pojo.bindable.initializer,
+ org.eclipse.core.databinding.pojo.bindable.initializer.osgi,
+ org.osgi.framework;version="1.3.0"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: Angelo ZERR
