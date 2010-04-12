@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2010, Original authors.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     Angelo ZERR <angelo.zerr@gmail.com>
+ *******************************************************************************/
 package org.eclipse.core.examples.databinding.pojo.bindable.equinox;
 
 import java.beans.PropertyChangeEvent;
@@ -8,6 +18,14 @@ import org.eclipse.core.examples.databinding.pojo.bindable.model.PojoPerson;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+/**
+ * Basic sample with Pojo Bindable (this bundle doesn't import package of Pojo
+ * bindable). When PojoPerson Class is loaded Equinox Hook Adapter (see fragment
+ * org.eclipse.core.databinding.pojo.bindable.equinox.weaving or
+ * org.eclipse.persistence.jpa.equinox.weaving) change the  bytecode of
+ * PojoPerson to add PropertyChangeSupport.
+ * 
+ */
 public class Activator implements BundleActivator {
 
 	/*
@@ -18,10 +36,10 @@ public class Activator implements BundleActivator {
 	 * )
 	 */
 	public void start(BundleContext context) throws Exception {
-		
+
+		// Create Pojo instance
 		PojoPerson person = new PojoPerson();
 
-		// Instrumentation was done with successfull, add Listener
 		PropertyChangeListener listener = new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent event) {
 				System.out.println("---------- Property User changed --------");
@@ -32,7 +50,8 @@ public class Activator implements BundleActivator {
 						.println("------------------------------------------");
 			}
 		};
-		
+
+		// Add Listener
 		try {
 			Method m = person.getClass().getMethod("addPropertyChangeListener",
 					String.class, PropertyChangeListener.class);
@@ -40,10 +59,10 @@ public class Activator implements BundleActivator {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		person.setName("AAAAAAAAAAAAAAAAAAA");
-		person.setName("bhbh");
-		
+
+		// Change name property.
+		person.setName("New name");
+
 	}
 
 	/*
