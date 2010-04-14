@@ -13,11 +13,7 @@ import org.eclipse.osgi.baseadaptor.loader.ClasspathEntry;
 import org.eclipse.osgi.baseadaptor.loader.ClasspathManager;
 import org.eclipse.osgi.framework.adaptor.BundleProtectionDomain;
 import org.eclipse.osgi.framework.adaptor.ClassLoaderDelegate;
-import org.eclipse.osgi.framework.internal.core.BundleLoader;
-import org.eclipse.osgi.framework.internal.core.Constants;
-import org.eclipse.osgi.util.ManifestElement;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
@@ -65,7 +61,6 @@ public class BindableWeaverRegistry implements ClassLoadingHook,
 			ClasspathEntry classpathEntry, BundleEntry entry,
 			ClasspathManager manager) {
 
-		System.out.println(name);
 		String bundleId = manager.getBaseData().getSymbolicName();
 		if (this.weaverServices.isEmpty()) {
 
@@ -85,7 +80,6 @@ public class BindableWeaverRegistry implements ClassLoadingHook,
 			if (weaver != null) {
 				byte[] transformedBytes = weaver.transform(name, classbytes);
 				if (transformedBytes != null) {
-					System.out.println(name + " woven");
 					return transformedBytes;
 				}
 			}
