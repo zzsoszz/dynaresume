@@ -94,6 +94,13 @@ public class MethodBindable extends AdviceAdapter implements Opcodes,
 			setBindableAnnotationValue(classBindable
 					.getBindableAnnotationValue());
 		}
+		if (classBindable.getBindableAnnotationComputedProperties() != null) {
+			// Initialize the bindable annotation computedProperties of the method with
+			// Bindable
+			// value of the Class.
+			setBindableAnnotationComputedProperties(classBindable
+					.getBindableAnnotationComputedProperties());
+		}
 
 	}
 

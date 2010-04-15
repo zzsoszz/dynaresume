@@ -33,6 +33,8 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	private String className = null;
 	private BindableStrategy bindableStrategy;
 	private Boolean bindableAnnotation = null;
+	// Bindable value of property 'computedProperties' of Bindable annotation.
+	private String[] computedProperties = null;
 
 	public ClassBindable(ClassVisitor cv, BindableStrategy bindableStrategy) {
 		super(cv);
@@ -101,9 +103,10 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 			String desc, String signature, String[] exceptions) {
 		if (bindableStrategy.isBindableMethod(className, methodName)) {
 			// Method is bindable, visit it.
-			return new MethodBindable(this, access, methodName, desc, cv.visitMethod(
-					access, methodName, desc, signature, exceptions));
-	
+			return new MethodBindable(this, access, methodName, desc, cv
+					.visitMethod(access, methodName, desc, signature,
+							exceptions));
+
 		}
 		return super.visitMethod(access, methodName, desc, signature,
 				exceptions);
@@ -196,12 +199,10 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 		mv.visitInsn(RETURN);
 		mv.visitMaxs(3, 3);
 
-
-		// public void addPropertyChangeListener(PropertyChangeListener listener)
-		mv = cv.visitMethod(ACC_PUBLIC,
-				"addPropertyChangeListener",
-				"(Ljava/beans/PropertyChangeListener;)V",
-				null, null);
+		// public void addPropertyChangeListener(PropertyChangeListener
+		// listener)
+		mv = cv.visitMethod(ACC_PUBLIC, "addPropertyChangeListener",
+				"(Ljava/beans/PropertyChangeListener;)V", null, null);
 		mv.visitCode();
 
 		// _bindable_getPropertyChangeSupport().addPropertyChangeListener(listener)
@@ -214,8 +215,7 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 				"(Ljava/beans/PropertyChangeListener;)V");
 		mv.visitInsn(RETURN);
 		mv.visitMaxs(3, 3);
-		
-		
+
 	}
 
 	/**
@@ -236,7 +236,7 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 				"(Ljava/lang/String;Ljava/beans/PropertyChangeListener;)V",
 				null, null);
 		mv.visitCode();
-		
+
 		// _bindable_getPropertyChangeSupport().removePropertyChangeListener(propertyName,
 		// listener)
 		mv.visitVarInsn(ALOAD, 0);
@@ -250,13 +250,12 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 		mv.visitInsn(RETURN);
 		mv.visitMaxs(3, 3);
 
-		// public void removePropertyChangeListener(PropertyChangeListener listener)
-		mv = cv.visitMethod(ACC_PUBLIC,
-				"removePropertyChangeListener",
-				"(Ljava/beans/PropertyChangeListener;)V",
-				null, null);
+		// public void removePropertyChangeListener(PropertyChangeListener
+		// listener)
+		mv = cv.visitMethod(ACC_PUBLIC, "removePropertyChangeListener",
+				"(Ljava/beans/PropertyChangeListener;)V", null, null);
 		mv.visitCode();
-		
+
 		// _bindable_getPropertyChangeSupport().removePropertyChangeListener(listener)
 		mv.visitVarInsn(ALOAD, 0);
 		mv.visitMethodInsn(INVOKESPECIAL, className, PCS_GETTER,
@@ -267,7 +266,7 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 				"(Ljava/beans/PropertyChangeListener;)V");
 		mv.visitInsn(RETURN);
 		mv.visitMaxs(3, 3);
-		
+
 	}
 
 	/**
@@ -299,15 +298,25 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	}
 
 	/**
+	 * Return the string array of 'computedProperties' Bindable annotation
+	 * putted into Class and null otherwise.
+	 * 
+	 * @return
+	 */
+	public String[] getBindableAnnotationComputedProperties() {
+		return computedProperties;
+	}
+
+	/**
 	 * Set the value of Bindable annotation putted into Class.
 	 */
 	public void setBindableAnnotationValue(boolean value) {
 		this.bindableAnnotation = value;
 	}
-		
+
 	public void setBindableAnnotationComputedProperties(
 			String[] computedProperties) {
-		// DO nothing.		
+		this.computedProperties = computedProperties;
 	}
 
 }
