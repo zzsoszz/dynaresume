@@ -304,5 +304,10 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	public void setBindableAnnotationValue(boolean value) {
 		this.bindableAnnotation = value;
 	}
+		
+	public void setBindableAnnotationComputedProperties(
+			String[] computedProperties) {
+		// DO nothing.		
+	}
 
 }
