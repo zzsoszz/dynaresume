@@ -342,7 +342,6 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 		return dependsOn;
 	}
 
-	@Override
 	public void setBindableAnnotationDependsOn(String[] dependsOn) {
 		this.dependsOn = dependsOn;
 	}
