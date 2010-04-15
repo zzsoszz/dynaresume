@@ -11,6 +11,7 @@
 package org.eclipse.core.databinding.pojo.bindable.internal.asm;
 
 import org.eclipse.core.databinding.pojo.bindable.annotation.Bindable;
+import org.eclipse.core.databinding.pojo.bindable.internal.util.ClassUtils;
 import org.objectweb.asm.MethodVisitor;
 
 /**
@@ -19,9 +20,14 @@ import org.objectweb.asm.MethodVisitor;
  */
 public class GetterMethodBindable extends AbstractMethodBindable {
 
+	private String methodDesc = null;
+	private String propertyDesc = null;
+
 	protected GetterMethodBindable(ClassBindable classBindable, int access,
 			String methodName, String desc, MethodVisitor mv) {
 		super(classBindable, access, methodName, desc, mv);
+		this.methodDesc = desc;
+		this.propertyDesc = ClassUtils.getPropertyDesc(methodDesc);
 	}
 
 	@Override
@@ -34,6 +40,14 @@ public class GetterMethodBindable extends AbstractMethodBindable {
 			// fields)
 			getClassBindable().addGetterMethodBindable(this);
 		}
+	}
+	
+	public String getMethodDesc() {
+		return methodDesc;
+	}
+	
+	public String getPropertyDesc() {
+		return propertyDesc;
 	}
 
 }

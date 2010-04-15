@@ -13,10 +13,8 @@ package org.eclipse.core.databinding.pojo.bindable.internal.asm;
 
 import java.beans.PropertyChangeSupport;
 
-import org.eclipse.core.databinding.pojo.bindable.internal.asm.annotation.AnnotationBindable;
 import org.eclipse.core.databinding.pojo.bindable.internal.util.ASMUtils;
 import org.eclipse.core.databinding.pojo.bindable.internal.util.ClassUtils;
-import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Type;
 
@@ -169,19 +167,6 @@ public class SetterMethodBindable extends AbstractMethodBindable {
 	@Override
 	public void visitMaxs(int maxStack, int maxLocals) {
 		super.visitMaxs(maxStack + 3, maxLocals + 3);
-	}
-
-	@Override
-	public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
-		ClassBindable classBindable = getClassBindable();
-		if (classBindable.getBindableStrategy().isUseAnnotation()) {
-			if (B_SIGNATURE.equals(desc)) {
-				// It's Bindable annotation, visit it.
-				return new AnnotationBindable(
-						mv.visitAnnotation(desc, visible), this);
-			}
-		}
-		return super.visitAnnotation(desc, visible);
 	}
 
 	/**
