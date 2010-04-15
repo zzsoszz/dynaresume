@@ -13,6 +13,8 @@ package org.eclipse.core.databinding.pojo.bindable.annotation;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import org.eclipse.core.databinding.pojo.bindable.BindableStrategy;
+
 /**
  * 
  * Bindable interface to set if method are bindable or not. This annotation
@@ -22,5 +24,19 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Bindable {
 
+	/**
+	 * Return true if method must be transformed to bindable method and false
+	 * otherwise.
+	 * 
+	 * @return
+	 */
 	boolean value() default true;
+
+	/**
+	 * Return list of properties name which must fire event when the method is
+	 * called.
+	 * 
+	 * @return
+	 */
+	String[] computedProperties() default {};
 }
