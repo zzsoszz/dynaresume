@@ -159,7 +159,19 @@ public class ClassUtils implements Opcodes {
 	 * @return
 	 */
 	public static boolean isSetterMethod(String methodName) {
-		return methodName.startsWith(ClassUtils.SET_PREFIX_METHOD);
+		return methodName.startsWith(SET_PREFIX_METHOD);
+	}
+
+	/**
+	 * Return true if methodName is 'set', 'get' or 'is'
+	 * 
+	 * @param methodName
+	 * @return
+	 */
+	public static boolean isOnlyGetSetIs(String methodName) {
+		return methodName.equals(SET_PREFIX_METHOD)
+				|| methodName.equals(GET_PREFIX_METHOD)
+				|| methodName.equals(IS_PREFIX_METHOD);
 	}
 
 	/**
