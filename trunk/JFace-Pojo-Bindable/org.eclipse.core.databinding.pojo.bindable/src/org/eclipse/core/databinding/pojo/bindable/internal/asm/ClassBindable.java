@@ -119,16 +119,16 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 			String desc, String signature, String[] exceptions) {
 		if (bindableStrategy.isBindableMethod(className, methodName)) {
 			// Method is bindable, visit it.
-			return new SetterMethodBindable(this, access, methodName, desc, cv
-					.visitMethod(access, methodName, desc, signature,
-							exceptions));
+			return new SetterMethodBindable(this, cv.visitMethod(access,
+					methodName, desc, signature, exceptions), access,
+					methodName, desc);
 
 		} else {
 			// Test if it's getter method
 			if (isDependsOnSupported() && ClassUtils.isGetterMethod(methodName)) {
-				return new GetterMethodBindable(this, access, methodName, desc,
-						cv.visitMethod(access, methodName, desc, signature,
-								exceptions));
+				return new GetterMethodBindable(this, cv.visitMethod(access,
+						methodName, desc, signature, exceptions), access,
+						methodName, desc);
 			}
 
 		}
@@ -500,14 +500,33 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	 * @param getterMethodBindableList
 	 */
 	protected void addBeforeDependsOnMethod(
-			SetterMethodBindable methodBindable,
+			SetterMethodBindable setterMethodBindable,
 			Collection<GetterMethodBindable> getterMethodBindableList) {
-		MethodVisitor mv = cv.visitMethod(ACC_PRIVATE, methodBindable
+		MethodVisitor mv = cv.visitMethod(ACC_PRIVATE, setterMethodBindable
 				.getBeforeDependsOnMethodName(), "()V", null, null);
 		mv.visitCode();
 
+		if (getterMethodBindableList != null) {
+			String dependsOnFieldName = null;
+			for (GetterMethodBindable getterMethodBindable : getterMethodBindableList) {
+
+				dependsOnFieldName = getDependsOnFieldName(setterMethodBindable
+						.getMethodName(), getterMethodBindable
+						.getPropertyName());
+
+				mv.visitVarInsn(ALOAD, 0);
+				mv.visitVarInsn(ALOAD, 0);
+
+				mv.visitMethodInsn(INVOKEVIRTUAL, className,
+						getterMethodBindable.getMethodName(),
+						getterMethodBindable.getMethodDesc());
+				mv.visitFieldInsn(PUTFIELD, className, dependsOnFieldName,
+						getterMethodBindable.getPropertyDesc());
+			}
+		}
+
 		mv.visitInsn(RETURN);
-		mv.visitMaxs(5, 1);
+		mv.visitMaxs(3, 1);
 		mv.visitEnd();
 	}
 

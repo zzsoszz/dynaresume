@@ -13,10 +13,15 @@ package org.eclipse.core.databinding.pojo.bindable.internal.asm;
 
 import java.beans.PropertyChangeSupport;
 
+import org.eclipse.core.databinding.pojo.bindable.internal.asm.annotation.AnnotationBindable;
+import org.eclipse.core.databinding.pojo.bindable.internal.asm.annotation.AnnotationBindableAware;
 import org.eclipse.core.databinding.pojo.bindable.internal.util.ASMUtils;
 import org.eclipse.core.databinding.pojo.bindable.internal.util.ClassUtils;
+import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
+import org.objectweb.asm.commons.AdviceAdapter;
 
 /**
  * 
@@ -36,10 +41,26 @@ import org.objectweb.asm.Type;
  * 
  */
 
-public class SetterMethodBindable extends AbstractMethodBindable {
+public class SetterMethodBindable extends AdviceAdapter implements Opcodes,
+		BindableSignatureConstants, AnnotationBindableAware {
 
 	private static final String BINDABLE_BEFORE_DEPENDS_ON_METHOD_SUFFIX = "_bindable_beforeDependsOn_";
 	private static final String BINDABLE_AFTER_DEPENDS_ON_METHOD_SUFFIX = "_bindable_afterDependsOn_";
+
+	// Owvner class bindable
+	private ClassBindable classBindable;
+
+	// Method name
+	private String methodName;
+
+	// Method name without set (ex : 'name')
+	private String propertyName;
+
+	// Bindable value of property 'dependsOn' of Bindable annotation.
+	private String[] dependsOn = null;
+
+	// true if method must be transformed and false otherwise.
+	private boolean bindableAnnotationValue = true;
 
 	// Getter method name for the property i.e. getName. Getter method is used
 	// to get the old and new value
@@ -53,9 +74,29 @@ public class SetterMethodBindable extends AbstractMethodBindable {
 	// Variable index holder in the bytecode.
 	private int oldValueVarIndex;
 
-	public SetterMethodBindable(ClassBindable classBindable, int access,
-			String methodName, String desc, MethodVisitor mv) {
-		super(classBindable, access, methodName, desc, mv);
+	public SetterMethodBindable(ClassBindable classBindable, MethodVisitor mv,
+			int access, String methodName, String desc) {
+		super(mv, access, methodName, desc);
+		this.methodName = methodName;
+		this.classBindable = classBindable;
+		// Get the property name = method name without 'set'|'get'|'is' suffix.
+		this.propertyName = ClassUtils.getPropertyName(methodName);
+
+		if (classBindable.getBindableAnnotationValue() != null) {
+			// Initialize the bindable annotation value of the method with
+			// Bindable
+			// value of the Class.
+			setBindableAnnotationValue(classBindable
+					.getBindableAnnotationValue());
+		}
+		if (classBindable.getBindableAnnotationDependsOn() != null) {
+			// Initialize the bindable annotation dependsOn of the
+			// method with
+			// Bindable
+			// value of the Class.
+			setBindableAnnotationDependsOn(classBindable
+					.getBindableAnnotationDependsOn());
+		}
 
 		// Get the first argument type of the method
 		Type[] argumentTypes = Type.getArgumentTypes(desc);
@@ -247,4 +288,81 @@ public class SetterMethodBindable extends AbstractMethodBindable {
 				getAfterDependsOnMethodName(), "()V");
 
 	}
+
+	@Override
+	public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
+		ClassBindable classBindable = getClassBindable();
+		if (classBindable.getBindableStrategy().isUseAnnotation()) {
+			if (B_SIGNATURE.equals(desc)) {
+				// It's Bindable annotation, visit it.
+				return new AnnotationBindable(
+						mv.visitAnnotation(desc, visible), this);
+			}
+		}
+		return super.visitAnnotation(desc, visible);
+	}
+
+	/**
+	 * Return method name.
+	 * 
+	 * @return
+	 */
+	public String getMethodName() {
+		return methodName;
+	}
+
+	/**
+	 * Return the property name of the method (ex : "getValue" method name is
+	 * "value" property name).
+	 * 
+	 * @return
+	 */
+	public String getPropertyName() {
+		return propertyName;
+	}
+
+	/**
+	 * Return owner Class Bindable.
+	 * 
+	 * @return
+	 */
+	public ClassBindable getClassBindable() {
+		return classBindable;
+	}
+
+	/**
+	 * 
+	 * Set dependsOn array declared into Bindable annotation.
+	 */
+	public void setBindableAnnotationDependsOn(String[] dependsOn) {
+		this.dependsOn = dependsOn;
+	}
+
+	/**
+	 * Returns dependsOn array declared into Bindable annotation.
+	 * 
+	 * @return
+	 */
+	public String[] getBindableAnnotationDependsOn() {
+		return dependsOn;
+	}
+
+	/**
+	 * 
+	 * Set value declared into Bindable annotation.
+	 */
+	public void setBindableAnnotationValue(boolean bindableAnnotationValue) {
+		this.bindableAnnotationValue = bindableAnnotationValue;
+	}
+
+	/**
+	 * 
+	 * Returns value declared into Bindable annotation.
+	 * 
+	 * @return
+	 */
+	public boolean isBindableAnnotationValue() {
+		return bindableAnnotationValue;
+	}
+
 }
