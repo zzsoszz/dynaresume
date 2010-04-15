@@ -21,6 +21,7 @@ import org.eclipse.core.databinding.pojo.bindable.BindableStrategy;
 import org.eclipse.core.databinding.pojo.bindable.annotation.Bindable;
 import org.eclipse.core.databinding.pojo.bindable.internal.asm.annotation.AnnotationBindable;
 import org.eclipse.core.databinding.pojo.bindable.internal.asm.annotation.AnnotationBindableAware;
+import org.eclipse.core.databinding.pojo.bindable.internal.util.ASMUtils;
 import org.eclipse.core.databinding.pojo.bindable.internal.util.ClassUtils;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassAdapter;
@@ -28,6 +29,7 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
 /**
  * ASM {@link ClassVisitor} to change bytecode of POJO to implements
@@ -343,7 +345,6 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	@Override
 	public void setBindableAnnotationDependsOn(String[] dependsOn) {
 		this.dependsOn = dependsOn;
-
 	}
 
 	/**
@@ -494,7 +495,14 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	}
 
 	/**
-	 * Generate bindable_beforeDependsOn_... for the methodBindable.
+	 * Generate Method bindable_beforeDependsOn_... which get old value for each
+	 * dependsOn for the setterMethodBindable.
+	 * 
+	 * Example :
+	 * 
+	 * private void _bindable_beforeDependsOn_setBuyingPrice() {
+	 * _bindable_setBuyingPrice_ratio = getRatio(); }
+	 * 
 	 * 
 	 * @param methodBindable
 	 * @param getterMethodBindableList
@@ -502,26 +510,17 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	protected void addBeforeDependsOnMethod(
 			SetterMethodBindable setterMethodBindable,
 			Collection<GetterMethodBindable> getterMethodBindableList) {
+
+		// private void _bindable_beforeDependsOn_setBuyingPrice()
 		MethodVisitor mv = cv.visitMethod(ACC_PRIVATE, setterMethodBindable
 				.getBeforeDependsOnMethodName(), "()V", null, null);
 		mv.visitCode();
 
 		if (getterMethodBindableList != null) {
-			String dependsOnFieldName = null;
 			for (GetterMethodBindable getterMethodBindable : getterMethodBindableList) {
 
-				dependsOnFieldName = getDependsOnFieldName(setterMethodBindable
-						.getMethodName(), getterMethodBindable
-						.getPropertyName());
-
-				mv.visitVarInsn(ALOAD, 0);
-				mv.visitVarInsn(ALOAD, 0);
-
-				mv.visitMethodInsn(INVOKEVIRTUAL, className,
-						getterMethodBindable.getMethodName(),
-						getterMethodBindable.getMethodDesc());
-				mv.visitFieldInsn(PUTFIELD, className, dependsOnFieldName,
-						getterMethodBindable.getPropertyDesc());
+				addBeforeDependsOnMethod(setterMethodBindable,
+						getterMethodBindable, mv);
 			}
 		}
 
@@ -531,20 +530,127 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	}
 
 	/**
-	 * Generate bindable_afterDependsOn_... for the methodBindable.
+	 * Generate the get old value for the dependsOn field.
 	 * 
-	 * @param methodBindable
+	 * Example:
+	 * 
+	 * _bindable_setBuyingPrice_ratio = getRatio();
+	 * 
+	 * @param setterMethodBindable
+	 * @param getterMethodBindable
+	 * @param mv
+	 */
+	private void addBeforeDependsOnMethod(
+			SetterMethodBindable setterMethodBindable,
+			GetterMethodBindable getterMethodBindable, MethodVisitor mv) {
+		String dependsOnFieldName = getDependsOnFieldName(setterMethodBindable
+				.getMethodName(), getterMethodBindable.getPropertyName());
+
+		/*
+		 * Example :
+		 * 
+		 * _bindable_setBuyingPrice_ratio = getRatio();
+		 */
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitVarInsn(ALOAD, 0);
+
+		mv.visitMethodInsn(INVOKEVIRTUAL, className, getterMethodBindable
+				.getMethodName(), getterMethodBindable.getMethodDesc());
+		mv.visitFieldInsn(PUTFIELD, className, dependsOnFieldName,
+				getterMethodBindable.getPropertyDesc());
+	}
+
+	/**
+	 * Generate Method bindable_afterDependsOn_... which fire event for each
+	 * dependsOn for the setterMethodBindable.
+	 * 
+	 * Example :
+	 * 
+	 * private void _bindable_afterDependsOn_setBuyingPrice() {
+	 * _bindable_getPropertyChangeSupport().firePropertyChange("ratio",
+	 * Double.valueOf(_bindable_setBuyingPrice_ratio),
+	 * Double.valueOf(getRatio())); }
+	 * 
+	 * 
+	 * @param setterMethodBindable
 	 * @param getterMethodBindableList
 	 */
-	protected void addAfterDependsOnMethod(SetterMethodBindable methodBindable,
+	protected void addAfterDependsOnMethod(
+			SetterMethodBindable setterMethodBindable,
 			Collection<GetterMethodBindable> getterMethodBindableList) {
-		MethodVisitor mv = cv.visitMethod(ACC_PRIVATE, methodBindable
+		MethodVisitor mv = cv.visitMethod(ACC_PRIVATE, setterMethodBindable
 				.getAfterDependsOnMethodName(), "()V", null, null);
 		mv.visitCode();
+
+		if (getterMethodBindableList != null) {
+			for (GetterMethodBindable getterMethodBindable : getterMethodBindableList) {
+
+				addAfterDependsOnMethod(setterMethodBindable,
+						getterMethodBindable, mv);
+			}
+		}
 
 		mv.visitInsn(RETURN);
 		mv.visitMaxs(5, 1);
 		mv.visitEnd();
+
+	}
+
+	/**
+	 * Generate the fire event for the dependsOn field.
+	 * 
+	 * Example :
+	 * 
+	 * _bindable_getPropertyChangeSupport().firePropertyChange("ratio",
+	 * Double.valueOf(_bindable_setBuyingPrice_ratio),
+	 * Double.valueOf(getRatio()));
+	 * 
+	 * @param setterMethodBindable
+	 * @param getterMethodBindable
+	 * @param mv
+	 */
+	private void addAfterDependsOnMethod(
+			SetterMethodBindable setterMethodBindable,
+			GetterMethodBindable getterMethodBindable, MethodVisitor mv) {
+
+		String propertyName = getterMethodBindable.getPropertyName();
+		String propertyDesc = getterMethodBindable.getPropertyDesc();
+		Type propertyType = Type.getType(propertyDesc);
+		String getterMethodName = getterMethodBindable.getMethodName();
+		String setterMethodName = setterMethodBindable.getMethodName();
+
+		/*
+		 * Example :
+		 * _bindable_getPropertyChangeSupport().firePropertyChange("ratio",
+		 * Double.valueOf(_bindable_setBuyingPrice_ratio),
+		 * Double.valueOf(getRatio()));
+		 */
+
+		String dependsOnFieldName = getDependsOnFieldName(setterMethodName,
+				propertyName);
+
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitMethodInsn(INVOKESPECIAL, className,
+				"_bindable_getPropertyChangeSupport",
+				"()Ljava/beans/PropertyChangeSupport;");
+		mv.visitLdcInsn(propertyName);
+		mv.visitVarInsn(ALOAD, 0);
+
+		mv
+				.visitFieldInsn(GETFIELD, className, dependsOnFieldName,
+						propertyDesc);
+		ASMUtils.convertPrimitiveTypeToObjectTypeIfNeeded(mv, propertyType);
+
+		mv.visitVarInsn(ALOAD, 0);
+
+		mv.visitMethodInsn(INVOKEVIRTUAL, getClassName(), getterMethodName,
+				getterMethodBindable.getMethodDesc());
+		ASMUtils.convertPrimitiveTypeToObjectTypeIfNeeded(mv, propertyType);
+
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/beans/PropertyChangeSupport",
+				"firePropertyChange", FPC_DESC_OBJECT /*
+													 * "(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V")
+													 */);
 
 	}
 
