@@ -18,14 +18,16 @@ import org.objectweb.asm.AnnotationVisitor;
  * {@link Bindable} annotation.
  * 
  */
-public class AnnotationBindable extends AnnotationAdapter {
-
-	private static final String BINDABLE_VALUE_ANNOTATION = "value";
+public class AnnotationBindable extends AnnotationAdapter implements
+		BindableAnnotationConstants {
 
 	private AnnotationBindableAware annotationBindableAware = null;
 
 	// Bindable value of property 'value' of Bindable annotation.
 	private Boolean bindableValue = null;
+
+	// Bindable value of property 'computedProperties' of Bindable annotation.
+	private String[] computedProperties = null;
 
 	public AnnotationBindable(AnnotationVisitor av,
 			AnnotationBindableAware annotationBindableAware) {
@@ -36,11 +38,22 @@ public class AnnotationBindable extends AnnotationAdapter {
 	@Override
 	public void visit(String name, Object value) {
 		if (BINDABLE_VALUE_ANNOTATION.equals(name)) {
-			// value property is definied into Bindable annotation, get it the
+			// value property is definied into @Bindable annotation, get it the
 			// value
 			bindableValue = (Boolean) value;
 		}
 		super.visit(name, value);
+	}
+	
+	@Override
+	public AnnotationVisitor visitArray(String name) {
+		if (BINDABLE_COMPUTED_PROPERTIES_ANNOTATION.equals(name)) {
+			// computedproperties is defined into @Bindable annotation, create 
+			// AnnotationStringArrayAdapter to get values of computedproperties
+			// When String array values are built, AnnotationBindable#setValues is called.
+			return new AnnotationStringArrayAdapter(name, this);
+		}
+		return super.visitArray(name);
 	}
 
 	@Override
@@ -51,6 +64,19 @@ public class AnnotationBindable extends AnnotationAdapter {
 			// AnnotationBindableAware (ClassBindable or MethodBindable)
 			annotationBindableAware.setBindableAnnotationValue(bindableValue);
 		}
+		if (computedProperties != null) {
+			// computedProperties property is definied into Bindable annotation, set the
+			// computedProperties to the
+			// AnnotationBindableAware (ClassBindable or MethodBindable)
+			annotationBindableAware.setBindableAnnotationComputedProperties(computedProperties);
+		}
 		super.visitEnd();
+	}
+	
+	@Override
+	public void setValues(String arrayName, String[] values) {
+		if (BINDABLE_COMPUTED_PROPERTIES_ANNOTATION.equals(arrayName)) {
+			this.computedProperties = values;
+		}
 	}
 }

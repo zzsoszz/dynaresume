@@ -63,6 +63,9 @@ public class MethodBindable extends AdviceAdapter implements Opcodes,
 	// Variable index holder in the bytecode.
 	private int oldValueVarIndex;
 
+	// Bindable value of property 'computedProperties' of Bindable annotation.
+	private String[] computedProperties = null;
+
 	// true if method must be transformed and false otherwise.
 	private boolean transformToBindableMethod = true;
 
@@ -197,6 +200,11 @@ public class MethodBindable extends AdviceAdapter implements Opcodes,
 
 	public void setBindableAnnotationValue(boolean value) {
 		this.transformToBindableMethod = value;
+	}
+
+	public void setBindableAnnotationComputedProperties(
+			String[] computedProperties) {
+		this.computedProperties = computedProperties;
 	}
 
 	/**

@@ -113,4 +113,8 @@ public class AnnotationAdapter implements AnnotationVisitor {
 	public void visitEnd() {
 		av.visitEnd();
 	}
+
+	public void setValues(String arrayName, String[] values) {
+
+	}
 }

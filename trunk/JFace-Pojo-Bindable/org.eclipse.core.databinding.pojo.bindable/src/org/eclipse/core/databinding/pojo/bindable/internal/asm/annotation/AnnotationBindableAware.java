@@ -26,4 +26,12 @@ public interface AnnotationBindableAware {
 	 * @param bindableValue
 	 */
 	void setBindableAnnotationValue(boolean bindableValue);
+
+	/**
+	 * Set the value of the property 'computedProperties' of the
+	 * {@link Bindable} annotation.
+	 * 
+	 * @param computedProperties
+	 */
+	void setBindableAnnotationComputedProperties(String[] computedProperties);
 }

@@ -17,6 +17,8 @@ package org.eclipse.core.databinding.pojo.bindable.internal.util;
  */
 public class StringUtils {
 
+	public static final String[] EMPTY_STRING = new String[0];
+	
 	private static final String TRUE = "true";
 
 	/**
