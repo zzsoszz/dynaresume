@@ -77,17 +77,26 @@ public class ClassUtils implements Opcodes {
 	}
 
 	/**
-	 * Return the property name = method name without 'set' prefix.
+	 * Return the property name = method name without 'set', 'get' or 'is'
+	 * prefix.
 	 * 
 	 * @param methodName
 	 * @return
 	 */
 	public static String getPropertyName(String methodName) {
-		if (methodName.startsWith(SET_PREFIX_METHOD)) {
-
-			String firstChar = methodName.substring(3, 4).toLowerCase();
-			if (methodName.length() > 4) {
-				return firstChar + methodName.substring(4, methodName.length());
+		int index = -1;
+		if (methodName.startsWith(SET_PREFIX_METHOD)
+				|| methodName.startsWith(GET_PREFIX_METHOD)) {
+			index = 3;
+		} else if (methodName.startsWith(IS_PREFIX_METHOD)) {
+			index = 2;
+		}
+		if (index != -1) {
+			int prefixIndex = index + 1; 
+			String firstChar = methodName.substring(index, prefixIndex)
+					.toLowerCase();			
+			if (methodName.length() > prefixIndex) {
+				return firstChar + methodName.substring(prefixIndex, methodName.length());
 			} else {
 				return firstChar;
 			}
