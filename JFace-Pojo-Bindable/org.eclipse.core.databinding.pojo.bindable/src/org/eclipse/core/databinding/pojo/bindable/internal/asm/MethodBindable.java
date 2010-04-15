@@ -16,6 +16,7 @@ import java.beans.PropertyChangeSupport;
 
 import org.eclipse.core.databinding.pojo.bindable.internal.asm.annotation.AnnotationBindable;
 import org.eclipse.core.databinding.pojo.bindable.internal.asm.annotation.AnnotationBindableAware;
+import org.eclipse.core.databinding.pojo.bindable.internal.util.ASMUtils;
 import org.eclipse.core.databinding.pojo.bindable.internal.util.ClassUtils;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.MethodVisitor;
@@ -128,56 +129,7 @@ public class MethodBindable extends AdviceAdapter implements Opcodes,
 	 * @param type
 	 */
 	private void convertPrimitiveTypeToObjectTypeIfNeeded(Type type) {
-		switch (type.getSort()) {
-		case Type.BOOLEAN:
-			// mv.visitMethodInsn(INVOKESTATIC, "java/lang/Boolean", "valueOf",
-			// "(Z)Ljava/lang/Boolean;");
-			mv.visitMethodInsn(INVOKESTATIC, BOOLEAN_SHORT_SIGNATURE,
-					VALUEOF_METHOD, BOOLEAN_SIGNATURE);
-			break;
-		case Type.BYTE:
-			// mv.visitMethodInsn(INVOKESTATIC, "java/lang/Byte", "valueOf",
-			// "(B)Ljava/lang/Byte;");
-			mv.visitMethodInsn(INVOKESTATIC, BYTE_SHORT_SIGNATURE,
-					VALUEOF_METHOD, BYTE_SIGNATURE);
-			break;
-		case Type.CHAR:
-			// mv.visitMethodInsn(INVOKESTATIC, "java/lang/Character",
-			// "valueOf", "(C)Ljava/lang/Character;");
-			mv.visitMethodInsn(INVOKESTATIC, CHARACTER_SHORT_SIGNATURE,
-					VALUEOF_METHOD, CHARACTER_SIGNATURE);
-			break;
-		case Type.INT:
-			// mv.visitMethodInsn(INVOKESTATIC, "java/lang/Integer", "valueOf",
-			// "(I)Ljava/lang/Integer;");
-			mv.visitMethodInsn(INVOKESTATIC, INTEGER_SHORT_SIGNATURE,
-					VALUEOF_METHOD, INTEGER_SIGNATURE);
-			break;
-		case Type.SHORT:
-			// mv.visitMethodInsn(INVOKESTATIC, "java/lang/Short",
-			// "valueOf","(S)Ljava/lang/Short;");
-			mv.visitMethodInsn(INVOKESTATIC, SHORT_SHORT_SIGNATURE,
-					VALUEOF_METHOD, SHORT_SIGNATURE);
-			break;
-		case Type.LONG:
-			// mv.visitMethodInsn(INVOKESTATIC, "java/lang/Long", "valueOf",
-			// "(J)Ljava/lang/Long;");
-			mv.visitMethodInsn(INVOKESTATIC, LONG_SHORT_SIGNATURE,
-					VALUEOF_METHOD, LONG_SIGNATURE);
-			break;
-		case Type.FLOAT:
-			// mv.visitMethodInsn(INVOKESTATIC, "java/lang/Float", "valueOf",
-			// "(F)Ljava/lang/Float;");
-			mv.visitMethodInsn(INVOKESTATIC, FLOAT_SHORT_SIGNATURE,
-					VALUEOF_METHOD, FLOAT_SIGNATURE);
-			break;
-		case Type.DOUBLE:
-			// mv.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf",
-			// "(D)Ljava/lang/Double;");
-			mv.visitMethodInsn(INVOKESTATIC, DOUBLE_SHORT_SIGNATURE,
-					VALUEOF_METHOD, DOUBLE_SIGNATURE);
-			break;
-		}
+		ASMUtils.convertPrimitiveTypeToObjectTypeIfNeeded(mv, type);
 	}
 
 	@Override
