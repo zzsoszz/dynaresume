@@ -107,6 +107,21 @@ public class ClassUtils implements Opcodes {
 	}
 
 	/**
+	 * Returns property descriptor from method descriptor.
+	 * 
+	 * Ex : '()D' return 'D'.
+	 * 
+	 * @param methodDesc
+	 * @return
+	 */
+	public static String getPropertyDesc(String methodDesc) {
+		if (methodDesc.startsWith("()")) {
+			return methodDesc.substring(2, methodDesc.length());
+		}
+		return methodDesc;
+	}
+
+	/**
 	 * Return true if method is getter start with 'get' or 'is' and false
 	 * otherwise.
 	 * 

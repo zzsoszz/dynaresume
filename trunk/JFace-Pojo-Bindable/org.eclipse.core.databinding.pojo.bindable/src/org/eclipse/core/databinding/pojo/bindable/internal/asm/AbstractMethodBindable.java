@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.core.databinding.pojo.bindable.internal.asm;
 
+import org.eclipse.core.databinding.pojo.bindable.internal.asm.annotation.AnnotationBindable;
 import org.eclipse.core.databinding.pojo.bindable.internal.asm.annotation.AnnotationBindableAware;
 import org.eclipse.core.databinding.pojo.bindable.internal.util.ClassUtils;
+import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.commons.AdviceAdapter;
@@ -62,6 +64,19 @@ public abstract class AbstractMethodBindable extends AdviceAdapter implements
 					.getBindableAnnotationDependsOn());
 		}
 
+	}
+	
+	@Override
+	public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
+		ClassBindable classBindable = getClassBindable();
+		if (classBindable.getBindableStrategy().isUseAnnotation()) {
+			if (B_SIGNATURE.equals(desc)) {
+				// It's Bindable annotation, visit it.
+				return new AnnotationBindable(
+						mv.visitAnnotation(desc, visible), this);
+			}
+		}
+		return super.visitAnnotation(desc, visible);
 	}
 
 	/**

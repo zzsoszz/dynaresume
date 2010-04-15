@@ -45,7 +45,7 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	private String[] dependsOn = null;
 
 	// List of MethodBindables
-	private Collection<SetterMethodBindable> setterMethodBindable = null;
+	private Collection<SetterMethodBindable> setterMethodBindableList = null;
 
 	// List of MethodBindables
 	private Map<String, Collection<GetterMethodBindable>> dependsOnGetterMethodBindable = null;
@@ -353,10 +353,10 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	 * @param methodBindable
 	 */
 	protected void addSetterMethodBindable(SetterMethodBindable methodBindable) {
-		if (setterMethodBindable == null) {
-			setterMethodBindable = new ArrayList<SetterMethodBindable>();
+		if (setterMethodBindableList == null) {
+			setterMethodBindableList = new ArrayList<SetterMethodBindable>();
 		}
-		setterMethodBindable.add(methodBindable);
+		setterMethodBindableList.add(methodBindable);
 	}
 
 	/**
@@ -394,43 +394,114 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	}
 
 	/**
-	 * Generate methods _bindable_afterDependsOn_... and
-	 * _bindable_beforeDependsOn_... for each {@link SetterMethodBindable}.
+	 * Generate methods _bindable_beforeDependsOn_... and
+	 * _bindable_afterDependsOn_... for each {@link SetterMethodBindable}.
 	 */
 	private void addDependsOnMethodsIfNeeded() {
-		if (setterMethodBindable == null)
+		if (setterMethodBindableList == null)
 			// No methods have declared @Bindable#dependsOn.
 			return;
 
 		// Loop for each MethodBindable which have declared
 		// @Bindable#dependsOn and generate dependsOn methods
 		// required for each SetterMethodBindable
-		for (SetterMethodBindable methodBindable : setterMethodBindable) {
+		Collection<GetterMethodBindable> getterMethodBindableList = null;
+		String setterPropertyName = null;
+		for (SetterMethodBindable setterMethodBindable : setterMethodBindableList) {
 
-			addDependsOnFields(methodBindable);
+			if (dependsOnGetterMethodBindable != null) {
+				// Get the property name of the setter
+				setterPropertyName = setterMethodBindable.getPropertyName();
+				// Search if it exists dependsOn (defined into getter) linked to
+				// this
+				// property name of the setter.
+				getterMethodBindableList = dependsOnGetterMethodBindable
+						.get(setterPropertyName);
+
+			}
+			addDependsOnFields(setterMethodBindable, getterMethodBindableList);
 			// Generate before
-			addBeforeDependsOnMethod(methodBindable);
+			addBeforeDependsOnMethod(setterMethodBindable,
+					getterMethodBindableList);
 			// Generate after
-			addAfterDependsOnMethod(methodBindable);
+			addAfterDependsOnMethod(setterMethodBindable,
+					getterMethodBindableList);
 		}
 	}
 
 	/**
 	 * Generate fields dependsOn for the methodBindable.
 	 * 
-	 * @param methodBindable
+	 * @param setterMethodBindable
 	 */
-	private void addDependsOnFields(SetterMethodBindable methodBindable) {
-		// TODO : generate fields
+	private void addDependsOnFields(SetterMethodBindable setterMethodBindable,
+			Collection<GetterMethodBindable> getterMethodBindableList) {
+		if (getterMethodBindableList == null)
+			return;
 
+		// It exists list of getter wich defines dependsOn to this setter
+		// method.
+		// Loop for this list and generate dependsOn field.
+		for (GetterMethodBindable getterMethodBindable : getterMethodBindableList) {
+			addDependsOnFields(setterMethodBindable, getterMethodBindable);
+		}
+
+	}
+
+	/**
+	 * Generate dependsOn field for the setterMethodBindable by using
+	 * getterMethodBindable :
+	 * 
+	 * private transient <type>
+	 * _bindable_<setterMethodName>_<propertyNameOfGetterMethod>;
+	 * 
+	 * Ex : private transient double _bindable_setSellingPrice_ratio;
+	 * 
+	 * @param setterMethodBindable
+	 * @param getterMethodBindable
+	 */
+	private void addDependsOnFields(SetterMethodBindable setterMethodBindable,
+			GetterMethodBindable getterMethodBindable) {
+
+		String dependsOnFieldName = getDependsOnFieldName(setterMethodBindable
+				.getMethodName(), getterMethodBindable.getPropertyName());
+		String propertyDesc = getterMethodBindable.getPropertyDesc();
+
+		/*
+		 * Generate private transient <type>
+		 * _bindable_<setterMethodName>_<propertyNameOfGetterMethod>;
+		 * 
+		 * Ex : private transient double _bindable_setSellingPrice_ratio;
+		 */
+		cv.visitField(ACC_PRIVATE + ACC_TRANSIENT, dependsOnFieldName,
+				propertyDesc, null, null);
+	}
+
+	/**
+	 * Returns name of dependsOn field name.
+	 * 
+	 * @param methodName
+	 * @param fieldName
+	 * @return
+	 */
+	private String getDependsOnFieldName(String methodName, String fieldName) {
+		StringBuffer name = new StringBuffer();
+		name.append("_bindable_");
+		name.append(methodName);
+		name.append("_");
+		name.append(fieldName);
+		return name.toString();
 	}
 
 	/**
 	 * Generate bindable_beforeDependsOn_... for the methodBindable.
 	 * 
 	 * @param methodBindable
+	 * @param getterMethodBindableList
 	 */
-	protected void addBeforeDependsOnMethod(SetterMethodBindable methodBindable) {
+	protected void addBeforeDependsOnMethod(
+			SetterMethodBindable methodBindable,
+			Collection<GetterMethodBindable> getterMethodBindableList) {
 		MethodVisitor mv = cv.visitMethod(ACC_PRIVATE, methodBindable
 				.getBeforeDependsOnMethodName(), "()V", null, null);
 		mv.visitCode();
@@ -444,8 +515,10 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	 * Generate bindable_afterDependsOn_... for the methodBindable.
 	 * 
 	 * @param methodBindable
+	 * @param getterMethodBindableList
 	 */
-	protected void addAfterDependsOnMethod(SetterMethodBindable methodBindable) {
+	protected void addAfterDependsOnMethod(SetterMethodBindable methodBindable,
+			Collection<GetterMethodBindable> getterMethodBindableList) {
 		MethodVisitor mv = cv.visitMethod(ACC_PRIVATE, methodBindable
 				.getAfterDependsOnMethodName(), "()V", null, null);
 		mv.visitCode();
