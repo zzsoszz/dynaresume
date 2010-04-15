@@ -9,20 +9,16 @@
  *     Angelo ZERR <angelo.zerr@gmail.com>
  *     Joga Singh <joga.singh@gmail.com> Changed the code to inject the bytecode in the start and end of method.
  *******************************************************************************/
-
 package org.eclipse.core.databinding.pojo.bindable.internal.asm;
 
 import java.beans.PropertyChangeSupport;
 
 import org.eclipse.core.databinding.pojo.bindable.internal.asm.annotation.AnnotationBindable;
-import org.eclipse.core.databinding.pojo.bindable.internal.asm.annotation.AnnotationBindableAware;
 import org.eclipse.core.databinding.pojo.bindable.internal.util.ASMUtils;
 import org.eclipse.core.databinding.pojo.bindable.internal.util.ClassUtils;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
-import org.objectweb.asm.commons.AdviceAdapter;
 
 /**
  * 
@@ -42,18 +38,14 @@ import org.objectweb.asm.commons.AdviceAdapter;
  * 
  */
 
-public class MethodBindable extends AdviceAdapter implements Opcodes,
-		BindableSignatureConstants, AnnotationBindableAware {
+public class SetterMethodBindable extends AbstractMethodBindable {
 
-	// Owvner class bindable
-	private ClassBindable classBindable;
+	private static final String BINDABLE_BEFORE_DEPENDS_ON_METHOD_SUFFIX = "_bindable_beforeDependsOn_";
+	private static final String BINDABLE_AFTER_DEPENDS_ON_METHOD_SUFFIX = "_bindable_afterDependsOn_";
 
 	// Getter method name for the property i.e. getName. Getter method is used
 	// to get the old and new value
 	private String getterMethod;
-
-	// Method name without set (ex : 'name')
-	private String propertyName;
 
 	// Method arguments types. Used to generate the variable to store the old
 	// value.
@@ -63,45 +55,20 @@ public class MethodBindable extends AdviceAdapter implements Opcodes,
 	// Variable index holder in the bytecode.
 	private int oldValueVarIndex;
 
-	// Bindable value of property 'computedProperties' of Bindable annotation.
-	private String[] computedProperties = null;
-
-	// true if method must be transformed and false otherwise.
-	private boolean transformToBindableMethod = true;
-
-	public MethodBindable(ClassBindable classBindable, int access,
+	public SetterMethodBindable(ClassBindable classBindable, int access,
 			String methodName, String desc, MethodVisitor mv) {
-		super(mv, access, methodName, desc);
-		this.classBindable = classBindable;
+		super(classBindable, access, methodName, desc, mv);
 
 		// Get the first argument type of the method
 		Type[] argumentTypes = Type.getArgumentTypes(desc);
 		this.firstArgumentType = (argumentTypes.length == 1 ? argumentTypes[0]
 				: null);
 
-		// Get the property name = method name without 'set' prefix.
-		this.propertyName = ClassUtils.getPropertyName(methodName);
 		// Get the getter method name
 		this.getterMethod = ClassUtils
-				.getGetterMethod(propertyName,
+				.getGetterMethod(getPropertyName(),
 						(firstArgumentType != null && firstArgumentType
 								.getSort() == Type.BOOLEAN));
-
-		if (classBindable.getBindableAnnotationValue() != null) {
-			// Initialize the bindable annotation value of the method with
-			// Bindable
-			// value of the Class.
-			setBindableAnnotationValue(classBindable
-					.getBindableAnnotationValue());
-		}
-		if (classBindable.getBindableAnnotationComputedProperties() != null) {
-			// Initialize the bindable annotation computedProperties of the method with
-			// Bindable
-			// value of the Class.
-			setBindableAnnotationComputedProperties(classBindable
-					.getBindableAnnotationComputedProperties());
-		}
-
 	}
 
 	@Override
@@ -109,23 +76,30 @@ public class MethodBindable extends AdviceAdapter implements Opcodes,
 		if (!canTransformToBindableMethod())
 			return;
 
-		/*
-		 * Inject the bytecode to store the old value of the property into a
-		 * variable. E.g. String s = getName();
-		 * 
-		 * Experience has shown that sometimes getter methods do not simply
-		 * return the field value especially in JPA entities. Further, field
-		 * names could be totally different than the setter/getter method names.
-		 * This is the reason that getter method is used to get the old value,
-		 * rather than accessing the field.
-		 */
+		// Call methods wich get the old values of computedProperties
+		addBeforeDependsOnMethodsIfNeeded();
+		// Get the old value.
+		addGetOldValueCode();
 
+	}
+
+	/**
+	 * Inject the bytecode to store the old value of the property into a
+	 * variable. E.g. String s = getName();
+	 * 
+	 * Experience has shown that sometimes getter methods do not simply return
+	 * the field value especially in JPA entities. Further, field names could be
+	 * totally different than the setter/getter method names. This is the reason
+	 * that getter method is used to get the old value, rather than accessing
+	 * the field.
+	 */
+	private void addGetOldValueCode() {
 		// Get the index of the variable. Mostly it will be 2.
 		oldValueVarIndex = newLocal(firstArgumentType);
 
 		String methodDesc = getGettterMethodDesc();
 		mv.visitVarInsn(ALOAD, 0);
-		visitMethodInsn(INVOKEVIRTUAL, classBindable.getClassName(),
+		visitMethodInsn(INVOKEVIRTUAL, getClassBindable().getClassName(),
 				getterMethod, methodDesc);
 		convertPrimitiveTypeToObjectTypeIfNeeded(firstArgumentType);
 		visitVarInsn(ASTORE, oldValueVarIndex);
@@ -152,7 +126,10 @@ public class MethodBindable extends AdviceAdapter implements Opcodes,
 		 * exception
 		 */
 		if (opcode == RETURN) {
-			insertFirePropertyChangeCode();
+			// Fire event
+			addFirePropertyChangeCode();
+			// Call methods wich fire events for each dependsOn
+			addAfterDependsOnMethodsIfNeeded();
 		}
 
 	}
@@ -162,14 +139,15 @@ public class MethodBindable extends AdviceAdapter implements Opcodes,
 	 * _bindable_getPropertyChangeSupport().firePropertyChange("name", s,
 	 * getName());
 	 **/
-	private void insertFirePropertyChangeCode() {
+	private void addFirePropertyChangeCode() {
 
+		ClassBindable classBindable = getClassBindable();
 		String methodDesc = getGettterMethodDesc();
 		visitVarInsn(ALOAD, 0);
 		visitMethodInsn(INVOKESPECIAL, classBindable.getClassName(),
 				"_bindable_getPropertyChangeSupport",
 				"()Ljava/beans/PropertyChangeSupport;");
-		visitLdcInsn(propertyName);
+		visitLdcInsn(getPropertyName());
 		visitVarInsn(ALOAD, oldValueVarIndex);
 		visitVarInsn(ALOAD, 0);
 
@@ -195,6 +173,7 @@ public class MethodBindable extends AdviceAdapter implements Opcodes,
 
 	@Override
 	public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
+		ClassBindable classBindable = getClassBindable();
 		if (classBindable.getBindableStrategy().isUseAnnotation()) {
 			if (B_SIGNATURE.equals(desc)) {
 				// It's Bindable annotation, visit it.
@@ -205,21 +184,82 @@ public class MethodBindable extends AdviceAdapter implements Opcodes,
 		return super.visitAnnotation(desc, visible);
 	}
 
-	public void setBindableAnnotationValue(boolean value) {
-		this.transformToBindableMethod = value;
-	}
-
-	public void setBindableAnnotationComputedProperties(
-			String[] computedProperties) {
-		this.computedProperties = computedProperties;
-	}
-
 	/**
 	 * Return true if method must be transformed and false otherwise.
 	 * 
 	 * @return
 	 */
 	private boolean canTransformToBindableMethod() {
-		return transformToBindableMethod && firstArgumentType != null;
+		return isBindableAnnotationValue() && firstArgumentType != null;
+	}
+
+	// ----------------- @Bindable#dependsOn
+
+	/**
+	 * Return name of the method which get old values of dependsOn
+	 * "_bindable_beforeDependsOn_<methodName>".
+	 * 
+	 * @return
+	 */
+	public String getBeforeDependsOnMethodName() {
+		return BINDABLE_BEFORE_DEPENDS_ON_METHOD_SUFFIX + getMethodName();
+	}
+
+	/**
+	 * Return name of the method which fire event for dependsOn
+	 * "_bindable_afterDependsOn_<methodName>".
+	 * 
+	 * @return
+	 */
+	public String getAfterDependsOnMethodName() {
+		return BINDABLE_AFTER_DEPENDS_ON_METHOD_SUFFIX + getMethodName();
+	}
+
+	/**
+	 * Call the method "_bindable_beforeDependsOn_<methodName>" to get old
+	 * values of dependsOn. This method will be generated into
+	 * {@link ClassBindable#addBeforeDependsOnMethod(SetterMethodBindable)}.
+	 */
+	private void addBeforeDependsOnMethodsIfNeeded() {
+		ClassBindable classBindable = getClassBindable();
+		if (!classBindable.isDependsOnSupported())
+			return;
+
+		// Add this method bindable to owner class bindable
+		// to generate dependsOn method bindable.
+		classBindable.addSetterMethodBindable(this);
+
+		// Generate _bindable_beforeDependsOn_<methodName>();
+		// ex for setValue method, it will generate
+		// public void setValue(String value) {
+		// _bindable_beforeDependsOn_setValue(); ...
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitMethodInsn(INVOKESPECIAL, classBindable.getClassName(),
+				getBeforeDependsOnMethodName(), "()V");
+
+	}
+
+	/**
+	 * Call the method "_bindable_afterDependsOn_<methodName>" to fire event for
+	 * each dependsOn. Methods is used to get values because here we cannot know
+	 * the Type of the dependsOn because method can be not parsed. The method
+	 * "_bindable_afterDependsOn_<methodName>" will be generated into
+	 * {@link ClassBindable#addAfterDependsOnMethod(SetterMethodBindable)}.
+	 */
+	private void addAfterDependsOnMethodsIfNeeded() {
+		ClassBindable classBindable = getClassBindable();
+		if (!classBindable.isDependsOnSupported())
+			return;
+
+		// Generate _bindable_afterDependsOn_<methodName>();
+		// ex for setValue method, it will generate
+		// public void setValue(String value) {
+		// _bindable_beforeDependsOn_setValue(); ...
+		// ...
+		// _bindable_afterDependsOn_setValue(); ...
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitMethodInsn(INVOKESPECIAL, classBindable.getClassName(),
+				getAfterDependsOnMethodName(), "()V");
+
 	}
 }

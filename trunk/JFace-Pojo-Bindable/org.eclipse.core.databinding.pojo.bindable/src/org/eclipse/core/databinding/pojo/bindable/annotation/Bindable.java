@@ -38,5 +38,5 @@ public @interface Bindable {
 	 * 
 	 * @return
 	 */
-	String[] computedProperties() default {};
+	String[] dependsOn() default {};
 }

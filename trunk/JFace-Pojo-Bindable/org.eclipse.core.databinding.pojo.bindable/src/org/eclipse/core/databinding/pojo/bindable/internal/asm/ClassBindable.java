@@ -11,10 +11,17 @@
  *******************************************************************************/
 package org.eclipse.core.databinding.pojo.bindable.internal.asm;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.core.databinding.pojo.bindable.BindableAware;
 import org.eclipse.core.databinding.pojo.bindable.BindableStrategy;
+import org.eclipse.core.databinding.pojo.bindable.annotation.Bindable;
 import org.eclipse.core.databinding.pojo.bindable.internal.asm.annotation.AnnotationBindable;
 import org.eclipse.core.databinding.pojo.bindable.internal.asm.annotation.AnnotationBindableAware;
+import org.eclipse.core.databinding.pojo.bindable.internal.util.ClassUtils;
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassAdapter;
 import org.objectweb.asm.ClassVisitor;
@@ -33,8 +40,15 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	private String className = null;
 	private BindableStrategy bindableStrategy;
 	private Boolean bindableAnnotation = null;
-	// Bindable value of property 'computedProperties' of Bindable annotation.
-	private String[] computedProperties = null;
+
+	// Bindable value of property 'dependsOn' of Bindable annotation.
+	private String[] dependsOn = null;
+
+	// List of MethodBindables
+	private Collection<SetterMethodBindable> setterMethodBindable = null;
+
+	// List of MethodBindables
+	private Map<String, Collection<GetterMethodBindable>> dependsOnGetterMethodBindable = null;
 
 	public ClassBindable(ClassVisitor cv, BindableStrategy bindableStrategy) {
 		super(cv);
@@ -94,6 +108,8 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 		addAddPropertyChangeListener();
 		// Add removePropertyChangeListener method
 		addRemovePropertyChangeListener();
+		// Add for each method dependsOn method
+		addDependsOnMethodsIfNeeded();
 
 		super.visitEnd();
 	}
@@ -103,9 +119,17 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 			String desc, String signature, String[] exceptions) {
 		if (bindableStrategy.isBindableMethod(className, methodName)) {
 			// Method is bindable, visit it.
-			return new MethodBindable(this, access, methodName, desc, cv
+			return new SetterMethodBindable(this, access, methodName, desc, cv
 					.visitMethod(access, methodName, desc, signature,
 							exceptions));
+
+		} else {
+			// Test if it's getter method
+			if (isDependsOnSupported() && ClassUtils.isGetterMethod(methodName)) {
+				return new GetterMethodBindable(this, access, methodName, desc,
+						cv.visitMethod(access, methodName, desc, signature,
+								exceptions));
+			}
 
 		}
 		return super.visitMethod(access, methodName, desc, signature,
@@ -298,25 +322,147 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	}
 
 	/**
-	 * Return the string array of 'computedProperties' Bindable annotation
-	 * putted into Class and null otherwise.
-	 * 
-	 * @return
-	 */
-	public String[] getBindableAnnotationComputedProperties() {
-		return computedProperties;
-	}
-
-	/**
 	 * Set the value of Bindable annotation putted into Class.
 	 */
 	public void setBindableAnnotationValue(boolean value) {
 		this.bindableAnnotation = value;
 	}
 
-	public void setBindableAnnotationComputedProperties(
-			String[] computedProperties) {
-		this.computedProperties = computedProperties;
+	// ----------------- @Bindable#dependsOn
+
+	/**
+	 * Return the string array of 'dependsOn' Bindable annotation putted into
+	 * Class and null otherwise.
+	 * 
+	 * @return
+	 */
+	public String[] getBindableAnnotationDependsOn() {
+		return dependsOn;
+	}
+
+	@Override
+	public void setBindableAnnotationDependsOn(String[] dependsOn) {
+		this.dependsOn = dependsOn;
+
+	}
+
+	/**
+	 * Add a {@link SetterMethodBindable} which have call (if Bindable
+	 * annotation is activated serveral methods _bindable_afterDependsOn...).
+	 * 
+	 * @param methodBindable
+	 */
+	protected void addSetterMethodBindable(SetterMethodBindable methodBindable) {
+		if (setterMethodBindable == null) {
+			setterMethodBindable = new ArrayList<SetterMethodBindable>();
+		}
+		setterMethodBindable.add(methodBindable);
+	}
+
+	/**
+	 * Add {@link GetterMethodBindable} which have declared dependsOn into
+	 * {@link Bindable} annotation.
+	 * 
+	 * @param methodBindable
+	 */
+	public void addGetterMethodBindable(GetterMethodBindable methodBindable) {
+		String[] dependsOn = methodBindable.getBindableAnnotationDependsOn();
+		if (dependsOn == null)
+			return;
+
+		if (dependsOnGetterMethodBindable == null) {
+			dependsOnGetterMethodBindable = new HashMap<String, Collection<GetterMethodBindable>>();
+		}
+
+		String depend = null;
+		Collection<GetterMethodBindable> methodsBindable = null;
+		for (int i = 0; i < dependsOn.length; i++) {
+			depend = dependsOn[i];
+			if (methodBindable.getPropertyName().equals(depend)) {
+				continue;
+			}
+
+			methodsBindable = dependsOnGetterMethodBindable.get(depend);
+			if (methodsBindable == null) {
+				methodsBindable = new ArrayList<GetterMethodBindable>();
+				dependsOnGetterMethodBindable.put(depend, methodsBindable);
+			}
+			if (!methodsBindable.contains(methodBindable)) {
+				methodsBindable.add(methodBindable);
+			}
+		}
+	}
+
+	/**
+	 * Generate methods _bindable_afterDependsOn_... and
+	 * _bindable_beforeDependsOn_... for each {@link SetterMethodBindable}.
+	 */
+	private void addDependsOnMethodsIfNeeded() {
+		if (setterMethodBindable == null)
+			// No methods have declared @Bindable#dependsOn.
+			return;
+
+		// Loop for each MethodBindable which have declared
+		// @Bindable#dependsOn and generate dependsOn methods
+		// required for each SetterMethodBindable
+		for (SetterMethodBindable methodBindable : setterMethodBindable) {
+
+			addDependsOnFields(methodBindable);
+			// Generate before
+			addBeforeDependsOnMethod(methodBindable);
+			// Generate after
+			addAfterDependsOnMethod(methodBindable);
+		}
+	}
+
+	/**
+	 * Generate fields dependsOn for the methodBindable.
+	 * 
+	 * @param methodBindable
+	 */
+	private void addDependsOnFields(SetterMethodBindable methodBindable) {
+		// TODO : generate fields
+
+	}
+
+	/**
+	 * Generate bindable_beforeDependsOn_... for the methodBindable.
+	 * 
+	 * @param methodBindable
+	 */
+	protected void addBeforeDependsOnMethod(SetterMethodBindable methodBindable) {
+		MethodVisitor mv = cv.visitMethod(ACC_PRIVATE, methodBindable
+				.getBeforeDependsOnMethodName(), "()V", null, null);
+		mv.visitCode();
+
+		mv.visitInsn(RETURN);
+		mv.visitMaxs(5, 1);
+		mv.visitEnd();
+	}
+
+	/**
+	 * Generate bindable_afterDependsOn_... for the methodBindable.
+	 * 
+	 * @param methodBindable
+	 */
+	protected void addAfterDependsOnMethod(SetterMethodBindable methodBindable) {
+		MethodVisitor mv = cv.visitMethod(ACC_PRIVATE, methodBindable
+				.getAfterDependsOnMethodName(), "()V", null, null);
+		mv.visitCode();
+
+		mv.visitInsn(RETURN);
+		mv.visitMaxs(5, 1);
+		mv.visitEnd();
+
+	}
+
+	/**
+	 * Return true if dependsOn is supported and false otherwise.
+	 * 
+	 * @return
+	 */
+	public boolean isDependsOnSupported() {
+		return bindableStrategy.isUseAnnotation();
 	}
 
 }

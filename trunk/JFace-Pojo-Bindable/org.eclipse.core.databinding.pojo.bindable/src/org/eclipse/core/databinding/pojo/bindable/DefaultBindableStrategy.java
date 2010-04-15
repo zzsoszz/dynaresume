@@ -81,7 +81,7 @@ public class DefaultBindableStrategy implements BindableStrategy {
 
 	public boolean isBindableMethod(String className, String methodName) {
 		// test if methode start with 'set'
-		return methodName.startsWith(ClassUtils.SET_PREFIX_METHOD);
+		return ClassUtils.isSetterMethod(methodName);
 	}
 
 	public boolean isUseAnnotation() {

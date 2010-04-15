@@ -12,11 +12,10 @@ package org.eclipse.core.databinding.pojo.bindable.internal.asm.annotation;
 
 import org.eclipse.core.databinding.pojo.bindable.annotation.Bindable;
 import org.eclipse.core.databinding.pojo.bindable.internal.asm.ClassBindable;
-import org.eclipse.core.databinding.pojo.bindable.internal.asm.MethodBindable;
 
 /**
  * Interface which support {@link Bindable} annotation (see
- * {@link ClassBindable} and {@link MethodBindable}).
+ * {@link ClassBindable} and {@link SetterMethodBindable}).
  */
 public interface AnnotationBindableAware {
 
@@ -28,10 +27,10 @@ public interface AnnotationBindableAware {
 	void setBindableAnnotationValue(boolean bindableValue);
 
 	/**
-	 * Set the value of the property 'computedProperties' of the
+	 * Set the value of the property 'dependsOn' of the
 	 * {@link Bindable} annotation.
 	 * 
-	 * @param computedProperties
+	 * @param dependsOn
 	 */
-	void setBindableAnnotationComputedProperties(String[] computedProperties);
+	void setBindableAnnotationDependsOn(String[] dependsOn);
 }

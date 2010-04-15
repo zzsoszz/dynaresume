@@ -28,9 +28,9 @@ public class ClassUtils implements Opcodes {
 	private static final String SLASH_REGEXP = "\\/";
 
 	// get/is/set prefix method name.
-	public static final String GET_PREFIX_METHOD = "get";
-	public static final String IS_PREFIX_METHOD = "is";
-	public static final String SET_PREFIX_METHOD = "set";
+	private static final String GET_PREFIX_METHOD = "get";
+	private static final String IS_PREFIX_METHOD = "is";
+	private static final String SET_PREFIX_METHOD = "set";
 
 	/**
 	 * Replace String array package names with '/' character and returns it into
@@ -85,24 +85,66 @@ public class ClassUtils implements Opcodes {
 	 */
 	public static String getPropertyName(String methodName) {
 		int index = -1;
-		if (methodName.startsWith(SET_PREFIX_METHOD)
-				|| methodName.startsWith(GET_PREFIX_METHOD)) {
+		if (isSetterMethod(methodName) || isGetterGetMethod(methodName)) {
 			index = 3;
-		} else if (methodName.startsWith(IS_PREFIX_METHOD)) {
+		} else if (isGetterIsMethod(methodName)) {
 			index = 2;
 		}
 		if (index != -1) {
-			int prefixIndex = index + 1; 
+			int prefixIndex = index + 1;
 			String firstChar = methodName.substring(index, prefixIndex)
-					.toLowerCase();			
+					.toLowerCase();
 			if (methodName.length() > prefixIndex) {
-				return firstChar + methodName.substring(prefixIndex, methodName.length());
+				return firstChar
+						+ methodName
+								.substring(prefixIndex, methodName.length());
 			} else {
 				return firstChar;
 			}
 
 		}
 		return methodName;
+	}
+
+	/**
+	 * Return true if method is getter start with 'get' or 'is' and false
+	 * otherwise.
+	 * 
+	 * @param methodName
+	 * @return
+	 */
+	public static boolean isGetterMethod(String methodName) {
+		return isGetterGetMethod(methodName) || isGetterIsMethod(methodName);
+	}
+
+	/**
+	 * Return true if method is getter start with 'is' and false otherwise.
+	 * 
+	 * @param methodName
+	 * @return
+	 */
+	public static boolean isGetterIsMethod(String methodName) {
+		return methodName.startsWith(ClassUtils.IS_PREFIX_METHOD);
+	}
+
+	/**
+	 * Return true if method is getter start with 'get' and false otherwise.
+	 * 
+	 * @param methodName
+	 * @return
+	 */
+	public static boolean isGetterGetMethod(String methodName) {
+		return methodName.startsWith(ClassUtils.GET_PREFIX_METHOD);
+	}
+
+	/**
+	 * Return true if method is setter and false otherwise.
+	 * 
+	 * @param methodName
+	 * @return
+	 */
+	public static boolean isSetterMethod(String methodName) {
+		return methodName.startsWith(ClassUtils.SET_PREFIX_METHOD);
 	}
 
 	/**

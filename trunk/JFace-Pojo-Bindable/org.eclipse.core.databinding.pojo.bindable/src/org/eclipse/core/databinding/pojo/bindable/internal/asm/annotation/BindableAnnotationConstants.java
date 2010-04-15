@@ -19,5 +19,5 @@ import org.eclipse.core.databinding.pojo.bindable.annotation.Bindable;
 public interface BindableAnnotationConstants {
 
 	String BINDABLE_VALUE_ANNOTATION = "value";
-	String BINDABLE_COMPUTED_PROPERTIES_ANNOTATION = "computedProperties";
+	String BINDABLE_DEPENDS_ON_ANNOTATION = "dependsOn";
 }
