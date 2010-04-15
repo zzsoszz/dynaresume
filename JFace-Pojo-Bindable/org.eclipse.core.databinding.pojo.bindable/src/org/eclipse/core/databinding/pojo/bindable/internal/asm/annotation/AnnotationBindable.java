@@ -26,8 +26,8 @@ public class AnnotationBindable extends AnnotationAdapter implements
 	// Bindable value of property 'value' of Bindable annotation.
 	private Boolean bindableValue = null;
 
-	// Bindable value of property 'computedProperties' of Bindable annotation.
-	private String[] computedProperties = null;
+	// Bindable value of property 'dependsOn' of Bindable annotation.
+	private String[] dependsOn = null;
 
 	public AnnotationBindable(AnnotationVisitor av,
 			AnnotationBindableAware annotationBindableAware) {
@@ -47,9 +47,9 @@ public class AnnotationBindable extends AnnotationAdapter implements
 	
 	@Override
 	public AnnotationVisitor visitArray(String name) {
-		if (BINDABLE_COMPUTED_PROPERTIES_ANNOTATION.equals(name)) {
-			// computedproperties is defined into @Bindable annotation, create 
-			// AnnotationStringArrayAdapter to get values of computedproperties
+		if (BINDABLE_DEPENDS_ON_ANNOTATION.equals(name)) {
+			// dependsOn is defined into @Bindable annotation, create 
+			// AnnotationStringArrayAdapter to get values of dependsOn
 			// When String array values are built, AnnotationBindable#setValues is called.
 			return new AnnotationStringArrayAdapter(name, this);
 		}
@@ -64,19 +64,19 @@ public class AnnotationBindable extends AnnotationAdapter implements
 			// AnnotationBindableAware (ClassBindable or MethodBindable)
 			annotationBindableAware.setBindableAnnotationValue(bindableValue);
 		}
-		if (computedProperties != null) {
-			// computedProperties property is definied into Bindable annotation, set the
-			// computedProperties to the
+		if (dependsOn != null) {
+			// dependsOn property is definied into Bindable annotation, set the
+			// dependsOn to the
 			// AnnotationBindableAware (ClassBindable or MethodBindable)
-			annotationBindableAware.setBindableAnnotationComputedProperties(computedProperties);
+			annotationBindableAware.setBindableAnnotationDependsOn(dependsOn);
 		}
 		super.visitEnd();
 	}
 	
 	@Override
 	public void setValues(String arrayName, String[] values) {
-		if (BINDABLE_COMPUTED_PROPERTIES_ANNOTATION.equals(arrayName)) {
-			this.computedProperties = values;
+		if (BINDABLE_DEPENDS_ON_ANNOTATION.equals(arrayName)) {
+			this.dependsOn = values;
 		}
 	}
 }
