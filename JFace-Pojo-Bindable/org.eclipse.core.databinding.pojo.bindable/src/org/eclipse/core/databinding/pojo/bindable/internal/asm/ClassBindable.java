@@ -119,20 +119,24 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	@Override
 	public MethodVisitor visitMethod(int access, String methodName,
 			String desc, String signature, String[] exceptions) {
-		if (bindableStrategy.isBindableMethod(className, methodName)) {
-			// Method is bindable, visit it.
-			return new SetterMethodBindable(this, cv.visitMethod(access,
-					methodName, desc, signature, exceptions), access,
-					methodName, desc);
-
-		} else {
-			// Test if it's getter method
-			if (isDependsOnSupported() && ClassUtils.isGetterMethod(methodName)) {
-				return new GetterMethodBindable(this, cv.visitMethod(access,
+		boolean onlyGetSetIs = ClassUtils.isOnlyGetSetIs(methodName);
+		if (!onlyGetSetIs) {
+			if (bindableStrategy.isBindableMethod(className, methodName)) {
+				// Method is bindable, visit it.
+				return new SetterMethodBindable(this, cv.visitMethod(access,
 						methodName, desc, signature, exceptions), access,
 						methodName, desc);
-			}
 
+			} else {
+				// Test if it's getter method
+				if (isDependsOnSupported()
+						&& ClassUtils.isGetterMethod(methodName)) {
+					return new GetterMethodBindable(this, cv.visitMethod(
+							access, methodName, desc, signature, exceptions),
+							access, methodName, desc);
+				}
+
+			}
 		}
 		return super.visitMethod(access, methodName, desc, signature,
 				exceptions);
