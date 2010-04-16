@@ -10,16 +10,12 @@
  *******************************************************************************/
 package org.eclipse.core.databinding.pojo.bindable.initializer.osgi;
 
-import static org.eclipse.core.databinding.pojo.bindable.internal.util.StringUtils.isTrue;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
-import java.util.Properties;
 
 import org.eclipse.core.databinding.pojo.bindable.BindableStrategy;
 import org.eclipse.core.databinding.pojo.bindable.BindableStrategyProvider;
-import org.eclipse.core.databinding.pojo.bindable.DefaultBindableStrategy;
 import org.eclipse.core.databinding.pojo.bindable.initializer.AbstractBindableInitializer;
 import org.eclipse.core.databinding.pojo.bindable.logs.Policy;
 import org.eclipse.core.runtime.IStatus;
@@ -48,8 +44,6 @@ import org.osgi.framework.ServiceRegistration;
  */
 public abstract class OSGiBindableInitializer extends
 		AbstractBindableInitializer {
-
-	private static final String BINDABLE_PROPERTIES = "bindable.properties";
 
 	private BundleContext bundleContext = null;
 	private BindableStrategy bindableStrategy = null;
@@ -124,63 +118,19 @@ public abstract class OSGiBindableInitializer extends
 		return "OSGi Bindable with configuration: ";
 	}
 
-	protected BindableStrategy loadBindableStrategy() {
-		DefaultBindableStrategy bindableStrategy = null;
-		Enumeration<URL> bindableProperties = null;
-		ClassLoader cl = getClass().getClassLoader();
-		try {
-			bindableProperties = cl == null ? ClassLoader
-					.getSystemResources(BINDABLE_PROPERTIES) : cl
-					.getResources(BINDABLE_PROPERTIES);
-		} catch (IOException e) {
-			Policy.getLog().log(
-					new Status(IStatus.ERROR, BindableStrategy.POJO_BINDABLE,
-							IStatus.ERROR, "getResources error on "
-									+ BINDABLE_PROPERTIES, e));
-			return null;
-		}
-
-		while (bindableProperties.hasMoreElements()) {
-			URL url = bindableProperties.nextElement();
-			// check each file for a bindable.properties property
-			Properties bindableProps = new Properties();
-			try {
-				bindableProps.load(url.openStream());
-
-				// bindable.packages=<packages name>
-				String packages = bindableProps.getProperty(BINDABLE_PACKAGES);
-
-				// bindable.use_annotation=<true|false>
-				boolean useAnnotation = isTrue(bindableProps
-						.getProperty(BINDABLE_USE_ANNOTATION));
-
-				// bindable.gen_basedir=<path of base dir where class
-				// transformed must
-				// be generated>
-				String genBaseDir = bindableProps
-						.getProperty(BINDABLE_GEN_BASEDIR);
-
-				// bindable.debug=><true|false>
-				boolean debugMode = isTrue(bindableProps
-						.getProperty(BINDABLE_DEBUG));
-
-				return createBindableStrategy(packages, useAnnotation,
-						genBaseDir, debugMode, false);
-			} catch (IOException e) {
-				Policy.getLog().log(
-						new Status(IStatus.ERROR,
-								BindableStrategy.POJO_BINDABLE, IStatus.ERROR,
-								"getResources error on " + BINDABLE_PROPERTIES,
-								e));
-				return null;
-			}
-		}
-		return bindableStrategy;
+	/**
+	 * Load BindableStrategy instance from the file bindable.properties wich is
+	 * stored into an OSGi fragment.
+	 * 
+	 * @return
+	 */
+	protected BindableStrategy loadBindableStrategyFromBindablePropertiesFile() {
+		return loadBindableStrategyFromBindablePropertiesFile(false);
 	}
 
 	public BindableStrategy getBindableStrategy() {
 		if (bindableStrategy == null) {
-			this.bindableStrategy = loadBindableStrategy();
+			this.bindableStrategy = loadBindableStrategyFromBindablePropertiesFile();
 		}
 		return bindableStrategy;
 	}

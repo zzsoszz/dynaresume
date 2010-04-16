@@ -14,6 +14,8 @@ import static org.eclipse.core.databinding.pojo.bindable.internal.util.StringUti
 import static org.eclipse.core.databinding.pojo.bindable.internal.util.StringUtils.isTrue;
 
 import java.lang.instrument.Instrumentation;
+import java.net.URL;
+import java.util.Enumeration;
 
 import org.eclipse.core.databinding.pojo.bindable.BindableHelper;
 import org.eclipse.core.databinding.pojo.bindable.BindableStrategy;
@@ -83,7 +85,12 @@ public class BindableInitializerAgent extends AbstractBindableInitializer {
 		if (bindableStrategy != null)
 			return bindableStrategy;
 		// get BindableStrategy instance from -Dbindable.packages
-		return getBindableStrategyFromPackages();
+		bindableStrategy = getBindableStrategyFromPackages();
+		if (bindableStrategy != null)
+			return bindableStrategy;
+		// get BindableStrategy instance from src/bindable.properties
+		return getBindableStrategyBindablePropertiesFile();
+
 	}
 
 	/**
@@ -118,7 +125,10 @@ public class BindableInitializerAgent extends AbstractBindableInitializer {
 	private BindableStrategy getBindableStrategyFromPackages() {
 		// -Dbindable.packages=<packages name>
 		String packages = System.getProperty(BINDABLE_PACKAGES);
-
+		if (isEmpty(packages)) {
+			return null;
+		}
+		
 		// -Dbindable.use_annotation=<true|false>
 		boolean useAnnotation = isTrue(System
 				.getProperty(BINDABLE_USE_ANNOTATION));
@@ -134,6 +144,15 @@ public class BindableInitializerAgent extends AbstractBindableInitializer {
 		// Instrumentation instance.
 		return createBindableStrategy(packages, useAnnotation, genBaseDir,
 				debugMode, true);
+	}
+
+	/**
+	 * Returns BindableStrategy instance from src/bindable.properties
+	 * 
+	 * @return
+	 */
+	private BindableStrategy getBindableStrategyBindablePropertiesFile() {
+		return loadBindableStrategyFromBindablePropertiesFile(true);
 	}
 
 	/**

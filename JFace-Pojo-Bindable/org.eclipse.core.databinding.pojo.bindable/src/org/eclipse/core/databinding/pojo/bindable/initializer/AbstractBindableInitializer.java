@@ -11,15 +11,22 @@
 package org.eclipse.core.databinding.pojo.bindable.initializer;
 
 import static org.eclipse.core.databinding.pojo.bindable.internal.util.StringUtils.isEmpty;
+import static org.eclipse.core.databinding.pojo.bindable.internal.util.StringUtils.isTrue;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.Collection;
+import java.util.Enumeration;
+import java.util.Properties;
 
 import org.eclipse.core.databinding.pojo.bindable.BindableStrategy;
 import org.eclipse.core.databinding.pojo.bindable.DefaultBindableStrategy;
 import org.eclipse.core.databinding.pojo.bindable.initializer.instrument.agent.BindableInitializerAgent;
 import org.eclipse.core.databinding.pojo.bindable.initializer.instrument.agent.BindablePackagesRequiredException;
 import org.eclipse.core.databinding.pojo.bindable.initializer.osgi.OSGiBindableInitializer;
+import org.eclipse.core.databinding.pojo.bindable.logs.Policy;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 
 /**
  * Base class used in any environnment to initialize Pojo Bindable.
@@ -29,6 +36,8 @@ import org.eclipse.core.runtime.IStatus;
  */
 public abstract class AbstractBindableInitializer implements
 		BindableInitializer, BindableInitializerConstants {
+
+	protected static final String BINDABLE_PROPERTIES_FILE = "bindable.properties";
 
 	/**
 	 * Configure Pojo Bindable.
@@ -102,6 +111,86 @@ public abstract class AbstractBindableInitializer implements
 	protected DefaultBindableStrategy createBindableStrategy(
 			String[] splittedPackages, boolean slashIt) {
 		return new DefaultBindableStrategy(splittedPackages, slashIt);
+	}
+
+	/**
+	 * Load BindableStrategy instance from the file bindable.properties.s
+	 * 
+	 * @return
+	 */
+	protected BindableStrategy loadBindableStrategyFromBindablePropertiesFile(
+			boolean slashIt) {
+		BindableStrategy bindableStrategy = null;
+		Enumeration<URL> bindableProperties = null;
+		ClassLoader cl = getClass().getClassLoader();
+		try {
+			bindableProperties = cl == null ? ClassLoader
+					.getSystemResources(BINDABLE_PROPERTIES_FILE) : cl
+					.getResources(BINDABLE_PROPERTIES_FILE);
+		} catch (IOException e) {
+			Policy.getLog().log(
+					new Status(IStatus.ERROR, BindableStrategy.POJO_BINDABLE,
+							IStatus.ERROR, "getResources error on "
+									+ BINDABLE_PROPERTIES_FILE, e));
+			return null;
+		}
+
+		while (bindableProperties.hasMoreElements()) {
+			URL url = bindableProperties.nextElement();
+			// check each file for a bindable.properties property
+			bindableStrategy = createBindableStrategyFromBindablePropertiesFile(
+					url, slashIt);
+			if (bindableStrategy != null) {
+				return bindableStrategy;
+			}
+		}
+		if (bindableStrategy == null) {
+			// Call this method to throw BindablePackagesRequiredException exception.
+			return createBindableStrategy(null, false, null, false, false);
+		}
+		return bindableStrategy;
+	}
+
+	/**
+	 * Create {@link BindableStrategy} instance from an URL url of
+	 * bindable.properties file.
+	 * 
+	 * @param url
+	 * @param required
+	 * @return
+	 */
+	private BindableStrategy createBindableStrategyFromBindablePropertiesFile(
+			URL url, boolean slashIt) {
+		Properties bindableProps = new Properties();
+		try {
+			if (url != null) {
+				bindableProps.load(url.openStream());
+			}
+			// bindable.packages=<packages name>
+			String packages = bindableProps.getProperty(BINDABLE_PACKAGES);
+
+			// bindable.use_annotation=<true|false>
+			boolean useAnnotation = isTrue(bindableProps
+					.getProperty(BINDABLE_USE_ANNOTATION));
+
+			// bindable.gen_basedir=<path of base dir where class
+			// transformed must
+			// be generated>
+			String genBaseDir = bindableProps.getProperty(BINDABLE_GEN_BASEDIR);
+
+			// bindable.debug=><true|false>
+			boolean debugMode = isTrue(bindableProps
+					.getProperty(BINDABLE_DEBUG));
+
+			return createBindableStrategy(packages, useAnnotation, genBaseDir,
+					debugMode, slashIt);
+		} catch (IOException e) {
+			Policy.getLog().log(
+					new Status(IStatus.ERROR, BindableStrategy.POJO_BINDABLE,
+							IStatus.ERROR, "getResources error on "
+									+ BINDABLE_PROPERTIES_FILE, e));
+			return null;
+		}
 	}
 
 	/**
