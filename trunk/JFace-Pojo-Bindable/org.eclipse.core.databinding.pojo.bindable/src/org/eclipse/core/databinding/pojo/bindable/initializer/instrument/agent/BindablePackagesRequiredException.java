@@ -25,7 +25,7 @@ public class BindablePackagesRequiredException extends RuntimeException
 
 	private static final long serialVersionUID = -6409599787336699402L;
 
-	private static final String MESSAGE = "Parameter {0} not found into JVM argument (ex : -D{0}=com.example.domain)";
+	private static final String MESSAGE = "Parameter {0} not found into JVM argument (ex : -D{0}=com.example.domain) or into bindable.properties file.";
 
 	public BindablePackagesRequiredException() {
 		super(format(MESSAGE, BINDABLE_PACKAGES));
