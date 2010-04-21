@@ -13,6 +13,7 @@ import org.eclipse.osgi.baseadaptor.loader.ClasspathEntry;
 import org.eclipse.osgi.baseadaptor.loader.ClasspathManager;
 import org.eclipse.osgi.framework.adaptor.BundleProtectionDomain;
 import org.eclipse.osgi.framework.adaptor.ClassLoaderDelegate;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
@@ -60,25 +61,17 @@ public class BindableWeaverRegistry implements ClassLoadingHook,
 	public byte[] processClass(String name, byte[] classbytes,
 			ClasspathEntry classpathEntry, BundleEntry entry,
 			ClasspathManager manager) {
-
-		String bundleId = manager.getBaseData().getSymbolicName();
 		if (this.weaverServices.isEmpty()) {
-
-			// try {
-			// serviceTracker.waitForService(5000);
-			// } catch (InterruptedException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
-
 			return null;
 		}
+		Bundle bundle = manager.getBaseData().getBundle();
 		for (Iterator<ServiceReference> iterator = this.weaverServices
 				.iterator(); iterator.hasNext();) {
 			ServiceReference reference = iterator.next();
 			BindableWeaver weaver = (BindableWeaver) ctx.getService(reference);
 			if (weaver != null) {
-				byte[] transformedBytes = weaver.transform(name, classbytes);
+				byte[] transformedBytes = weaver.transform(bundle, name,
+						classbytes);
 				if (transformedBytes != null) {
 					return transformedBytes;
 				}
