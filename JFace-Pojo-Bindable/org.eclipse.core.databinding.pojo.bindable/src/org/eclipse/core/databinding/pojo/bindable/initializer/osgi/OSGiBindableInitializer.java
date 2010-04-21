@@ -10,13 +10,13 @@
  *******************************************************************************/
 package org.eclipse.core.databinding.pojo.bindable.initializer.osgi;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Enumeration;
+import java.util.Collection;
+import java.util.Properties;
 
 import org.eclipse.core.databinding.pojo.bindable.BindableStrategy;
-import org.eclipse.core.databinding.pojo.bindable.BindableStrategyProvider;
+import org.eclipse.core.databinding.pojo.bindable.DefaultBindableStrategy;
 import org.eclipse.core.databinding.pojo.bindable.initializer.AbstractBindableInitializer;
+import org.eclipse.core.databinding.pojo.bindable.internal.util.StringUtils;
 import org.eclipse.core.databinding.pojo.bindable.logs.Policy;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -27,9 +27,9 @@ import org.osgi.framework.ServiceRegistration;
 
 /**
  * OSGi Bindable Initializer which register a service
- * {@link OSGiBindableClassTransformer} into OSGi registry services which is
- * enable to transform Class into Pojo Bindable. This initializer must be
- * created into another bundle :
+ * {@link OSGiBindableInitializer} into OSGi registry services which is enable
+ * to transform Class into Pojo Bindable. This initializer must be created into
+ * another bundle :
  * 
  * <ul>
  * <li>{@link OSGiBindableInitializer#start()} must be called into
@@ -45,9 +45,9 @@ import org.osgi.framework.ServiceRegistration;
 public abstract class OSGiBindableInitializer extends
 		AbstractBindableInitializer {
 
-	private BundleContext bundleContext = null;
-	private BindableStrategy bindableStrategy = null;
-	private ServiceRegistration serviceRegistration = null;
+	protected BundleContext bundleContext = null;
+	protected OSGiBindableStrategy bindableStrategy = null;
+	protected ServiceRegistration serviceRegistration = null;
 
 	/**
 	 * Constructor wait the {@link BundleContext} comming from the Bundle wich
@@ -75,11 +75,13 @@ public abstract class OSGiBindableInitializer extends
 
 		// Create service instance which is enable to transform Class to Pojo
 		// Bindable Class
-		OSGiBindableClassTransformer service = createClassTransformerService(this);
+		registerService();
+	}
 
+	protected void registerService() {
 		// Register the service into OSGi registry services.
 		this.serviceRegistration = bundleContext.registerService(
-				getClassTransformerServiceName(), service, null);
+				getClassTransformerServiceName(), this, null);
 	}
 
 	/**
@@ -124,37 +126,54 @@ public abstract class OSGiBindableInitializer extends
 	 * 
 	 * @return
 	 */
-	protected BindableStrategy loadBindableStrategyFromBindablePropertiesFile() {
-		return loadBindableStrategyFromBindablePropertiesFile(false);
+	protected OSGiBindableStrategy loadBindableStrategyFromBindablePropertiesFile() {
+		return (OSGiBindableStrategy) loadBindableStrategyFromBindablePropertiesFile(false);
 	}
 
-	public BindableStrategy getBindableStrategy() {
+	/**
+	 * Returns instance of {@link OSGiBindableStrategy} by loading
+	 * bindable.properties file.
+	 */
+	public OSGiBindableStrategy getBindableStrategy() {
 		if (bindableStrategy == null) {
 			this.bindableStrategy = loadBindableStrategyFromBindablePropertiesFile();
 		}
 		return bindableStrategy;
 	}
 
-	/**
-	 * Create instance of the service {@link OSGiBindableClassTransformer}. This
-	 * service must implements an interface wich is used too into
-	 * {@link OSGiBindableInitializer#getClassTransformerServiceName()} as
-	 * service name.
-	 * 
-	 * @param bindableStrategy
-	 * @return
-	 */
-	protected abstract OSGiBindableClassTransformer createClassTransformerService(
-			BindableStrategyProvider bindableStrategy);
+	@Override
+	protected DefaultBindableStrategy createBindableStrategy(
+			String[] splittedPackages, boolean slashIt) {
+		// override this method to create OSGi Bindable Strategy
+		return new OSGiDefaultBindableStrategy(splittedPackages, slashIt);
+	}
 
-	/**
-	 * Returns the service name of the service
-	 * {@link OSGiBindableClassTransformer}. The service name used (generally)
-	 * an interface name.
-	 * 
-	 * @return
-	 */
-	protected abstract String getClassTransformerServiceName();
+	@Override
+	protected void intializeOtherProperties(BindableStrategy bindableStrategy,
+			Properties bindableProps) {
+		OSGiDefaultBindableStrategy strategy = (OSGiDefaultBindableStrategy) bindableStrategy;
+
+		// Initialize bundes to include coming from "bindable.include_bundles"
+		// property.
+		String includeBundles = bindableProps
+				.getProperty(BINDABLE_INCLUDE_BUNDLES);
+		if (!StringUtils.isEmpty(includeBundles)) {
+			String[] includeBundlesSplitted = includeBundles.split(";");
+			strategy.setIncludeBundles(includeBundlesSplitted);
+		}
+	}
+
+	@Override
+	protected StringBuffer buildTrace(BindableStrategy bindableStrategy) {
+		StringBuffer message = super.buildTrace(bindableStrategy);
+
+		// Display "bindable.include_bundles" property
+		Collection<String> includeBundles = ((OSGiBindableStrategy) bindableStrategy)
+				.getIncludeBundles();
+		addParams(message, BINDABLE_INCLUDE_BUNDLES, includeBundles);
+
+		return message;
+	}
 
 	// ---------------- Stop initialisation
 
@@ -172,4 +191,12 @@ public abstract class OSGiBindableInitializer extends
 		}
 	}
 
+	/**
+	 * Returns the service name of the service
+	 * {@link OSGiBindableClassTransformer}. The service name used (generally)
+	 * an interface name.
+	 * 
+	 * @return
+	 */
+	protected abstract String getClassTransformerServiceName();
 }

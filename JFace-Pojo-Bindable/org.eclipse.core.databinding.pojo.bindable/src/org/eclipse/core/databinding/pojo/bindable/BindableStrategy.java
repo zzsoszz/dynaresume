@@ -36,7 +36,7 @@ public interface BindableStrategy {
 	/**
 	 * Return true if methodName must be transformed (by calling
 	 * {@link PropertyChangeSupport#firePropertyChange(java.beans.PropertyChangeEvent)}
-	 * and false otherwise. ;
+	 * and false otherwise.
 	 * 
 	 * @param methodName
 	 * @return

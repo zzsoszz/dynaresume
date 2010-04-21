@@ -24,4 +24,7 @@ public interface BindableInitializerConstants {
 	String BINDABLE_USE_ANNOTATION = "bindable.use_annotation";
 	String BINDABLE_GEN_BASEDIR = "bindable.gen_basedir";
 	String BINDABLE_DEBUG = "bindable.debug";
+	
+	// OSGi context
+	String BINDABLE_INCLUDE_BUNDLES = "bindable.include_bundles";
 }
