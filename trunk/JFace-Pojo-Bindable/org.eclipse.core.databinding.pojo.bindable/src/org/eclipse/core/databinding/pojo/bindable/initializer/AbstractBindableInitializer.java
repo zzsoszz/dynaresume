@@ -145,7 +145,8 @@ public abstract class AbstractBindableInitializer implements
 			}
 		}
 		if (bindableStrategy == null) {
-			// Call this method to throw BindablePackagesRequiredException exception.
+			// Call this method to throw BindablePackagesRequiredException
+			// exception.
 			return createBindableStrategy(null, false, null, false, false);
 		}
 		return bindableStrategy;
@@ -182,8 +183,10 @@ public abstract class AbstractBindableInitializer implements
 			boolean debugMode = isTrue(bindableProps
 					.getProperty(BINDABLE_DEBUG));
 
-			return createBindableStrategy(packages, useAnnotation, genBaseDir,
-					debugMode, slashIt);
+			BindableStrategy bindableStrategy = createBindableStrategy(
+					packages, useAnnotation, genBaseDir, debugMode, slashIt);
+			intializeOtherProperties(bindableStrategy, bindableProps);
+			return bindableStrategy;
 		} catch (IOException e) {
 			Policy.getLog().log(
 					new Status(IStatus.ERROR, BindableStrategy.POJO_BINDABLE,
@@ -191,6 +194,12 @@ public abstract class AbstractBindableInitializer implements
 									+ BINDABLE_PROPERTIES_FILE, e));
 			return null;
 		}
+	}
+
+	protected void intializeOtherProperties(BindableStrategy bindableStrategy,
+			Properties bindableProps) {
+		// Do Nothing
+
 	}
 
 	/**
@@ -203,34 +212,59 @@ public abstract class AbstractBindableInitializer implements
 		if (debugMode) {
 			// Debug mode, print info about BindableStrategy
 
-			StringBuffer message = new StringBuffer();
-			message.append(getHeaderTrace());
-			addParam(message, BINDABLE_PACKAGES, "");
-			int p = 0;
-			Collection<String> packageNames = bindableStrategy
-					.getPackageNames();
-			for (String packageName : packageNames) {
-				if (p > 0) {
-					message.append("\n");
-					for (int i = 0; i < BINDABLE_PACKAGES.length() + 1; i++) {
-						message.append(" ");
-					}
-				}
-				message.append(packageName);
-				p++;
-			}
-			boolean useAnnotation = bindableStrategy.isUseAnnotation();
-			addParam(message, BINDABLE_USE_ANNOTATION, useAnnotation);
-			addParam(message, BINDABLE_DEBUG, debugMode);
-			String genBaseDir = bindableStrategy.getGenBaseDir();
-			addParam(message, BINDABLE_GEN_BASEDIR, genBaseDir);
-			addParam(message, BINDABLE_STRATEGY_PROVIDER, System
-					.getProperty(BINDABLE_STRATEGY_PROVIDER));
-
+			StringBuffer message = buildTrace(bindableStrategy);
 			// Trace
 			bindableStrategy.log(IStatus.INFO, message.toString(), null);
 		}
 
+	}
+
+	/**
+	 * Create the message to use to trace configuration of
+	 * {@link BindableStrategy}.
+	 * 
+	 * @param bindableStrategy
+	 * @return
+	 */
+	protected StringBuffer buildTrace(BindableStrategy bindableStrategy) {
+		StringBuffer message = new StringBuffer();
+		message.append(getHeaderTrace());
+
+		Collection<String> packageNames = bindableStrategy.getPackageNames();
+		addParams(message, BINDABLE_PACKAGES, packageNames);
+
+		boolean useAnnotation = bindableStrategy.isUseAnnotation();
+		addParam(message, BINDABLE_USE_ANNOTATION, useAnnotation);
+		addParam(message, BINDABLE_DEBUG, true);
+		String genBaseDir = bindableStrategy.getGenBaseDir();
+		addParam(message, BINDABLE_GEN_BASEDIR, genBaseDir);
+		addParam(message, BINDABLE_STRATEGY_PROVIDER, System
+				.getProperty(BINDABLE_STRATEGY_PROVIDER));
+
+		return message;
+	}
+
+	/**
+	 * Add list of parameters into message.
+	 * 
+	 * @param message
+	 * @param paramName
+	 * @param paramValues
+	 */
+	protected void addParams(StringBuffer message, String paramName,
+			Collection<String> paramValues) {
+		addParam(message, paramName, "");
+		int p = 0;
+		for (String packageName : paramValues) {
+			if (p > 0) {
+				message.append("\n");
+				for (int i = 0; i < paramName.length() + 1; i++) {
+					message.append(" ");
+				}
+			}
+			message.append(packageName);
+			p++;
+		}
 	}
 
 	/**
@@ -240,7 +274,7 @@ public abstract class AbstractBindableInitializer implements
 	 * @param paramName
 	 * @param paramValue
 	 */
-	private void addParam(StringBuffer message, String paramName,
+	protected void addParam(StringBuffer message, String paramName,
 			Object paramValue) {
 		message.append("\n");
 		message.append(paramName);
