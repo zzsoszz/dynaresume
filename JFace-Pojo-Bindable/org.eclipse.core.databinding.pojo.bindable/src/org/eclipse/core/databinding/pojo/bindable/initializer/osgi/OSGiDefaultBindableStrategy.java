@@ -34,7 +34,6 @@ public class OSGiDefaultBindableStrategy extends DefaultBindableStrategy
 		super(packageNames, slashIt);
 	}
 
-	@Override
 	public boolean isBindableBundle(Bundle bundle) {
 		if (includeBundles == null)
 			return true;
@@ -58,7 +57,6 @@ public class OSGiDefaultBindableStrategy extends DefaultBindableStrategy
 		}
 	}
 
-	@Override
 	public Collection<String> getIncludeBundles() {
 		if (includeBundles == null) {
 			return Collections.emptyList();
