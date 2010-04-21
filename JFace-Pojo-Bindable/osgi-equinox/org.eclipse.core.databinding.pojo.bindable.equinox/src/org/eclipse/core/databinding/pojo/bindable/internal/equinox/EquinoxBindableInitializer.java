@@ -14,6 +14,7 @@ import org.eclipse.core.databinding.pojo.bindable.BindableAware;
 import org.eclipse.core.databinding.pojo.bindable.BindableStrategyProvider;
 import org.eclipse.core.databinding.pojo.bindable.equinox.weaving.BindableWeaver;
 import org.eclipse.core.databinding.pojo.bindable.initializer.osgi.OSGiBindableClassTransformer;
+import org.eclipse.core.databinding.pojo.bindable.initializer.osgi.OSGiBindableClassTransformerInitializer;
 import org.eclipse.core.databinding.pojo.bindable.initializer.osgi.OSGiBindableInitializer;
 import org.osgi.framework.BundleContext;
 
@@ -29,7 +30,8 @@ import org.osgi.framework.BundleContext;
  * {@link BindableAware} interface name.</li>
  * </ul>
  */
-public class EquinoxBindableInitializer extends OSGiBindableInitializer {
+public class EquinoxBindableInitializer extends
+		OSGiBindableClassTransformerInitializer {
 
 	public EquinoxBindableInitializer(BundleContext bundleContext) {
 		super(bundleContext);
