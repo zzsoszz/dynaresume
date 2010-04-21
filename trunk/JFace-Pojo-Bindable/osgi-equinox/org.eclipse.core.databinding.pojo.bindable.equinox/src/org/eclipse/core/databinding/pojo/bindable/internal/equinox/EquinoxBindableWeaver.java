@@ -27,7 +27,6 @@ public class EquinoxBindableWeaver extends OSGiBindableClassTransformer
 		super(provider);
 	}
 
-	@Override
 	public byte[] transform(Bundle bundle, String className,
 			byte[] classfileBuffer) {
 		if (isBindableBundle(bundle))
