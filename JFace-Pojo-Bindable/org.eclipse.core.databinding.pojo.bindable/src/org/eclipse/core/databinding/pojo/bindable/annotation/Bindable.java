@@ -39,4 +39,12 @@ public @interface Bindable {
 	 * @return
 	 */
 	String[] dependsOn() default {};
+	
+	/**
+	 * Return list of properties name which must fire event when the method is
+	 * called.
+	 * 
+	 * @return
+	 */
+	String[] fireEvents() default {};
 }

@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.core.tests.databinding.pojo.bindable.domain;
 
+/**
+ * Model with all primitives Java type.
+ * 
+ */
 public class AllJavaTypes {
 
 	// Primitives types
@@ -18,7 +22,7 @@ public class AllJavaTypes {
 	private char charValue = 'a';
 	private short shortValue = 0;
 	private int intValue = 0;
-	
+
 	private long longValue = 0;
 	private float floatValue = 0;
 	private double doubleValue = 0;
@@ -58,11 +62,11 @@ public class AllJavaTypes {
 	public void setShortValue(short shortValue) {
 		this.shortValue = shortValue;
 	}
-	
+
 	public void setShortObjectValue(Short shortObjectValue) {
 		this.shortObjectValue = shortObjectValue;
 	}
-	
+
 	public Short getShortObjectValue() {
 		return shortObjectValue;
 	}
@@ -106,12 +110,12 @@ public class AllJavaTypes {
 	public void setStringValue(String stringValue) {
 		this.stringValue = stringValue;
 	}
-	
+
 	public void setMethodWithNoParameters() {
-		
+
 	}
-	
+
 	public void setMethodWith2Parameters(String s1, String s2) {
-		
+
 	}
 }
