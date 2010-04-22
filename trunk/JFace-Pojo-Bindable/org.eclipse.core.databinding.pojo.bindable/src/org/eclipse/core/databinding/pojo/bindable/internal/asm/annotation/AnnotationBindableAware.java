@@ -33,4 +33,12 @@ public interface AnnotationBindableAware {
 	 * @param dependsOn
 	 */
 	void setBindableAnnotationDependsOn(String[] dependsOn);
+	
+	/**
+	 * Set the value of the property 'fireEvents' of the
+	 * {@link Bindable} annotation.
+	 * 
+	 * @param dependsOn
+	 */
+	void setBindableAnnotationFireEvents(String[] fireEvents);
 }

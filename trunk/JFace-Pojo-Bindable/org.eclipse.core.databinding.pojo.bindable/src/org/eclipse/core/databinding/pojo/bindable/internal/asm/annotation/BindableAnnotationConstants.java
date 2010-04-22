@@ -20,4 +20,5 @@ public interface BindableAnnotationConstants {
 
 	String BINDABLE_VALUE_ANNOTATION = "value";
 	String BINDABLE_DEPENDS_ON_ANNOTATION = "dependsOn";
+	String BINDABLE_FIREEVENTS_ON_ANNOTATION = "fireEvents";
 }

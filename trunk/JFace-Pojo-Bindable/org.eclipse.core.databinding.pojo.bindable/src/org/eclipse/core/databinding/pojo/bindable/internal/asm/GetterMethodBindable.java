@@ -44,9 +44,9 @@ public class GetterMethodBindable extends MethodAdapter implements Opcodes,
 	private String methodDesc = null;
 	private String propertyDesc = null;
 
-	protected GetterMethodBindable(ClassBindable classBindable, MethodVisitor mv,
-			int access, String methodName, String desc) {
-		super(mv);		
+	protected GetterMethodBindable(ClassBindable classBindable,
+			MethodVisitor mv, int access, String methodName, String desc) {
+		super(mv);
 		this.methodName = methodName;
 		this.classBindable = classBindable;
 		// Get the property name = method name without 'set'|'get'|'is' suffix.
@@ -77,12 +77,12 @@ public class GetterMethodBindable extends MethodAdapter implements Opcodes,
 	public void visitEnd() {
 		super.visitEnd();
 		String[] dependsOn = getBindableAnnotationDependsOn();
-		if (dependsOn != null && dependsOn.length > 0) {
+		//if (dependsOn != null && dependsOn.length > 0) {
 			// dependsOn are declared with Bindable annotation, add this
 			// GetterMethodBindable to ClassBindable (to generate dependsOn
 			// fields)
 			getClassBindable().addGetterMethodBindable(this);
-		}
+		//}
 	}
 
 	/**
@@ -177,5 +177,9 @@ public class GetterMethodBindable extends MethodAdapter implements Opcodes,
 	 */
 	public boolean isBindableAnnotationValue() {
 		return bindableAnnotationValue;
+	}
+
+	public void setBindableAnnotationFireEvents(String[] fireEvents) {
+
 	}
 }

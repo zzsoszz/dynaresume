@@ -29,6 +29,9 @@ public class AnnotationBindable extends AnnotationAdapter implements
 	// Bindable value of property 'dependsOn' of Bindable annotation.
 	private String[] dependsOn = null;
 
+	// Bindable value of property 'fireEvents' of Bindable annotation.
+	private String[] fireEvents = null;
+
 	public AnnotationBindable(AnnotationVisitor av,
 			AnnotationBindableAware annotationBindableAware) {
 		super(av);
@@ -44,13 +47,21 @@ public class AnnotationBindable extends AnnotationAdapter implements
 		}
 		super.visit(name, value);
 	}
-	
+
 	@Override
 	public AnnotationVisitor visitArray(String name) {
 		if (BINDABLE_DEPENDS_ON_ANNOTATION.equals(name)) {
-			// dependsOn is defined into @Bindable annotation, create 
+			// dependsOn is defined into @Bindable annotation, create
 			// AnnotationStringArrayAdapter to get values of dependsOn
-			// When String array values are built, AnnotationBindable#setValues is called.
+			// When String array values are built, AnnotationBindable#setValues
+			// is called.
+			return new AnnotationStringArrayAdapter(name, this);
+		}
+		if (BINDABLE_FIREEVENTS_ON_ANNOTATION.equals(name)) {
+			// fireEvents is defined into @Bindable annotation, create
+			// AnnotationStringArrayAdapter to get values of dependsOn
+			// When String array values are built, AnnotationBindable#setValues
+			// is called.
 			return new AnnotationStringArrayAdapter(name, this);
 		}
 		return super.visitArray(name);
@@ -70,13 +81,23 @@ public class AnnotationBindable extends AnnotationAdapter implements
 			// AnnotationBindableAware (ClassBindable or MethodBindable)
 			annotationBindableAware.setBindableAnnotationDependsOn(dependsOn);
 		}
+		if (fireEvents != null) {
+			// fireEvents property is definied into Bindable annotation, set the
+			// dependsOn to the
+			// AnnotationBindableAware (ClassBindable or MethodBindable)
+			annotationBindableAware.setBindableAnnotationFireEvents(fireEvents);
+		}
 		super.visitEnd();
 	}
-	
+
 	@Override
 	public void setValues(String arrayName, String[] values) {
 		if (BINDABLE_DEPENDS_ON_ANNOTATION.equals(arrayName)) {
 			this.dependsOn = values;
+		} else {
+			if (BINDABLE_FIREEVENTS_ON_ANNOTATION.equals(arrayName)) {
+				this.fireEvents = values;
+			}
 		}
 	}
 }

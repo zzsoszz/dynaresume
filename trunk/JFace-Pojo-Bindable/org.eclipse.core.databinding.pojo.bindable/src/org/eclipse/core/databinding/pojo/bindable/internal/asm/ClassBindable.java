@@ -46,11 +46,17 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	// Bindable value of property 'dependsOn' of Bindable annotation.
 	private String[] dependsOn = null;
 
-	// List of MethodBindables
+	// List of FireEventsMethodBindables
+	private Collection<FireEventsMethodBindable> fireEventsMethodBindableList = null;
+
+	// List of SetterMethodBindables
 	private Collection<SetterMethodBindable> setterMethodBindableList = null;
 
-	// List of MethodBindables
+	// List of DependsOn GetterMethodBindables
 	private Map<String, Collection<GetterMethodBindable>> dependsOnGetterMethodBindable = null;
+
+	// List of GetterMethodBindables
+	private Map<String, GetterMethodBindable> getterMethodBindableMap = null;
 
 	public ClassBindable(ClassVisitor cv, BindableStrategy bindableStrategy) {
 		super(cv);
@@ -110,6 +116,8 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 		addAddPropertyChangeListener();
 		// Add removePropertyChangeListener method
 		addRemovePropertyChangeListener();
+		// Add for each method fireEvents method
+		addFireEventsMethodsIfNeeded();
 		// Add for each method dependsOn method
 		addDependsOnMethodsIfNeeded();
 
@@ -134,8 +142,12 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 					return new GetterMethodBindable(this, cv.visitMethod(
 							access, methodName, desc, signature, exceptions),
 							access, methodName, desc);
-				}
+				} else if (isFireEventsSupported()) {
+					return new FireEventsMethodBindable(this, cv.visitMethod(
+							access, methodName, desc, signature, exceptions),
+							access, methodName, desc);
 
+				}
 			}
 		}
 		return super.visitMethod(access, methodName, desc, signature,
@@ -351,6 +363,20 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	}
 
 	/**
+	 * Add a {@link FireEventsMethodBindable} which have call (if Bindable
+	 * annotation is activated serveral methods _bindable_afterDependsOn...).
+	 * 
+	 * @param methodBindable
+	 */
+	protected void addFireEventsMethodBindable(
+			FireEventsMethodBindable methodBindable) {
+		if (fireEventsMethodBindableList == null) {
+			fireEventsMethodBindableList = new ArrayList<FireEventsMethodBindable>();
+		}
+		fireEventsMethodBindableList.add(methodBindable);
+	}
+
+	/**
 	 * Add a {@link SetterMethodBindable} which have call (if Bindable
 	 * annotation is activated serveral methods _bindable_afterDependsOn...).
 	 * 
@@ -371,6 +397,13 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 	 */
 	public void addGetterMethodBindable(GetterMethodBindable methodBindable) {
 		String[] dependsOn = methodBindable.getBindableAnnotationDependsOn();
+
+		if (getterMethodBindableMap == null) {
+			getterMethodBindableMap = new HashMap<String, GetterMethodBindable>();
+		}
+		getterMethodBindableMap.put(methodBindable.getPropertyName(),
+				methodBindable);
+
 		if (dependsOn == null)
 			return;
 
@@ -396,6 +429,246 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 			}
 		}
 	}
+
+	// ----------- fireEvents generation method
+
+	/**
+	 * Generate methods _bindable_beforeDependsOn_... and
+	 * _bindable_afterDependsOn_... for each {@link SetterMethodBindable}.
+	 */
+	private void addFireEventsMethodsIfNeeded() {
+		if (fireEventsMethodBindableList == null)
+			// No methods have declared @Bindable#fireEvents.
+			return;
+		if (getterMethodBindableMap == null)
+			// No getter into Class
+			return;
+
+		for (FireEventsMethodBindable fireEventsMethodBindable : fireEventsMethodBindableList) {
+
+			String[] fireEvents = fireEventsMethodBindable
+					.getBindableAnnotationFireEvents();
+			Collection<GetterMethodBindable> getterMethodBindableList = null;
+			for (int i = 0; i < fireEvents.length; i++) {
+				GetterMethodBindable getterMethodBindable = getterMethodBindableMap
+						.get(fireEvents[i]);
+				if (getterMethodBindable != null) {
+					if (getterMethodBindableList == null) {
+						getterMethodBindableList = new ArrayList<GetterMethodBindable>();
+					}
+					getterMethodBindableList.add(getterMethodBindable);
+				}
+			}
+
+			if (getterMethodBindableList == null) {
+				continue;
+			}
+
+			// Generate fireEvents fields
+			addFireEventsFields(fireEventsMethodBindable,
+					getterMethodBindableList);
+			// Generate before fireEvents
+			addBeforeFireEventsMethod(fireEventsMethodBindable,
+					getterMethodBindableList);
+			// Generate after fireEvents
+			addAfterFireEventsMethod(fireEventsMethodBindable,
+					getterMethodBindableList);
+
+		}
+
+	}
+
+	private void addFireEventsFields(
+			FireEventsMethodBindable fireEventsMethodBindable,
+			Collection<GetterMethodBindable> getterMethodBindableList) {
+
+		for (GetterMethodBindable getterMethodBindable : getterMethodBindableList) {
+
+			String fireEventsFieldName = getFireEventsFieldName(
+					fireEventsMethodBindable.getMethodName(),
+					getterMethodBindable.getPropertyName());
+
+			String propertyDesc = getterMethodBindable.getPropertyDesc();
+
+			/*
+			 * Generate private transient <type>
+			 * _bindableFireEvents_<setterMethodName
+			 * >_<propertyNameOfGetterMethod>;
+			 * 
+			 * Ex : private transient double
+			 * _bindableFireEvents_setSellingPrice_ratio;
+			 */
+			cv.visitField(ACC_PRIVATE + ACC_TRANSIENT, fireEventsFieldName,
+					propertyDesc, null, null);
+
+		}
+	}
+
+	/**
+	 * Returns name of dependsOn field name.
+	 * 
+	 * @param methodName
+	 * @param fieldName
+	 * @return
+	 */
+	private String getFireEventsFieldName(String methodName, String fieldName) {
+		StringBuffer name = new StringBuffer();
+		name.append("_bindableFireEvents_");
+		name.append(methodName);
+		name.append("_");
+		name.append(fieldName);
+		return name.toString();
+	}
+
+	private void addBeforeFireEventsMethod(
+			FireEventsMethodBindable fireEventsMethodBindable,
+			Collection<GetterMethodBindable> getterMethodBindableList) {
+		// private void _bindable_beforeFireEvents_setBuyingPrice()
+		MethodVisitor mv = cv.visitMethod(ACC_PRIVATE, fireEventsMethodBindable
+				.getBeforeFireEventsMethodName(), "()V", null, null);
+		mv.visitCode();
+
+		if (getterMethodBindableList != null) {
+			for (GetterMethodBindable getterMethodBindable : getterMethodBindableList) {
+
+				addBeforeFireEventsMethod(fireEventsMethodBindable,
+						getterMethodBindable, mv);
+			}
+		}
+
+		mv.visitInsn(RETURN);
+		mv.visitMaxs(3, 1);
+		mv.visitEnd();
+
+	}
+
+	/**
+	 * Generate the get old value for the fireEvents field.
+	 * 
+	 * Example:
+	 * 
+	 * _bindableFireEvents_setBuyingPrice_ratio = getRatio();
+	 * 
+	 * @param setterMethodBindable
+	 * @param getterMethodBindable
+	 * @param mv
+	 */
+	private void addBeforeFireEventsMethod(
+			FireEventsMethodBindable fireEventsMethodBindable,
+			GetterMethodBindable getterMethodBindable, MethodVisitor mv) {
+
+		String fireEventsFieldName = getFireEventsFieldName(
+				fireEventsMethodBindable.getMethodName(), getterMethodBindable
+						.getPropertyName());
+		/*
+		 * Example :
+		 * 
+		 * _bindableFireEvents_setBuyingPrice_ratio = getRatio();
+		 */
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitVarInsn(ALOAD, 0);
+
+		mv.visitMethodInsn(INVOKEVIRTUAL, className, getterMethodBindable
+				.getMethodName(), getterMethodBindable.getMethodDesc());
+		mv.visitFieldInsn(PUTFIELD, className, fireEventsFieldName,
+				getterMethodBindable.getPropertyDesc());
+	}
+
+	/**
+	 * Generate Method bindable_afterFireEvents_... which fire event for each
+	 * fireEvents for the fireEventsMethodBindable.
+	 * 
+	 * Example :
+	 * 
+	 * private void _bindable_afterDependsOn_setBuyingPrice() {
+	 * _bindable_getPropertyChangeSupport().firePropertyChange("ratio",
+	 * Double.valueOf(_bindable_setBuyingPrice_ratio),
+	 * Double.valueOf(getRatio())); }
+	 * 
+	 * 
+	 * @param setterMethodBindable
+	 * @param getterMethodBindableList
+	 */
+	private void addAfterFireEventsMethod(
+			FireEventsMethodBindable fireEventsMethodBindable,
+			Collection<GetterMethodBindable> getterMethodBindableList) {
+		// private void _bindable_beforeFireEvents_setBuyingPrice()
+		MethodVisitor mv = cv.visitMethod(ACC_PRIVATE, fireEventsMethodBindable
+				.getAfterFireEventsMethodName(), "()V", null, null);
+		mv.visitCode();
+
+		if (getterMethodBindableList != null) {
+			for (GetterMethodBindable getterMethodBindable : getterMethodBindableList) {
+
+				addAfterFireEventsMethod(fireEventsMethodBindable,
+						getterMethodBindable, mv);
+			}
+		}
+
+		mv.visitInsn(RETURN);
+		mv.visitMaxs(5, 1);
+		mv.visitEnd();
+
+	}
+
+	/**
+	 * Generate the fire event for the dependsOn field.
+	 * 
+	 * Example :
+	 * 
+	 * _bindable_getPropertyChangeSupport().firePropertyChange("ratio",
+	 * Double.valueOf(_bindable_setBuyingPrice_ratio),
+	 * Double.valueOf(getRatio()));
+	 * 
+	 * @param setterMethodBindable
+	 * @param getterMethodBindable
+	 * @param mv
+	 */
+	private void addAfterFireEventsMethod(
+			FireEventsMethodBindable fireEventsMethodBindable,
+			GetterMethodBindable getterMethodBindable, MethodVisitor mv) {
+
+		String propertyName = getterMethodBindable.getPropertyName();
+		String propertyDesc = getterMethodBindable.getPropertyDesc();
+		Type propertyType = Type.getType(propertyDesc);
+		String getterMethodName = getterMethodBindable.getMethodName();
+
+		/*
+		 * Example :
+		 * _bindable_getPropertyChangeSupport().firePropertyChange("ratio",
+		 * Double.valueOf(_bindable_setBuyingPrice_ratio),
+		 * Double.valueOf(getRatio()));
+		 */
+
+		String fireEventsFieldName = getFireEventsFieldName(
+				fireEventsMethodBindable.getMethodName(), getterMethodBindable
+						.getPropertyName());
+
+		mv.visitVarInsn(ALOAD, 0);
+		mv.visitMethodInsn(INVOKESPECIAL, className,
+				"_bindable_getPropertyChangeSupport",
+				"()Ljava/beans/PropertyChangeSupport;");
+		mv.visitLdcInsn(propertyName);
+		mv.visitVarInsn(ALOAD, 0);
+
+		mv.visitFieldInsn(GETFIELD, className, fireEventsFieldName,
+				propertyDesc);
+		ASMUtils.convertPrimitiveTypeToObjectTypeIfNeeded(mv, propertyType);
+
+		mv.visitVarInsn(ALOAD, 0);
+
+		mv.visitMethodInsn(INVOKEVIRTUAL, getClassName(), getterMethodName,
+				getterMethodBindable.getMethodDesc());
+		ASMUtils.convertPrimitiveTypeToObjectTypeIfNeeded(mv, propertyType);
+
+		mv.visitMethodInsn(INVOKEVIRTUAL, "java/beans/PropertyChangeSupport",
+				"firePropertyChange", FPC_DESC_OBJECT /*
+													 * "(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V")
+													 */);
+
+	}
+
+	// ----------- dependsOn generation method
 
 	/**
 	 * Generate methods _bindable_beforeDependsOn_... and
@@ -423,6 +696,7 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 						.get(setterPropertyName);
 
 			}
+			// Generate fireEvents fields
 			addDependsOnFields(setterMethodBindable, getterMethodBindableList);
 			// Generate before
 			addBeforeDependsOnMethod(setterMethodBindable,
@@ -666,4 +940,16 @@ public class ClassBindable extends ClassAdapter implements Opcodes,
 		return bindableStrategy.isUseAnnotation();
 	}
 
+	public void setBindableAnnotationFireEvents(String[] fireEvents) {
+
+	}
+
+	/**
+	 * Return true if fireEvents is supported and false otherwise.
+	 * 
+	 * @return
+	 */
+	public boolean isFireEventsSupported() {
+		return bindableStrategy.isUseAnnotation();
+	}
 }
