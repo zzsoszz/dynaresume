@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<!-- entityManagerFactory created before DAO -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="dynaresume" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
+				<property name="database" value="H2" />
+				<property name="generateDdl" value="false" />
+				<property name="showSql" value="true" />
+			</bean>
+		</property>
+		<property name="loadTimeWeaver">
+			<bean
+				class="org.eclipse.equinox.weaving.springweaver.EquinoxAspectsLoadTimeWeaver">
+				<property name="weaverScope" value="APPLICATION" />
+				<property name="importDynamicPackages" value="org.eclipse.persistence.descriptors.changetracking,org.eclipse.persistence.internal.descriptors,org.eclipse.persistence.internal.identitymaps,org.eclipse.persistence.internal.weaving,org.eclipse.persistence.jpa,org.eclipse.persistence.queries,org.eclipse.persistence.sessions" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="userDAO" class="org.dynaresume.dao.jpa.UserDAOJpa"></bean>
+
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<tx:annotation-driven transaction-manager="txManager" />
+
+	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+</beans>
