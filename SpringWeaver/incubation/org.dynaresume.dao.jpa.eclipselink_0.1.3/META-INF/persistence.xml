@@ -1,0 +1,10 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	version="1.0">
+
+	<persistence-unit name="dynaresume" transaction-type="RESOURCE_LOCAL">
+
+		<class>org.dynaresume.domain.User</class>
+
+	</persistence-unit>
+
+</persistence>
