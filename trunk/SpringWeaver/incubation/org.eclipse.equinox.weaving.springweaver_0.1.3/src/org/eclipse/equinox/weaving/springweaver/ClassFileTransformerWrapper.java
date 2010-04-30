@@ -25,17 +25,17 @@ import org.osgi.framework.Bundle;
 public class ClassFileTransformerWrapper implements ClassFileTransformer {
 
 	private ClassFileTransformer classFileTransformer;
-	private String importDynamicPackages;
+	private String dynamicImportPackages;
 
 	public ClassFileTransformerWrapper(
 			ClassFileTransformer classFileTransformer,
-			String importDynamicPackages) {
+			String dynamicImportPackages) {
 		this.classFileTransformer = classFileTransformer;
-		this.importDynamicPackages = importDynamicPackages;
+		this.dynamicImportPackages = dynamicImportPackages;
 	}
 
-	public String getImportDynamicPackages() {
-		return importDynamicPackages;
+	public String getDynamicImportPackages() {
+		return dynamicImportPackages;
 	}
 
 	@Override
