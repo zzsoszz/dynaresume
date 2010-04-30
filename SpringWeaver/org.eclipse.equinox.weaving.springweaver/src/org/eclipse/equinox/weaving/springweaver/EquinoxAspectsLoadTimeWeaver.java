@@ -36,7 +36,8 @@ import org.springframework.util.ClassUtils;
 public class EquinoxAspectsLoadTimeWeaver implements LoadTimeWeaver,
 		BundleContextAware {
 
-	private WeaverScope weaverScope;
+	private WeaverScope weaverScope = WeaverScope.BUNDLE;
+	
 	private final ClassLoader classLoader;
 	private BundleContext bundleContext;
 
