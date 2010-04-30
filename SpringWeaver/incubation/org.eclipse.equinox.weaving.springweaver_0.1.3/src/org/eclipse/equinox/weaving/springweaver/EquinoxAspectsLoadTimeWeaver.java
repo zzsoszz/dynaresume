@@ -12,6 +12,7 @@
 package org.eclipse.equinox.weaving.springweaver;
 
 import java.lang.instrument.ClassFileTransformer;
+import java.util.Properties;
 
 import org.eclipse.equinox.service.weaving.IWeavingService;
 import org.eclipse.equinox.service.weaving.IWeavingServiceFactory;
@@ -37,7 +38,8 @@ public class EquinoxAspectsLoadTimeWeaver implements LoadTimeWeaver,
 		BundleContextAware {
 
 	private WeaverScope weaverScope = WeaverScope.BUNDLE;
-	private String importDynamicPackages;
+	private String dynamicImportPackages = null;
+	private Properties dynamicImportPackagesProperties = null;
 	
 	private final ClassLoader classLoader;
 	private BundleContext bundleContext;
@@ -54,14 +56,20 @@ public class EquinoxAspectsLoadTimeWeaver implements LoadTimeWeaver,
 		this.weaverScope = weaverScope;
 	}
 	
-	public void setImportDynamicPackages(String importDynamicPackages) {
-		this.importDynamicPackages = importDynamicPackages;
+	
+	public void setDynamicImportPackages(String dynamicImportPackages) {
+		this.dynamicImportPackages = dynamicImportPackages;
 	}
-
+	
+	public void setDynamicImportPackagesProperties(
+			Properties dynamicImportPackagesProperties) {
+		this.dynamicImportPackagesProperties = dynamicImportPackagesProperties;
+	}
+	
 	@Override
 	public void addTransformer(ClassFileTransformer transformer) {
 		Activator.getInstance().getTransformerRegistry().addTransformer( 
-				this.weaverScope, this.bundleContext.getBundle(), transformer, this.importDynamicPackages);
+				this.weaverScope, this.bundleContext.getBundle(), transformer, this.dynamicImportPackages);
 		System.out.println("transformer added; " + transformer);
 	}
 

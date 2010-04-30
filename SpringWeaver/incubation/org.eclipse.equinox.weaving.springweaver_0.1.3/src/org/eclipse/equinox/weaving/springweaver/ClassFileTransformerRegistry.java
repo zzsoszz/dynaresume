@@ -57,13 +57,13 @@ public class ClassFileTransformerRegistry {
 	 *            the transformer to register.
 	 */
 	public void addTransformer(WeaverScope weaverScope, Bundle bundle,
-			ClassFileTransformer transformer, String importDynamicPackages) {
+			ClassFileTransformer transformer, String dynamicImportPackages) {
 
 		switch (weaverScope) {
 		case APPLICATION:
 			// Application Scope
 			this.applicationTransformers.add(new ClassFileTransformerWrapper(
-					transformer, importDynamicPackages));
+					transformer, dynamicImportPackages));
 			break;
 		case BUNDLE:
 			BundleClassFileTransformers concreteTransformers = this.bundleTransformers
@@ -74,7 +74,7 @@ public class ClassFileTransformerRegistry {
 			}
 
 			concreteTransformers.add(new ClassFileTransformerWrapper(
-					transformer, importDynamicPackages));
+					transformer, dynamicImportPackages));
 			break;
 		}
 

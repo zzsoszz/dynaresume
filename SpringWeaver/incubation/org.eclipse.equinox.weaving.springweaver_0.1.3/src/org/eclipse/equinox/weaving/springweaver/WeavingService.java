@@ -105,10 +105,10 @@ public class WeavingService implements IWeavingService {
 
 		if (newBytes == null)
 			return;
-		
+
 		if (oneClassWasWoven)
 			return;
-		String packages = transformer.getImportDynamicPackages();
+		String packages = transformer.getDynamicImportPackages();
 		if (packages == null && packages.length() < 1)
 			return;
 
