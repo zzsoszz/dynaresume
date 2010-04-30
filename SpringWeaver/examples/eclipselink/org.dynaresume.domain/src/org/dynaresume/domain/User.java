@@ -12,8 +12,6 @@
  *******************************************************************************/
 package org.dynaresume.domain;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +21,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "T_USER")
-public class User implements Serializable {
+public class User {
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +31,7 @@ public class User implements Serializable {
 	private long id;
 
 	@Column(name = "USR_LOGIN_C")
-	//@Basic(fetch=FetchType.LAZY)
+	// @Basic(fetch=FetchType.LAZY)
 	private String login;
 
 	@Column(name = "USR_PASSWORD_C")
