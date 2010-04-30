@@ -73,14 +73,9 @@ public class FindAllUsersThread extends Thread {
 		Collection<User> users = userService.findAllUsers();
 
 		for (User user : users) {
-			
-			ClassLoader classLoader = User.class.getClassLoader();
-			
-			if (user instanceof PersistenceWeaved) {
-				System.out.println("WOVENNNNNNNNNNNNNNNNNNN!");
-			}
+			boolean woven = (user instanceof PersistenceWeaved);
 			System.out.println("User [login=" + user.getLogin() + ", password="
-					+ user.getPassword() + "]");
+					+ user.getPassword() + "], woven=" + woven);
 		}
 	}
 
