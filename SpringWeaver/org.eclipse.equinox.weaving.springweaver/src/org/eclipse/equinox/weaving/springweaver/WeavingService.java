@@ -10,22 +10,32 @@
  *******************************************************************************/
 package org.eclipse.equinox.weaving.springweaver;
 
+import static org.eclipse.equinox.weaving.springweaver.util.StringUtils.isEmpty;
+
 import java.io.IOException;
-import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.equinox.service.weaving.IWeavingService;
+import org.eclipse.osgi.internal.baseadaptor.DefaultClassLoader;
+import org.eclipse.osgi.internal.composite.CompositeClassLoader;
+import org.eclipse.osgi.internal.loader.BundleLoader;
+import org.eclipse.osgi.util.ManifestElement;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleException;
+import org.osgi.framework.Constants;
 
 /**
- * Springweaver {@link IWeavingService} implementation.
- *
+ * Springweaver {@link IWeavingService} implementation for one {@link Bundle}.
+ * 
  */
 public class WeavingService implements IWeavingService {
 
 	private final ClassFileTransformerRegistry registry;
 	private final Bundle bundle;
+	private List<ClassFileTransformerWrapper> dynamicImportPackages;
 
 	public WeavingService(final Bundle bundle,
 			ClassFileTransformerRegistry registry) {
@@ -71,18 +81,82 @@ public class WeavingService implements IWeavingService {
 
 		byte[] result = null;
 
-		ClassFileTransformer[] transformers = this.registry
+		ClassFileTransformerWrapper transformer = null;
+		ClassFileTransformerWrapper[] transformers = this.registry
 				.getTransformers(this.bundle);
 		for (int i = 0; i < transformers.length; i++) {
 			try {
-				result = transformers[i].transform(loader, name, null, null,
+				transformer = transformers[i];
+				result = transformer.transform(loader, name, null, null,
 						classbytes);
+				doDynamicImportPackagesIfNeeded(transformer, result, loader);
 			} catch (IllegalClassFormatException e) {
 				e.printStackTrace();
 			}
 		}
-
 		return result;
+	}
+
+	/**
+	 * Do Dynamic import package if needed.
+	 * 
+	 * @param transformer
+	 * @param newBytes
+	 * @param loader
+	 */
+	private void doDynamicImportPackagesIfNeeded(
+			final ClassFileTransformerWrapper transformer,
+			final byte[] newBytes, final ClassLoader loader) {
+
+		if (newBytes == null)
+			// Transformation was not done, dynamic import packages must not
+			// done.
+			return;
+
+		if (dynamicImportPackages != null
+				&& dynamicImportPackages.contains(transformer))
+			// DynamicImportPackages was already done for this bundle, dynamic
+			// import packages must not done.
+			return;
+
+		String packages = transformer.getDynamicImportPackages();
+		if (isEmpty(packages))
+			// DynamicImportPackages is empty
+			return;
+
+		// Add DynamicImportPackages to the Bundle.
+		BundleLoader bundleLoader = getBundleLoader(loader);
+		if (bundleLoader != null) {
+			try {
+				bundleLoader
+						.addDynamicImportPackage(ManifestElement.parseHeader(
+								Constants.DYNAMICIMPORT_PACKAGE, packages));
+				if (dynamicImportPackages == null) {
+					dynamicImportPackages = new ArrayList<ClassFileTransformerWrapper>();
+				}
+				dynamicImportPackages.add(transformer);
+			} catch (BundleException e) {
+				// TODO : which exception to throw????
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	/**
+	 * Returns {@link BundleLoader}.
+	 * 
+	 * @param loader
+	 * @return
+	 */
+	private BundleLoader getBundleLoader(ClassLoader loader) {
+		if (loader instanceof DefaultClassLoader) {
+			return (BundleLoader) ((DefaultClassLoader) loader).getDelegate();
+		}
+		if (loader instanceof CompositeClassLoader) {
+			return (BundleLoader) ((CompositeClassLoader) loader).getDelegate();
+		}
+		return null;
 	}
 
 }
