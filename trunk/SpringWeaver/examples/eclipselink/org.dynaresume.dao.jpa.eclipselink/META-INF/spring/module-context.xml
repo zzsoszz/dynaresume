@@ -20,6 +20,14 @@
 			<bean
 				class="org.eclipse.equinox.weaving.springweaver.EquinoxAspectsLoadTimeWeaver">
 				<property name="weaverScope" value="APPLICATION" />
+				<!-- uncomment dynamicImportPackages declaration if you wish not use 
+				     org.dynaresume.domain.eclipselink.fragment fragment into your launch.
+				<property name="dynamicImportPackages">
+					<list>
+						<value>ECLIPSELINK</value>
+					</list>
+				</property>
+				 -->
 			</bean>
 		</property>
 	</bean>
