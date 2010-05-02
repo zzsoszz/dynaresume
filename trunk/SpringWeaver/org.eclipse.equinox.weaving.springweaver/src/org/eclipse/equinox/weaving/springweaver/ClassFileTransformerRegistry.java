@@ -26,12 +26,12 @@ import org.osgi.framework.Bundle;
  */
 public class ClassFileTransformerRegistry {
 
-	private static final ClassFileTransformer[] EMPTY_CLASS_FILE_TRANSFORMER = new ClassFileTransformer[0];
+	private static final ClassFileTransformerWrapper[] EMPTY_CLASS_FILE_TRANSFORMER = new ClassFileTransformerWrapper[0];
 
 	/**
 	 * Store APPLICATION scope ClassFileTransformer
 	 */
-	private List<ClassFileTransformer> applicationTransformers;
+	private List<ClassFileTransformerWrapper> applicationTransformers;
 
 	/**
 	 * Store BUNDLE scope ClassFileTransformer
@@ -39,12 +39,14 @@ public class ClassFileTransformerRegistry {
 	private Map<Bundle, BundleClassFileTransformers> bundleTransformers;
 
 	public ClassFileTransformerRegistry() {
-		this.applicationTransformers = new ArrayList<ClassFileTransformer>();
+		this.applicationTransformers = new ArrayList<ClassFileTransformerWrapper>();
 		this.bundleTransformers = new HashMap<Bundle, BundleClassFileTransformers>();
 	}
 
 	/**
 	 * Add {@link ClassFileTransformer} transformer into this registry.
+	 * 
+	 * @param importDynamicPackages
 	 * 
 	 * @param weaverScope
 	 *            weaver scope.
@@ -55,12 +57,13 @@ public class ClassFileTransformerRegistry {
 	 *            the transformer to register.
 	 */
 	public void addTransformer(WeaverScope weaverScope, Bundle bundle,
-			ClassFileTransformer transformer) {
+			ClassFileTransformer transformer, String dynamicImportPackages) {
 
 		switch (weaverScope) {
 		case APPLICATION:
 			// Application Scope
-			this.applicationTransformers.add(transformer);
+			this.applicationTransformers.add(new ClassFileTransformerWrapper(
+					transformer, dynamicImportPackages));
 			break;
 		case BUNDLE:
 			BundleClassFileTransformers concreteTransformers = this.bundleTransformers
@@ -70,7 +73,8 @@ public class ClassFileTransformerRegistry {
 				this.bundleTransformers.put(bundle, concreteTransformers);
 			}
 
-			concreteTransformers.add(transformer);
+			concreteTransformers.add(new ClassFileTransformerWrapper(
+					transformer, dynamicImportPackages));
 			break;
 		}
 
@@ -82,7 +86,7 @@ public class ClassFileTransformerRegistry {
 	 * @param bundle
 	 * @return
 	 */
-	public ClassFileTransformer[] getTransformers(Bundle bundle) {
+	public ClassFileTransformerWrapper[] getTransformers(Bundle bundle) {
 		BundleClassFileTransformers result = this.bundleTransformers
 				.get(bundle);
 		if (result != null) {
@@ -90,7 +94,7 @@ public class ClassFileTransformerRegistry {
 			// Merge it with ClassFileTransformer with scope APPLICATION and
 			// return it.
 			result.mergeIfNeeded(this.applicationTransformers);
-			return (ClassFileTransformer[]) result
+			return (ClassFileTransformerWrapper[]) result
 					.toArray(EMPTY_CLASS_FILE_TRANSFORMER);
 		} else {
 			// return ClassFileTransformer with scope APPLICATION
@@ -104,7 +108,7 @@ public class ClassFileTransformerRegistry {
 	 * 
 	 */
 	private class BundleClassFileTransformers extends
-			ArrayList<ClassFileTransformer> {
+			ArrayList<ClassFileTransformerWrapper> {
 
 		private static final long serialVersionUID = 195726735267829321L;
 
@@ -116,7 +120,7 @@ public class ClassFileTransformerRegistry {
 		 * @param applicationTransformers
 		 */
 		public void mergeIfNeeded(
-				List<ClassFileTransformer> applicationTransformers) {
+				List<ClassFileTransformerWrapper> applicationTransformers) {
 			if (merged)
 				return;
 			super.addAll(applicationTransformers);
