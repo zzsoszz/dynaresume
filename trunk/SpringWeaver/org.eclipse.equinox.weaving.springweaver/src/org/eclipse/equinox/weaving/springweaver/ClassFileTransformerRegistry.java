@@ -38,9 +38,13 @@ public class ClassFileTransformerRegistry {
 	 */
 	private Map<Bundle, BundleClassFileTransformers> bundleTransformers;
 
-	public ClassFileTransformerRegistry() {
+	private DynamicImportPackagesRegistry dynamicImportPackagesRegistry;
+
+	public ClassFileTransformerRegistry(
+			DynamicImportPackagesRegistry dynamicImportPackagesRegistry) {
 		this.applicationTransformers = new ArrayList<ClassFileTransformerWrapper>();
 		this.bundleTransformers = new HashMap<Bundle, BundleClassFileTransformers>();
+		this.dynamicImportPackagesRegistry = dynamicImportPackagesRegistry;
 	}
 
 	/**
@@ -57,8 +61,11 @@ public class ClassFileTransformerRegistry {
 	 *            the transformer to register.
 	 */
 	public void addTransformer(WeaverScope weaverScope, Bundle bundle,
-			ClassFileTransformer transformer, String dynamicImportPackages) {
+			ClassFileTransformer transformer,
+			List<String> dynamicImportPackagesList) {
 
+		String dynamicImportPackages = dynamicImportPackagesRegistry
+				.getDynamicImportPackages(dynamicImportPackagesList);
 		switch (weaverScope) {
 		case APPLICATION:
 			// Application Scope
@@ -66,6 +73,7 @@ public class ClassFileTransformerRegistry {
 					transformer, dynamicImportPackages));
 			break;
 		case BUNDLE:
+			// Bundle Scope
 			BundleClassFileTransformers concreteTransformers = this.bundleTransformers
 					.get(bundle);
 			if (concreteTransformers == null) {
