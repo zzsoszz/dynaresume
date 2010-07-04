@@ -4,14 +4,9 @@ Bundle-Name: Jta Transaction
 Bundle-SymbolicName: org.dynaresume.infrastructure.jtatransaction
 Bundle-Version: 0.0.1.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: com.atomikos.icatch.config,
- com.atomikos.icatch.jta,
- com.atomikos.icatch.standalone;version="3.6.0",
- com.atomikos.util;version="3.6.0",
+Import-Package: javax.transaction;version="1.1.0",
+ javax.transaction.xa;version="1.1.0",
  org.apache.xbean.spring.jndi;version="3.6.0",
- org.springframework.beans.factory;version="3",
- org.springframework.jndi;version="3",
- org.springframework.orm.jpa;version="3",
- org.springframework.orm.jpa.persistenceunit;version="3",
- org.springframework.orm.jpa.vendor;version="3"
+ org.springframework.beans.factory;version=3,
+ org.springframework.jndi;version=3
 Require-Bundle: org.springframework.transaction

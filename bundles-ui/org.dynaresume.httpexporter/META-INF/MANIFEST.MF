@@ -12,7 +12,6 @@ Import-Package: com.springsource.server.web.dm;version="[2.0.0,3.0.0)";resolutio
  org.dynaresume.core.domain,
  org.dynaresume.core.service,
  org.dynaresume.springremoting.http,
- org.hibernate.hql.ast;version="3.2.6.ga",
  org.springframework.aop;version="3.0.0",
  org.springframework.aop.framework;version="3.0.0",
  org.springframework.osgi.web.context.support;version="1.2.1",

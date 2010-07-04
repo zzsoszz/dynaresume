@@ -11,11 +11,11 @@
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
 			http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-	<!-- IMPORTANT: specify all Atomikos properties here--> 
+	<!-- IMPORTANT: specify all Atomikos properties here
 	<bean id="userTransactionService" class="com.atomikos.icatch.config.UserTransactionServiceImp"
 		init-method="init" destroy-method="shutdownForce">
 		<constructor-arg>
-			
+
 			<props>
 				<prop key="com.atomikos.icatch.service">
 					com.atomikos.icatch.standalone.UserTransactionServiceFactory
@@ -23,11 +23,11 @@
 				<prop key="com.atomikos.icatch.default_jta_timeout">
 					300000
                 </prop>
-				<!--  	 Need this for long running transactions. --> 
+				  	 Need this for long running transactions.
 				<prop key="com.atomikos.icatch.max_timeout">
 					172800000
                 </prop>
-			<!-- 	 Max number of active transactions. --> 
+			 	 Max number of active transactions.
 				<prop key="com.atomikos.icatch.max_actives">
 					-1
                 </prop>
@@ -42,23 +42,23 @@
 	</bean>
 
 
-	<bean id="AtomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager"
+	--><!--<bean id="AtomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager"
 		init-method="init" destroy-method="close">
 
-		<!--
+
 			when close is called, should we force transactions to terminate or
 			not?
-		-->
+
 		<property name="forceShutdown" value="false" />
-	</bean>
+	</bean>-->
 
 	<!--
 		Also use Atomikos UserTransactionImp, needed to configure Spring
 	-->
-	<bean id="AtomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp">
+	<!--<bean id="AtomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp">
 
 		<property name="transactionTimeout" value="3000" />
-	</bean>
+	</bean>-->
 
 	<!--
 		Configure the Spring framework to use JTA transactions from Atomikos

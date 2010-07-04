@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-Version: 0.0.1.qualifier
-Bundle-Name: Mysql
+Bundle-Name: Db conf
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.dynaresume.infrastructure.db
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

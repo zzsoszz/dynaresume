@@ -61,17 +61,17 @@ public class GroupCompositeController {
 		fakeUpdateValueStrategy.setAfterConvertValidator(new IValidator() {
 
 			public IStatus validate(Object value) {
-				if (value != null) {
-					String input = (String) value;
-
-					Pattern p = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$");
-					Matcher m = p.matcher(input.toUpperCase());
-					boolean result= m.matches();
-					
-					if (!result)
-						// if(value2.length()>5)
-						return ValidationStatus.error("please enter a valid name");
-				}
+//				if (value != null) {
+//					String input = (String) value;
+//
+//					Pattern p = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$");
+//					Matcher m = p.matcher(input.toUpperCase());
+//					boolean result= m.matches();
+//
+//					if (!result)
+//						// if(value2.length()>5)
+//						return ValidationStatus.error("please enter a valid name");
+//				}
 				return Status.OK_STATUS;
 			}
 		});
