@@ -2,12 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Rcp
 Bundle-SymbolicName: org.dynaresume.swtdesigner.rcp
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.0.1.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: org.eclipse.core.runtime,
- org.eclipse.jface.resource,
- org.eclipse.swt,
- org.eclipse.swt.graphics,
- org.eclipse.swt.widgets,
+Import-Package: org.eclipse.jface.resource,
  org.osgi.framework
 Export-Package: com.swtdesigner
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.5.0",
+ org.eclipse.swt;bundle-version="3.5.1"

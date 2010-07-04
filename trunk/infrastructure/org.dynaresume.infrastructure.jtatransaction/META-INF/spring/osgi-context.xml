@@ -3,15 +3,24 @@
    xmlns="http://www.springframework.org/schema/osgi"
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xmlns:beans="http://www.springframework.org/schema/beans"
-   xsi:schemaLocation="http://www.springframework.org/schema/osgi  
+   xsi:schemaLocation="http://www.springframework.org/schema/osgi
        http://www.springframework.org/schema/osgi/spring-osgi-1.0.xsd
-       http://www.springframework.org/schema/beans   
+       http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
-       <!---->
+
 	<service ref="myTransactionManager" interface="org.springframework.transaction.PlatformTransactionManager"/>
+
+
+	<reference id="AtomikosTransactionManager" interface="javax.transaction.TransactionManager" />
+
+	<reference id="AtomikosUserTransaction" interface="javax.transaction.UserTransaction"/>
+
+
 	<!--
 	<service ref="jndi" interface="javax.naming.Context"/>
-	
-	
+
+
 	<service ref="persistenceUnitManager" interface="org.springframework.orm.jpa.persistenceunit.PersistenceUnitManager"/>
---></beans:beans>           
+-->
+
+</beans:beans>

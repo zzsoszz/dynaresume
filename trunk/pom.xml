@@ -7,7 +7,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho.version>0.8.0</tycho.version>
+		<tycho.version>0.9.0</tycho.version>
 	</properties>
 
 	<scm>
@@ -68,15 +68,15 @@
 	<repositories>
 		<!---->
 		<repository>
-			<id>gallileo</id>
+			<id>helios</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/galileo</url>
+			<url>http://download.eclipse.org/releases/helios</url>
 		</repository>
-		<repository>
+		<!--<repository>
 			<id>update35</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/eclipse/updates/3.5</url>
-		</repository>
+		</repository>-->
 		<!--
 			use with Nexus repository manager <repository> <id>atomikos</id>
 			<name>Atomikos</name>
