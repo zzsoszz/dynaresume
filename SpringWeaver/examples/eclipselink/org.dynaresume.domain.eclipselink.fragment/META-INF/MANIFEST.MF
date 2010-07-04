@@ -6,6 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Fragment-Host: org.dynaresume.domain;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.eclipse.persistence.descriptors.changetracking;version="2.0.0.v20091127-r5931",
+ org.eclipse.persistence.indirection;version="2.0.0.v20091127-r5931",
  org.eclipse.persistence.internal.descriptors;version="2.0.0.v20091127-r5931",
  org.eclipse.persistence.internal.identitymaps;version="2.0.0.v20091127-r5931",
  org.eclipse.persistence.internal.weaving;version="2.0.0.v20091127-r5931",
