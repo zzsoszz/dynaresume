@@ -152,13 +152,10 @@
 
 			</dependencies>
 		</profile>
-		<!--
-			<profile> <id>mysql</id> <activation> <property> <name>mysql</name>
-			</property> </activation> <dependencies> <dependency>
-			<groupId>com.mysql.jdbc</groupId>
-			<artifactId>com.springsource.com.mysql.jdbc</artifactId>
-			<version>5.1.6</version> </dependency> </dependencies> </profile>
-		-->
+		<!-- <profile> <id>mysql</id> <activation> <property> <name>mysql</name>
+			</property> </activation> <dependencies> <dependency> <groupId>com.mysql.jdbc</groupId>
+			<artifactId>com.springsource.com.mysql.jdbc</artifactId> <version>5.1.6</version>
+			</dependency> </dependencies> </profile> -->
 		<profile>
 			<id>derby</id>
 			<activation>
@@ -174,11 +171,8 @@
 					<version>10.5.1000001.764942</version>
 				</dependency>
 				<!---->
-				<!--
-					<dependency> <groupId>org.apache.derby</groupId>
-					<version>10.5.3.0</version> <artifactId>derby</artifactId>
-					</dependency>
-				-->
+				<!-- <dependency> <groupId>org.apache.derby</groupId> <version>10.5.3.0</version>
+					<artifactId>derby</artifactId> </dependency> -->
 			</dependencies>
 		</profile>
 
@@ -227,7 +221,7 @@
 			<url>http://maven.springframework.org/osgi</url>
 		</repository>
 
-		
+
 		<repository>
 			<id>com.springsource.repository.libraries.release</id>
 			<name>SpringSource Enterprise Bundle Repository - SpringSource
@@ -235,12 +229,9 @@
 			<url>http://repository.springsource.com/maven/libraries/release</url>
 		</repository>
 
-		<!--
-			<repository> <id>spring-maven-milestone</id> <name>Springframework
-			Maven Repository</name>
-			<url>http://s3.amazonaws.com/maven.springframework.org/milestone</url>
-			</repository>
-		-->
+		<!-- <repository> <id>spring-maven-milestone</id> <name>Springframework
+			Maven Repository</name> <url>http://s3.amazonaws.com/maven.springframework.org/milestone</url>
+			</repository> -->
 		<repository>
 			<id>com.springsource.repository.libraries.external</id>
 			<name>SpringSource Enterprise Bundle Repository - External Library
@@ -248,11 +239,8 @@
 			<url>http://repository.springsource.com/maven/libraries/external
 			</url>
 		</repository>
-<repository>
-			<id>atomikos</id>
-			<name>Atmikos</name>
-			<url>http://localhost:8081/nexus/content/repositories/atomikos/</url>
-		</repository>
+		<!--<repository> <id>atomikos</id> <name>Atmikos</name> <url>http://localhost:8081/nexus/content/repositories/atomikos/</url>
+			</repository> -->
 	</repositories>
 
 
@@ -267,7 +255,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>org.springframework.spring-library</artifactId>
 			<type>libd</type>
-			<version>3.0.0.RELEASE</version>
+			<version>3.0.3.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.osgi</groupId>
@@ -287,11 +275,8 @@
 			<version>1.1.0</version>
 		</dependency>
 
-		<!--
-			<dependency> <groupId>org.apache.commons</groupId>
-			<artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
-			<version>1.2.2.osgi</version> </dependency>
-		-->
+		<!-- <dependency> <groupId>org.apache.commons</groupId> <artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
+			<version>1.2.2.osgi</version> </dependency> -->
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -319,10 +304,6 @@
 		</dependency>
 
 		<dependency>
-			<!--
-				<groupId>org.springframework.osgi</groupId>
-				<artifactId>org.springframework.osgi.web.extender</artifactId>
-			-->
 			<groupId>org.springframework.osgi</groupId>
 			<artifactId>spring-osgi-web-extender</artifactId>
 			<version>1.2.1</version>
@@ -367,11 +348,7 @@
 			<artifactId>com.springsource.org.apache.xbean.spring</artifactId>
 			<version>3.6.0</version>
 		</dependency>
-		<!--
-			beanlib <dependency> <groupId>net.sourceforge.beanlib</groupId>
-			<artifactId>com.springsource.net.sf.beanlib.hibernate</artifactId>
-			<version>3.3.0.beta21</version> </dependency>
-		-->
+
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>com.springsource.com.thoughtworks.xstream</artifactId>
@@ -381,22 +358,6 @@
 			<groupId>net.jcip</groupId>
 			<artifactId>com.springsource.net.jcip.annotations</artifactId>
 			<version>1.0.0</version>
-		</dependency>
-		<!-- atomikos -->
-		<dependency>
-			<groupId>com.atomikos</groupId>
-			<artifactId>transactions-hibernate3</artifactId>
-			<version>3.6.3</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.hibernate</groupId>
-					<artifactId>hibernate</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.apache.geronimo.specs</groupId>
-					<artifactId>geronimo-jta_1.0.1B_spec</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 	</dependencies>
 </project>
