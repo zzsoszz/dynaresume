@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: HR Services
-Bundle-SymbolicName: org.dynaresume.hr.services
-Bundle-Version: 0.0.1.qualifier
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: org.dynaresume.hr.domain
-Export-Package: org.dynaresume.hr.service

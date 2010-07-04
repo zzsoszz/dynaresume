@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Fragment
-Bundle-SymbolicName: com.atomikos.transactions.datasource.xa.fragment
-Bundle-Version: 0.0.1.qualifier
-Fragment-Host: com.atomikos.transactions;bundle-version="3.6.0"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: com.atomikos.datasource.xa;resolution:=optional,
- com.atomikos.jdbc.nonxa;resolution:=optional

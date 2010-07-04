@@ -1,2 +1,0 @@
-java -cp ../lib/com.springsource.org.h2-1.0.71.jar org.h2.tools.RunScript -url jdbc:h2:../db/dynaresume -user sa -script h2schema.ddl
-java -cp ../lib/com.springsource.org.h2-1.0.71.jar org.h2.tools.RunScript -url jdbc:h2:../db/dynaresume -user sa -script data.sql

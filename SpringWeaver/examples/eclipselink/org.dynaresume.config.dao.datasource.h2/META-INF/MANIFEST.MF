@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Dynaresume Datasource H2 configuration
-Bundle-SymbolicName: org.dynaresume.config.dao.datasource.h2
-Bundle-Version: 1.0.0.qualifier
-Fragment-Host: org.dynaresume.dao.datasource;bundle-version="1.0.0"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Bundle-Vendor: Akrogen
-Import-Package: org.h2;version="1.0.71"

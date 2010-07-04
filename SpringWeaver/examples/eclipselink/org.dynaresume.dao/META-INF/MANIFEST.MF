@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Dynaresume API DAO
-Bundle-SymbolicName: org.dynaresume.dao
-Bundle-Version: 1.0.0.qualifier
-Bundle-Vendor: Akrogen
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: org.dynaresume.domain
-Export-Package: org.dynaresume.dao

@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Pojo Bindable Dynamic Weaving Fragment for Equinox
-Bundle-SymbolicName: org.eclipse.core.databinding.pojo.bindable.equinox.weaving
-Bundle-Version: 1.0.0
-Bundle-Vendor: Angelo ZERR
-Fragment-Host: org.eclipse.osgi;bundle-version="3.4.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.core.databinding.pojo.bindable.equinox.weaving
