@@ -17,7 +17,8 @@
 		<module>org.dynaresume.infrastructure.repository.generic</module>
 		<module>org.dynaresume.infrastructure.log4j</module>
 		<module>org.dynaresume.infrastructure.jtatransaction</module>
-		<module>org.dynaresume.infrastructure.db</module>
+		<!--<module>org.dynaresume.infrastructure.db</module>-->
+		<module>org.dynaresume.infrastructure.db.atomikos</module>
 		<module>org.dynaresume.hibernate.atomikos.adapter</module>
 	</modules>
 

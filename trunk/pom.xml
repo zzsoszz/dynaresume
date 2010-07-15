@@ -84,11 +84,11 @@
 			</repository>
 		-->
 
-		<repository>
+		<!--<repository>
 			<id>atomikos</id>
 			<name>Atomikos</name>
 			<url>http://repo.atomikos.com/</url>
-		</repository>
+		</repository>-->
 		<repository>
 			<id>com.springsource.repository.bundles.release</id>
 			<name>SpringSource Enterprise Bundle Repository - SpringSource Bundle
@@ -121,23 +121,23 @@
 		<dependencies>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>spring-aop</artifactId>
-				<version>3.0.0.RELEASE</version>
+				<artifactId>org.springframework.aop</artifactId>
+				<version>3.0.3.RELEASE</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>org.springframework.core</artifactId>
-				<version>3.0.0.RELEASE</version>
+				<version>3.0.3.RELEASE</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>org.springframework.orm</artifactId>
-				<version>3.0.0.RELEASE</version>
+				<version>3.0.3.RELEASE</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>org.springframework.transaction</artifactId>
-				<version>3.0.0.RELEASE</version>
+				<version>3.0.3.RELEASE</version>
 			</dependency>
 			<dependency>
 				<groupId>com.thoughtworks.xstream</groupId>
@@ -176,27 +176,27 @@
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>org.springframework.context</artifactId>
-				<version>3.0.0.RELEASE</version>
+				<version>3.0.3.RELEASE</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>org.springframework.web</artifactId>
-				<version>3.0.0.RELEASE</version>
+				<version>3.0.3.RELEASE</version>
 			</dependency>
-			<dependency>
+			<!--<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>org.springframework.aop</artifactId>
 				<version>3.0.0.RELEASE</version>
-			</dependency>
+			</dependency>-->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>org.springframework.web.servlet</artifactId>
-				<version>3.0.0.RELEASE</version>
+				<version>3.0.3.RELEASE</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>org.springframework.context.support</artifactId>
-				<version>3.0.0.RELEASE</version>
+				<version>3.0.3.RELEASE</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.xbean</groupId>
@@ -211,23 +211,23 @@
 			</dependency>
 
 
-			<dependency>
+			<!--<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>com.springsource.org.hibernate.annotations.common
 				</artifactId>
 				<version>3.3.0.ga</version>
-			</dependency>
+			</dependency>-->
 			<dependency>
 				<groupId>javax.transaction</groupId>
 				<artifactId>com.springsource.javax.transaction</artifactId>
 				<version>1.1.0</version>
 			</dependency>
-			<dependency>
+			<!--<dependency>
 
 				<groupId>com.atomikos</groupId>
 				<artifactId>transactions-hibernate3</artifactId>
 				<version>3.6.3</version>
-			</dependency>
+			</dependency>-->
 		</dependencies>
 	</dependencyManagement>
 
