@@ -14,7 +14,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
+			<artifactId>org.springframework.aop</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
@@ -28,6 +28,6 @@
 			<groupId>net.sourceforge.cglib</groupId>
 			<artifactId>com.springsource.net.sf.cglib</artifactId>
 		</dependency>
-		
+
 	</dependencies>
 </project>

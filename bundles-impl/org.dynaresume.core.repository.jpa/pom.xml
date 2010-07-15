@@ -14,6 +14,17 @@
 
 
 	<dependencies>
+	<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>com.springsource.org.hibernate.ejb</artifactId>
+
+			<version>3.3.2.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>com.springsource.javax.persistence</artifactId>
+			<version>1.99.0</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>org.springframework.orm</artifactId>
@@ -34,13 +45,13 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>com.springsource.slf4j.log4j</artifactId>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>com.springsource.org.hibernate.annotations.common</artifactId>
-		</dependency>
+		</dependency>-->
 	</dependencies>
-	
-	
+
+
 	<profiles>
 		<profile>
 			<id>generate-ddl</id>

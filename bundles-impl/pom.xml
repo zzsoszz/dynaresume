@@ -17,6 +17,7 @@
 		<module>org.dynaresume.hr.repository.jpa</module>
 		<module>org.dynaresume.core.services.impl</module>
 		<module>org.dynaresume.hr.services.impl</module>
+		<module>org.dynaresume.core.services.test</module>
 	</modules>
 
 

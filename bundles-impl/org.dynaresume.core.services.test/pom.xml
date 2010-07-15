@@ -1,0 +1,220 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.dynaresume</groupId>
+		<artifactId>impl</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+
+	</parent>
+	<groupId>org.dynaresume</groupId>
+	<artifactId>org.dynaresume.core.services.test</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>eclipse-test-plugin</packaging>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>maven-osgi-test-plugin</artifactId>
+				<version>0.9.0</version>
+
+				<configuration>
+					<!--<useUIHarness>true</useUIHarness> -->
+					<useUIThread>true</useUIThread>
+					<!--<product>org.eclipse.sdk.ide</product> -->
+					<!--<argLine>-consoleLog</argLine>-->
+					<!--<application>org.eclipse.ui.ide.workbench</application> -->
+					<showEclipseLog>true</showEclipseLog>
+					<dependencies>
+					<dependency>
+					<artifactId>org.dynaresume.core.services.impl</artifactId>
+					<type>p2-installable-unit</type>
+					</dependency>
+					<dependency>
+					<artifactId>org.dynaresume.core.repository.jpa</artifactId>
+					<type>p2-installable-unit</type>
+					</dependency>
+<dependency>
+
+						<artifactId>com.springsource.org.hibernate</artifactId>
+						<type>p2-installable-unit</type>
+						</dependency>
+
+						<!--<dependency>
+
+							<artifactId>org.springframework.transaction</artifactId>
+							<type>p2-installable-unit</type>
+						</dependency>-->
+						<!--<dependency>
+
+							<artifactId>org.springframework.context</artifactId>
+							<type>p2-installable-unit</type>
+						</dependency>-->
+						<dependency>
+							<artifactId>org.springframework.asm</artifactId>
+							<type>p2-installable-unit</type>
+						</dependency>
+						<!--<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>org.springframework.orm</artifactId>
+
+							<type>p2-installable-unit</type>
+						</dependency>-->
+						<!--<dependency>
+
+							<artifactId>org.springframework.expression</artifactId>
+
+							<type>p2-installable-unit</type>
+						</dependency>-->
+						<!--<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>org.springframework.core</artifactId>
+							<type>p2-installable-unit</type>
+						</dependency>-->
+						<dependency>
+
+							<artifactId>com.springsource.javax.transaction</artifactId>
+
+							<type>p2-installable-unit</type>
+						</dependency>
+						<dependency>
+
+							<artifactId>com.atomikos.transactions-osgi</artifactId>
+
+							<type>p2-installable-unit</type>
+						</dependency>
+						<!--<dependency>
+							<artifactId>com.springsource.org.apache.xbean.spring</artifactId>
+							<type>p2-installable-unit</type>
+						</dependency>-->
+
+						<dependency>
+							<groupId>org.slf4j</groupId>
+							<artifactId>com.springsource.slf4j.log4j</artifactId>
+							<type>p2-installable-unit</type>
+						</dependency>
+						<!--<dependency>
+							<groupId>org.hibernate</groupId>
+							<artifactId>com.springsource.org.hibernate.annotations.common</artifactId>
+							<type>p2-installable-unit</type>
+						</dependency>-->
+						<dependency>
+						<artifactId>org.dynaresume.infrastructure.jtatransaction</artifactId>
+						<type>p2-installable-unit</type>
+						</dependency>
+						<dependency>
+
+							<artifactId>org.springframework.osgi.extender</artifactId>
+
+							<type>p2-installable-unit</type>
+						</dependency>
+						<!--<dependency>
+							<groupId>javax.servlet</groupId>
+							<artifactId>com.springsource.javax.servlet</artifactId>
+
+							<type>p2-installable-unit</type>
+						</dependency>-->
+
+						<dependency>
+							<artifactId>com.springsource.org.apache.derby</artifactId>
+							<type>p2-installable-unit</type>
+						</dependency>
+						<dependency>
+							<artifactId>org.dynaresume.infrastructure.db.atomikos</artifactId>
+							<type>p2-installable-unit</type>
+						</dependency>
+						<dependency>
+							<artifactId>com.springsource.org.hibernate.ejb</artifactId>
+							<type>p2-installable-unit</type>
+						</dependency>
+					</dependencies>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>com.springsource.org.hibernate</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>com.springsource.org.hibernate.ejb</artifactId>
+
+			<version>3.3.2.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.transaction</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.asm</artifactId>
+			<version>3.0.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.orm</artifactId>
+			<version>3.0.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.expression</artifactId>
+			<version>3.0.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>org.springframework.core</artifactId>
+			<version>3.0.3.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>com.springsource.javax.transaction</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.atomikos</groupId>
+			<artifactId>transactions-osgi</artifactId>
+			<version>3.7.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xbean</groupId>
+			<artifactId>com.springsource.org.apache.xbean.spring</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>com.springsource.slf4j.log4j</artifactId>
+		</dependency>
+		<!--<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>com.springsource.org.hibernate.annotations.common</artifactId>
+		</dependency>-->
+		<dependency>
+			<groupId>org.springframework.osgi</groupId>
+			<artifactId>spring-osgi-extender</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>com.springsource.javax.servlet</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>com.springsource.org.apache.derby</artifactId>
+			<version>10.5.1000001.764942</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>com.springsource.javax.persistence</artifactId>
+			<version>1.99.0</version>
+		</dependency>
+	</dependencies>
+
+</project>
