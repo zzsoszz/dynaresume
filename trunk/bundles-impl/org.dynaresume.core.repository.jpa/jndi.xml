@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+  <bean id="jndi" class="org.apache.xbean.spring.jndi.DefaultContext">
+    <property name="entries">
+      <map>
+        <!--<entry key="java:comp/env/jdbc/myDatabase">
+			<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+				destroy-method="close" singleton="false">
+				<property name="driverClassName" value="com.sybase.jdbc3.jdbc.SybDataSource"/>
+				<property name="url" value="jdbc:sybase:Tds:sybase-server:5000/MyDatabase"/>
+				<property name="username" value="db-username"/>
+				<property name="password" value="myS3cr3tpassword"/>
+			</bean>
+        </entry>-->
+        <entry key="java:comp/env/jdbc/dynaDS2" value-ref="dynaresumeDataSource" />
+      </map>
+    </property>
+  </bean>
+</beans>

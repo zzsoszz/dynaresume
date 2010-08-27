@@ -9,6 +9,7 @@ Import-Package: javax.persistence,
  javax.sql,
  javax.transaction,
  javax.transaction.xa,
+ org.apache.xbean.spring;version="3.6.0",
  org.dynaresume.basebean,
  org.dynaresume.core.domain,
  org.dynaresume.core.repository,
@@ -32,3 +33,4 @@ Import-Package: javax.persistence,
  org.springframework.transaction
 Bundle-ClassPath: .,
  target/classes/
+Require-Bundle: com.springsource.org.apache.xbean.spring;bundle-version="3.6.0"
