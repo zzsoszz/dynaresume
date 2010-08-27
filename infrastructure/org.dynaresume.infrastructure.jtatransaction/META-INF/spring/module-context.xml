@@ -75,10 +75,12 @@
 		<property name="entries">
 			<map>
 				<entry key="java:comp/TransactionManager" value-ref="AtomikosTransactionManager" />
+				<entry key="jdbc/dynaDS2" value-ref="dynaresumeDataSource" />
 				<!--<entry key="java:comp/UserTransaction" value-ref="AtomikosUserTransaction" />-->
 				<!--<entry key="java:comp/UserTransactionService" value-ref="userTransactionService" />-->
 			</map>
 		</property>
+		<property name="freeze" value="false"></property>
 	</bean>
 
 

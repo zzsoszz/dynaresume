@@ -4,7 +4,7 @@
 	<persistence-unit name="core" transaction-type="JTA">
 		
 		<!---->
-		<jta-data-source>java:dynaDS2</jta-data-source>
+		<jta-data-source>jdbc/dynaDS2</jta-data-source>
 		<class>org.dynaresume.core.domain.Address</class>
 		<class>org.dynaresume.core.domain.Collaboration</class>
 		<class>org.dynaresume.core.domain.Country</class>

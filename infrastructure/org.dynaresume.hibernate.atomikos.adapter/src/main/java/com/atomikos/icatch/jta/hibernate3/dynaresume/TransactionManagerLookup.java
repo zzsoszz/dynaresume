@@ -30,13 +30,13 @@ package com.atomikos.icatch.jta.hibernate3.dynaresume;
 
 import java.util.Properties;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.transaction.Transaction;
 import javax.transaction.TransactionManager;
 
 import org.hibernate.HibernateException;
-import org.hibernate.util.NamingHelper;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * 
@@ -67,23 +67,39 @@ public class TransactionManagerLookup implements org.hibernate.transaction.Trans
 
     public TransactionManager getTransactionManager(Properties props) throws HibernateException
     {
-    	TransactionManager tm=null;
-    try {
-		InitialContext	context = NamingHelper.getInitialContext(props);
-		
-		 tm = (TransactionManager)context.lookup("java:comp/TransactionManager");
-	} catch (NamingException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+    	
+    	Bundle hostBundle = FrameworkUtil.getBundle(TransactionManager.class);
+  	TransactionManager tm=null;
+//    try {
+//		InitialContext	context = NamingHelper.getInitialContext(props);
+//		
+//		 tm = (TransactionManager)context.lookup("java:comp/TransactionManager");
+//	} catch (NamingException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	}
+  	ServiceReference ref= hostBundle.getBundleContext().getServiceReference(TransactionManager.class.getName());
+  	tm = (TransactionManager) 	hostBundle.getBundleContext().getService(ref);
+//  	
+//    	ServiceTracker 	tracker = new ServiceTracker(hostBundle.getBundleContext(), TransactionManager.class.getName(), null);
+//		tracker.open();
+//		try {
+//			tracker.waitForService(6000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		tm = (TransactionManager) tracker.getService();
         return tm;
+        
     	//return utm;
     }
 
     
     public String getUserTransactionName()
     {
-        return "java:comp/TransactionManager";
+        return TransactionManager.class.getName();
     }
 
 

@@ -9,6 +9,9 @@
 
 	<reference id="dynaresumeDataSource" interface="javax.sql.DataSource" />
 
+
+	<reference id="jndi" interface="javax.naming.Context" />
+
 	<service ref="agencyRepository" interface="org.dynaresume.core.repository.AgencyRepository" />
 
 	<service ref="groupRepository" interface="org.dynaresume.core.repository.GroupRepository" />

@@ -15,11 +15,12 @@
 
 	<reference id="AtomikosUserTransaction" interface="javax.transaction.UserTransaction"/>
 
+<reference id="dynaresumeDataSource" interface="javax.sql.DataSource" />
 
-	<!--
+
 	<service ref="jndi" interface="javax.naming.Context"/>
 
-
+<!-- 
 	<service ref="persistenceUnitManager" interface="org.springframework.orm.jpa.persistenceunit.PersistenceUnitManager"/>
 -->
 
