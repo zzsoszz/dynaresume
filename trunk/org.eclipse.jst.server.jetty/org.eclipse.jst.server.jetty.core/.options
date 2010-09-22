@@ -1,0 +1,4 @@
+# Debugging options for the org.eclipse.jst.server.jetty.core plugin
+
+# Turn on general debugging
+org.eclipse.jst.server.jetty.core/debug=true
