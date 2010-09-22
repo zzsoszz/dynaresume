@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+<extension point="org.eclipse.wst.server.ui.serverImages">
+      <image
+         id="org.eclipse.jst.server.jetty.70"
+         icon="icons/obj16/jetty.gif"
+         typeIds="org.eclipse.jst.server.jetty.runtime.70"/>
+      <image
+         id="org.eclipse.jst.server.jetty.80"
+         icon="icons/obj16/jetty.gif"
+         typeIds="org.eclipse.jst.server.jetty.runtime.80"/>
+
+      <image
+         id="org.eclipse.jst.server.jetty.70"
+         icon="icons/obj16/jetty.gif"
+         typeIds="org.eclipse.jst.server.jetty.70"/>
+      <image
+         id="org.eclipse.jst.server.jetty.80"
+         icon="icons/obj16/jetty.gif"
+         typeIds="org.eclipse.jst.server.jetty.80"/>
+   </extension>
+   
+   <extension point="org.eclipse.wst.server.ui.wizardFragments">
+      <fragment
+         id="org.eclipse.jst.server.jetty.runtime.70"
+         typeIds="org.eclipse.jst.server.jetty.runtime.70"
+         class="org.eclipse.jst.server.jetty.ui.internal.JettyRuntimeWizardFragment"/>
+      <fragment
+         id="org.eclipse.jst.server.jetty.runtime.80"
+         typeIds="org.eclipse.jst.server.jetty.runtime.6x"
+         class="org.eclipse.jst.server.jetty.ui.internal.JettyRuntimeWizardFragment"/>         
+   </extension>   
+   
+  <extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+    <launchConfigurationTypeImage
+      id="org.eclipse.jst.server.jetty.ui.launchConfigurationTypeImage"
+      configTypeID="org.eclipse.jst.server.jetty.core.launchConfigurationType"
+      icon="icons/obj16/jetty.gif">
+    </launchConfigurationTypeImage>
+  </extension>
+
+  <extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+    <launchConfigurationTabGroup
+      id="org.eclipse.jst.server.jetty.ui.launchConfigurationTabGroup"
+      type="org.eclipse.jst.server.jetty.core.launchConfigurationType"
+      class="org.eclipse.jst.server.jetty.ui.internal.JettyLaunchConfigurationTabGroup">
+    </launchConfigurationTabGroup>
+  </extension>
+     
+  <extension point="org.eclipse.wst.common.project.facet.ui.images">
+    <image runtime-component-type="org.eclipse.jst.server.jetty"
+      path="icons/obj16/jetty.gif"/>
+  </extension>
+
+  <extension point="org.eclipse.wst.common.project.facet.core.runtimes">
+    <adapter>
+      <runtime-component id="org.eclipse.jst.server.jetty"/>
+      <factory class="org.eclipse.jst.server.ui.internal.RuntimeLabelProvider$Factory"/>
+      <type class="org.eclipse.wst.common.project.facet.ui.IRuntimeComponentLabelProvider"/>
+    </adapter>
+  </extension>
+     
+</plugin>    
