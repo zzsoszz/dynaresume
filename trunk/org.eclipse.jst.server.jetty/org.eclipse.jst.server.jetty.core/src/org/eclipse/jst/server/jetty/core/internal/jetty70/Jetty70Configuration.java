@@ -160,10 +160,31 @@ public class Jetty70Configuration extends JettyConfiguration implements
 		// }
 
 	}
-
+	/**
+	 * Return a list of the web modules in this server.
+	 * @return java.util.List
+	 */
 	public List<WebModule> getWebModules() {
-		// TODO Auto-generated method stub
-		return null;
+		List list = new ArrayList();
+	
+		try {
+//			Context [] contexts = serverInstance.getContexts();
+//			if (contexts != null) {
+//				for (int i = 0; i < contexts.length; i++) {
+//					Context context = contexts[i];
+//					String reload = context.getReloadable();
+//					if (reload == null)
+//						reload = "false";
+//					WebModule module = new WebModule(context.getPath(), 
+//						context.getDocBase(), context.getSource(),
+//						reload.equalsIgnoreCase("true") ? true : false);
+//					list.add(module);
+//				}
+//			}
+		} catch (Exception e) {
+			Trace.trace(Trace.SEVERE, "Error getting project refs", e);
+		}
+		return list;
 	}
 
 	public void addWebModule(int i, WebModule module) {
@@ -315,6 +336,42 @@ public class Jetty70Configuration extends JettyConfiguration implements
 			monitor = ProgressUtil.getMonitorFor(monitor);
 			monitor.beginTask(Messages.loadingTask, 800);
 
+			Factory serverFactory = null;
+
+			// Load config.ini
+			this.startIniConfig = new StartIni(folder.getFullPath());
+
+			// Load jetty.xml files
+			List<PathFileConfig> jettyXMLConfiFiles = startIniConfig
+					.getJettyXMLFiles();
+			List<Server> servers = new ArrayList<Server>();
+			Server server = null;
+			File file = null;
+			IPath jettyPath = null;
+			if (jettyXMLConfiFiles.size() > 0) {
+				for (PathFileConfig jettyXMLConfig : jettyXMLConfiFiles) {
+					file = jettyXMLConfig.getFile();
+					jettyPath = jettyXMLConfig.getPath();
+					serverFactory = new Factory();
+					serverFactory
+							.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server");
+					server = (Server) serverFactory
+							.loadDocument(new FileInputStream(file));
+					server.setFile(file);
+					server.setPath(jettyPath);
+					servers.add(server);
+				}
+			}
+			// check for catalina.policy to verify that this is a v4.0 config
+			// InputStream in = new
+			// FileInputStream(path.append("catalina.policy").toFile());
+			// in.read();
+			// in.close();
+			monitor.worked(1);
+
+			// server = (Server) serverFactory.loadDocument(new FileInputStream(
+			// path.append("jetty.xml").toFile()));
+			serverInstance = new ServerInstance(servers);
 			// check for catalina.policy to verify that this is a v4.0 config
 			// IFile file = folder.getFile("catalina.policy");
 			// if (!file.exists())
