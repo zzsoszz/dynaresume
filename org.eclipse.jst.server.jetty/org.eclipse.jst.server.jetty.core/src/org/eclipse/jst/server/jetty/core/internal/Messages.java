@@ -45,6 +45,7 @@ public class Messages extends NLS {
 	public static String publishConfigurationTask;
 	public static String publisherPublishTask;
 	public static String errorPublishConfiguration;
+	public static String errorXMLNullContextArg;
 
 	static {
 		NLS.initializeMessages(JettyPlugin.PLUGIN_ID + ".internal.Messages",

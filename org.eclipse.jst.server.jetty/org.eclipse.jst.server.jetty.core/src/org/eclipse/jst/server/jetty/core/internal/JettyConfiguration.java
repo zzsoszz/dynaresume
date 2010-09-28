@@ -34,6 +34,8 @@ import org.eclipse.wst.server.core.ServerPort;
 
 public abstract class JettyConfiguration implements IJettyConfiguration {
 
+	public static final String MODIFY_WEB_MODULE_PROPERTY = "modifyWebModule";
+	public static final String ADD_WEB_MODULE_PROPERTY = "addWebModule";
 	public static final String REMOVE_WEB_MODULE_PROPERTY = "removeWebModule";
 
 	private IFolder configPath;

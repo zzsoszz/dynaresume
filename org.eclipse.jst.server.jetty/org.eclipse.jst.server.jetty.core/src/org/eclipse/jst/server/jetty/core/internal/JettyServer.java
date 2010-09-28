@@ -109,7 +109,7 @@ public class JettyServer extends ServerDelegate implements IJettyServer,
 			String id = getServer().getServerType().getId();
 			configuration = JettyPlugin.getJettyConfiguration(id, folder);
 			try {
-				configuration.load(folder, null);
+				configuration.load(folder, getRuntimeBaseDirectory(), null);
 			} catch (CoreException ce) {
 				// ignore
 				configuration = null;
@@ -129,10 +129,12 @@ public class JettyServer extends ServerDelegate implements IJettyServer,
 		IPath path = runtime.getLocation();
 
 		String id = getServer().getServerType().getId();
+		IPath runtimeBaseDirectory = getRuntimeBaseDirectory();
 		IFolder folder = getServer().getServerConfiguration();
 		configuration = JettyPlugin.getJettyConfiguration(id, folder);
 		try {
-			configuration.importFromPath(path, isTestEnvironment(), monitor);
+			configuration.importFromPath(path, runtimeBaseDirectory,
+					isTestEnvironment(), monitor);
 		} catch (CoreException ce) {
 			// ignore
 			configuration = null;
@@ -296,6 +298,7 @@ public class JettyServer extends ServerDelegate implements IJettyServer,
 	/**
 	 * @see ServerDelegate#modifyModules(IModule[], IModule[], IProgressMonitor)
 	 */
+	@Override
 	public void modifyModules(IModule[] add, IModule[] remove,
 			IProgressMonitor monitor) throws CoreException {
 		IStatus status = canModifyModules(add, remove);
