@@ -13,6 +13,7 @@ package org.eclipse.jst.server.jetty.core.internal;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.jst.server.core.IWebModule;
 import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.ServerPort;
@@ -21,6 +22,22 @@ public abstract class JettyConfiguration implements IJettyConfiguration {
 
 	public static final String REMOVE_WEB_MODULE_PROPERTY = "removeWebModule";
 	
+	private IFolder configPath;
+
+	/**
+	 * JettyConfiguration constructor.
+	 * 
+	 * @param path a path
+	 */
+	public JettyConfiguration(IFolder path) {
+		super();
+		this.configPath = path;
+	}
+	
+	protected IFolder getFolder() {
+		return configPath;
+	}
+
 	/**
 	 * Return the port number.
 	 * 

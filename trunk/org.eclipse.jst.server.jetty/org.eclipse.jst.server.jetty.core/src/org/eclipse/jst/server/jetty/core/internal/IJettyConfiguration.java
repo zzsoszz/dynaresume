@@ -77,4 +77,6 @@ public interface IJettyConfiguration {
 	String getWebModuleURL(IModule module);
 
 	String getDocBasePrefix();
+	
+	void importFromPath(IPath path, boolean isTestEnv, IProgressMonitor monitor) throws CoreException;
 }

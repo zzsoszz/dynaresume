@@ -1,6 +1,10 @@
 package org.eclipse.jst.server.jetty.core.internal.util;
 
+import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +20,7 @@ import org.eclipse.jst.server.jetty.core.internal.JettyServerBehaviour;
 public class JettyVersionHelper implements JettyConstants {
 
 	public static IStatus checkJettyVersion(IPath installPath) {
-		// Search start.jar 
+		// Search start.jar
 		IPath startJarPath = installPath.append(START_JAR);
 		File jarFile = null;
 		jarFile = startJarPath.toFile();
@@ -26,7 +30,7 @@ public class JettyVersionHelper implements JettyConstants {
 		}
 		return Status.OK_STATUS;
 	}
-	
+
 	/**
 	 * Gets the base directory for this server. This directory is used as the
 	 * "base" property for the server.
@@ -59,7 +63,7 @@ public class JettyVersionHelper implements JettyConstants {
 		// Return runtime path
 		return ts.getServer().getRuntime().getLocation();
 	}
-	
+
 	/**
 	 * Gets the startup VM arguments for the Jetty server.
 	 * 
@@ -79,27 +83,25 @@ public class JettyVersionHelper implements JettyConstants {
 		List list = new ArrayList();
 		if (isTestEnv) {
 			list.add("-Djetty.home=\"" + instancePath.toOSString() + "\"");
-			list.add("-DSTART=\"" + instancePath.toOSString() + "/start.config\"");
-		}
-		else 
+			list.add("-DSTART=\"" + instancePath.toOSString()
+					+ "/start.config\"");
+		} else
 			list.add("-Djetty.home=\"" + installPath.toOSString() + "\"");
-//		if (isTestEnv)
-//			list.add("-Djetty.base=\"" + instancePath.toOSString() + "\"");
-//		else
-//			list.add("-Djetty.base=\"" + installPath.toOSString() + "\"");
-		//list.add("-Djetty.home=\"" + installPath.toOSString() + "\"");
+		// if (isTestEnv)
+		// list.add("-Djetty.base=\"" + instancePath.toOSString() + "\"");
+		// else
+		// list.add("-Djetty.base=\"" + installPath.toOSString() + "\"");
+		// list.add("-Djetty.home=\"" + installPath.toOSString() + "\"");
 		// Include a system property for the configurable deploy location
 		list.add("-Dwtp.deploy=\"" + deployPath.toOSString() + "\"");
 		list.add("-Djava.endorsed.dirs=\"" + endorsedDirs + "\"");
 
 		System.setProperty("jetty.home", instancePath.toOSString());
-		//list.add("-DSTART=\"" +  instancePath.toOSString()+ "/start.ini\"");
-		
-		
-		
-		list.add( "-DVERBOSE" );
-//		list.add("-Djetty.port=8081");
-//		list.add("-Djetty.port=8081");
+		// list.add("-DSTART=\"" + instancePath.toOSString()+ "/start.ini\"");
+
+		list.add("-DVERBOSE");
+		// list.add("-Djetty.port=8081");
+		// list.add("-Djetty.port=8081");
 		list.add("-DSTOP.PORT=8082");
 		list.add("-DSTOP.KEY=secret");
 
@@ -114,7 +116,7 @@ public class JettyVersionHelper implements JettyConstants {
 
 		if (starting) {
 			list.add(configPath.toOSString() + "/etc/jetty.xml");
-//			list.add(configPath.toOSString() + "/etc/jetty-deploy.xml");
+			// list.add(configPath.toOSString() + "/etc/jetty-deploy.xml");
 		} else
 			list.add("--stop");
 
@@ -122,4 +124,5 @@ public class JettyVersionHelper implements JettyConstants {
 		list.toArray(temp);
 		return temp;
 	}
+
 }

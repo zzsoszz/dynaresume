@@ -193,6 +193,10 @@ public class XMLElement {
 		factory = factory1;
 	}
 
+	public Factory getFactory() {
+		return factory;
+	}
+	
 	public void setSubElementValue(String s, String value) {
 		Element element = getSubElement(s);
 		if (element == null) {
