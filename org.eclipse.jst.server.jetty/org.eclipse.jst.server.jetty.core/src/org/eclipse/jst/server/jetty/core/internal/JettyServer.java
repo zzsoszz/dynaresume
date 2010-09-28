@@ -11,6 +11,7 @@
 package org.eclipse.jst.server.jetty.core.internal;
 
 import java.net.URL;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.resources.IFolder;
@@ -25,17 +26,18 @@ import org.eclipse.jst.server.core.FacetUtil;
 import org.eclipse.jst.server.core.IWebModule;
 import org.eclipse.jst.server.core.internal.J2EEUtil;
 import org.eclipse.jst.server.jetty.core.JettyPlugin;
-import org.eclipse.jst.server.jetty.core.internal.jetty70.Jetty70Configuration;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.IModuleType;
 import org.eclipse.wst.server.core.IRuntime;
+import org.eclipse.wst.server.core.ServerPort;
 import org.eclipse.wst.server.core.ServerUtil;
 import org.eclipse.wst.server.core.model.ServerDelegate;
 
 public class JettyServer extends ServerDelegate implements IJettyServer,
 		IJettyServerWorkingCopy {
 
+	private static final ServerPort[] EMPTY_SERVER_PORTS = new ServerPort[0];
 	public static final String PROPERTY_SECURE = "secure";
 	public static final String PROPERTY_DEBUG = "debug";
 
@@ -118,16 +120,17 @@ public class JettyServer extends ServerDelegate implements IJettyServer,
 	}
 
 	@Override
-	public void importRuntimeConfiguration(IRuntime runtime, IProgressMonitor monitor) throws CoreException {
+	public void importRuntimeConfiguration(IRuntime runtime,
+			IProgressMonitor monitor) throws CoreException {
 		if (runtime == null) {
 			configuration = null;
 			return;
 		}
 		IPath path = runtime.getLocation();
-		
+
 		String id = getServer().getServerType().getId();
 		IFolder folder = getServer().getServerConfiguration();
-		configuration = JettyPlugin.getJettyConfiguration(id, folder);		
+		configuration = JettyPlugin.getJettyConfiguration(id, folder);
 		try {
 			configuration.importFromPath(path, isTestEnvironment(), monitor);
 		} catch (CoreException ce) {
@@ -136,12 +139,29 @@ public class JettyServer extends ServerDelegate implements IJettyServer,
 			throw ce;
 		}
 	}
+
 	@Override
 	public void saveConfiguration(IProgressMonitor monitor)
 			throws CoreException {
 		if (configuration == null)
 			return;
 		configuration.save(getServer().getServerConfiguration(), monitor);
+	}
+
+	@Override
+	public ServerPort[] getServerPorts() {
+		if (getServer().getServerConfiguration() == null)
+			return EMPTY_SERVER_PORTS;
+
+		try {
+			Collection<ServerPort> list = getJettyConfiguration()
+					.getServerPorts();
+			ServerPort[] sp = new ServerPort[list.size()];
+			list.toArray(sp);
+			return sp;
+		} catch (Exception e) {
+			return EMPTY_SERVER_PORTS;
+		}
 	}
 
 	@Override
@@ -432,7 +452,7 @@ public class JettyServer extends ServerDelegate implements IJettyServer,
 	public String getInstanceDirectory() {
 		return getAttribute(PROPERTY_INSTANCE_DIR, (String) null);
 	}
-	
+
 	/**
 	 * @see IJettyServer#getDeployDirectory()
 	 */
@@ -440,7 +460,7 @@ public class JettyServer extends ServerDelegate implements IJettyServer,
 		// Default to value used by prior WTP versions
 		return getAttribute(PROPERTY_DEPLOY_DIR, LEGACY_DEPLOYDIR);
 	}
-	
+
 	/**
 	 * Returns true if modules should be served without publishing.
 	 * 
@@ -453,6 +473,5 @@ public class JettyServer extends ServerDelegate implements IJettyServer,
 			return getAttribute(PROPERTY_SERVE_MODULES_WITHOUT_PUBLISH, false);
 		return false;
 	}
-	
-	
+
 }

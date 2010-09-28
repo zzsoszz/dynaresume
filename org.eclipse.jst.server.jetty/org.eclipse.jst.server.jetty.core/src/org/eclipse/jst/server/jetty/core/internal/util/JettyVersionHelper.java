@@ -85,6 +85,7 @@ public class JettyVersionHelper implements JettyConstants {
 			list.add("-Djetty.home=\"" + instancePath.toOSString() + "\"");
 			list.add("-DSTART=\"" + instancePath.toOSString()
 					+ "/start.config\"");
+			list.add("-Dinstall.jetty.home=\"" + installPath.toOSString() + "\"");
 		} else
 			list.add("-Djetty.home=\"" + installPath.toOSString() + "\"");
 		// if (isTestEnv)
@@ -93,11 +94,8 @@ public class JettyVersionHelper implements JettyConstants {
 		// list.add("-Djetty.base=\"" + installPath.toOSString() + "\"");
 		// list.add("-Djetty.home=\"" + installPath.toOSString() + "\"");
 		// Include a system property for the configurable deploy location
-		list.add("-Dwtp.deploy=\"" + deployPath.toOSString() + "\"");
-		list.add("-Djava.endorsed.dirs=\"" + endorsedDirs + "\"");
-
-		System.setProperty("jetty.home", instancePath.toOSString());
-		// list.add("-DSTART=\"" + instancePath.toOSString()+ "/start.ini\"");
+//		list.add("-Dwtp.deploy=\"" + deployPath.toOSString() + "\"");
+//		list.add("-Djava.endorsed.dirs=\"" + endorsedDirs + "\"");
 
 		list.add("-DVERBOSE");
 		// list.add("-Djetty.port=8081");
@@ -115,7 +113,7 @@ public class JettyVersionHelper implements JettyConstants {
 		List list = new ArrayList();
 
 		if (starting) {
-			list.add(configPath.toOSString() + "/etc/jetty.xml");
+			//list.add(configPath.toOSString() + "/etc/jetty.xml");
 			// list.add(configPath.toOSString() + "/etc/jetty-deploy.xml");
 		} else
 			list.add("--stop");
