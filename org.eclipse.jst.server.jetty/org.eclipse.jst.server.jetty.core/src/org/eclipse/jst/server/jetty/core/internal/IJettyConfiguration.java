@@ -17,6 +17,7 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.ServerPort;
 
@@ -77,6 +78,15 @@ public interface IJettyConfiguration {
 	String getWebModuleURL(IModule module);
 
 	String getDocBasePrefix();
-	
-	void importFromPath(IPath path, boolean isTestEnv, IProgressMonitor monitor) throws CoreException;
+
+	void importFromPath(IPath path, boolean isTestEnv, IProgressMonitor monitor)
+			throws CoreException;
+
+	IStatus cleanupServer(IPath confDir, IPath installDir,
+			IProgressMonitor monitor);
+
+	IStatus backupAndPublish(IPath confDir, boolean b, IProgressMonitor monitor);
+
+	IStatus localizeConfiguration(IPath confDir, IPath serverDeployDirectory,
+			IJettyServer jettyServer, IProgressMonitor subMonitorFor);
 }
