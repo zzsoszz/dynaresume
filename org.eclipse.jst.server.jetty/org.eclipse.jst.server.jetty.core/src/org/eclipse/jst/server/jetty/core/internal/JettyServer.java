@@ -25,9 +25,11 @@ import org.eclipse.jst.server.core.FacetUtil;
 import org.eclipse.jst.server.core.IWebModule;
 import org.eclipse.jst.server.core.internal.J2EEUtil;
 import org.eclipse.jst.server.jetty.core.JettyPlugin;
+import org.eclipse.jst.server.jetty.core.internal.jetty70.Jetty70Configuration;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.IModuleType;
+import org.eclipse.wst.server.core.IRuntime;
 import org.eclipse.wst.server.core.ServerUtil;
 import org.eclipse.wst.server.core.model.ServerDelegate;
 
@@ -103,7 +105,7 @@ public class JettyServer extends ServerDelegate implements IJettyServer,
 			}
 
 			String id = getServer().getServerType().getId();
-			configuration = JettyPlugin.getJettyConfiguration(id);
+			configuration = JettyPlugin.getJettyConfiguration(id, folder);
 			try {
 				configuration.load(folder, null);
 			} catch (CoreException ce) {
@@ -115,6 +117,25 @@ public class JettyServer extends ServerDelegate implements IJettyServer,
 		return configuration;
 	}
 
+	@Override
+	public void importRuntimeConfiguration(IRuntime runtime, IProgressMonitor monitor) throws CoreException {
+		if (runtime == null) {
+			configuration = null;
+			return;
+		}
+		IPath path = runtime.getLocation();
+		
+		String id = getServer().getServerType().getId();
+		IFolder folder = getServer().getServerConfiguration();
+		configuration = JettyPlugin.getJettyConfiguration(id, folder);		
+		try {
+			configuration.importFromPath(path, isTestEnvironment(), monitor);
+		} catch (CoreException ce) {
+			// ignore
+			configuration = null;
+			throw ce;
+		}
+	}
 	@Override
 	public void saveConfiguration(IProgressMonitor monitor)
 			throws CoreException {

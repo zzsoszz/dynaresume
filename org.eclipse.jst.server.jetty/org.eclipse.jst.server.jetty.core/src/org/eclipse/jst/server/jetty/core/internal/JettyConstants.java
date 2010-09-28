@@ -13,6 +13,7 @@ package org.eclipse.jst.server.jetty.core.internal;
 public interface JettyConstants {
 	
 	String START_JAR = "start.jar";
+	String START_INI = "start.ini";
 	String LIB_FOLDER = "lib";
 	String JSP_FOLDER = "jsp";
 	String JAR_EXT = "jar";

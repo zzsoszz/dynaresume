@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
 
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -147,8 +148,8 @@ public class JettyPlugin extends AbstractUIPlugin {
 		return JettyVersionManager.INSTANCE.getJettyVersionHandler(id);
 	}
 	
-	public static IJettyConfiguration getJettyConfiguration(String id) {
-		return JettyVersionManager.INSTANCE.getJettyConfiguration(id);
+	public static IJettyConfiguration getJettyConfiguration(String id, IFolder path) {
+		return JettyVersionManager.INSTANCE.getJettyConfiguration(id, path);
 	}
 	
 	public static Collection<String> getRuntimeTypes() {

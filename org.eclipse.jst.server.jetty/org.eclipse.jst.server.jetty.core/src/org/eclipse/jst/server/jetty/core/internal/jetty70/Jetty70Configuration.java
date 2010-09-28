@@ -12,11 +12,15 @@ package org.eclipse.jst.server.jetty.core.internal.jetty70;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -30,13 +34,25 @@ import org.eclipse.jst.server.jetty.core.internal.JettyConstants;
 import org.eclipse.jst.server.jetty.core.internal.Messages;
 import org.eclipse.jst.server.jetty.core.internal.Trace;
 import org.eclipse.jst.server.jetty.core.internal.WebModule;
+import org.eclipse.jst.server.jetty.core.internal.config.PathFileConfig;
+import org.eclipse.jst.server.jetty.core.internal.config.StartConfig;
+import org.eclipse.jst.server.jetty.core.internal.config.StartIni;
+import org.eclipse.jst.server.jetty.core.internal.util.IOUtils;
+import org.eclipse.jst.server.jetty.core.internal.xml.Factory;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.ServerInstance;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.Connector;
+import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.Server;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.wst.server.core.ServerPort;
 
 public class Jetty70Configuration extends JettyConfiguration implements
 		JettyConstants {
+
+	public Jetty70Configuration(IFolder path) {
+		super(path);
+	}
+
+	private StartIni startIniConfig;
 
 	protected ServerInstance serverInstance;
 	private boolean isServerDirty;
@@ -145,35 +161,6 @@ public class Jetty70Configuration extends JettyConfiguration implements
 
 	}
 
-	/**
-	 * Save the information held by this object to the given directory.
-	 * 
-	 * @param folder
-	 *            a folder
-	 * @param monitor
-	 *            a progress monitor
-	 * @throws CoreException
-	 */
-	public void save(IFolder folder, IProgressMonitor monitor)
-			throws CoreException {
-		try {
-			monitor = ProgressUtil.getMonitorFor(monitor);
-			monitor.beginTask(Messages.savingTask, 1200);
-			if (monitor.isCanceled())
-				return;
-			monitor.done();
-		} catch (Exception e) {
-			Trace.trace(
-					Trace.SEVERE,
-					"Could not save Jetty v7.0 configuration to "
-							+ folder.toString(), e);
-			throw new CoreException(new Status(IStatus.ERROR,
-					JettyPlugin.PLUGIN_ID, 0, NLS.bind(
-							Messages.errorCouldNotSaveConfiguration,
-							new String[] { e.getLocalizedMessage() }), e));
-		}
-	}
-
 	public List<WebModule> getWebModules() {
 		// TODO Auto-generated method stub
 		return null;
@@ -255,6 +242,32 @@ public class Jetty70Configuration extends JettyConfiguration implements
 			monitor = ProgressUtil.getMonitorFor(monitor);
 			monitor.beginTask(Messages.loadingTask, 5);
 
+			Factory serverFactory = null;
+
+			// Load config.ini
+			this.startIniConfig = new StartIni(path);
+
+			// Load jetty.xml files
+			List<PathFileConfig> jettyXMLConfiFiles = startIniConfig
+					.getJettyXMLFiles();
+			List<Server> servers = new ArrayList<Server>();
+			Server server = null;
+			File file = null;
+			IPath jettyPath = null;
+			if (jettyXMLConfiFiles.size() > 0) {
+				for (PathFileConfig jettyXMLConfig : jettyXMLConfiFiles) {
+					file = jettyXMLConfig.getFile();
+					jettyPath = jettyXMLConfig.getPath();
+					serverFactory = new Factory();
+					serverFactory
+							.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server");
+					server = (Server) serverFactory
+							.loadDocument(new FileInputStream(file));
+					server.setFile(file);
+					server.setPath(jettyPath);
+					servers.add(server);
+				}
+			}
 			// check for catalina.policy to verify that this is a v4.0 config
 			// InputStream in = new
 			// FileInputStream(path.append("catalina.policy").toFile());
@@ -262,12 +275,9 @@ public class Jetty70Configuration extends JettyConfiguration implements
 			// in.close();
 			monitor.worked(1);
 
-			// serverFactory = new Factory();
-			// serverFactory
-			// .setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.server70");
 			// server = (Server) serverFactory.loadDocument(new FileInputStream(
 			// path.append("jetty.xml").toFile()));
-			// serverInstance = new ServerInstance(server);
+			serverInstance = new ServerInstance(servers);
 			// monitor.worked(1);
 			//
 			// webAppDocument = new
@@ -301,8 +311,153 @@ public class Jetty70Configuration extends JettyConfiguration implements
 
 	public void load(IFolder folder, IProgressMonitor monitor)
 			throws CoreException {
-		// TODO Auto-generated method stub
+		try {
+			monitor = ProgressUtil.getMonitorFor(monitor);
+			monitor.beginTask(Messages.loadingTask, 800);
 
+			// check for catalina.policy to verify that this is a v4.0 config
+			// IFile file = folder.getFile("catalina.policy");
+			// if (!file.exists())
+			// throw new CoreException(new Status(IStatus.WARNING,
+			// JettyPlugin.PLUGIN_ID, 0,
+			// NLS.bind(Messages.errorCouldNotLoadConfiguration,
+			// folder.getFullPath().toOSString()), null));
+
+			// load server.xml
+			// IFile file = folder.getFile("jetty.xml");
+			// InputStream in = file.getContents();
+			// serverFactory = new Factory();
+			// serverFactory.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.server70");
+			// server = (Server) serverFactory.loadDocument(in);
+			// serverInstance = new ServerInstance(server);
+			// monitor.worked(200);
+			//
+			// // load web.xml
+			// file = folder.getFile("webdefault.xml");
+			// webAppDocument = new WebAppDocument(file);
+			// monitor.worked(200);
+
+			// load jetty-users.xml
+			// file = folder.getFile("jetty-users.xml");
+			// in = file.getContents();
+
+			// jettyUsersDocument = XMLUtil.getDocumentBuilder().parse(new
+			// InputSource(in));
+			monitor.worked(200);
+
+			// load catalina.policy
+			// file = folder.getFile("catalina.policy");
+			// in = file.getContents();
+			// policyFile = JettyVersionHelper.getFileContents(in);
+			monitor.worked(200);
+
+			if (monitor.isCanceled())
+				throw new Exception("Cancelled");
+			monitor.done();
+		} catch (Exception e) {
+			Trace.trace(
+					Trace.WARNING,
+					"Could not reload Jetty v7.0 configuration from: "
+							+ folder.getFullPath() + ": " + e.getMessage());
+			throw new CoreException(new Status(IStatus.ERROR,
+					JettyPlugin.PLUGIN_ID, 0, NLS.bind(
+							Messages.errorCouldNotLoadConfiguration, folder
+									.getFullPath().toOSString()), e));
+		}
+
+	}
+
+	/**
+	 * Save the information held by this object to the given directory.
+	 * 
+	 * @param folder
+	 *            a folder
+	 * @param monitor
+	 *            a progress monitor
+	 * @throws CoreException
+	 */
+	public void save(IFolder folder, IProgressMonitor monitor)
+			throws CoreException {
+		try {
+			monitor = ProgressUtil.getMonitorFor(monitor);
+			monitor.beginTask(Messages.savingTask, 1200);
+			if (monitor.isCanceled())
+				return;
+
+			startIniConfig.save(folder.getFile(START_INI), monitor);
+			serverInstance.save(folder, monitor);
+
+			// get etc/realm.properties
+			// get etc/webdefault.xml
+
+			InputStream in = null;
+			IFolder newFolder = folder;
+			IPath path = null;
+			String filename = null;
+			List<PathFileConfig> otherConfigs = startIniConfig
+					.getOtherConfigs();
+			for (PathFileConfig pathFileConfig : otherConfigs) {
+				path = pathFileConfig.getPath();
+				if (path.segmentCount() > 1) {
+					newFolder = folder.getFolder(path.removeLastSegments(1));
+					IOUtils.createFolder(newFolder, monitor);
+				}
+				filename = pathFileConfig.getFile().getName();
+				in = new FileInputStream(pathFileConfig.getFile());
+				IFile file = newFolder.getFile(filename);
+				if (file.exists()) {
+					// if (isServerDirty)
+					file.setContents(in, true, true,
+							ProgressUtil.getSubMonitorFor(monitor, 200));
+					// else
+					// monitor.worked(200);
+				} else
+					file.create(in, true,
+							ProgressUtil.getSubMonitorFor(monitor, 200));
+			}
+
+			// start.config from start.jar
+			PathFileConfig startConfig = startIniConfig.getStartConfig();
+			if (startConfig != null) {
+				File startJARFile = startConfig.getFile();
+				InputStream stream = StartConfig.getInputStream(startJARFile);
+				IFile file = folder.getFile("start.config");
+				if (file.exists()) {
+					// if (isServerDirty)
+					file.setContents(stream, true, true,
+							ProgressUtil.getSubMonitorFor(monitor, 200));
+					// else
+					// monitor.worked(200);
+				} else
+					file.create(stream, true,
+							ProgressUtil.getSubMonitorFor(monitor, 200));
+
+			}
+
+			monitor.done();
+		} catch (Exception e) {
+			Trace.trace(
+					Trace.SEVERE,
+					"Could not save Jetty v7.0 configuration to "
+							+ folder.toString(), e);
+			throw new CoreException(new Status(IStatus.ERROR,
+					JettyPlugin.PLUGIN_ID, 0, NLS.bind(
+							Messages.errorCouldNotSaveConfiguration,
+							new String[] { e.getLocalizedMessage() }), e));
+		}
+	}
+
+	public void importFromPath(IPath path, boolean isTestEnv,
+			IProgressMonitor monitor) throws CoreException {
+		load(path, monitor);
+
+		// for test environment, remove existing contexts since a separate
+		// catalina.base will be used
+		if (isTestEnv) {
+			while (serverInstance.removeContext(0)) {
+				// no-op
+			}
+		}
 	}
 
 }

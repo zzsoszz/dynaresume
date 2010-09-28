@@ -18,7 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jst.server.jetty.core.internal.jetty70.Jetty70Configuration;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.jst.server.jetty.core.internal.jetty70.Jetty70ConfigurationFactory;
 import org.eclipse.jst.server.jetty.core.internal.jetty70.Jetty70Handler;
 
 public class JettyVersionManager {
@@ -36,14 +37,14 @@ public class JettyVersionManager {
 	private JettyVersionManager() {
 		// Jetty 7.0
 		register(JettyVersion.V70, new Jetty70Handler(),
-				new Jetty70Configuration());
+				Jetty70ConfigurationFactory.INSTANCE);
 	}
 
 	public void register(JettyVersion version,
 			IJettyVersionHandler versionHandler,
-			IJettyConfiguration configuration) {
+			IJettyConfigurationFactory configurationFactory) {
 		versionDatas.put(version.name(), new JettyVersionData(
-				versionHandler, configuration));
+				versionHandler, configurationFactory));
 		
 		String versionNumber = version.name().substring(1, version.name().length());		
 		runtimeTypes.add("org.eclipse.jst.server.jetty.runtime." + versionNumber);
@@ -58,13 +59,13 @@ public class JettyVersionManager {
 		return data.versionHandler;
 	}
 
-	public IJettyConfiguration getJettyConfiguration(String id) {
+	public IJettyConfiguration getJettyConfiguration(String id, IFolder path) {
 		String version = getVersion(id);
 		JettyVersionData data = versionDatas.get(version);
 		if (data == null) {
 			throw new JettyVersionHandlerNotFoundException(version);
 		}
-		return data.configuration;
+		return data.configurationFactory.createJettyConfiguration(path);
 	}
 	
 	private String getVersion(String id) {
@@ -84,12 +85,12 @@ public class JettyVersionManager {
 
 	private static class JettyVersionData {
 		public final IJettyVersionHandler versionHandler;
-		public final IJettyConfiguration configuration;
+		public final IJettyConfigurationFactory configurationFactory;
 
 		public JettyVersionData(IJettyVersionHandler versionHandler,
-				IJettyConfiguration configuration) {
+				IJettyConfigurationFactory configurationFactory) {
 			this.versionHandler = versionHandler;
-			this.configuration = configuration;
+			this.configurationFactory = configurationFactory;
 		}
 	}
 
