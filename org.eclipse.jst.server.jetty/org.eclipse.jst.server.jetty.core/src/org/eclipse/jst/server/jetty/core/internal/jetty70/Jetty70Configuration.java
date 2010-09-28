@@ -96,6 +96,10 @@ public class Jetty70Configuration extends JettyConfiguration implements
 		} catch (Exception e) {
 			Trace.trace(Trace.SEVERE, "Error getting server ports", e);
 		}
+		if (ports.size() <1) {
+			ports.add(new ServerPort("server", Messages.portServer,
+					8080, HTTP));
+		}
 		return ports;
 
 		// String instanceServiceName = serverInstance.getService().getName();
