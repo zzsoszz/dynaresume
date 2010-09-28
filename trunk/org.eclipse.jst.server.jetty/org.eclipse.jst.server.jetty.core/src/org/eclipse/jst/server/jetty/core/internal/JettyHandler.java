@@ -15,8 +15,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jdt.launching.IRuntimeClasspathEntry;
 import org.eclipse.jdt.launching.JavaRuntime;
+import org.eclipse.jst.server.jetty.core.internal.util.JettyVersionHelper;
 
 public abstract class JettyHandler implements IJettyVersionHandler,
 		JettyConstants {
@@ -69,4 +71,10 @@ public abstract class JettyHandler implements IJettyVersionHandler,
 		return cp;
 	}
 
+	/**
+	 * @see IJettyVersionHandler#prepareRuntimeDirectory(IPath)
+	 */
+	public IStatus prepareRuntimeDirectory(IPath baseDir) {
+		return JettyVersionHelper.createJettyInstanceDirectory(baseDir);
+	}
 }

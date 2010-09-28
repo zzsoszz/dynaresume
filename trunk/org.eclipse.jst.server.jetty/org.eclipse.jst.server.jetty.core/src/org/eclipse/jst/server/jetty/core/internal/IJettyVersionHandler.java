@@ -134,4 +134,6 @@ public interface IJettyVersionHandler {
 	 * @return true if serving modules without publishing is supported
 	 */
 	public boolean supportsServeModulesWithoutPublish();
+
+	public IStatus prepareRuntimeDirectory(IPath confDir);
 }

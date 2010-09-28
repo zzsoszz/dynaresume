@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jst.server.core.internal.ProgressUtil;
 import org.eclipse.jst.server.jetty.core.JettyPlugin;
+import org.eclipse.jst.server.jetty.core.internal.IJettyServer;
 import org.eclipse.jst.server.jetty.core.internal.JettyConfiguration;
 import org.eclipse.jst.server.jetty.core.internal.JettyConstants;
 import org.eclipse.jst.server.jetty.core.internal.Messages;
@@ -516,5 +517,6 @@ public class Jetty70Configuration extends JettyConfiguration implements
 			}
 		}
 	}
+	
 
 }

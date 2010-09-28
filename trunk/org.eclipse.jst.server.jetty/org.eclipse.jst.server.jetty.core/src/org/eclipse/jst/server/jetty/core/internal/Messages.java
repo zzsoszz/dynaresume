@@ -38,6 +38,13 @@ public class Messages extends NLS {
 	public static String loadingTask;
 	public static String errorPublish;
 	public static String startJarRequiredInstallDirStatus;
+	public static String publishServerTask;
+	public static String errorPublishCouldNotRemoveModule;
+	public static String copyingTask;
+	public static String errorCopyingFile;
+	public static String publishConfigurationTask;
+	public static String publisherPublishTask;
+	public static String errorPublishConfiguration;
 
 	static {
 		NLS.initializeMessages(JettyPlugin.PLUGIN_ID + ".internal.Messages",

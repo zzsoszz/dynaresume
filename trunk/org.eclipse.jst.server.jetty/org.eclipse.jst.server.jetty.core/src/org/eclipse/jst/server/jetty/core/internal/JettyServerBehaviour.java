@@ -40,7 +40,11 @@ import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 import org.eclipse.jdt.launching.IRuntimeClasspathEntry;
 import org.eclipse.jdt.launching.IVMInstall;
 import org.eclipse.jdt.launching.JavaRuntime;
+import org.eclipse.jst.server.core.IJ2EEModule;
+import org.eclipse.jst.server.core.IWebModule;
+import org.eclipse.jst.server.core.internal.ProgressUtil;
 import org.eclipse.jst.server.jetty.core.JettyPlugin;
+import org.eclipse.jst.server.jetty.core.internal.util.JettyVersionHelper;
 import org.eclipse.jst.server.jetty.core.internal.util.StringUtils;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.wst.server.core.IModule;
@@ -51,6 +55,7 @@ import org.eclipse.wst.server.core.internal.Server;
 import org.eclipse.wst.server.core.model.IModuleResource;
 import org.eclipse.wst.server.core.model.IModuleResourceDelta;
 import org.eclipse.wst.server.core.model.ServerBehaviourDelegate;
+import org.eclipse.wst.server.core.util.PublishHelper;
 import org.eclipse.wst.server.core.util.SocketUtil;
 
 public class JettyServerBehaviour extends ServerBehaviourDelegate implements
@@ -791,6 +796,313 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements
 		setServerState(IServer.STATE_STOPPED);
 	}
 
+	@Override
+	protected void publishServer(int kind, IProgressMonitor monitor)
+			throws CoreException {
+		if (getServer().getRuntime() == null)
+			return;
+
+		IPath installDir = getServer().getRuntime().getLocation();
+		IPath confDir = null;
+		if (getJettyServer().isTestEnvironment()) {
+			confDir = getRuntimeBaseDirectory();
+			IStatus status = getJettyVersionHandler().prepareRuntimeDirectory(
+					confDir);
+			if (status != null && !status.isOK())
+				throw new CoreException(status);
+		} else
+			confDir = installDir;
+		// IStatus status =
+		// getJettyVersionHandler().prepareDeployDirectory(getServerDeployDirectory());
+		// if (status != null && !status.isOK())
+		// throw new CoreException(status);
+
+		monitor = ProgressUtil.getMonitorFor(monitor);
+		monitor.beginTask(Messages.publishServerTask, 600);
+
+		IStatus status = getJettyConfiguration().cleanupServer(confDir,
+				installDir, ProgressUtil.getSubMonitorFor(monitor, 100));
+		if (status != null && !status.isOK())
+			throw new CoreException(status);
+
+		status = getJettyConfiguration().backupAndPublish(confDir,
+				!getJettyServer().isTestEnvironment(),
+				ProgressUtil.getSubMonitorFor(monitor, 400));
+		if (status != null && !status.isOK())
+			throw new CoreException(status);
+
+		status = getJettyConfiguration().localizeConfiguration(confDir,
+				getServerDeployDirectory(), getJettyServer(),
+				ProgressUtil.getSubMonitorFor(monitor, 100));
+		if (status != null && !status.isOK())
+			throw new CoreException(status);
+
+		monitor.done();
+
+		setServerPublishState(IServer.PUBLISH_STATE_NONE);
+	}
+
+	/*
+	 * Publishes the given module to the server.
+	 */
+	@Override
+	protected void publishModule(int kind, int deltaKind, IModule[] moduleTree,
+			IProgressMonitor monitor) throws CoreException {
+		if (getServer().getServerState() != IServer.STATE_STOPPED) {
+			if (deltaKind == ServerBehaviourDelegate.ADDED
+					|| deltaKind == ServerBehaviourDelegate.REMOVED)
+				setServerRestartState(true);
+		}
+		if (getJettyServer().isTestEnvironment())
+			return;
+
+		Properties p = loadModulePublishLocations();
+
+		PublishHelper helper = new PublishHelper(getRuntimeBaseDirectory()
+				.append("temp").toFile());
+		// If parent web module
+		if (moduleTree.length == 1) {
+			publishDir(deltaKind, p, moduleTree, helper, monitor);
+		}
+		// Else a child module
+		else {
+			// Try to determine the URI for the child module
+			IWebModule webModule = (IWebModule) moduleTree[0].loadAdapter(
+					IWebModule.class, monitor);
+			String childURI = null;
+			if (webModule != null) {
+				childURI = webModule.getURI(moduleTree[1]);
+			}
+			// Try to determine if child is binary
+			IJ2EEModule childModule = (IJ2EEModule) moduleTree[1].loadAdapter(
+					IJ2EEModule.class, monitor);
+			boolean isBinary = false;
+			if (childModule != null) {
+				isBinary = childModule.isBinary();
+			}
+
+			if (isBinary) {
+				publishArchiveModule(childURI, kind, deltaKind, p, moduleTree,
+						helper, monitor);
+			} else {
+				publishJar(childURI, kind, deltaKind, p, moduleTree, helper,
+						monitor);
+			}
+		}
+
+		setModulePublishState(moduleTree, IServer.PUBLISH_STATE_NONE);
+
+		saveModulePublishLocations(p);
+	}
+
+	/**
+	 * Publish a web module.
+	 * 
+	 * @param deltaKind
+	 * @param p
+	 * @param module
+	 * @param monitor
+	 * @throws CoreException
+	 */
+	private void publishDir(int deltaKind, Properties p, IModule module[],
+			PublishHelper helper, IProgressMonitor monitor)
+			throws CoreException {
+		List status = new ArrayList();
+		// Remove if requested or if previously published and are now serving
+		// without publishing
+		if (deltaKind == REMOVED
+				|| getJettyServer().isServeModulesWithoutPublish()) {
+			String publishPath = (String) p.get(module[0].getId());
+			if (publishPath != null) {
+				try {
+					File f = new File(publishPath);
+					if (f.exists()) {
+						IStatus[] stat = PublishHelper.deleteDirectory(f,
+								monitor);
+						PublishOperation2.addArrayToList(status, stat);
+					}
+				} catch (Exception e) {
+					throw new CoreException(new Status(IStatus.WARNING,
+							JettyPlugin.PLUGIN_ID, 0, NLS.bind(
+									Messages.errorPublishCouldNotRemoveModule,
+									module[0].getName()), e));
+				}
+				p.remove(module[0].getId());
+			}
+		} else {
+			IPath path = getModuleDeployDirectory(module[0]);
+			IModuleResource[] mr = getResources(module);
+			IPath[] jarPaths = null;
+			IWebModule webModule = (IWebModule) module[0].loadAdapter(
+					IWebModule.class, monitor);
+			IModule[] childModules = getServer().getChildModules(module,
+					monitor);
+			if (childModules != null && childModules.length > 0) {
+				jarPaths = new IPath[childModules.length];
+				for (int i = 0; i < childModules.length; i++) {
+					if (webModule != null) {
+						jarPaths[i] = new Path(
+								webModule.getURI(childModules[i]));
+					} else {
+						IJ2EEModule childModule = (IJ2EEModule) childModules[i]
+								.loadAdapter(IJ2EEModule.class, monitor);
+						if (childModule != null && childModule.isBinary()) {
+							jarPaths[i] = new Path("WEB-INF/lib")
+									.append(childModules[i].getName());
+						} else {
+							jarPaths[i] = new Path("WEB-INF/lib")
+									.append(childModules[i].getName() + ".jar");
+						}
+					}
+				}
+			}
+			IStatus[] stat = helper.publishSmart(mr, path, jarPaths, monitor);
+			PublishOperation2.addArrayToList(status, stat);
+			p.put(module[0].getId(), path.toOSString());
+		}
+		PublishOperation2.throwException(status);
+	}
+
+	/**
+	 * Publish a jar file.
+	 * 
+	 * @param deltaKind
+	 * @param p
+	 * @param module
+	 * @param monitor
+	 * @throws CoreException
+	 */
+	private void publishJar(String jarURI, int kind, int deltaKind,
+			Properties p, IModule[] module, PublishHelper helper,
+			IProgressMonitor monitor) throws CoreException {
+		// Remove if requested or if previously published and are now serving
+		// without publishing
+		if (deltaKind == REMOVED
+				|| getJettyServer().isServeModulesWithoutPublish()) {
+			try {
+				String publishPath = (String) p.get(module[1].getId());
+				if (publishPath != null) {
+					new File(publishPath).delete();
+					p.remove(module[1].getId());
+				}
+			} catch (Exception e) {
+				throw new CoreException(new Status(IStatus.WARNING,
+						JettyPlugin.PLUGIN_ID, 0, "Could not remove module", e));
+			}
+		} else {
+			IPath path = getModuleDeployDirectory(module[0]);
+			if (jarURI == null) {
+				jarURI = "WEB-INF/lib" + module[1].getName() + ".jar";
+			}
+			IPath jarPath = path.append(jarURI);
+			path = jarPath.removeLastSegments(1);
+			if (!path.toFile().exists()) {
+				path.toFile().mkdirs();
+			} else {
+				// If file still exists and we are not forcing a new one to be
+				// built
+				if (jarPath.toFile().exists() && kind != IServer.PUBLISH_CLEAN
+						&& kind != IServer.PUBLISH_FULL) {
+					// avoid changes if no changes to module since last publish
+					IModuleResourceDelta[] delta = getPublishedResourceDelta(module);
+					if (delta == null || delta.length == 0)
+						return;
+				}
+			}
+
+			IModuleResource[] mr = getResources(module);
+			IStatus[] stat = helper.publishZip(mr, jarPath, monitor);
+			List status = new ArrayList();
+			PublishOperation2.addArrayToList(status, stat);
+			PublishOperation2.throwException(status);
+			p.put(module[1].getId(), jarPath.toOSString());
+		}
+	}
+
+	private void publishArchiveModule(String jarURI, int kind, int deltaKind,
+			Properties p, IModule[] module, PublishHelper helper,
+			IProgressMonitor monitor) throws CoreException {
+		// Remove if requested or if previously published and are now serving
+		// without publishing
+		if (deltaKind == REMOVED
+				|| getJettyServer().isServeModulesWithoutPublish()) {
+			try {
+				String publishPath = (String) p.get(module[1].getId());
+				if (publishPath != null) {
+					new File(publishPath).delete();
+					p.remove(module[1].getId());
+				}
+			} catch (Exception e) {
+				throw new CoreException(new Status(IStatus.WARNING,
+						JettyPlugin.PLUGIN_ID, 0,
+						"Could not remove archive module", e));
+			}
+		} else {
+			List status = new ArrayList();
+			IPath path = getModuleDeployDirectory(module[0]);
+			if (jarURI == null) {
+				jarURI = "WEB-INF/lib" + module[1].getName();
+			}
+			IPath jarPath = path.append(jarURI);
+			path = jarPath.removeLastSegments(1);
+			if (!path.toFile().exists()) {
+				path.toFile().mkdirs();
+			} else {
+				// If file still exists and we are not forcing a new one to be
+				// built
+				if (jarPath.toFile().exists() && kind != IServer.PUBLISH_CLEAN
+						&& kind != IServer.PUBLISH_FULL) {
+					// avoid changes if no changes to module since last publish
+					IModuleResourceDelta[] delta = getPublishedResourceDelta(module);
+					if (delta == null || delta.length == 0)
+						return;
+				}
+			}
+
+			IModuleResource[] mr = getResources(module);
+			IStatus[] stat = helper.publishToPath(mr, jarPath, monitor);
+			PublishOperation2.addArrayToList(status, stat);
+			PublishOperation2.throwException(status);
+			p.put(module[1].getId(), jarPath.toOSString());
+		}
+	}
+
+//	@Override
+//	protected void publishFinish(IProgressMonitor monitor) throws CoreException {
+//		IStatus status;
+//		IPath baseDir = getRuntimeBaseDirectory();
+//		JettyServer ts = getJettyServer();
+//		IJettyVersionHandler tvh = getJettyVersionHandler();
+//		// Include or remove loader jar depending on state of serving directly
+//		status = tvh.prepareForServingDirectly(baseDir, getJettyServer());
+//		if (status.isOK()) {
+//			// If serving modules directly, update server.xml accordingly
+//			// (includes project context.xmls)
+//			if (ts.isServeModulesWithoutPublish()) {
+//				status = getJettyConfiguration().updateContextsToServeDirectly(
+//						baseDir, tvh.getSharedLoader(baseDir), monitor);
+//			}
+//			// Else serving normally. Add project context.xmls to server.xml
+//			else {
+//				// Publish context configuration for servers that support
+//				// META-INF/context.xml
+//				status = getJettyConfiguration().publishContextConfig(baseDir,
+//						getServerDeployDirectory(), monitor);
+//			}
+//			if (status.isOK() && ts.isSaveSeparateContextFiles()) {
+//				// Determine if context's path attribute should be removed
+//				String id = getServer().getServerType().getId();
+//				boolean noPath = id.indexOf("55") > 0 || id.indexOf("60") > 0;
+//				boolean serverStopped = getServer().getServerState() == IServer.STATE_STOPPED;
+//				// TODO Add a monitor
+//				JettyVersionHelper.moveContextsToSeparateFiles(baseDir, noPath,
+//						serverStopped, null);
+//			}
+//		}
+//		if (!status.isOK())
+//			throw new CoreException(status);
+//	}
+
 	/**
 	 * Gets the directory to which modules should be deployed for this server.
 	 * 
@@ -799,7 +1111,7 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements
 	public IPath getServerDeployDirectory() {
 		return getJettyServer().getServerDeployDirectory();
 	}
-	
+
 	protected IModuleResource[] getResources(IModule[] module) {
 		return super.getResources(module);
 	}

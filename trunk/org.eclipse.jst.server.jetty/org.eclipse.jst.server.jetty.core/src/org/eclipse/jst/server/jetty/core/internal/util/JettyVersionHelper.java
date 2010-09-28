@@ -1,21 +1,23 @@
 package org.eclipse.jst.server.jetty.core.internal.util;
 
 import java.io.BufferedReader;
-import java.io.Closeable;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jst.server.jetty.core.internal.JettyConstants;
 import org.eclipse.jst.server.jetty.core.internal.JettyServer;
 import org.eclipse.jst.server.jetty.core.internal.JettyServerBehaviour;
+import org.eclipse.jst.server.jetty.core.internal.Trace;
 
 public class JettyVersionHelper implements JettyConstants {
 
@@ -85,7 +87,8 @@ public class JettyVersionHelper implements JettyConstants {
 			list.add("-Djetty.home=\"" + instancePath.toOSString() + "\"");
 			list.add("-DSTART=\"" + instancePath.toOSString()
 					+ "/start.config\"");
-			list.add("-Dinstall.jetty.home=\"" + installPath.toOSString() + "\"");
+			list.add("-Dinstall.jetty.home=\"" + installPath.toOSString()
+					+ "\"");
 		} else
 			list.add("-Djetty.home=\"" + installPath.toOSString() + "\"");
 		// if (isTestEnv)
@@ -94,8 +97,8 @@ public class JettyVersionHelper implements JettyConstants {
 		// list.add("-Djetty.base=\"" + installPath.toOSString() + "\"");
 		// list.add("-Djetty.home=\"" + installPath.toOSString() + "\"");
 		// Include a system property for the configurable deploy location
-//		list.add("-Dwtp.deploy=\"" + deployPath.toOSString() + "\"");
-//		list.add("-Djava.endorsed.dirs=\"" + endorsedDirs + "\"");
+		// list.add("-Dwtp.deploy=\"" + deployPath.toOSString() + "\"");
+		// list.add("-Djava.endorsed.dirs=\"" + endorsedDirs + "\"");
 
 		list.add("-DVERBOSE");
 		// list.add("-Djetty.port=8081");
@@ -113,7 +116,7 @@ public class JettyVersionHelper implements JettyConstants {
 		List list = new ArrayList();
 
 		if (starting) {
-			//list.add(configPath.toOSString() + "/etc/jetty.xml");
+			// list.add(configPath.toOSString() + "/etc/jetty.xml");
 			// list.add(configPath.toOSString() + "/etc/jetty-deploy.xml");
 		} else
 			list.add("--stop");
@@ -123,4 +126,32 @@ public class JettyVersionHelper implements JettyConstants {
 		return temp;
 	}
 
+	/**
+	 * Creates a Jetty instance directory at the specified path. This
+	 * involves creating the set of subdirectories uses by a Jetty instance.
+	 * 
+	 * @param baseDir
+	 *            directory at which to create Jetty instance directories.
+	 * @return result status of the operation
+	 */
+	public static IStatus createJettyInstanceDirectory(IPath baseDir) {
+		if (Trace.isTraceEnabled())
+			Trace.trace(Trace.FINER,
+					"Creating runtime directory at " + baseDir.toOSString());
+		File temp = baseDir.append("contexts").toFile();
+		if (!temp.exists())
+			temp.mkdirs();
+		temp = baseDir.append("etc").toFile();
+		if (!temp.exists())
+			temp.mkdirs();
+		temp = baseDir.append("resources").toFile();
+		if (!temp.exists())
+			temp.mkdirs();
+		temp = baseDir.append("webapps").toFile();
+		if (!temp.exists())
+			temp.mkdirs();
+
+		return Status.OK_STATUS;
+	}
+	
 }
