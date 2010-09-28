@@ -13,7 +13,14 @@ package org.eclipse.jst.server.jetty.core.internal.xml;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
+
 /**
  * An XML element.
  */
@@ -25,6 +32,10 @@ public class XMLElement {
 		// do nothing
 	}
 	
+	public void setText(String textContent) {
+		xmlElement.setTextContent(textContent);
+	}
+
 	public Element getElementNode() {
 		return xmlElement;
 	}
@@ -52,7 +63,7 @@ public class XMLElement {
 			if (s1.equals(s))
 				return factory.newInstance((Element) node);
 		}
-	
+
 		return createElement(s);
 	}
 
@@ -65,18 +76,37 @@ public class XMLElement {
 			if (s1.equals(s) && k == i)
 				return factory.newInstance((Element) node);
 		}
-	
+
 		return createElement(s);
+	}
+
+	public Element findElement(String s, String attrName) {
+		NodeList nodelist = xmlElement.getElementsByTagName(s);
+		int j = nodelist == null ? 0 : nodelist.getLength();
+		for (int k = 0; k < j; k++) {
+			Element node = (Element)nodelist.item(k);
+			NamedNodeMap attributes = node.getAttributes();
+			int length = attributes.getLength();
+			for (int i = 0; i < length; i++) {
+				Node n = attributes.item(i);
+				if (attrName.equals(n.getNodeValue())) {
+					return node;
+				}
+			}
+		}
+		Element newElement = xmlElement.getOwnerDocument().createElement(s);
+		xmlElement.getOwnerDocument().getDocumentElement().appendChild(newElement);
+		return newElement;
 	}
 
 	public String getAttributeValue(String s) {
 		Attr attr = xmlElement.getAttributeNode(s);
 		if (attr != null)
 			return attr.getValue();
-		
+
 		return null;
 	}
-	
+
 	public Map getAttributes() {
 		Map attributes = new LinkedHashMap();
 		NamedNodeMap attrs = xmlElement.getAttributes();
@@ -90,15 +120,15 @@ public class XMLElement {
 		}
 		return attributes;
 	}
-	
+
 	public String getElementName() {
 		return xmlElement.getNodeName();
 	}
-	
+
 	public String getElementValue() {
 		return getElementValue(xmlElement);
 	}
-	
+
 	protected static String getElementValue(Element element) {
 		String s = element.getNodeValue();
 		if (s != null)
@@ -107,10 +137,10 @@ public class XMLElement {
 		for (int i = 0; i < nodelist.getLength(); i++)
 			if (nodelist.item(i) instanceof Text)
 				return ((Text) nodelist.item(i)).getData();
-	
+
 		return null;
 	}
-	
+
 	public Element getSubElement(String s) {
 		NodeList nodelist = xmlElement.getElementsByTagName(s);
 		int i = nodelist == null ? 0 : nodelist.getLength();
@@ -120,7 +150,7 @@ public class XMLElement {
 			if (s1.equals(s))
 				return (Element) node;
 		}
-	
+
 		return null;
 	}
 
@@ -128,11 +158,11 @@ public class XMLElement {
 		Element element = getSubElement(s);
 		if (element == null)
 			return null;
-	
+
 		String value = getElementValue(element);
 		if (value == null)
 			return null;
-		
+
 		return value.trim();
 	}
 
@@ -156,7 +186,7 @@ public class XMLElement {
 				return true;
 			}
 		}
-	
+
 		return false;
 	}
 
@@ -185,7 +215,7 @@ public class XMLElement {
 				text.setData(value);
 				return;
 			}
-	
+
 		return;
 	}
 
@@ -196,7 +226,7 @@ public class XMLElement {
 	public Factory getFactory() {
 		return factory;
 	}
-	
+
 	public void setSubElementValue(String s, String value) {
 		Element element = getSubElement(s);
 		if (element == null) {
@@ -230,18 +260,17 @@ public class XMLElement {
 			}
 		}
 	}
-	
+
 	public boolean hasChildNodes() {
 		return xmlElement.hasChildNodes();
 	}
-	
-	public void removeChildren()
-	{
+
+	public void removeChildren() {
 		while (xmlElement.hasChildNodes()) {
 			xmlElement.removeChild(xmlElement.getFirstChild());
 		}
 	}
-	
+
 	public void copyChildrenTo(XMLElement destination) {
 		NodeList nodelist = xmlElement.getChildNodes();
 		int len = nodelist == null ? 0 : nodelist.getLength();
@@ -250,30 +279,31 @@ public class XMLElement {
 			destination.importNode(node, true);
 		}
 	}
-	
+
 	public void importNode(Node node, boolean deep) {
-		xmlElement.appendChild(xmlElement.getOwnerDocument().importNode(node, deep));
+		xmlElement.appendChild(xmlElement.getOwnerDocument().importNode(node,
+				deep));
 	}
 
 	/**
-	 * This method tries to compare two XMLElements for equivalence. Due to
-	 * the lack of normalization, they aren't compared for equality. Elements
-	 * are required to have the same attributes or the same node value
-	 * if attributes aren't present. Attributes and node value are assumed
-	 * to be mutually exclusive for Tomcat configuration XML files. The
-	 * same non-text child nodes are required to be present in an element
-	 * and appear in the same order. If a node type other than element or
-	 * comment is encountered, this method punts and returns false.
+	 * This method tries to compare two XMLElements for equivalence. Due to the
+	 * lack of normalization, they aren't compared for equality. Elements are
+	 * required to have the same attributes or the same node value if attributes
+	 * aren't present. Attributes and node value are assumed to be mutually
+	 * exclusive for Tomcat configuration XML files. The same non-text child
+	 * nodes are required to be present in an element and appear in the same
+	 * order. If a node type other than element or comment is encountered, this
+	 * method punts and returns false.
 	 * 
-	 * @param obj XMLElement to compare
+	 * @param obj
+	 *            XMLElement to compare
 	 * @return true if the elements are equivalent
 	 */
 	public boolean isEquivalent(XMLElement obj) {
 		if (obj != null) {
 			try {
 				return elementsAreEquivalent(xmlElement, obj.getElementNode());
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				// Catch and ignore just to be safe
 			}
 		}
@@ -284,7 +314,8 @@ public class XMLElement {
 	 * Same as isEquivalent() but doesn't ignore exceptions for test purposes.
 	 * This avoids hiding an expected mismatch behind an unexpected exception.
 	 * 
-	 * @param obj XMLElement to compare
+	 * @param obj
+	 *            XMLElement to compare
 	 * @return true if the elements are equivalent
 	 */
 	public boolean isEquivalentTest(XMLElement obj) {
@@ -293,31 +324,35 @@ public class XMLElement {
 		}
 		return false;
 	}
-	
-	private static boolean elementsAreEquivalent(Element element, Element otherElement) {
+
+	private static boolean elementsAreEquivalent(Element element,
+			Element otherElement) {
 		if (element == otherElement)
 			return true;
-		
+
 		if (!element.getNodeName().equals(otherElement.getNodeName()))
 			return false;
-		
+
 		if (element.hasChildNodes()) {
-			if (otherElement.hasChildNodes() && attributesAreEqual(element, otherElement)) {
+			if (otherElement.hasChildNodes()
+					&& attributesAreEqual(element, otherElement)) {
 				// Compare child nodes
 				NodeList nodelist = element.getChildNodes();
 				NodeList otherNodelist = otherElement.getChildNodes();
 				if (nodelist.getLength() == otherNodelist.getLength()) {
 					Node node = nextNonTextNode(element.getFirstChild());
-					Node otherNode = nextNonTextNode(otherElement.getFirstChild());
+					Node otherNode = nextNonTextNode(otherElement
+							.getFirstChild());
 					while (node != null) {
 						if (otherNode == null)
 							return false;
 						short nextNodeType = node.getNodeType();
 						if (nextNodeType != otherNode.getNodeType())
 							return false;
-						// If elements, compare 
+						// If elements, compare
 						if (nextNodeType == Node.ELEMENT_NODE) {
-							if (!elementsAreEquivalent((Element)node, (Element)otherNode))
+							if (!elementsAreEquivalent((Element) node,
+									(Element) otherNode))
 								return false;
 						}
 						// Else if comment, compare
@@ -337,32 +372,33 @@ public class XMLElement {
 						return true;
 				}
 			}
-		}
-		else if (!otherElement.hasChildNodes()) {
+		} else if (!otherElement.hasChildNodes()) {
 			return attributesAreEqual(element, otherElement);
 		}
 		return false;
 	}
-	
+
 	private static Node nextNonTextNode(Node node) {
 		while (node != null && node.getNodeType() == Node.TEXT_NODE)
 			node = node.getNextSibling();
 		return node;
 	}
 
-	private static boolean attributesAreEqual(Element element, Element otherElement) {
+	private static boolean attributesAreEqual(Element element,
+			Element otherElement) {
 		NamedNodeMap attrs = element.getAttributes();
 		NamedNodeMap otherAttrs = otherElement.getAttributes();
 		if (attrs == null && otherAttrs == null) {
 			// Return comparison of element values if there are no attributes
 			return nodeValuesAreEqual(element, otherElement);
 		}
-		
+
 		if (attrs.getLength() == otherAttrs.getLength()) {
 			if (attrs.getLength() == 0)
-				// Return comparison of element values if there are no attributes
+				// Return comparison of element values if there are no
+				// attributes
 				return nodeValuesAreEqual(element, otherElement);
-			
+
 			for (int i = 0; i < attrs.getLength(); i++) {
 				Node attr = attrs.item(i);
 				Node otherAttr = otherAttrs.getNamedItem(attr.getNodeName());
@@ -373,15 +409,14 @@ public class XMLElement {
 		}
 		return false;
 	}
-	
+
 	private static boolean nodeValuesAreEqual(Node node, Node otherNode) {
 		String value = node.getNodeValue();
 		String otherValue = otherNode.getNodeValue();
 		if (value != null && otherValue != null) {
 			if (value.equals(otherValue))
 				return true;
-		}
-		else if (value == null && otherValue == null)
+		} else if (value == null && otherValue == null)
 			return true;
 		return false;
 	}

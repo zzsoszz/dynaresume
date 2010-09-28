@@ -43,7 +43,7 @@ public interface IJettyConfiguration {
 	 * @param monitor
 	 * @throws CoreException
 	 */
-	void load(IPath path, IProgressMonitor monitor) throws CoreException;
+	void load(IPath path, IPath runtimeBaseDirectory, IProgressMonitor monitor) throws CoreException;
 
 	/**
 	 * 
@@ -51,7 +51,7 @@ public interface IJettyConfiguration {
 	 * @param monitor
 	 * @throws CoreException
 	 */
-	void load(IFolder folder, IProgressMonitor monitor) throws CoreException;
+	void load(IFolder folder, IPath runtimeBaseDirectory, IProgressMonitor monitor) throws CoreException;
 
 	/**
 	 * Save the information held by this object to the given directory.
@@ -79,7 +79,7 @@ public interface IJettyConfiguration {
 
 	String getDocBasePrefix();
 
-	void importFromPath(IPath path, boolean isTestEnv, IProgressMonitor monitor)
+	void importFromPath(IPath path, IPath runtimeBaseDirectory, boolean isTestEnv, IProgressMonitor monitor)
 			throws CoreException;
 
 	IStatus cleanupServer(IPath confDir, IPath installDir,

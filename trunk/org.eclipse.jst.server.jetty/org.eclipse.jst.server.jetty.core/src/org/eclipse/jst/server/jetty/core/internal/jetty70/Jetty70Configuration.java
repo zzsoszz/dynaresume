@@ -29,7 +29,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jst.server.core.internal.ProgressUtil;
 import org.eclipse.jst.server.jetty.core.JettyPlugin;
-import org.eclipse.jst.server.jetty.core.internal.IJettyServer;
 import org.eclipse.jst.server.jetty.core.internal.JettyConfiguration;
 import org.eclipse.jst.server.jetty.core.internal.JettyConstants;
 import org.eclipse.jst.server.jetty.core.internal.Messages;
@@ -43,6 +42,7 @@ import org.eclipse.jst.server.jetty.core.internal.xml.Factory;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.ServerInstance;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.Connector;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.Server;
+import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.webapp.WebAppContext;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.wst.server.core.ServerPort;
 
@@ -96,9 +96,8 @@ public class Jetty70Configuration extends JettyConfiguration implements
 		} catch (Exception e) {
 			Trace.trace(Trace.SEVERE, "Error getting server ports", e);
 		}
-		if (ports.size() <1) {
-			ports.add(new ServerPort("server", Messages.portServer,
-					8080, HTTP));
+		if (ports.size() < 1) {
+			ports.add(new ServerPort("server", Messages.portServer, 8080, HTTP));
 		}
 		return ports;
 
@@ -165,27 +164,33 @@ public class Jetty70Configuration extends JettyConfiguration implements
 		// }
 
 	}
+
 	/**
 	 * Return a list of the web modules in this server.
+	 * 
 	 * @return java.util.List
 	 */
 	public List<WebModule> getWebModules() {
 		List list = new ArrayList();
-	
+
 		try {
-//			Context [] contexts = serverInstance.getContexts();
-//			if (contexts != null) {
-//				for (int i = 0; i < contexts.length; i++) {
-//					Context context = contexts[i];
-//					String reload = context.getReloadable();
-//					if (reload == null)
-//						reload = "false";
-//					WebModule module = new WebModule(context.getPath(), 
-//						context.getDocBase(), context.getSource(),
-//						reload.equalsIgnoreCase("true") ? true : false);
-//					list.add(module);
-//				}
-//			}
+			Collection<WebAppContext> contexts = serverInstance.getContexts();
+			if (contexts != null) {
+				for (WebAppContext context : contexts) {
+					
+					String path = context.getContextPath();
+					String memento = "org.eclipse.jst.jee.server:";
+					if (path.startsWith("/")) {
+						memento+=path.substring(1, path.length());
+					}
+					else {
+						memento+=path;
+					}
+					WebModule module = new WebModule(path,
+							"", memento, true);
+					list.add(module);
+				}
+			}
 		} catch (Exception e) {
 			Trace.trace(Trace.SEVERE, "Error getting project refs", e);
 		}
@@ -193,7 +198,24 @@ public class Jetty70Configuration extends JettyConfiguration implements
 	}
 
 	public void addWebModule(int i, WebModule module) {
-		// TODO Auto-generated method stub
+		try {
+			WebAppContext context = serverInstance.createContext(module
+					.getPath());
+			if (context != null) {
+				// context.setDocBase(module.getDocumentBase());
+				// context.setPath(module.getPath());
+				// context.setReloadable(module.isReloadable() ? "true" :
+				// "false");
+				// if (module.getMemento() != null &&
+				// module.getMemento().length() > 0)
+				// context.setSource(module.getMemento());
+				isServerDirty = true;
+				firePropertyChangeEvent(ADD_WEB_MODULE_PROPERTY, null, module);
+			}
+		} catch (Exception e) {
+			Trace.trace(Trace.SEVERE,
+					"Error adding web module " + module.getPath(), e);
+		}
 
 	}
 
@@ -263,7 +285,8 @@ public class Jetty70Configuration extends JettyConfiguration implements
 	/**
 	 * @see JettyConfiguration#load(IPath, IProgressMonitor)
 	 */
-	public void load(IPath path, IProgressMonitor monitor) throws CoreException {
+	public void load(IPath path, IPath runtimeBaseDirectory,
+			IProgressMonitor monitor) throws CoreException {
 		try {
 			monitor = ProgressUtil.getMonitorFor(monitor);
 			monitor.beginTask(Messages.loadingTask, 5);
@@ -303,7 +326,7 @@ public class Jetty70Configuration extends JettyConfiguration implements
 
 			// server = (Server) serverFactory.loadDocument(new FileInputStream(
 			// path.append("jetty.xml").toFile()));
-			serverInstance = new ServerInstance(servers);
+			serverInstance = new ServerInstance(servers, runtimeBaseDirectory);
 			// monitor.worked(1);
 			//
 			// webAppDocument = new
@@ -335,8 +358,8 @@ public class Jetty70Configuration extends JettyConfiguration implements
 		}
 	}
 
-	public void load(IFolder folder, IProgressMonitor monitor)
-			throws CoreException {
+	public void load(IFolder folder, IPath runtimeBaseDirectory,
+			IProgressMonitor monitor) throws CoreException {
 		try {
 			monitor = ProgressUtil.getMonitorFor(monitor);
 			monitor.beginTask(Messages.loadingTask, 800);
@@ -376,7 +399,7 @@ public class Jetty70Configuration extends JettyConfiguration implements
 
 			// server = (Server) serverFactory.loadDocument(new FileInputStream(
 			// path.append("jetty.xml").toFile()));
-			serverInstance = new ServerInstance(servers);
+			serverInstance = new ServerInstance(servers, runtimeBaseDirectory);
 			// check for catalina.policy to verify that this is a v4.0 config
 			// IFile file = folder.getFile("catalina.policy");
 			// if (!file.exists())
@@ -509,9 +532,9 @@ public class Jetty70Configuration extends JettyConfiguration implements
 		}
 	}
 
-	public void importFromPath(IPath path, boolean isTestEnv,
-			IProgressMonitor monitor) throws CoreException {
-		load(path, monitor);
+	public void importFromPath(IPath path, IPath runtimeBaseDirectory,
+			boolean isTestEnv, IProgressMonitor monitor) throws CoreException {
+		load(path, runtimeBaseDirectory, monitor);
 
 		// for test environment, remove existing contexts since a separate
 		// catalina.base will be used
@@ -521,6 +544,5 @@ public class Jetty70Configuration extends JettyConfiguration implements
 			}
 		}
 	}
-	
 
 }
