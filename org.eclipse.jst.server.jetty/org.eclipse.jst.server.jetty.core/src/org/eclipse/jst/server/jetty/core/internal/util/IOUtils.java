@@ -15,10 +15,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
+import org.eclipse.core.filesystem.EFS;
+import org.eclipse.core.filesystem.IFileStore;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -44,15 +48,20 @@ public class IOUtils {
 	 * @return
 	 * @throws CoreException
 	 */
-	// public static File toLocalFile(URI uri, IProgressMonitor monitor)
-	// throws CoreException {
-	// IFileStore fileStore = EFS.getStore(uri);
-	// File localFile = fileStore.toLocalFile(EFS.NONE, monitor);
-	// if (localFile == null)
-	// // non local file system
-	// localFile = fileStore.toLocalFile(EFS.CACHE, monitor);
-	// return localFile;
-	// }
+	public static File toLocalFile(URI uri, IProgressMonitor monitor)
+			throws CoreException {
+		IFileStore fileStore = EFS.getStore(uri);
+		File localFile = fileStore.toLocalFile(EFS.NONE, monitor);
+		if (localFile == null)
+			// non local file system
+			localFile = fileStore.toLocalFile(EFS.CACHE, monitor);
+		return localFile;
+	}
+
+	public static File toLocalFile(IFile file, IProgressMonitor monitor)
+			throws CoreException {
+		return toLocalFile(file.getLocationURI(), monitor);
+	}
 
 	/**
 	 * Create Eclipse {@link IFolder}.

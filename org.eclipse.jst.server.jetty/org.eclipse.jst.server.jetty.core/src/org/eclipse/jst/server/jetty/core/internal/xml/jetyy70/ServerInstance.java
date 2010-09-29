@@ -39,11 +39,22 @@ public class ServerInstance {
 	}
 
 	public Collection<Connector> getConnectors() {
-		return null;
+		Collection<Connector> allConnectors = null;
+		Collection<Connector> serverConnectors = null;
+		for (Server server : jettyServers) {
+			serverConnectors = server.getConnectors();
+			if (serverConnectors != null) {
+				if (allConnectors == null) {
+					allConnectors = new ArrayList<Connector>();
+				}
+				allConnectors.addAll(serverConnectors);
+			}
+		}
+		return allConnectors;
 	}
 
 	public boolean removeContext(int index) {
-		if (index >=webAppContexts.size())
+		if (index >= webAppContexts.size())
 			return false;
 		WebAppContext webAppContext = webAppContexts.remove(index);
 		if (webAppContext != null) {
