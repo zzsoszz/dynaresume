@@ -16,6 +16,7 @@ import java.util.Map;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -29,8 +30,10 @@ public class JettyUIPlugin extends AbstractUIPlugin {
 
 	// base url for icons
 	private static URL ICON_BASE_URL;
+	private static final String URL_OBJ = "obj16/";
 	private static final String URL_WIZBAN = "wizban/";
 	public static final String IMG_WIZ_JETTY = "wizJetty";
+	public static final String IMG_PORT = "port";
 
 	// The shared instance
 	private static JettyUIPlugin plugin;
@@ -75,7 +78,7 @@ public class JettyUIPlugin extends AbstractUIPlugin {
 		ImageRegistry registry = new ImageRegistry();
 		
 		registerImage(registry, IMG_WIZ_JETTY, URL_WIZBAN + "jetty_wiz.png");
-		
+		registerImage(registry, IMG_PORT, URL_OBJ + "port.gif");
 //		registerImage(registry, IMG_WEB_MODULE, URL_OBJ + "web_module.gif");
 //		registerImage(registry, IMG_MIME_MAPPING, URL_OBJ + "mime_mapping.gif");
 //		registerImage(registry, IMG_MIME_EXTENSION, URL_OBJ + "mime_extension.gif");
@@ -83,6 +86,15 @@ public class JettyUIPlugin extends AbstractUIPlugin {
 //		registerImage(registry, IMG_PROJECT_MISSING, URL_OBJ + "project_missing.gif");
 	
 		return registry;
+	}
+	
+	/**
+	 * Return the image with the given key from the image registry.
+	 * @param key java.lang.String
+	 * @return org.eclipse.jface.parts.IImage
+	 */
+	public static Image getImage(String key) {
+		return getDefault().getImageRegistry().get(key);
 	}
 	
 	/**

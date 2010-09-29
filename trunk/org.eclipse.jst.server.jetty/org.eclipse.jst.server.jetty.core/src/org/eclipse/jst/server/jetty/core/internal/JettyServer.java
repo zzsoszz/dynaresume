@@ -25,6 +25,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jst.server.core.FacetUtil;
 import org.eclipse.jst.server.core.IWebModule;
 import org.eclipse.jst.server.core.internal.J2EEUtil;
+import org.eclipse.jst.server.jetty.core.IJettyConfiguration;
+import org.eclipse.jst.server.jetty.core.IJettyServer;
 import org.eclipse.jst.server.jetty.core.JettyPlugin;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.wst.server.core.IModule;
@@ -476,4 +478,7 @@ public class JettyServer extends ServerDelegate implements IJettyServer,
 		return false;
 	}
 
+	public IJettyConfiguration getServerConfiguration() throws CoreException {
+		return getJettyConfiguration();
+	}
 }

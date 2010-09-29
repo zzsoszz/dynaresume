@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.jst.server.jetty.core.IJettyConfiguration;
 import org.eclipse.jst.server.jetty.core.internal.jetty70.Jetty70ConfigurationFactory;
 import org.eclipse.jst.server.jetty.core.internal.jetty70.Jetty70Handler;
 

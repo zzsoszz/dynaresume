@@ -19,7 +19,6 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jst.server.jetty.core.internal.IJettyConfiguration;
 import org.eclipse.jst.server.jetty.core.internal.IJettyVersionHandler;
 import org.eclipse.jst.server.jetty.core.internal.JettyVersionManager;
 import org.eclipse.ui.plugin.AbstractUIPlugin;

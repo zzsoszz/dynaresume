@@ -2,12 +2,11 @@ package org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jst.server.jetty.core.internal.xml.XMLElement;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class Server extends XMLElement {
@@ -15,8 +14,8 @@ public class Server extends XMLElement {
 	private File file;
 	private IPath path;
 	
-	public Collection<Connector> getConnectors() {
-		Collection<Connector> connectors = null;
+	public List<Connector> getConnectors() {
+		List<Connector> connectors = null;
 		NodeList callNodes = getElementNode().getElementsByTagName("Call");
 		int length = callNodes.getLength();
 		Element node = null;

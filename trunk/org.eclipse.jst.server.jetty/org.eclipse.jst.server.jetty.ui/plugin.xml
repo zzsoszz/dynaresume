@@ -22,6 +22,29 @@
          typeIds="org.eclipse.jst.server.jetty.80"/>
    </extension>
    
+   <extension point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+         id="org.eclipse.jst.server.jetty.ui.propertyTester"
+         namespace="org.eclipse.jst.server.jetty.ui"
+         properties="hasConfiguration"
+         type="java.lang.Object"
+         class="org.eclipse.jst.server.jetty.ui.internal.ConfigurationPropertyTester">
+      </propertyTester>
+   </extension>
+   
+   <extension point="org.eclipse.wst.server.ui.editorPageSections">      
+      <section
+         id="org.eclipse.jst.server.jetty.configuration.editor.port"
+         order="10"
+         insertionId="org.eclipse.wst.server.editor.overview.right"
+         typeIds="org.eclipse.jst.server.jetty.*"
+         class="org.eclipse.jst.server.jetty.ui.internal.editor.ConfigurationPortEditorSection">
+         <enablement>
+           <test property="org.eclipse.jst.server.jetty.ui.hasConfiguration" value="true"/>
+         </enablement>
+      </section>
+   </extension>
+      
    <extension point="org.eclipse.wst.server.ui.wizardFragments">
       <fragment
          id="org.eclipse.jst.server.jetty.runtime.70"
