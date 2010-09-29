@@ -43,6 +43,7 @@ import org.eclipse.jdt.launching.JavaRuntime;
 import org.eclipse.jst.server.core.IJ2EEModule;
 import org.eclipse.jst.server.core.IWebModule;
 import org.eclipse.jst.server.core.internal.ProgressUtil;
+import org.eclipse.jst.server.jetty.core.IJettyConfiguration;
 import org.eclipse.jst.server.jetty.core.JettyPlugin;
 import org.eclipse.jst.server.jetty.core.internal.util.JettyVersionHelper;
 import org.eclipse.jst.server.jetty.core.internal.util.StringUtils;

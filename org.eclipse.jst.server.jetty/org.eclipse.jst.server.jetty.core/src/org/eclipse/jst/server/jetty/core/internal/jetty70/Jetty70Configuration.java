@@ -547,4 +547,46 @@ public class Jetty70Configuration extends JettyConfiguration implements
 		}
 	}
 
+	/**
+	 * Modify the port with the given id.
+	 *
+	 * @param id java.lang.String
+	 * @param port int
+	 */
+	public void modifyServerPort(String id, int port) {
+		try {
+			if ("server".equals(id)) {
+				serverInstance.setPort(port + "");
+				isServerDirty = true;
+				firePropertyChangeEvent(MODIFY_PORT_PROPERTY, id, new Integer(port));
+				return;
+			}
+	
+//			int i = id.indexOf("/");
+//			// If a connector in the instance Service
+//			if (i < 0) {
+//				int connNum = Integer.parseInt(id);
+//				Connector connector = serverInstance.getConnector(connNum);
+//				if (connector != null) {
+//					connector.setPort(port + "");
+//					isServerDirty = true;
+//					firePropertyChangeEvent(MODIFY_PORT_PROPERTY, id, new Integer(port));
+//				}
+//			}
+//			// Else a connector in another Service
+//			else {
+//				int servNum = Integer.parseInt(id.substring(0, i));
+//				int connNum = Integer.parseInt(id.substring(i + 1));
+//				
+//				Service service = server.getService(servNum);
+//				Connector connector = service.getConnector(connNum);
+//				connector.setPort(port + "");
+//				isServerDirty = true;
+//				firePropertyChangeEvent(MODIFY_PORT_PROPERTY, id, new Integer(port));
+//			}
+		} catch (Exception e) {
+			Trace.trace(Trace.SEVERE, "Error modifying server port " + id, e);
+		}
+	}
+
 }

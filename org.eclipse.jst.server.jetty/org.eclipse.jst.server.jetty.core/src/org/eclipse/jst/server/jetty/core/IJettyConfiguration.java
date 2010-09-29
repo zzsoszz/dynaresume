@@ -8,8 +8,9 @@
  * Contributors:
  *     Angelo Zerr <angelo.zerr@gmail.com> - Initial API and implementation 
  *******************************************************************************/
-package org.eclipse.jst.server.jetty.core.internal;
+package org.eclipse.jst.server.jetty.core;
 
+import java.beans.PropertyChangeListener;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,10 +19,19 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jst.server.jetty.core.internal.WebModule;
 import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.ServerPort;
 
 public interface IJettyConfiguration {
+
+	public static final String NAME_PROPERTY = "name";
+	public static final String PORT_PROPERTY = "port";
+	public static final String MODIFY_PORT_PROPERTY = "modifyPort";
+	
+	public static final String MODIFY_WEB_MODULE_PROPERTY = "modifyWebModule";
+	public static final String ADD_WEB_MODULE_PROPERTY = "addWebModule";
+	public static final String REMOVE_WEB_MODULE_PROPERTY = "removeWebModule";
 
 	/**
 	 * Returns a list of ServerPorts that this configuration uses.
@@ -89,4 +99,8 @@ public interface IJettyConfiguration {
 
 	IStatus localizeConfiguration(IPath confDir, IPath serverDeployDirectory,
 			IJettyServer jettyServer, IProgressMonitor subMonitorFor);
+
+	void addPropertyChangeListener(PropertyChangeListener listener);
+
+	void removePropertyChangeListener(PropertyChangeListener listener);
 }

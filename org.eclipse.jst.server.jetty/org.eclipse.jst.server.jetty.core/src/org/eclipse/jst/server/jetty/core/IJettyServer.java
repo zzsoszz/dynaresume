@@ -1,5 +1,6 @@
-package org.eclipse.jst.server.jetty.core.internal;
+package org.eclipse.jst.server.jetty.core;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.wst.server.core.model.IURLProvider;
 
 public interface IJettyServer extends IURLProvider {
@@ -27,5 +28,9 @@ public interface IJettyServer extends IURLProvider {
 	 * Property which specifies if modules should be served without publishing.
 	 */
 	public static final String PROPERTY_SERVE_MODULES_WITHOUT_PUBLISH = "serveModulesWithoutPublish";
+
+	IJettyConfiguration getJettyConfiguration() throws CoreException;
+
+	IJettyConfiguration getServerConfiguration() throws CoreException;
 
 }

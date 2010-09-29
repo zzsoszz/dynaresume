@@ -27,16 +27,16 @@ import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jst.server.core.IWebModule;
 import org.eclipse.jst.server.core.internal.ProgressUtil;
+import org.eclipse.jst.server.jetty.core.IJettyConfiguration;
+import org.eclipse.jst.server.jetty.core.IJettyConfigurationWorkingCopy;
+import org.eclipse.jst.server.jetty.core.IJettyServer;
 import org.eclipse.jst.server.jetty.core.JettyPlugin;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.ServerPort;
 
-public abstract class JettyConfiguration implements IJettyConfiguration {
-
-	public static final String MODIFY_WEB_MODULE_PROPERTY = "modifyWebModule";
-	public static final String ADD_WEB_MODULE_PROPERTY = "addWebModule";
-	public static final String REMOVE_WEB_MODULE_PROPERTY = "removeWebModule";
+public abstract class JettyConfiguration implements IJettyConfiguration,
+		IJettyConfigurationWorkingCopy {
 
 	private IFolder configPath;
 
@@ -228,7 +228,8 @@ public abstract class JettyConfiguration implements IJettyConfiguration {
 				IFolder childFolder = (IFolder) resource;
 				backupFolder(childFolder,
 						confDir.append(childFolder.getName()),
-						(backup != null ? backup.append(childFolder.getName()) : null), ms, monitor);
+						(backup != null ? backup.append(childFolder.getName())
+								: null), ms, monitor);
 				break;
 			}
 			monitor.worked(100);

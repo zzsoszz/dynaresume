@@ -25,6 +25,10 @@ public class Messages extends NLS {
 	public static String installedJRE;
 	public static String installedJREs;
 	public static String runtimeDefaultJRE;
+	public static String configurationEditorPortsSection;
+	public static String configurationEditorPortsDescription;
+	public static String configurationEditorPortNameColumn;
+	public static String configurationEditorPortValueColumn;
 
 	static {
 		NLS.initializeMessages(JettyUIPlugin.PLUGIN_ID + ".internal.Messages",

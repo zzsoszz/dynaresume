@@ -38,9 +38,9 @@ public class ServerInstance {
 		this.runtimeBaseDirectory = runtimeBaseDirectory;
 	}
 
-	public Collection<Connector> getConnectors() {
-		Collection<Connector> allConnectors = null;
-		Collection<Connector> serverConnectors = null;
+	public List<Connector> getConnectors() {
+		List<Connector> allConnectors = null;
+		List<Connector> serverConnectors = null;
 		for (Server server : jettyServers) {
 			serverConnectors = server.getConnectors();
 			if (serverConnectors != null) {
@@ -186,5 +186,14 @@ public class ServerInstance {
 	public Collection<WebAppContext> getContexts() {
 		loadContextsIfNeeded();
 		return webAppContexts;
+	}
+
+	public void setPort(String port) {
+		List<Connector> connectors = getConnectors();
+		if (connectors != null && connectors.size() > 0) {
+			Connector connector = connectors.get(0);
+			connector.setPort(port);
+		}
+		
 	}
 }
