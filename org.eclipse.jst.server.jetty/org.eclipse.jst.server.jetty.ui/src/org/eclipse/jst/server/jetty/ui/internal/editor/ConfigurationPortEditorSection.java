@@ -219,6 +219,9 @@ public class ConfigurationPortEditorSection extends ServerEditorSection {
 		
 		IJettyServer ts = (IJettyServer) server.getAdapter(IJettyServer.class);
 		try {
+			if (ts == null) {
+				ts = (IJettyServer) server.loadAdapter(IJettyServer.class, null);
+			}
 			jettyConfiguration = (IJettyConfigurationWorkingCopy)ts.getJettyConfiguration();
 		} catch (Exception e) {
 			// ignore
