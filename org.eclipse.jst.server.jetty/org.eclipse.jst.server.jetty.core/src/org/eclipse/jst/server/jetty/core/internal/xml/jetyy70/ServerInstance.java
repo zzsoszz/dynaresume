@@ -43,6 +43,8 @@ public class ServerInstance {
 	}
 
 	public boolean removeContext(int index) {
+		if (index >=webAppContexts.size())
+			return false;
 		WebAppContext webAppContext = webAppContexts.remove(index);
 		if (webAppContext != null) {
 			IPath contextFilePath = getXMLContextFilePath(webAppContext

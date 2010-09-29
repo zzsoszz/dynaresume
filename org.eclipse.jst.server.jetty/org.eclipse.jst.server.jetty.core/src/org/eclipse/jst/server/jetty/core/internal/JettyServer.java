@@ -129,11 +129,11 @@ public class JettyServer extends ServerDelegate implements IJettyServer,
 		IPath path = runtime.getLocation();
 
 		String id = getServer().getServerType().getId();
-		IPath runtimeBaseDirectory = getRuntimeBaseDirectory();
+		//IPath runtimeBaseDirectory = getRuntimeBaseDirectory();
 		IFolder folder = getServer().getServerConfiguration();
 		configuration = JettyPlugin.getJettyConfiguration(id, folder);
 		try {
-			configuration.importFromPath(path, runtimeBaseDirectory,
+			configuration.importFromPath(path, null,
 					isTestEnvironment(), monitor);
 		} catch (CoreException ce) {
 			// ignore

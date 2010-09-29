@@ -34,6 +34,7 @@ import org.eclipse.jst.server.jetty.core.internal.JettyConstants;
 import org.eclipse.jst.server.jetty.core.internal.Messages;
 import org.eclipse.jst.server.jetty.core.internal.Trace;
 import org.eclipse.jst.server.jetty.core.internal.WebModule;
+import org.eclipse.jst.server.jetty.core.internal.config.JettyXMLConfig;
 import org.eclipse.jst.server.jetty.core.internal.config.PathFileConfig;
 import org.eclipse.jst.server.jetty.core.internal.config.StartConfig;
 import org.eclipse.jst.server.jetty.core.internal.config.StartIni;
@@ -306,12 +307,13 @@ public class Jetty70Configuration extends JettyConfiguration implements
 			if (jettyXMLConfiFiles.size() > 0) {
 				for (PathFileConfig jettyXMLConfig : jettyXMLConfiFiles) {
 					file = jettyXMLConfig.getFile();
+					
 					jettyPath = jettyXMLConfig.getPath();
 					serverFactory = new Factory();
 					serverFactory
 							.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server");
 					server = (Server) serverFactory
-							.loadDocument(new FileInputStream(file));
+							.loadDocument(JettyXMLConfig.getInputStream(file));
 					server.setFile(file);
 					server.setPath(jettyPath);
 					servers.add(server);
