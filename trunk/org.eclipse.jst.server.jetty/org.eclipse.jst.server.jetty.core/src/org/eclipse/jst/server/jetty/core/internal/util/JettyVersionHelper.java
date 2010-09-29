@@ -46,6 +46,9 @@ public class JettyVersionHelper implements JettyConstants {
 				JettyServerBehaviour tsb = (JettyServerBehaviour) ts
 						.getServer().loadAdapter(JettyServerBehaviour.class,
 								null);
+				if (tsb == null) {
+					return null;
+				}
 				return tsb.getTempDirectory();
 			}
 			IPath path = new Path(baseDir);
