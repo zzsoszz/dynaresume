@@ -31,7 +31,7 @@ public class XMLElement {
 	public XMLElement() {
 		// do nothing
 	}
-	
+
 	public void setText(String textContent) {
 		xmlElement.setTextContent(textContent);
 	}
@@ -81,22 +81,34 @@ public class XMLElement {
 	}
 
 	public Element findElement(String s, String attrName) {
-		NodeList nodelist = xmlElement.getElementsByTagName(s);
+		return findElement(xmlElement, s, attrName);
+	}
+	
+	public Element findElement(Element element, String s, String attrName) {
+		NodeList nodelist = element.getElementsByTagName(s);
 		int j = nodelist == null ? 0 : nodelist.getLength();
 		for (int k = 0; k < j; k++) {
-			Element node = (Element)nodelist.item(k);
-			NamedNodeMap attributes = node.getAttributes();
-			int length = attributes.getLength();
-			for (int i = 0; i < length; i++) {
-				Node n = attributes.item(i);
-				if (attrName.equals(n.getNodeValue())) {
-					return node;
-				}
+			Element node = (Element) nodelist.item(k);
+			if (hasAttribute(node, attrName)) {
+				return node;
 			}
 		}
-		Element newElement = xmlElement.getOwnerDocument().createElement(s);
-		xmlElement.getOwnerDocument().getDocumentElement().appendChild(newElement);
+		Element newElement = element.getOwnerDocument().createElement(s);
+		element.getOwnerDocument().getDocumentElement()
+				.appendChild(newElement);
 		return newElement;
+	}
+
+	public boolean hasAttribute(Element node, String attrName) {
+		NamedNodeMap attributes = node.getAttributes();
+		int length = attributes.getLength();
+		for (int i = 0; i < length; i++) {
+			Node n = attributes.item(i);
+			if (attrName.equals(n.getNodeValue())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public String getAttributeValue(String s) {

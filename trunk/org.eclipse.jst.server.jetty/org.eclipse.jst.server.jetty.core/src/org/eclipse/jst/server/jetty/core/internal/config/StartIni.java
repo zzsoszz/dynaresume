@@ -11,32 +11,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jdt.internal.core.search.PathCollector;
 import org.eclipse.jst.server.core.internal.ProgressUtil;
 import org.eclipse.jst.server.jetty.core.internal.JettyConstants;
+import org.eclipse.jst.server.jetty.core.internal.util.IOUtils;
 
 public class StartIni implements JettyConstants {
 
 	private List<PathFileConfig> jettyXMLFiles = new ArrayList<PathFileConfig>();
 	private List<PathFileConfig> otherConfigs = new ArrayList<PathFileConfig>();
 	private PathFileConfig startConfig = null;
-	
+
 	private File startIniFile;
 
 	private boolean isStartIniDirty;
 
 	public StartIni(IPath baseDirPath) {
-		loadStartIni(baseDirPath);
+		loadStartIni(baseDirPath, null);
 		loadOtherConfigs(baseDirPath);
 	}
-	
-	private List<String> loadStartIni(IPath baseDirPath) {
+
+	public StartIni(IFolder baseDirFolder) {
+		loadStartIni(null, baseDirFolder);
+		//loadOtherConfigs(null, baseDirFolder);
+	}
+
+	private List<String> loadStartIni(IPath baseDirPath, IFolder baseDirFolder) {
 		List<String> args = new ArrayList<String>();
-		IPath startIniPath = baseDirPath.append(START_INI);
-		this.startIniFile = startIniPath.toFile();
+		if (baseDirPath != null) {
+			IPath startIniPath = baseDirPath.append(START_INI);
+			this.startIniFile = startIniPath.toFile();
+		} else {
+			try {
+				this.startIniFile = IOUtils.toLocalFile(
+						baseDirFolder.getFile(START_INI), null);
+			} catch (CoreException e) {
+				e.printStackTrace();
+			}
+		}
+
 		if (startIniFile.exists() && startIniFile.canRead()) {
 			FileReader reader = null;
 			BufferedReader buf = null;
@@ -52,8 +69,18 @@ public class StartIni implements JettyConstants {
 						continue;
 					}
 					if (arg.indexOf('=') == -1) {
-						jettyXMLFile = baseDirPath.append(arg).toFile();
-						if (jettyXMLFile.exists() && jettyXMLFile.canRead()) {
+						if (baseDirPath != null) {
+							jettyXMLFile = baseDirPath.append(arg).toFile();
+						} else {
+							try {
+								jettyXMLFile = IOUtils.toLocalFile(
+										baseDirFolder.getFile(arg), null);
+							} catch (CoreException e) {
+								e.printStackTrace();
+							}
+						}
+						if (jettyXMLFile != null && jettyXMLFile.exists()
+								&& jettyXMLFile.canRead()) {
 							jettyXMLFiles.add(new PathFileConfig(jettyXMLFile,
 									new Path(arg)));
 						}
@@ -84,22 +111,25 @@ public class StartIni implements JettyConstants {
 		IPath realmPropertiesPath = baseDirPath.append("etc/realm.properties");
 		File realmPropertiesFile = realmPropertiesPath.toFile();
 		if (realmPropertiesFile.exists()) {
-			otherConfigs.add(new PathFileConfig(realmPropertiesFile, new Path("etc/realm.properties")));
+			otherConfigs.add(new PathFileConfig(realmPropertiesFile, new Path(
+					"etc/realm.properties")));
 		}
-		
+
 		IPath webdefaultPath = baseDirPath.append("etc/webdefault.xml");
 		File webdefaultFile = webdefaultPath.toFile();
 		if (webdefaultFile.exists()) {
-			otherConfigs.add(new PathFileConfig(webdefaultFile, new Path("etc/webdefault.xml")));
+			otherConfigs.add(new PathFileConfig(webdefaultFile, new Path(
+					"etc/webdefault.xml")));
 		}
-		
+
 		IPath startJARPath = baseDirPath.append(START_JAR);
 		File startConfigFile = startJARPath.toFile();
 		if (startConfigFile.exists()) {
-			startConfig = new PathFileConfig(startConfigFile, new Path(START_JAR));
+			startConfig = new PathFileConfig(startConfigFile, new Path(
+					START_JAR));
 		}
 	}
-	
+
 	public List<PathFileConfig> getJettyXMLFiles() {
 		return jettyXMLFiles;
 	}
@@ -160,7 +190,7 @@ public class StartIni implements JettyConstants {
 	public List<PathFileConfig> getOtherConfigs() {
 		return otherConfigs;
 	}
-	
+
 	public PathFileConfig getStartConfig() {
 		return startConfig;
 	}

@@ -606,6 +606,7 @@ public class JettyServerBehaviour extends ServerBehaviourDelegate implements
 		cp.add(entry);
 	}
 
+	@Override
 	public void setupLaunchConfiguration(
 			ILaunchConfigurationWorkingCopy workingCopy,
 			IProgressMonitor monitor) throws CoreException {

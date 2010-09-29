@@ -369,7 +369,7 @@ public class Jetty70Configuration extends JettyConfiguration implements
 			Factory serverFactory = null;
 
 			// Load config.ini
-			this.startIniConfig = new StartIni(folder.getFullPath());
+			this.startIniConfig = new StartIni(folder);
 
 			// Load jetty.xml files
 			List<PathFileConfig> jettyXMLConfiFiles = startIniConfig
