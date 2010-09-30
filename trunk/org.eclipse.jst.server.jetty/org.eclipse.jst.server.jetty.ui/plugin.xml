@@ -65,7 +65,7 @@
          class="org.eclipse.jst.server.jetty.ui.internal.JettyRuntimeWizardFragment"/>
       <fragment
          id="org.eclipse.jst.server.jetty.runtime.80"
-         typeIds="org.eclipse.jst.server.jetty.runtime.6x"
+         typeIds="org.eclipse.jst.server.jetty.runtime.80"
          class="org.eclipse.jst.server.jetty.ui.internal.JettyRuntimeWizardFragment"/>         
    </extension>   
    
