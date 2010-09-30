@@ -15,7 +15,7 @@ public class AddWebModuleCommand extends ConfigurationCommand {
 	/**
 	 * AddWebModuleCommand constructor comment.
 	 * 
-	 * @param configuration a tomcat configuration
+	 * @param configuration a Jetty configuration
 	 * @param module a web module
 	 */
 	public AddWebModuleCommand(IJettyConfigurationWorkingCopy configuration, WebModule module) {

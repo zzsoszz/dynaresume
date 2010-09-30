@@ -7,7 +7,7 @@ import org.eclipse.debug.core.ILaunch;
 public interface IJettyServerBehaviour {
 
 	/**
-	 * Returns the main class that is used to launch the Tomcat server.
+	 * Returns the main class that is used to launch the Jetty server.
 	 * 
 	 * @return the main runtime class
 	 */

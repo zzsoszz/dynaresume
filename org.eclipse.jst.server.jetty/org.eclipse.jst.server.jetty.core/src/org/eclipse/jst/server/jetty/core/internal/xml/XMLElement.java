@@ -302,7 +302,7 @@ public class XMLElement {
 	 * lack of normalization, they aren't compared for equality. Elements are
 	 * required to have the same attributes or the same node value if attributes
 	 * aren't present. Attributes and node value are assumed to be mutually
-	 * exclusive for Tomcat configuration XML files. The same non-text child
+	 * exclusive for Jetty configuration XML files. The same non-text child
 	 * nodes are required to be present in an element and appear in the same
 	 * order. If a node type other than element or comment is encountered, this
 	 * method punts and returns false.

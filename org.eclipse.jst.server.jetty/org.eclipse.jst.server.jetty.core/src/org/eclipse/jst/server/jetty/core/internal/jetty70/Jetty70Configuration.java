@@ -130,7 +130,7 @@ public class Jetty70Configuration extends JettyConfiguration implements
 		// protocol2 = "AJP";
 		// }
 		// else {
-		// // Get Tomcat equivalent name if protocol handler class specified
+		// // Get Jetty equivalent name if protocol handler class specified
 		// name = (String)protocolHandlerMap.get(protocol);
 		// if (name != null) {
 		// // Prepare simple protocol string for ServerPort protocol
