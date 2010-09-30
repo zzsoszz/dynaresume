@@ -17,7 +17,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jst.server.core.internal.ProgressUtil;
 import org.eclipse.jst.server.jetty.core.internal.util.IOUtils;
 import org.eclipse.jst.server.jetty.core.internal.xml.Factory;
-import org.eclipse.jst.server.jetty.core.internal.xml.XMLUtil;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.Connector;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.Server;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.webapp.WebAppContext;
@@ -117,9 +116,8 @@ public class ServerInstance {
 		context.setWar("/wtpwebapps/" + pathWithoutSlash);
 
 		IPath contextFilePath = getXMLContextFilePath(pathWithoutSlash);
-		XMLUtil.save(contextFilePath.toOSString(), context.getElementNode()
-				.getOwnerDocument());
-
+		context.setFileName(contextFilePath.toOSString());
+		context.save();
 		return context;
 	}
 
@@ -154,6 +152,7 @@ public class ServerInstance {
 		if (contextsLoaded)
 			return;
 		try {
+			WebAppContext context = null;
 			IPath contexts = runtimeBaseDirectory.append("contexts");
 			File contextsFolder = contexts.toFile();
 			if (contextsFolder.exists()) {
@@ -164,7 +163,8 @@ public class ServerInstance {
 					f = files[i];
 					try {
 						stream = new FileInputStream(f);
-						createContext(stream);
+						context = createContext(stream);
+						context.setFileName(f.getCanonicalPath());
 					} catch (Throwable e) {
 						e.printStackTrace();
 					} finally {
@@ -194,7 +194,7 @@ public class ServerInstance {
 			Connector connector = connectors.get(0);
 			connector.setPort(port);
 		}
-		
+
 	}
 
 	public WebAppContext getContext(int index) {
