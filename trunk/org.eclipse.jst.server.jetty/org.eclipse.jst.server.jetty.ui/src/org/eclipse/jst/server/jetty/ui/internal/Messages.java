@@ -29,6 +29,26 @@ public class Messages extends NLS {
 	public static String configurationEditorPortsDescription;
 	public static String configurationEditorPortNameColumn;
 	public static String configurationEditorPortValueColumn;
+	public static String configurationEditorWebModuleDialogTitleEdit;
+	public static String configurationEditorWebModuleDialogTitleAdd;
+	public static String configurationEditorWebModuleDialogProjects;
+	public static String configurationEditorWebModuleDialogDocumentBase;
+	public static String configurationEditorWebModuleDialogSelectDirectory;
+	public static String configurationEditorWebModuleDialogPath;
+	public static String configurationEditorPathColumn;
+	public static String configurationEditorDocBaseColumn;
+	public static String configurationEditorProjectColumn;
+	public static String configurationEditorWebModulesPageTitle;
+	public static String configurationEditorWebModulesSection;
+	public static String configurationEditorWebModulesDescription;
+	public static String configurationEditorAddProjectModule;
+	public static String configurationEditorAddExternalModule;
+	public static String editorEdit;
+	public static String editorRemove;
+	public static String errorMissingWebModule;
+	public static String configurationEditorReloadDisabled;
+	public static String configurationEditorReloadEnabled;
+	public static String configurationEditorProjectMissing;
 
 	static {
 		NLS.initializeMessages(JettyUIPlugin.PLUGIN_ID + ".internal.Messages",

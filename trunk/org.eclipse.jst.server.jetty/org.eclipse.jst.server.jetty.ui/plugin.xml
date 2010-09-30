@@ -32,6 +32,19 @@
       </propertyTester>
    </extension>
    
+   <extension point="org.eclipse.wst.server.ui.editorPages">
+      <page
+         id="org.eclipse.jst.server.jetty.configuration.editor.webmodule"
+         order="20"
+         name="%configurationEditorWebModulesPage"
+         typeIds="org.eclipse.jst.server.jetty.*"
+         class="org.eclipse.jst.server.jetty.ui.internal.editor.ConfigurationWebModuleEditorPart">
+         <enablement>
+           <test property="org.eclipse.jst.server.jetty.ui.hasConfiguration" value="true"/>
+         </enablement>
+      </page>
+   </extension>
+   
    <extension point="org.eclipse.wst.server.ui.editorPageSections">      
       <section
          id="org.eclipse.jst.server.jetty.configuration.editor.port"

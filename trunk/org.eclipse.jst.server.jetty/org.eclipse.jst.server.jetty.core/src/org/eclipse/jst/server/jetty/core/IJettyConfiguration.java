@@ -19,7 +19,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jst.server.jetty.core.internal.WebModule;
+import org.eclipse.jst.server.jetty.core.internal.IJettyWebModule;
 import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.ServerPort;
 
@@ -81,7 +81,7 @@ public interface IJettyConfiguration {
 	 */
 	public List<WebModule> getWebModules();
 
-	void addWebModule(int i, WebModule module);
+	void addWebModule(int i, IJettyWebModule module);
 
 	void removeWebModule(int i);
 

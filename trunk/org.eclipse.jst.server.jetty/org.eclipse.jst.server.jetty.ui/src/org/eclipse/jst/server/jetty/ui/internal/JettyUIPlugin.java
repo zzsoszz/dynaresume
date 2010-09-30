@@ -33,7 +33,10 @@ public class JettyUIPlugin extends AbstractUIPlugin {
 	private static final String URL_OBJ = "obj16/";
 	private static final String URL_WIZBAN = "wizban/";
 	public static final String IMG_WIZ_JETTY = "wizJetty";
+	
+	public static final String IMG_WEB_MODULE = "webModule";
 	public static final String IMG_PORT = "port";
+	public static final String IMG_PROJECT_MISSING = "projectMissing";
 
 	// The shared instance
 	private static JettyUIPlugin plugin;
@@ -78,12 +81,14 @@ public class JettyUIPlugin extends AbstractUIPlugin {
 		ImageRegistry registry = new ImageRegistry();
 		
 		registerImage(registry, IMG_WIZ_JETTY, URL_WIZBAN + "jetty_wiz.png");
+		
+		registerImage(registry, IMG_WEB_MODULE, URL_OBJ + "web_module.gif");
 		registerImage(registry, IMG_PORT, URL_OBJ + "port.gif");
 //		registerImage(registry, IMG_WEB_MODULE, URL_OBJ + "web_module.gif");
 //		registerImage(registry, IMG_MIME_MAPPING, URL_OBJ + "mime_mapping.gif");
 //		registerImage(registry, IMG_MIME_EXTENSION, URL_OBJ + "mime_extension.gif");
 //		registerImage(registry, IMG_PORT, URL_OBJ + "port.gif");
-//		registerImage(registry, IMG_PROJECT_MISSING, URL_OBJ + "project_missing.gif");
+		registerImage(registry, IMG_PROJECT_MISSING, URL_OBJ + "project_missing.gif");
 	
 		return registry;
 	}

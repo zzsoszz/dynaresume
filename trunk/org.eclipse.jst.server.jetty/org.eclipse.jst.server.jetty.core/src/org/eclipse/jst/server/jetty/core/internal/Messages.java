@@ -47,6 +47,9 @@ public class Messages extends NLS {
 	public static String errorPublishConfiguration;
 	public static String errorXMLNullContextArg;
 	public static String configurationEditorActionModifyPort;
+	public static String configurationEditorActionAddWebModule;
+	public static String configurationEditorActionModifyWebModule;
+	public static String configurationEditorActionRemoveWebModule;
 
 	static {
 		NLS.initializeMessages(JettyPlugin.PLUGIN_ID + ".internal.Messages",

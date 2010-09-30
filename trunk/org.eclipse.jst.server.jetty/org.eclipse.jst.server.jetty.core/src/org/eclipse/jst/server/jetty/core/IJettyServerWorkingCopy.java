@@ -1,6 +1,6 @@
-package org.eclipse.jst.server.jetty.core.internal;
+package org.eclipse.jst.server.jetty.core;
 
-public interface IJettyServerWorkingCopy {
+public interface IJettyServerWorkingCopy extends IJettyServer {
 
 	/**
 	 * The default deployment directory.  Avoid "webapps" due to

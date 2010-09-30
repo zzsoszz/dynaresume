@@ -9,7 +9,7 @@ public interface IJettyConfigurationWorkingCopy extends IJettyConfiguration {
 	 * @param index int
 	 * @param module org.eclipse.jst.server.jetty.WebModule
 	 */
-	//public void addWebModule(int index, IJettyWebModule module);
+	public void addWebModule(int index, IJettyWebModule module);
 	
 	/**
 	 * Change a web module.
@@ -19,14 +19,14 @@ public interface IJettyConfigurationWorkingCopy extends IJettyConfiguration {
 	 * @param path java.lang.String
 	 * @param reloadable boolean
 	 */
-	//public void modifyWebModule(int index, String docBase, String path, boolean reloadable);
+	public void modifyWebModule(int index, String docBase, String path, boolean reloadable);
 
 	/**
 	 * Remove a web module.
 	 * 
 	 * @param index int
 	 */
-	//public void removeWebModule(int index);
+	public void removeWebModule(int index);
 
 //	/**
 //	 * Adds a mime mapping.

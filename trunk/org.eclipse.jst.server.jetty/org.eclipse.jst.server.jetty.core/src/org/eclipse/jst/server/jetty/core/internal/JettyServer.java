@@ -27,7 +27,9 @@ import org.eclipse.jst.server.core.IWebModule;
 import org.eclipse.jst.server.core.internal.J2EEUtil;
 import org.eclipse.jst.server.jetty.core.IJettyConfiguration;
 import org.eclipse.jst.server.jetty.core.IJettyServer;
+import org.eclipse.jst.server.jetty.core.IJettyServerWorkingCopy;
 import org.eclipse.jst.server.jetty.core.JettyPlugin;
+import org.eclipse.jst.server.jetty.core.WebModule;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.IModuleType;
@@ -119,6 +121,11 @@ public class JettyServer extends ServerDelegate implements IJettyServer,
 			}
 		}
 		return configuration;
+	}
+	
+	@Override
+	public void configurationChanged() {
+		configuration = null;
 	}
 
 	@Override

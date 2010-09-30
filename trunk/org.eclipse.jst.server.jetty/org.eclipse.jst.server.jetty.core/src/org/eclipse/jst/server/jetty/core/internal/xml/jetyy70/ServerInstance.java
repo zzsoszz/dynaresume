@@ -196,4 +196,8 @@ public class ServerInstance {
 		}
 		
 	}
+
+	public WebAppContext getContext(int index) {
+		return webAppContexts.get(index);
+	}
 }
