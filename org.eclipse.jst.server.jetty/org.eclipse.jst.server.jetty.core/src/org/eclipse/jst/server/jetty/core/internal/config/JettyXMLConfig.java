@@ -15,17 +15,20 @@ public class JettyXMLConfig {
 	public static InputStream getInputStream(File jettyXMLFile)
 			throws IOException {
 		InputStream stream = new FileInputStream(jettyXMLFile);
-
-		InputStreamReader input = new InputStreamReader(stream);
-		BufferedReader reader = new BufferedReader(input);
-		StringWriter newContent = new StringWriter();
-		for (String line = reader.readLine(); line != null; line = reader
-				.readLine()) {
-			newContent.append(line);
-			newContent.append('\n');
+		try {
+			InputStreamReader input = new InputStreamReader(stream);
+			BufferedReader reader = new BufferedReader(input);
+			StringWriter newContent = new StringWriter();
+			for (String line = reader.readLine(); line != null; line = reader
+					.readLine()) {
+				newContent.append(line);
+				newContent.append('\n');
+			}
+			String s = newContent.toString().replaceAll("<Property", "<SystemProperty");		
+			return IOUtils.toInputStream(s, "UTF-8");
 		}
-
-		String s = newContent.toString().replaceAll("<Property", "<SystemProperty");		
-		return IOUtils.toInputStream(s, "UTF-8");
+		finally {
+			stream.close();
+		}	
 	}
 }
