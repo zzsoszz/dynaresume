@@ -102,7 +102,7 @@ public class ServerInstance {
 
 	}
 
-	public WebAppContext createContext(String path) throws IOException,
+	public WebAppContext createContext(String documentBase, String memento, String path) throws IOException,
 			SAXException {
 		loadContextsIfNeeded();
 		String pathWithoutSlash = path;
@@ -113,10 +113,17 @@ public class ServerInstance {
 		WebAppContext context = createContext(WebAppContext.class
 				.getResourceAsStream("WebAppContext.xml"));
 		context.setContextPath(pathWithoutSlash);
-		context.setWar("/wtpwebapps/" + pathWithoutSlash);
-
+		
+		File f = new File(documentBase);
+		if (f.exists()) {
+			context.setWar(documentBase, true);
+		}
+		else {
+			context.setWar("/wtpwebapps/" + pathWithoutSlash, false);
+		}
+		
 		IPath contextFilePath = getXMLContextFilePath(pathWithoutSlash);
-		context.setFileName(contextFilePath.toOSString());
+		context.setSaveFile(contextFilePath.toFile());
 		context.save();
 		return context;
 	}
@@ -164,7 +171,7 @@ public class ServerInstance {
 					try {
 						stream = new FileInputStream(f);
 						context = createContext(stream);
-						context.setFileName(f.getCanonicalPath());
+						context.setSaveFile(f);						
 					} catch (Throwable e) {
 						e.printStackTrace();
 					} finally {
@@ -200,4 +207,5 @@ public class ServerInstance {
 	public WebAppContext getContext(int index) {
 		return webAppContexts.get(index);
 	}
+
 }

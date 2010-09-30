@@ -179,15 +179,11 @@ public class Jetty70Configuration extends JettyConfiguration implements
 			Collection<WebAppContext> contexts = serverInstance.getContexts();
 			if (contexts != null) {
 				for (WebAppContext context : contexts) {
-					String war = context.getWar();
+					String documentBase = context.getDocumentBase();
 					String path = context.getContextPath();
-					String memento = "org.eclipse.jst.jee.server:";
-					if (path.startsWith("/")) {
-						memento += path.substring(1, path.length());
-					} else {
-						memento += path;
-					}
-					WebModule module = new WebModule(path, war, memento, true);
+					String memento = context.getMemento();
+					WebModule module = new WebModule(path, documentBase,
+							memento, true);
 					list.add(module);
 				}
 			}
@@ -199,8 +195,9 @@ public class Jetty70Configuration extends JettyConfiguration implements
 
 	public void addWebModule(int i, IJettyWebModule module) {
 		try {
-			WebAppContext context = serverInstance.createContext(module
-					.getPath());
+			WebAppContext context = serverInstance.createContext(
+					module.getDocumentBase(), module.getMemento(),
+					module.getPath());
 			if (context != null) {
 				// context.setDocBase(module.getDocumentBase());
 				// context.setPath(module.getPath());
