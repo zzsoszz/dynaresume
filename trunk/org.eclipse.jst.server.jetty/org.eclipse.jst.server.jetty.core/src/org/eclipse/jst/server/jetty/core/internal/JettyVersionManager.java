@@ -20,79 +20,67 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.jst.server.jetty.core.IJettyConfiguration;
-import org.eclipse.jst.server.jetty.core.internal.jetty70.Jetty70ConfigurationFactory;
-import org.eclipse.jst.server.jetty.core.internal.jetty70.Jetty70Handler;
+import org.eclipse.jst.server.jetty.core.internal.jetty70.Jetty70Provider;
+import org.eclipse.jst.server.jetty.core.internal.jetty80.Jetty80Provider;
 
 public class JettyVersionManager {
-	
+
 	public static final JettyVersionManager INSTANCE = new JettyVersionManager();
 
-	private Map<String, JettyVersionData> versionDatas = new HashMap<String, JettyVersionData>();
+	private Map<String, IJettyVersionProvider> versionProviders = new HashMap<String, IJettyVersionProvider>();
 
 	private List<String> runtimeTypes = new ArrayList<String>();
-	
+
 	public enum JettyVersion {
 		V70, V80
 	}
 
 	private JettyVersionManager() {
 		// Jetty 7.0
-		register(JettyVersion.V70, new Jetty70Handler(),
-				Jetty70ConfigurationFactory.INSTANCE);
+		register(JettyVersion.V70, Jetty70Provider.INSTANCE);
+		// Jetty 8.0, same than Jetty7.0
+		register(JettyVersion.V80, Jetty80Provider.INSTANCE);
 	}
 
 	public void register(JettyVersion version,
-			IJettyVersionHandler versionHandler,
-			IJettyConfigurationFactory configurationFactory) {
-		versionDatas.put(version.name(), new JettyVersionData(
-				versionHandler, configurationFactory));
-		
-		String versionNumber = version.name().substring(1, version.name().length());		
-		runtimeTypes.add("org.eclipse.jst.server.jetty.runtime." + versionNumber);
+			IJettyVersionProvider versionProvider) {
+		versionProviders.put(version.name(), versionProvider);
+
+		String versionNumber = version.name().substring(1,
+				version.name().length());
+		runtimeTypes.add("org.eclipse.jst.server.jetty.runtime."
+				+ versionNumber);
 	}
 
 	public IJettyVersionHandler getJettyVersionHandler(String id) {
 		String version = getVersion(id);
-		JettyVersionData data = versionDatas.get(version);
-		if (data == null) {
+		IJettyVersionProvider versionProvider = versionProviders.get(version);
+		if (versionProvider == null) {
 			throw new JettyVersionHandlerNotFoundException(version);
 		}
-		return data.versionHandler;
+		return versionProvider.getJettyVersionHandler();
 	}
 
 	public IJettyConfiguration getJettyConfiguration(String id, IFolder path) {
 		String version = getVersion(id);
-		JettyVersionData data = versionDatas.get(version);
-		if (data == null) {
+		IJettyVersionProvider versionProvider = versionProviders.get(version);
+		if (versionProvider == null) {
 			throw new JettyVersionHandlerNotFoundException(version);
 		}
-		return data.configurationFactory.createJettyConfiguration(path);
+		return versionProvider.createJettyConfiguration(path);
 	}
-	
+
 	private String getVersion(String id) {
 		String version = id;
 		int index = version.lastIndexOf('.');
 		if (index != -1) {
-			version = version.substring(index+1, version.length());
+			version = version.substring(index + 1, version.length());
 		}
 		if (!version.startsWith("v")) {
 			version = "v" + version;
 		}
 		version = version.toUpperCase();
 		return version;
-	}
-	
-	
-
-	private static class JettyVersionData {
-		public final IJettyVersionHandler versionHandler;
-		public final IJettyConfigurationFactory configurationFactory;
-
-		public JettyVersionData(IJettyVersionHandler versionHandler,
-				IJettyConfigurationFactory configurationFactory) {
-			this.versionHandler = versionHandler;
-			this.configurationFactory = configurationFactory;
-		}
 	}
 
 	private static class JettyVersionHandlerNotFoundException extends
@@ -105,7 +93,7 @@ public class JettyVersionManager {
 			super(format(MESSAGE, serverType));
 		}
 	}
-	
+
 	public Collection<String> getRuntimeTypes() {
 		return runtimeTypes;
 	}

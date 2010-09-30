@@ -10,9 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jst.server.jetty.core.internal.jetty70;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -27,19 +24,17 @@ import org.eclipse.wst.server.core.IModule;
 
 public class Jetty70Handler extends JettyHandler {
 
-	public static final String SERVER_TYPE = "org.eclipse.jst.server.jetty.70";
-
 	protected static final IStatus startJarRequiredInstallDirStatus = new Status(
 			IStatus.ERROR, JettyPlugin.PLUGIN_ID, 0,
 			Messages.startJarRequiredInstallDirStatus, null);
-	
+
 	public IStatus verifyInstallPath(IPath installPath) {
 		IStatus result = JettyVersionHelper.checkJettyVersion(installPath);
 		if (result.getSeverity() == IStatus.CANCEL) {
 			// TODO : search in a folder.
 			return startJarRequiredInstallDirStatus;
 		}
-		
+
 		return result;
 	}
 
@@ -60,11 +55,11 @@ public class Jetty70Handler extends JettyHandler {
 		return new Status(IStatus.ERROR, JettyPlugin.PLUGIN_ID, 0,
 				Messages.errorSpec70, null);
 	}
-	
+
 	public IPath getRuntimeBaseDirectory(JettyServer server) {
 		return JettyVersionHelper.getStandardBaseDirectory(server);
 	}
-	
+
 	/**
 	 * @see IJettyVersionHandler#getRuntimeVMArguments(IPath, IPath, IPath,
 	 *      boolean)
@@ -74,7 +69,7 @@ public class Jetty70Handler extends JettyHandler {
 		return JettyVersionHelper.getJettyVMArguments(installPath, configPath,
 				deployPath, getEndorsedDirectories(installPath), isTestEnv);
 	}
-	
+
 	public String getEndorsedDirectories(IPath installPath) {
 		return installPath.append("endorsed").toOSString();
 	}
@@ -83,18 +78,19 @@ public class Jetty70Handler extends JettyHandler {
 		return configPath.append("lib").append("policy").append("jetty.policy")
 				.toOSString();
 	}
-	
+
 	public String[] getRuntimeProgramArguments(IPath configPath, boolean debug,
 			boolean starting) {
-		return JettyVersionHelper.getJettyProgramArguments(configPath, debug, starting);		
+		return JettyVersionHelper.getJettyProgramArguments(configPath, debug,
+				starting);
 	}
-	
+
 	public String[] getExcludedRuntimeProgramArguments(boolean debug,
 			boolean starting) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	public boolean supportsServeModulesWithoutPublish() {
 		return true;
 	}
