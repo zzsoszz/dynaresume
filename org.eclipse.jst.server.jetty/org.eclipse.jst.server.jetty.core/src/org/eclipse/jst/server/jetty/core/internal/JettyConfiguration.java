@@ -31,6 +31,7 @@ import org.eclipse.jst.server.jetty.core.IJettyConfiguration;
 import org.eclipse.jst.server.jetty.core.IJettyConfigurationWorkingCopy;
 import org.eclipse.jst.server.jetty.core.IJettyServer;
 import org.eclipse.jst.server.jetty.core.JettyPlugin;
+import org.eclipse.jst.server.jetty.core.WebModule;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.ServerPort;

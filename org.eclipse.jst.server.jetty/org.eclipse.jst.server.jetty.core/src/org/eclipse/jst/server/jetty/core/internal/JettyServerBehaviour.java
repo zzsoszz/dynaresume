@@ -45,6 +45,7 @@ import org.eclipse.jst.server.core.IWebModule;
 import org.eclipse.jst.server.core.internal.ProgressUtil;
 import org.eclipse.jst.server.jetty.core.IJettyConfiguration;
 import org.eclipse.jst.server.jetty.core.JettyPlugin;
+import org.eclipse.jst.server.jetty.core.WebModule;
 import org.eclipse.jst.server.jetty.core.internal.util.JettyVersionHelper;
 import org.eclipse.jst.server.jetty.core.internal.util.StringUtils;
 import org.eclipse.osgi.util.NLS;

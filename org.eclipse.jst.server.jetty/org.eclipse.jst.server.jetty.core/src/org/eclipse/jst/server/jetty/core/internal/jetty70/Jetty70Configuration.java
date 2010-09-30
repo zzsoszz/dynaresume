@@ -29,11 +29,12 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jst.server.core.internal.ProgressUtil;
 import org.eclipse.jst.server.jetty.core.JettyPlugin;
+import org.eclipse.jst.server.jetty.core.WebModule;
+import org.eclipse.jst.server.jetty.core.internal.IJettyWebModule;
 import org.eclipse.jst.server.jetty.core.internal.JettyConfiguration;
 import org.eclipse.jst.server.jetty.core.internal.JettyConstants;
 import org.eclipse.jst.server.jetty.core.internal.Messages;
 import org.eclipse.jst.server.jetty.core.internal.Trace;
-import org.eclipse.jst.server.jetty.core.internal.WebModule;
 import org.eclipse.jst.server.jetty.core.internal.config.JettyXMLConfig;
 import org.eclipse.jst.server.jetty.core.internal.config.PathFileConfig;
 import org.eclipse.jst.server.jetty.core.internal.config.StartConfig;
@@ -178,17 +179,15 @@ public class Jetty70Configuration extends JettyConfiguration implements
 			Collection<WebAppContext> contexts = serverInstance.getContexts();
 			if (contexts != null) {
 				for (WebAppContext context : contexts) {
-					
+
 					String path = context.getContextPath();
 					String memento = "org.eclipse.jst.jee.server:";
 					if (path.startsWith("/")) {
-						memento+=path.substring(1, path.length());
+						memento += path.substring(1, path.length());
+					} else {
+						memento += path;
 					}
-					else {
-						memento+=path;
-					}
-					WebModule module = new WebModule(path,
-							"", memento, true);
+					WebModule module = new WebModule(path, "", memento, true);
 					list.add(module);
 				}
 			}
@@ -198,7 +197,7 @@ public class Jetty70Configuration extends JettyConfiguration implements
 		return list;
 	}
 
-	public void addWebModule(int i, WebModule module) {
+	public void addWebModule(int i, IJettyWebModule module) {
 		try {
 			WebAppContext context = serverInstance.createContext(module
 					.getPath());
@@ -307,13 +306,13 @@ public class Jetty70Configuration extends JettyConfiguration implements
 			if (jettyXMLConfiFiles.size() > 0) {
 				for (PathFileConfig jettyXMLConfig : jettyXMLConfiFiles) {
 					file = jettyXMLConfig.getFile();
-					
+
 					jettyPath = jettyXMLConfig.getPath();
 					serverFactory = new Factory();
 					serverFactory
 							.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server");
-					server = (Server) serverFactory
-							.loadDocument(JettyXMLConfig.getInputStream(file));
+					server = (Server) serverFactory.loadDocument(JettyXMLConfig
+							.getInputStream(file));
 					server.setFile(file);
 					server.setPath(jettyPath);
 					servers.add(server);
@@ -549,43 +548,77 @@ public class Jetty70Configuration extends JettyConfiguration implements
 
 	/**
 	 * Modify the port with the given id.
-	 *
-	 * @param id java.lang.String
-	 * @param port int
+	 * 
+	 * @param id
+	 *            java.lang.String
+	 * @param port
+	 *            int
 	 */
 	public void modifyServerPort(String id, int port) {
 		try {
 			if ("server".equals(id)) {
 				serverInstance.setPort(port + "");
 				isServerDirty = true;
-				firePropertyChangeEvent(MODIFY_PORT_PROPERTY, id, new Integer(port));
+				firePropertyChangeEvent(MODIFY_PORT_PROPERTY, id, new Integer(
+						port));
 				return;
 			}
-	
-//			int i = id.indexOf("/");
-//			// If a connector in the instance Service
-//			if (i < 0) {
-//				int connNum = Integer.parseInt(id);
-//				Connector connector = serverInstance.getConnector(connNum);
-//				if (connector != null) {
-//					connector.setPort(port + "");
-//					isServerDirty = true;
-//					firePropertyChangeEvent(MODIFY_PORT_PROPERTY, id, new Integer(port));
-//				}
-//			}
-//			// Else a connector in another Service
-//			else {
-//				int servNum = Integer.parseInt(id.substring(0, i));
-//				int connNum = Integer.parseInt(id.substring(i + 1));
-//				
-//				Service service = server.getService(servNum);
-//				Connector connector = service.getConnector(connNum);
-//				connector.setPort(port + "");
-//				isServerDirty = true;
-//				firePropertyChangeEvent(MODIFY_PORT_PROPERTY, id, new Integer(port));
-//			}
+
+			// int i = id.indexOf("/");
+			// // If a connector in the instance Service
+			// if (i < 0) {
+			// int connNum = Integer.parseInt(id);
+			// Connector connector = serverInstance.getConnector(connNum);
+			// if (connector != null) {
+			// connector.setPort(port + "");
+			// isServerDirty = true;
+			// firePropertyChangeEvent(MODIFY_PORT_PROPERTY, id, new
+			// Integer(port));
+			// }
+			// }
+			// // Else a connector in another Service
+			// else {
+			// int servNum = Integer.parseInt(id.substring(0, i));
+			// int connNum = Integer.parseInt(id.substring(i + 1));
+			//
+			// Service service = server.getService(servNum);
+			// Connector connector = service.getConnector(connNum);
+			// connector.setPort(port + "");
+			// isServerDirty = true;
+			// firePropertyChangeEvent(MODIFY_PORT_PROPERTY, id, new
+			// Integer(port));
+			// }
 		} catch (Exception e) {
 			Trace.trace(Trace.SEVERE, "Error modifying server port " + id, e);
+		}
+	}
+
+	/**
+	 * Change a web module.
+	 * 
+	 * @param index
+	 *            int
+	 * @param docBase
+	 *            java.lang.String
+	 * @param path
+	 *            java.lang.String
+	 * @param reloadable
+	 *            boolean
+	 */
+	public void modifyWebModule(int index, String docBase, String path,
+			boolean reloadable) {
+		try {
+			WebAppContext context = serverInstance.getContext(index);
+			if (context != null) {
+				context.setContextPath(path);
+				isServerDirty = true;
+				WebModule module = new WebModule(path, docBase, null,
+						reloadable);
+				firePropertyChangeEvent(MODIFY_WEB_MODULE_PROPERTY,
+						new Integer(index), module);
+			}
+		} catch (Exception e) {
+			Trace.trace(Trace.SEVERE, "Error modifying web module " + index, e);
 		}
 	}
 

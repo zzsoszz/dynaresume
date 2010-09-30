@@ -8,7 +8,10 @@
  * Contributors:
  *     IBM Corporation - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.jst.server.jetty.core.internal;
+package org.eclipse.jst.server.jetty.core;
+
+import org.eclipse.jst.server.jetty.core.internal.IJettyWebModule;
+
 /**
  * A Web module.
  */
