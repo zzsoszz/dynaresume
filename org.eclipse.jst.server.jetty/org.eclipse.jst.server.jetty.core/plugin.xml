@@ -198,6 +198,11 @@
       licenseUrl="http://www.apache.org/licenses/LICENSE-1.1"
       archiveUrl="http://download.eclipse.org/jetty/stable-7/dist/jetty-distribution-7.1.6.v20100715.zip"
       archivePath="jetty-distribution-7.1.6.v20100715" />
+	<runtime
+      id="org.eclipse.jst.server.jetty.runtime.80"
+      licenseUrl="http://www.apache.org/licenses/LICENSE-1.1"
+      archiveUrl="http://download.eclipse.org/jetty/8.0.0.M1/dist/jetty-distribution-8.0.0.M1.zip"
+      archivePath="jetty-distribution-8.0.0.M1.zip" />      
   </extension>          
           
 </plugin>    
