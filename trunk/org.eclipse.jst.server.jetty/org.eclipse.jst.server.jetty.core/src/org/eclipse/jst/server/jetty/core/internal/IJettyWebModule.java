@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jst.server.jetty.core.internal;
 /**
- * A Web module deployed on Tomcat.
+ * A Web module deployed on Jetty.
  */
 public interface IJettyWebModule {
 	/**

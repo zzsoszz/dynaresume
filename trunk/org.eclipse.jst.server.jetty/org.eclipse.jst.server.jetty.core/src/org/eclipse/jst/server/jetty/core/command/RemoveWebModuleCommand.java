@@ -13,7 +13,7 @@ public class RemoveWebModuleCommand extends ConfigurationCommand {
 	/**
 	 * RemoveWebModuleCommand constructor comment.
 	 * 
-	 * @param configuration a tomcat configuration
+	 * @param configuration a jetty configuration
 	 * @param index an index
 	 */
 	public RemoveWebModuleCommand(IJettyConfigurationWorkingCopy configuration, int index) {
