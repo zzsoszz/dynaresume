@@ -1,5 +1,6 @@
 package org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.webapp;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.jst.server.jetty.core.internal.xml.XMLElement;
@@ -10,7 +11,9 @@ import org.w3c.dom.Node;
 
 public class WebAppContext extends XMLElement {
 
-	private String fileName;
+	private File saveFile;
+	private String memento;
+	private String documentBase;
 
 	public void setContextPath(String contextPath) {
 		Element element = super.findElement("Set", "contextPath");
@@ -22,15 +25,17 @@ public class WebAppContext extends XMLElement {
 
 	}
 
-	public void setWar(String war) {
+	public void setWar(String war, boolean isExternal) {
 		Element element = super.findElement("Set", "war");
 		element.setTextContent(war);
-		Document document = element.getOwnerDocument();
-		Element systemProperty = document.createElement("SystemProperty");
-		systemProperty.setAttribute("name", "jetty.home");
-		systemProperty.setAttribute("default", ".");
-		Node firstChild = element.getFirstChild();
-		element.insertBefore(systemProperty, firstChild);
+		if (!isExternal) {
+			Document document = element.getOwnerDocument();
+			Element systemProperty = document.createElement("SystemProperty");
+			systemProperty.setAttribute("name", "jetty.home");
+			systemProperty.setAttribute("default", ".");
+			Node firstChild = element.getFirstChild();
+			element.insertBefore(systemProperty, firstChild);
+		}
 	}
 
 	public String getContextPath() {
@@ -44,10 +49,44 @@ public class WebAppContext extends XMLElement {
 	}
 
 	public void save() throws IOException {
-		XMLUtil.save(fileName, getElementNode().getOwnerDocument());
+		XMLUtil.save(saveFile.getCanonicalPath(), getElementNode()
+				.getOwnerDocument());
 	}
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public void setSaveFile(File saveFile) {
+		this.saveFile = saveFile;
+		String war = getWar();
+		File warFile = new File(war);
+		if (war != null && warFile.exists()) {
+			try {
+				this.documentBase = warFile.getCanonicalPath();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			this.documentBase = saveFile.getName();
+			int index = documentBase.lastIndexOf('.');
+			if (index != -1) {
+				documentBase = documentBase.substring(0, index);
+			}
+			this.memento = "org.eclipse.jst.jee.server:" + documentBase;
+		}		
 	}
+
+	public String getMemento() {
+		return memento;
+	}
+
+	// public void setMemento(String memento) {
+	// this.memento = memento;
+	// }
+
+	public String getDocumentBase() {
+		return documentBase;
+	}
+
+	// public void setDocumentBase(String documentBase) {
+	// this.documentBase = documentBase;
+	// }
 }
