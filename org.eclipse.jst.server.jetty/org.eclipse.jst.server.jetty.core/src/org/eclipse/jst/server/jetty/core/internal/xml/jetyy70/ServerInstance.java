@@ -19,6 +19,7 @@ import org.eclipse.jst.server.jetty.core.internal.util.IOUtils;
 import org.eclipse.jst.server.jetty.core.internal.xml.Factory;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.Connector;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.Server;
+import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.WebApp;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.webapp.WebAppContext;
 import org.xml.sax.SAXException;
 
@@ -28,13 +29,16 @@ public class ServerInstance {
 	private IPath runtimeBaseDirectory;
 	private boolean contextsLoaded = false;
 	private List<WebAppContext> webAppContexts = new ArrayList<WebAppContext>();
+	private WebApp webApp = null;
 
-	public ServerInstance(List<Server> jettyServers, IPath runtimeBaseDirectory) {
+	public ServerInstance(List<Server> jettyServers, WebApp webApp,
+			IPath runtimeBaseDirectory) {
 		if (jettyServers == null)
 			throw new IllegalArgumentException(
 					"Jetty Server argument may not be null.");
 		this.jettyServers = jettyServers;
 		this.runtimeBaseDirectory = runtimeBaseDirectory;
+		this.webApp = webApp;
 	}
 
 	public List<Connector> getConnectors() {
@@ -99,11 +103,32 @@ public class ServerInstance {
 				file.create(in, true,
 						ProgressUtil.getSubMonitorFor(monitor, 200));
 		}
+		if (webApp != null) {
+			path = webApp.getPath();
+			if (path.segmentCount() > 1) {
+				newFolder = folder.getFolder(path.removeLastSegments(1));
+				IOUtils.createFolder(newFolder, monitor);
+			}
+
+			filename = webApp.getFile().getName();
+			data = webApp.getFactory().getContents();
+			in = new ByteArrayInputStream(data);
+			IFile file = newFolder.getFile(filename);
+			if (file.exists()) {
+				// if (isServerDirty)
+				file.setContents(in, true, true,
+						ProgressUtil.getSubMonitorFor(monitor, 200));
+				// else
+				// monitor.worked(200);
+			} else
+				file.create(in, true,
+						ProgressUtil.getSubMonitorFor(monitor, 200));
+		}
 
 	}
 
-	public WebAppContext createContext(String documentBase, String memento, String path) throws IOException,
-			SAXException {
+	public WebAppContext createContext(String documentBase, String memento,
+			String path) throws IOException, SAXException {
 		loadContextsIfNeeded();
 		String pathWithoutSlash = path;
 		if (pathWithoutSlash.startsWith("/")) {
@@ -113,15 +138,14 @@ public class ServerInstance {
 		WebAppContext context = createContext(WebAppContext.class
 				.getResourceAsStream("WebAppContext.xml"));
 		context.setContextPath(pathWithoutSlash);
-		
+
 		File f = new File(documentBase);
 		if (f.exists()) {
 			context.setWar(documentBase, true);
-		}
-		else {
+		} else {
 			context.setWar("/wtpwebapps/" + pathWithoutSlash, false);
 		}
-		
+
 		IPath contextFilePath = getXMLContextFilePath(pathWithoutSlash);
 		context.setSaveFile(contextFilePath.toFile());
 		context.save();
@@ -171,7 +195,7 @@ public class ServerInstance {
 					try {
 						stream = new FileInputStream(f);
 						context = createContext(stream);
-						context.setSaveFile(f);						
+						context.setSaveFile(f);
 					} catch (Throwable e) {
 						e.printStackTrace();
 					} finally {

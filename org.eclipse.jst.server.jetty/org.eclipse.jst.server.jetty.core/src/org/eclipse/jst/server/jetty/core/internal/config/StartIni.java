@@ -25,7 +25,7 @@ public class StartIni implements JettyConstants {
 	private List<PathFileConfig> jettyXMLFiles = new ArrayList<PathFileConfig>();
 	private List<PathFileConfig> otherConfigs = new ArrayList<PathFileConfig>();
 	private PathFileConfig startConfig = null;
-
+	private PathFileConfig webdefaultXMLConfig = null;
 	private File startIniFile;
 
 	private boolean isStartIniDirty;
@@ -118,8 +118,8 @@ public class StartIni implements JettyConstants {
 		IPath webdefaultPath = baseDirPath.append("etc/webdefault.xml");
 		File webdefaultFile = webdefaultPath.toFile();
 		if (webdefaultFile.exists()) {
-			otherConfigs.add(new PathFileConfig(webdefaultFile, new Path(
-					"etc/webdefault.xml")));
+			webdefaultXMLConfig = new PathFileConfig(webdefaultFile, new Path(
+					"etc/webdefault.xml"));
 		}
 
 		IPath startJARPath = baseDirPath.append(START_JAR);
@@ -134,6 +134,9 @@ public class StartIni implements JettyConstants {
 		return jettyXMLFiles;
 	}
 
+	public PathFileConfig getWebdefaultXMLConfig() {
+		return webdefaultXMLConfig;
+	}
 	/**
 	 * Saves the Web app document.
 	 * 
