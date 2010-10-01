@@ -101,6 +101,9 @@ public class Factory {
 		//String s = element.getNodeName();
 		
 		String s = element.getAttribute("class");
+		if (s.length() < 1) {
+			s = element.getNodeName();
+		}
 		int index = s.lastIndexOf('.');
 		s = s.substring(index+1, s.length());
 		

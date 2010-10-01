@@ -14,6 +14,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,11 +40,13 @@ import org.eclipse.jst.server.jetty.core.internal.config.JettyXMLConfig;
 import org.eclipse.jst.server.jetty.core.internal.config.PathFileConfig;
 import org.eclipse.jst.server.jetty.core.internal.config.StartConfig;
 import org.eclipse.jst.server.jetty.core.internal.config.StartIni;
+import org.eclipse.jst.server.jetty.core.internal.config.WebdefaultXMLConfig;
 import org.eclipse.jst.server.jetty.core.internal.util.IOUtils;
 import org.eclipse.jst.server.jetty.core.internal.xml.Factory;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.ServerInstance;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.Connector;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.Server;
+import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server.WebApp;
 import org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.webapp.WebAppContext;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.wst.server.core.ServerPort;
@@ -315,6 +318,21 @@ public class Jetty70Configuration extends JettyConfiguration implements
 					servers.add(server);
 				}
 			}
+			
+			WebApp webApp = null;
+			PathFileConfig pathFileConfig = startIniConfig.getWebdefaultXMLConfig();
+			if (pathFileConfig != null) {
+				File webAppFile = pathFileConfig.getFile();
+				IPath webAppPath = pathFileConfig.getPath();
+				
+				Factory webdefaultFactory = new Factory();
+				webdefaultFactory
+						.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server");
+				webApp = (WebApp) webdefaultFactory.loadDocument(WebdefaultXMLConfig
+						.getInputStream(webAppFile));	
+				webApp.setFile(webAppFile);
+				webApp.setPath(webAppPath);
+			}
 			// check for catalina.policy to verify that this is a v4.0 config
 			// InputStream in = new
 			// FileInputStream(path.append("catalina.policy").toFile());
@@ -324,7 +342,7 @@ public class Jetty70Configuration extends JettyConfiguration implements
 
 			// server = (Server) serverFactory.loadDocument(new FileInputStream(
 			// path.append("jetty.xml").toFile()));
-			serverInstance = new ServerInstance(servers, runtimeBaseDirectory);
+			serverInstance = new ServerInstance(servers, webApp, runtimeBaseDirectory);
 			// monitor.worked(1);
 			//
 			// webAppDocument = new
@@ -395,9 +413,22 @@ public class Jetty70Configuration extends JettyConfiguration implements
 			// in.close();
 			monitor.worked(1);
 
+			WebApp webApp = null;
+			PathFileConfig pathFileConfig = startIniConfig.getWebdefaultXMLConfig();
+			if (pathFileConfig != null) {
+				File webAppFile = pathFileConfig.getFile();
+				IPath webAppPath = pathFileConfig.getPath();
+				
+				Factory webdefaultFactory = new Factory();
+				webdefaultFactory
+						.setPackageName("org.eclipse.jst.server.jetty.core.internal.xml.jetyy70.server");
+				webApp = (WebApp) webdefaultFactory.loadDocument(new FileInputStream(webAppFile));	
+				webApp.setFile(webAppFile);
+				webApp.setPath(webAppPath);
+			}
 			// server = (Server) serverFactory.loadDocument(new FileInputStream(
 			// path.append("jetty.xml").toFile()));
-			serverInstance = new ServerInstance(servers, runtimeBaseDirectory);
+			serverInstance = new ServerInstance(servers, webApp, runtimeBaseDirectory);
 			// check for catalina.policy to verify that this is a v4.0 config
 			// IFile file = folder.getFile("catalina.policy");
 			// if (!file.exists())
