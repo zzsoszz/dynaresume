@@ -8,21 +8,21 @@
  * Contributors:      
  *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gmt.modisco.jm2t.ui.actions;
+package org.eclipse.gmt.modisco.jm2t.internal.ui.actions;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.gmt.modisco.jm2t.core.JM2TProjectInstaller;
 
 /**
- * Remove Freemarker nature to the selected Eclipse Project.
+ * Remove JM2T nature to the selected Eclipse Project.
  * 
  */
 public class RemoveJM2TNatureActionDelegate extends
 		AbstractJM2TNatureActionDelegate {
 
 	/**
-	 * Remove Freemarker nature to the selected project.
+	 * Remove JM2T nature to the selected project.
 	 * 
 	 * @return
 	 */

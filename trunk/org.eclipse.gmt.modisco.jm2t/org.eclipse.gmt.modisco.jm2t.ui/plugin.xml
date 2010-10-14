@@ -28,9 +28,9 @@
             </separator>
          </menu>
          <action
-               class="org.eclipse.gmt.modisco.jm2t.ui.actions.AddJM2TNatureActionDelegate"
+               class="org.eclipse.gmt.modisco.jm2t.internal.ui.actions.AddJM2TNatureActionDelegate"
                enablesFor="1"
-               id="org.eclipse.gmt.modisco.jm2t.ui.actions.AddJM2TNatureActionDelegate"
+               id="org.eclipse.gmt.modisco.jm2t.internal.ui.actions.AddJM2TNatureActionDelegate"
                label="%AddJM2TNatureAction.label"
                icon="icons/obj16/jm2t.gif" />
       </objectContribution>
@@ -42,7 +42,7 @@
          name="PopupMenu"
          point="org.eclipse.ui.popupMenus">
       <objectContribution
-            objectClass=" org.eclipse.jdt.core.IJavaProject"
+            objectClass="org.eclipse.jdt.core.IJavaProject"
             adaptable="true"
             id="org.eclipse.gmt.modisco.jm2t.PopupMenuObject">
          <visibility>           
@@ -60,12 +60,27 @@
             </separator>
          </menu>
          <action
-               class="org.eclipse.gmt.modisco.jm2t.ui.actions.RemoveJM2TNatureActionDelegate"
+               class="org.eclipse.gmt.modisco.jm2t.internal.ui.actions.RemoveJM2TNatureActionDelegate"
                enablesFor="1"
-               id="org.eclipse.gmt.modisco.jm2t.ui.actions.RemoveJM2TNatureActionDelegate"
+               id="org.eclipse.gmt.modisco.jm2t.internal.ui.actions.RemoveJM2TNatureActionDelegate"
                label="%RemoveJM2TNatureAction.label"
                icon="icons/obj16/jm2t.gif" />
       </objectContribution>
    </extension>
    
+   <!-- Java M2T Root property pages -->
+   <extension
+     point="org.eclipse.ui.propertyPages">
+     <page
+         class="org.eclipse.gmt.modisco.jm2t.internal.ui.preferences.JM2TRootPropertyPage"
+         id="org.eclipse.gmt.modisco.jm2t.ui.propertyPage"
+         name="%JM2TRootPropertyPage.name">
+       <enabledWhen>
+         <adapt type="org.eclipse.core.resources.IProject">
+           <test property="org.eclipse.core.resources.projectNature" value="org.eclipse.gmt.modisco.jm2t.core.nature"/>
+         </adapt>         
+       </enabledWhen>
+     </page>         
+   </extension>
+      
 </plugin>
