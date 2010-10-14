@@ -8,7 +8,7 @@
  * Contributors:      
  *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gmt.modisco.jm2t.ui.actions;
+package org.eclipse.gmt.modisco.jm2t.internal.ui.actions;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
