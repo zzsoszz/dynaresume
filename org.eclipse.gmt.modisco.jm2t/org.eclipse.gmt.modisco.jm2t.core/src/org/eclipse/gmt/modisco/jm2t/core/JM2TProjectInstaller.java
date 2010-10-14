@@ -16,7 +16,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.gmt.modisco.jm2t.core.util.ProjectUtils;
-import org.eclipse.gmt.modisco.jm2t.internal.core.JM2TCorePlugin;
 
 public class JM2TProjectInstaller {
 
@@ -30,15 +29,14 @@ public class JM2TProjectInstaller {
 	public static IStatus installNature(IProject project,
 			IProgressMonitor progressMonitor) {
 		IStatus status = null;
-		String natureId = JM2TNature.NATURE_ID;
+		String natureId = IJM2TProject.NATURE_ID;
 		try {
 			// Add Akrogen Nature to the project
 			ProjectUtils.addNatureToProject(project, progressMonitor, natureId);
-			status = new Status(IStatus.OK, JM2TCorePlugin.PLUGIN_ID,
-					IStatus.OK, "", null);
+			status = new Status(IStatus.OK, JM2TCore.PLUGIN_ID, IStatus.OK, "",
+					null);
 		} catch (CoreException e) {
-			status = new Status(IStatus.ERROR,
-					JM2TCorePlugin.PLUGIN_ID, IStatus.OK,
+			status = new Status(IStatus.ERROR, JM2TCore.PLUGIN_ID, IStatus.OK,
 					"Error adding nature " + natureId + " to project: "
 							+ project.getName(), e);
 		}
@@ -66,16 +64,15 @@ public class JM2TProjectInstaller {
 	public static IStatus uninstallNature(IProject project,
 			IProgressMonitor progressMonitor) {
 		IStatus status = null;
-		String natureId = JM2TNature.NATURE_ID;
+		String natureId = IJM2TProject.NATURE_ID;
 		try {
 			// Remove JM2T Nature to the project
 			ProjectUtils.removeNatureToProject(project, progressMonitor,
 					natureId);
-			status = new Status(IStatus.OK, JM2TCorePlugin.PLUGIN_ID,
-					IStatus.OK, "", null);
+			status = new Status(IStatus.OK, JM2TCore.PLUGIN_ID, IStatus.OK, "",
+					null);
 		} catch (CoreException e) {
-			status = new Status(IStatus.ERROR,
-					JM2TCorePlugin.PLUGIN_ID, IStatus.OK,
+			status = new Status(IStatus.ERROR, JM2TCore.PLUGIN_ID, IStatus.OK,
 					"Error remove nature " + natureId + " to project: "
 							+ project.getName(), e);
 		}

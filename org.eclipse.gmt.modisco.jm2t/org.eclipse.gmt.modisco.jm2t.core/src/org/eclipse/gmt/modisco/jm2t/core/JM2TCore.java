@@ -8,26 +8,29 @@
  * Contributors:      
  *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gmt.modisco.jm2t.internal.core;
+package org.eclipse.gmt.modisco.jm2t.core;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.gmt.modisco.jm2t.internal.core.JM2TModel;
+import org.eclipse.gmt.modisco.jm2t.internal.core.JM2TModelManager;
 import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle
  */
-public class JM2TCorePlugin extends Plugin {
+public class JM2TCore extends Plugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.eclipse.gmt.modisco.jm2t.core"; //$NON-NLS-1$
 
 	// The shared instance
-	private static JM2TCorePlugin plugin;
+	private static JM2TCore plugin;
 
 	/**
 	 * The constructor
 	 */
-	public JM2TCorePlugin() {
+	public JM2TCore() {
 	}
 
 	/*
@@ -59,8 +62,25 @@ public class JM2TCorePlugin extends Plugin {
 	 * 
 	 * @return the shared instance
 	 */
-	public static JM2TCorePlugin getDefault() {
+	public static JM2TCore getDefault() {
 		return plugin;
+	}
+
+	/**
+	 * Returns the Java M2T project corresponding to the given project.
+	 * 
+	 * @param project
+	 *            the given project
+	 * @return the Java M2T projec project corresponding to the given project,
+	 *         null if the given project is null
+	 */
+	public static IJM2TProject create(IProject project) {
+		if (project == null) {
+			return null;
+		}
+		JM2TModel jm2tModel = JM2TModelManager.getJM2TModelManager()
+				.getJM2TModel();
+		return jm2tModel.getJM2TProject(project);
 	}
 
 }

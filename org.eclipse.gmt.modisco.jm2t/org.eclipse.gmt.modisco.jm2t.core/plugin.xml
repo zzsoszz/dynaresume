@@ -4,9 +4,9 @@
 
 	<extension id="nature"
          point="org.eclipse.core.resources.natures"
-         name="%JM2TNature">
+         name="%JM2TProject">
       <runtime>	
-         <run class="org.eclipse.gmt.modisco.jm2t.core.JM2TNature"/>
+         <run class="org.eclipse.gmt.modisco.jm2t.internal.core.JM2TProject"/>
       </runtime>
    </extension>
     

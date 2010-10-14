@@ -4,7 +4,7 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %pluginProvider
 Bundle-SymbolicName: org.eclipse.gmt.modisco.jm2t.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.eclipse.gmt.modisco.jm2t.internal.ui.JM2TUIPlugin
+Bundle-Activator: org.eclipse.gmt.modisco.jm2t.internal.ui.JM2TUI
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
