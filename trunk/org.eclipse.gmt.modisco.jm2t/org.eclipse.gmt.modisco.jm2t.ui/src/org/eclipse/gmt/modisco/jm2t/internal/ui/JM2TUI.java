@@ -16,18 +16,18 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class JM2TUIPlugin extends AbstractUIPlugin {
+public class JM2TUI extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.eclipse.gmt.modisco.jm2t.ui"; //$NON-NLS-1$
 
 	// The shared instance
-	private static JM2TUIPlugin plugin;
+	private static JM2TUI plugin;
 	
 	/**
 	 * The constructor
 	 */
-	public JM2TUIPlugin() {
+	public JM2TUI() {
 	}
 
 	/*
@@ -53,7 +53,7 @@ public class JM2TUIPlugin extends AbstractUIPlugin {
 	 *
 	 * @return the shared instance
 	 */
-	public static JM2TUIPlugin getDefault() {
+	public static JM2TUI getDefault() {
 		return plugin;
 	}
 
