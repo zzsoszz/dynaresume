@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <!-- PopupMenu : Add JM2T nature -->
+   <extension
+         id="org.eclipse.gmt.modisco.jm2t.PopupMenu"
+         name="PopupMenu"
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass=" org.eclipse.jdt.core.IJavaProject"
+            adaptable="true"
+            id="org.eclipse.gmt.modisco.jm2t.PopupMenuObject">
+         <visibility>
+           <not>
+              <objectState
+                    name="nature"
+                    value="org.eclipse.gmt.modisco.jm2t.core.nature">
+              </objectState> 
+           </not>
+         </visibility>
+         <menu
+               label="%JM2T.Popupmenu"
+               path="additions"
+               id="org.eclipse.gmt.modisco.jm2t.PopupMenu">
+            <separator
+                  name="group1">
+            </separator>
+         </menu>
+         <action
+               class="org.eclipse.gmt.modisco.jm2t.ui.actions.AddJM2TNatureActionDelegate"
+               enablesFor="1"
+               id="org.eclipse.gmt.modisco.jm2t.ui.actions.AddJM2TNatureActionDelegate"
+               label="%AddJM2TNatureAction.label"
+               icon="icons/obj16/jm2t.gif" />
+      </objectContribution>
+   </extension>
+   
+   <!-- PopupMenu : Remove JM2T capabilities -->
+   <extension
+         id="org.eclipse.gmt.modisco.jm2t.PopupMenu"
+         name="PopupMenu"
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass=" org.eclipse.jdt.core.IJavaProject"
+            adaptable="true"
+            id="org.eclipse.gmt.modisco.jm2t.PopupMenuObject">
+         <visibility>           
+          <objectState
+                name="nature"
+                value="org.eclipse.gmt.modisco.jm2t.core.nature">
+          </objectState>            
+         </visibility>
+         <menu
+               label="%JM2T.Popupmenu"
+               path="additions"
+               id="org.eclipse.gmt.modisco.jm2t.PopupMenu">
+            <separator
+                  name="group1">
+            </separator>
+         </menu>
+         <action
+               class="org.eclipse.gmt.modisco.jm2t.ui.actions.RemoveJM2TNatureActionDelegate"
+               enablesFor="1"
+               id="org.eclipse.gmt.modisco.jm2t.ui.actions.RemoveJM2TNatureActionDelegate"
+               label="%RemoveJM2TNatureAction.label"
+               icon="icons/obj16/jm2t.gif" />
+      </objectContribution>
+   </extension>
+   
+</plugin>
