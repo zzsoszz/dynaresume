@@ -2,6 +2,8 @@
 <?eclipse version="3.0"?>
 <plugin>
 
+  <extension-point id="wizardFragments" name="%extensionPointWizardFragments" schema="schema/wizardFragments.exsd"/>
+  
    <!-- PopupMenu : Add JM2T nature -->
    <extension
          id="org.eclipse.gmt.modisco.jm2t.PopupMenu"

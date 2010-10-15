@@ -10,16 +10,23 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.internal.ui.preferences;
 
+import java.util.List;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.gmt.modisco.jm2t.core.IJM2TProject;
 import org.eclipse.gmt.modisco.jm2t.core.JM2TCore;
+import org.eclipse.gmt.modisco.jm2t.core.TaskModel;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
+import org.eclipse.gmt.modisco.jm2t.internal.ui.JM2TUI;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.Messages;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.util.SWTUtil;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.viewers.GeneratorConfigurationsComposite;
+import org.eclipse.gmt.modisco.jm2t.internal.ui.wizard.TaskWizard;
+import org.eclipse.gmt.modisco.jm2t.ui.wizard.WizardFragment;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -189,8 +196,31 @@ public class JM2TPropertyPage extends PropertyPage {
 	}
 
 	private int showWizard(Object object) {
-		// TODO Auto-generated method stub
-		return 0;
+		String title = "AA";
+		WizardFragment fragment = null;
+		TaskModel taskModel = new TaskModel();		
+		
+		final WizardFragment fragment2 = JM2TUI
+				.getWizardFragment("org.eclipse.gmt.modisco.jm2t.acceleo2");
+		if (fragment2 == null) {
+			editButton.setEnabled(false);
+			return Window.CANCEL;
+		}
+
+		// Object a = null;
+		// taskModel.putObject(TaskModel.TASK_RUNTIME, a);
+		fragment = new WizardFragment() {
+			protected void createChildFragments(List<WizardFragment> list) {
+				list.add(fragment2);
+				// list.add(WizardTaskUtil.SaveRuntimeFragment);
+			}
+		};
+
+		TaskWizard wizard = new TaskWizard(title, fragment, taskModel);
+		wizard.setForcePreviousAndNextButtons(true);
+		WizardDialog dialog = new WizardDialog(getShell(), wizard);
+		return dialog.open();
+
 	}
 
 	/**
