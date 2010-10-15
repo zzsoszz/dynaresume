@@ -10,7 +10,8 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.core;
 
-import org.eclipse.gmt.modisco.jm2t.core.settings.IGeneratorEntry;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
 
 /**
  * Interface for Java M2T Project.
@@ -21,17 +22,24 @@ public interface IJM2TProject {
 	public static final String NATURE_ID = JM2TCore.PLUGIN_ID + ".nature";
 
 	/**
-	 * Returns generator entries defined for the Java M2T project.
+	 * Returns the owner {@link IProject}.
 	 * 
 	 * @return
 	 */
-	IGeneratorEntry[] getRawGenerator();
+	IProject getProject();
 
 	/**
-	 * Fine the generator entry by name.
+	 * Returns generator configurations defined for the Java M2T project.
+	 * 
+	 * @return
+	 */
+	IGeneratorConfiguration[] getGeneratorConfigurations();
+
+	/**
+	 * Fine the generator configuration by name.
 	 * 
 	 * @param name
 	 * @return
 	 */
-	IGeneratorEntry findGenerator(String name);
+	IGeneratorConfiguration findGeneratorConfiguration(String name);
 }

@@ -72,7 +72,7 @@
    <extension
      point="org.eclipse.ui.propertyPages">
      <page
-         class="org.eclipse.gmt.modisco.jm2t.internal.ui.preferences.JM2TRootPropertyPage"
+         class="org.eclipse.gmt.modisco.jm2t.internal.ui.preferences.JM2TPropertyPage"
          id="org.eclipse.gmt.modisco.jm2t.ui.propertyPage"
          name="%JM2TRootPropertyPage.name">
        <enabledWhen>

@@ -8,15 +8,15 @@
  * Contributors:      
  *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gmt.modisco.jm2t.core.settings;
+package org.eclipse.gmt.modisco.jm2t.core.generator;
 
 /**
- * Interface for Generator entry.
+ * Generator configuration interface.
  * 
  */
-public interface IGeneratorEntry {
+public interface IGeneratorConfiguration {
 
-	public static final IGeneratorEntry[] EMPTY_GENERATOR_ENTRY = new IGeneratorEntry[0];
+	public static final IGeneratorConfiguration[] EMPTY = new IGeneratorConfiguration[0];
 
 	/**
 	 * Returns the name of the generator entry.

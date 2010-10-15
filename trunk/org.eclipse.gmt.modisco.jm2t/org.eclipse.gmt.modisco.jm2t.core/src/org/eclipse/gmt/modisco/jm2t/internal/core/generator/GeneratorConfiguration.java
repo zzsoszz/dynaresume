@@ -8,15 +8,15 @@
  * Contributors:      
  *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gmt.modisco.jm2t.internal.core.settings;
+package org.eclipse.gmt.modisco.jm2t.internal.core.generator;
 
-import org.eclipse.gmt.modisco.jm2t.core.settings.IGeneratorEntry;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
 
 /**
- * Implementation for Generator entry {@link IGeneratorEntry}.
+ * Implementation for Generator launcher configurationS {@link IGeneratorConfiguration}.
  * 
  */
-public class GeneratorEntry implements IGeneratorEntry {
+public class GeneratorConfiguration implements IGeneratorConfiguration {
 
 	private String name;
 	private String description;
