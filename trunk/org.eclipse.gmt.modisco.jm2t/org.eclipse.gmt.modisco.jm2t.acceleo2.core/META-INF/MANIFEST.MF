@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-Vendor: %pluginProvider
+Bundle-Localization: plugin
+Bundle-SymbolicName: org.eclipse.gmt.modisco.jm2t.acceleo2.core
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.eclipse.gmt.modisco.jm2t.acceleo2.internal.core.JM2TAcceleo2Core
+Require-Bundle: org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
