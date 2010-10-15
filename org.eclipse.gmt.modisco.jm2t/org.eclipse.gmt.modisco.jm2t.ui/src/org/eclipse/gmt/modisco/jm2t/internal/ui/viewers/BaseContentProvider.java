@@ -8,21 +8,25 @@
  * Contributors:      
  *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gmt.modisco.jm2t.internal.ui.preferences;
+package org.eclipse.gmt.modisco.jm2t.internal.ui.viewers;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.dialogs.PropertyPage;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.Viewer;
 
 /**
- * JM2T Root Property page.
+ * A basic content provider.
  * 
  */
-public class JM2TRootPropertyPage extends PropertyPage {
-
-	protected Control createContents(Composite parent) {
-		return new Composite(parent, SWT.NONE);
+public abstract class BaseContentProvider implements IStructuredContentProvider {
+	public BaseContentProvider() {
+		super();
 	}
 
+	public void dispose() {
+		// do nothing
+	}
+
+	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+		// do nothing
+	}
 }

@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.gmt.modisco.jm2t.core.IJM2TProject;
 import org.eclipse.gmt.modisco.jm2t.core.JM2TCore;
-import org.eclipse.gmt.modisco.jm2t.core.settings.IGeneratorEntry;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
 
 /**
  * Implementation for Java M2T project {@link IJM2TProject}.
@@ -55,11 +55,11 @@ public class JM2TProject implements IJM2TProject, IProjectNature {
 		this.project = project;
 	}
 
-	public IGeneratorEntry[] getRawGenerator() {
-		return IGeneratorEntry.EMPTY_GENERATOR_ENTRY;
+	public IGeneratorConfiguration[] getGeneratorConfigurations() {
+		return IGeneratorConfiguration.EMPTY;
 	}
 
-	public IGeneratorEntry findGenerator(String name) {
+	public IGeneratorConfiguration findGeneratorConfiguration(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}

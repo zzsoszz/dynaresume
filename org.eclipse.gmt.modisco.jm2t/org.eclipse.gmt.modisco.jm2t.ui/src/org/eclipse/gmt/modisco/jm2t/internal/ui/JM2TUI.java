@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.internal.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -55,6 +58,33 @@ public class JM2TUI extends AbstractUIPlugin {
 	 */
 	public static JM2TUI getDefault() {
 		return plugin;
+	}
+
+	public static Object[] adaptLabelChangeObjects(Object[] obj) {
+		if (obj == null)
+			return obj;
+		
+		List<Object> list = new ArrayList<Object>();
+		int size = obj.length;
+		for (int i = 0; i < size; i++) {
+//			if (obj[i] instanceof IModule) {
+//				list.add(obj[i]);
+//			} else if (obj[i] instanceof IServer) {
+//				list.add(obj[i]);
+//			} else if (obj[i] instanceof ModuleServer) {
+//				list.add(obj[i]);
+//			} else if (obj[i] instanceof IProject) {
+//				IProject proj = (IProject) obj[i];
+//				IModule[] m = ServerUtil.getModules(proj);
+//				int size2 = m.length;
+//				for (int j = 0; j < size2; j++)
+//					list.add(m[j]);
+//			}
+		}
+		
+		Object[] o = new Object[list.size()];
+		list.toArray(o);
+		return o;
 	}
 
 }
