@@ -9,9 +9,7 @@ Bundle-Activator: org.eclipse.gmt.modisco.jm2t.core.JM2TCore
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
- org.eclipse.jdt.core,
- org.eclipse.gmt.modisco.java;bundle-version="0.8.0",
- org.eclipse.emf.ecore
+ org.eclipse.jdt.core
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.gmt.modisco.jm2t.core,

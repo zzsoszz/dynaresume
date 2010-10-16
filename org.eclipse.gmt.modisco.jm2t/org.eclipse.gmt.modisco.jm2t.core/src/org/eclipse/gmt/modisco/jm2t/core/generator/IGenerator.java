@@ -10,13 +10,12 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.core.generator;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * Generator interface.
  * 
  */
-public interface IGenerator {
+public interface IGenerator<T extends Object> {
 
-	void generate(EObject model, IGeneratorConfiguration configuration);
+	void generate(T model, IGeneratorConfiguration configuration);
 }
