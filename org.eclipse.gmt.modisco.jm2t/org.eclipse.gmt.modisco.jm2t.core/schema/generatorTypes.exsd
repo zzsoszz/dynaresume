@@ -61,10 +61,10 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  specifies the fully qualified name of the Java class that implements &lt;samp&gt;org.eclipse.gmt.modisco.jm2t.core.generator.GeneratorDelegate&lt;/samp&gt;
+                  specifies the fully qualified name of the Java class that implements &lt;samp&gt;org.eclipse.gmt.modisco.jm2t.core.generator.IGenerator&lt;/samp&gt;
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn="org.eclipse.gmt.modisco.jm2t.core.generator.GeneratorDelegate:"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.gmt.modisco.jm2t.core.generator.IGenerator"/>
                </appInfo>
             </annotation>
          </attribute>
