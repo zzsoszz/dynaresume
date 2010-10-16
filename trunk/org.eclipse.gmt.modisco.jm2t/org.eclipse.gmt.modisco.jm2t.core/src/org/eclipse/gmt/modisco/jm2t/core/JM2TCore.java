@@ -73,10 +73,10 @@ public class JM2TCore extends Plugin {
 	 * )
 	 */
 	public void start(BundleContext context) throws Exception {
+		plugin = this;
 		Trace.trace(Trace.CONFIG,
 				"----->----- JM2T Core plugin startup ----->-----");
-		super.start(context);
-		plugin = this;
+		super.start(context);		
 	}
 
 	/*
