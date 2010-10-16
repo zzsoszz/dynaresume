@@ -8,7 +8,7 @@
  * Contributors:      
  *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gmt.modisco.jm2t.internal.ui;
+package org.eclipse.gmt.modisco.jm2t.internal.core;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.gmt.modisco.jm2t.core.JM2TCore;
 
 /**
  * Helper class to route trace output.
@@ -75,16 +76,16 @@ public class Trace {
 
 		if (level == SEVERE) {
 			if (!logged.contains(s)) {
-				JM2TUI.getDefault().getLog()
-						.log(new Status(IStatus.ERROR, JM2TUI.PLUGIN_ID, s, t));
+				JM2TCore.getDefault().getLog()
+						.log(new Status(IStatus.ERROR, JM2TCore.PLUGIN_ID, s, t));
 				logged.add(s);
 			}
 		}
 
-		if (!JM2TUI.getDefault().isDebugging())
+		if (!JM2TCore.getDefault().isDebugging())
 			return;
 
-		StringBuilder sb = new StringBuilder(JM2TUI.PLUGIN_ID);
+		StringBuilder sb = new StringBuilder(JM2TCore.PLUGIN_ID);
 		sb.append(" ");
 		sb.append(levelNames[level]);
 		sb.append(" ");
