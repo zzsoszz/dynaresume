@@ -229,7 +229,7 @@ public class JM2TPropertyPage extends PropertyPage {
 		TaskModel taskModel = new TaskModel();
 
 		final WizardFragment fragment2 = JM2TUI
-				.getWizardFragment("org.eclipse.gmt.modisco.jm2t.acceleo2");
+				.getWizardFragment("org.eclipse.gmt.modisco.jm2t.generator.acceleo2");
 		if (fragment2 == null) {
 			editButton.setEnabled(false);
 			return Window.CANCEL;

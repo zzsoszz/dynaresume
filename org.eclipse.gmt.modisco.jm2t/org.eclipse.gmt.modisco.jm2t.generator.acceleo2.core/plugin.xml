@@ -5,7 +5,7 @@
   
   <extension point="org.eclipse.gmt.modisco.jm2t.core.generatorTypes">
     <generatorType
-       id="org.eclipse.jst.server.tomcat.runtime.32"
+       id="org.eclipse.gmt.modisco.jm2t.generator.acceleo2"
        name="%generatorTypeAcceleo2Label"
        description="%generatorTypeAcceleo2Description"
        class="org.eclipse.gmt.modisco.jm2t.generator.acceleo2.internal.core.Acceleo2Generator">
