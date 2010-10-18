@@ -3,10 +3,10 @@
 <schema targetNamespace="org.eclipse.gmt.modisco.jm2t.core" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.eclipse.gmt.modisco.jm2t.core" id="modelProviders" name="Model providers"/>
+         <meta.schema plugin="org.eclipse.gmt.modisco.jm2t.core" id="modelProviderTypes" name="Model provider types"/>
       </appInfo>
       <documentation>
-         This extension point is used to provide support for a new model provider.
+         This extension point is used to provide support for a new model provider type.
       </documentation>
    </annotation>
 
@@ -18,7 +18,7 @@
       </annotation>
       <complexType>
          <sequence>
-            <element ref="modelProvider" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="modelProviderType" minOccurs="1" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -44,7 +44,7 @@
       </complexType>
    </element>
 
-   <element name="modelProvider">
+   <element name="modelProviderType">
       <annotation>
          <appInfo>
             <meta.element labelAttribute="id"/>
@@ -61,10 +61,10 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  specifies the fully qualified name of the Java class that implements &lt;samp&gt;org.eclipse.gmt.modisco.jm2t.core.generator.IModelProvider&lt;/samp&gt;
+                  specifies the fully qualified name of the Java class that implements &lt;samp&gt;org.eclipse.gmt.modisco.jm2t.core.generator.IModelProviderType&lt;/samp&gt;
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.gmt.modisco.jm2t.core.generator.IModelProvider"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.gmt.modisco.jm2t.core.generator.IModelProviderType"/>
                </appInfo>
             </annotation>
          </attribute>

@@ -11,25 +11,25 @@
 package org.eclipse.gmt.modisco.jm2t.internal.core.generator;
 
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.gmt.modisco.jm2t.core.generator.IGenerator;
-import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelProvider;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelProviderType;
 
 /**
- * Generator type implementation which use Extension Point generatorTypes.
+ * Model provider type implementation which use Extension Point modelProviderTypes.
  * 
  */
-public class GeneratorType implements IGeneratorType {
+public class ModelProviderType implements IModelProviderType {
 
 	private IConfigurationElement element;
-	private IGenerator<?> generator;
+	private IModelProvider modelProvider;
 
 	/**
-	 * GeneratorType constructor comment.
+	 * ModelProviderType constructor comment.
 	 * 
 	 * @param element
 	 *            a configuration element
 	 */
-	public GeneratorType(IConfigurationElement element) {
+	public ModelProviderType(IConfigurationElement element) {
 		super();
 		this.element = element;
 	}
@@ -47,32 +47,16 @@ public class GeneratorType implements IGeneratorType {
 		}
 	}
 
-	public String getName() {
-		try {
-			return element.getAttribute("name");
-		} catch (Exception e) {
-			return null;
+	public IModelProvider getModelProvider() {
+		if (modelProvider == null) {
+			modelProvider = createModelProvider();
 		}
+		return modelProvider;
 	}
 
-	public String getDescription() {
+	private IModelProvider createModelProvider() {
 		try {
-			return element.getAttribute("description");
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	public IGenerator<?> getGenerator() {
-		if (generator == null) {
-			generator = createGenerator();
-		}
-		return generator;
-	}
-
-	private IGenerator<?> createGenerator() {
-		try {
-			return (IGenerator<?>) element.createExecutableExtension("class");
+			return (IModelProvider) element.createExecutableExtension("class");
 		} catch (Exception e) {
 			return null;
 		}
@@ -81,4 +65,5 @@ public class GeneratorType implements IGeneratorType {
 	public void dispose() {
 		element = null;
 	}
+
 }

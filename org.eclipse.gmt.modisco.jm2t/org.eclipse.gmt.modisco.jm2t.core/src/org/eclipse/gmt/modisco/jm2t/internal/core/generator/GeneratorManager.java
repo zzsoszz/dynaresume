@@ -26,6 +26,7 @@ import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorManager;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IModelProvider;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelProviderType;
 import org.eclipse.gmt.modisco.jm2t.internal.core.Trace;
 
 /**
@@ -36,14 +37,18 @@ public class GeneratorManager implements IGeneratorManager,
 		IRegistryChangeListener {
 
 	private static final String EXTENSION_GENERATOR_TYPE = "generatorTypes";
+	private static final String EXTENSION_MODEL_PROVIDER_TYPE = "modelProviderTypes";
 
 	public static GeneratorManager INSTANCE = new GeneratorManager();
 
 	// cached copy of all generator and configuration types
 	private List<IGeneratorType> generatorTypes;
+	// cached copy of all generator and configuration types
+	private List<IModelProviderType> modelProviderTypes;
+	private boolean registryListenerIntialized;
 
 	protected GeneratorManager() {
-
+		this.registryListenerIntialized = false;
 	}
 
 	public static GeneratorManager getManager() {
@@ -63,15 +68,23 @@ public class GeneratorManager implements IGeneratorManager,
 
 	}
 
-	public void registryChanged(IRegistryChangeEvent event) {
+	public void registryChanged(final IRegistryChangeEvent event) {
 		IExtensionDelta[] deltas = event.getExtensionDeltas(JM2TCore.PLUGIN_ID,
 				EXTENSION_GENERATOR_TYPE);
 		if (deltas != null) {
 			for (IExtensionDelta delta : deltas)
 				handleGeneratorTypeDelta(delta);
 		}
+		deltas = event.getExtensionDeltas(JM2TCore.PLUGIN_ID,
+				EXTENSION_MODEL_PROVIDER_TYPE);
+		if (deltas != null) {
+			for (IExtensionDelta delta : deltas)
+				handleModelProviderTypeDelta(delta);
+		}
 	}
 
+	// --------------------- Generator types 
+	
 	/**
 	 * Returns an array of all known generator types.
 	 * <p>
@@ -132,7 +145,7 @@ public class GeneratorManager implements IGeneratorManager,
 				JM2TCore.PLUGIN_ID, EXTENSION_GENERATOR_TYPE);
 		List<IGeneratorType> list = new ArrayList<IGeneratorType>(cf.length);
 		addGeneratorTypes(cf, list);
-		addRegistryListener();
+		addRegistryListenerIfNeeded();
 		generatorTypes = list;
 
 		Trace.trace(Trace.EXTENSION_POINT,
@@ -185,18 +198,136 @@ public class GeneratorManager implements IGeneratorManager,
 		generatorTypes = list;
 	}
 
-	private void addRegistryListener() {
+	// --------------------- ModelProvider types 
+	
+	/**
+	 * Returns an array of all known modelProvider types.
+	 * <p>
+	 * A new array is returned on each call, so clients may store or modify the
+	 * result.
+	 * </p>
+	 * 
+	 * @return the array of modelProvider types {@link IModelProviderType}
+	 */
+	public IModelProviderType[] getModelProviderTypes() {
+		if (modelProviderTypes == null)
+			loadModelProviderTypes();
+
+		IModelProviderType[] st = new IModelProviderType[modelProviderTypes.size()];
+		modelProviderTypes.toArray(st);
+		return st;
+	}
+
+	/**
+	 * Returns the modelProvider type with the given id, or <code>null</code> if
+	 * none. This convenience method searches the list of known modelProvider types
+	 * ({@link #getModelProviderTypes()}) for the one with a matching modelProvider type
+	 * id ({@link IModelProviderType#getId()}). The id may not be null.
+	 * 
+	 * @param id
+	 *            the modelProvider type id
+	 * @return the modelProvider type, or <code>null</code> if there is no modelProvider
+	 *         type with the given id
+	 */
+	public IModelProviderType findModelProviderType(String id) {
+		if (id == null)
+			throw new IllegalArgumentException();
+
+		if (modelProviderTypes == null)
+			loadModelProviderTypes();
+
+		Iterator<IModelProviderType> iterator = modelProviderTypes.iterator();
+		while (iterator.hasNext()) {
+			IModelProviderType modelProviderType = (IModelProviderType) iterator.next();
+			if (id.equals(modelProviderType.getId()))
+				return modelProviderType;
+		}
+		return null;
+	}
+
+	/**
+	 * Load the modelProvider types.
+	 */
+	private synchronized void loadModelProviderTypes() {
+		if (modelProviderTypes != null)
+			return;
+
+		Trace.trace(Trace.EXTENSION_POINT,
+				"->- Loading .modelProviderTypes extension point ->-");
+
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		IConfigurationElement[] cf = registry.getConfigurationElementsFor(
+				JM2TCore.PLUGIN_ID, EXTENSION_MODEL_PROVIDER_TYPE);
+		List<IModelProviderType> list = new ArrayList<IModelProviderType>(cf.length);
+		addModelProviderTypes(cf, list);
+		addRegistryListenerIfNeeded();
+		modelProviderTypes = list;
+
+		Trace.trace(Trace.EXTENSION_POINT,
+				"-<- Done loading .modelProviderTypes extension point -<-");
+	}
+
+	/**
+	 * Load the modelProvider types.
+	 */
+	private synchronized void addModelProviderTypes(IConfigurationElement[] cf,
+			List<IModelProviderType> list) {
+		for (IConfigurationElement ce : cf) {
+			try {
+				list.add(new ModelProviderType(ce));
+				Trace.trace(Trace.EXTENSION_POINT, "  Loaded modelProviderType: "
+						+ ce.getAttribute("id"));
+			} catch (Throwable t) {
+				Trace.trace(Trace.SEVERE, "  Could not load modelProviderType: "
+						+ ce.getAttribute("id"), t);
+			}
+		}
+	}
+
+	protected void handleModelProviderTypeDelta(IExtensionDelta delta) {
+		if (modelProviderTypes == null) // not loaded yet
+			return;
+
+		IConfigurationElement[] cf = delta.getExtension()
+				.getConfigurationElements();
+
+		List<IModelProviderType> list = new ArrayList<IModelProviderType>(
+				modelProviderTypes);
+		if (delta.getKind() == IExtensionDelta.ADDED) {
+			addModelProviderTypes(cf, list);
+		} else {
+			int size = list.size();
+			ModelProviderType[] st = new ModelProviderType[size];
+			list.toArray(st);
+			int size2 = cf.length;
+
+			for (int i = 0; i < size; i++) {
+				for (int j = 0; j < size2; j++) {
+					if (st[i].getId().equals(cf[j].getAttribute("id"))) {
+						st[i].dispose();
+						list.remove(st[i]);
+					}
+				}
+			}
+		}
+		modelProviderTypes = list;
+	}
+
+	private void addRegistryListenerIfNeeded() {
+		if (registryListenerIntialized)
+			return;
+		
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		registry.addRegistryChangeListener(this, JM2TCore.PLUGIN_ID);
+		registryListenerIntialized = true;
+	}
+
+	public void initialize() {
+
 	}
 
 	public void destroy() {
 		Platform.getExtensionRegistry().removeRegistryChangeListener(this);
-
 	}
 
-	public void initialize() {
-		// TODO Auto-generated method stub
-
-	}
 }
