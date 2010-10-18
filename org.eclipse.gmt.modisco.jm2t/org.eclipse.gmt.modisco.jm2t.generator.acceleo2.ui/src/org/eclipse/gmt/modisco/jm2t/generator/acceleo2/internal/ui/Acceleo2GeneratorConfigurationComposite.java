@@ -11,6 +11,7 @@
 package org.eclipse.gmt.modisco.jm2t.generator.acceleo2.internal.ui;
 
 import org.eclipse.gmt.modisco.jm2t.ui.wizard.GeneratorConfigurationComposite;
+import org.eclipse.gmt.modisco.jm2t.ui.wizard.IWizardHandle;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -20,8 +21,13 @@ import org.eclipse.swt.widgets.Composite;
 public class Acceleo2GeneratorConfigurationComposite extends
 		GeneratorConfigurationComposite {
 
-	public Acceleo2GeneratorConfigurationComposite(Composite parent, int style) {
-		super(parent, style);
+	public Acceleo2GeneratorConfigurationComposite(Composite parent,
+			IWizardHandle wizardHandle) {
+		super(parent, wizardHandle);
+		IWizardHandle wizard = getWizardHandle();
+//		wizard.setTitle(Messages.wizardTitle);
+//		wizard.setDescription(Messages.wizardDescription);
+//		wizard.setImageDescriptor(TomcatUIPlugin.getImageDescriptor(TomcatUIPlugin.IMG_WIZ_TOMCAT));
 	}
 
 }

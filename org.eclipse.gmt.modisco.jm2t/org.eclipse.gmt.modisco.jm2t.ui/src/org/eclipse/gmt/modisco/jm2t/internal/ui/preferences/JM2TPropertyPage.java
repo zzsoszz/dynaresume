@@ -26,10 +26,10 @@ import org.eclipse.gmt.modisco.jm2t.internal.ui.viewers.GeneratorConfigurationsC
 import org.eclipse.gmt.modisco.jm2t.internal.ui.viewers.GeneratorTypeContentProvider;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.viewers.GeneratorTypeLabelProvider;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.wizard.TaskWizard;
+import org.eclipse.gmt.modisco.jm2t.internal.ui.wizard.WizardTaskUtil;
 import org.eclipse.gmt.modisco.jm2t.ui.wizard.WizardFragment;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -56,7 +56,7 @@ public class JM2TPropertyPage extends PropertyPage {
 	private Button removeButton;
 
 	private IGeneratorType selectedGeneratorType = null;
-	
+
 	/**
 	 * GeneratorConfigurationPreferencesPage constructor comment.
 	 */
@@ -118,12 +118,13 @@ public class JM2TPropertyPage extends PropertyPage {
 		// Combo with list of generator type.
 		IGeneratorType[] generatorTypes = JM2TCore.getGeneratorManager()
 				.getGeneratorTypes();
-		
-		Combo combo = new Combo(generatorTypesComposite, SWT.READ_ONLY | SWT.DROP_DOWN);
+
+		Combo combo = new Combo(generatorTypesComposite, SWT.READ_ONLY
+				| SWT.DROP_DOWN);
 		data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
 		// data.horizontalSpan = 2;
-		combo.setLayoutData(data);		
-		
+		combo.setLayoutData(data);
+
 		final ComboViewer comboViewer = new ComboViewer(combo);
 		comboViewer.setLabelProvider(new GeneratorTypeLabelProvider());
 		comboViewer.setContentProvider(new GeneratorTypeContentProvider(
@@ -133,11 +134,13 @@ public class JM2TPropertyPage extends PropertyPage {
 		combo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				IStructuredSelection selection = (IStructuredSelection)comboViewer.getSelection();
-				selectedGeneratorType = (IGeneratorType)selection.getFirstElement();
+				IStructuredSelection selection = (IStructuredSelection) comboViewer
+						.getSelection();
+				selectedGeneratorType = (IGeneratorType) selection
+						.getFirstElement();
 			}
 		});
-		
+
 		// Description label for list of generator configuration
 		label = new Label(composite, SWT.WRAP);
 		data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
@@ -147,7 +150,7 @@ public class JM2TPropertyPage extends PropertyPage {
 		label.setText(Messages.preferenceGeneratorConfigurationsTable);
 
 		IJM2TProject project = JM2TCore.create(getProject());
-		final GeneratorConfigurationsComposite runtimeComp = new GeneratorConfigurationsComposite(
+		final GeneratorConfigurationsComposite configurationComp = new GeneratorConfigurationsComposite(
 				project,
 				composite,
 				SWT.NONE,
@@ -189,7 +192,7 @@ public class JM2TPropertyPage extends PropertyPage {
 						// }
 					}
 				});
-		runtimeComp.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
+		configurationComp.setLayoutData(new GridData(GridData.FILL_HORIZONTAL
 				| GridData.FILL_VERTICAL));
 
 		Composite buttonComp = new Composite(composite, SWT.NONE);
@@ -209,7 +212,7 @@ public class JM2TPropertyPage extends PropertyPage {
 			public void widgetSelected(SelectionEvent e) {
 				if (showWizard(null) == Window.CANCEL)
 					return;
-				runtimeComp.refresh();
+				configurationComp.refresh();
 			}
 		});
 
@@ -217,18 +220,17 @@ public class JM2TPropertyPage extends PropertyPage {
 		editButton.setEnabled(false);
 		editButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				// IRuntime runtime = runtimeComp.getSelectedRuntime();
-				// if (runtime != null) {
-				// IRuntimeWorkingCopy runtimeWorkingCopy =
-				// runtime.createWorkingCopy();
-				// if (showWizard(runtimeWorkingCopy) != Window.CANCEL) {
-				// try {
-				// runtimeComp.refresh(runtime);
-				// } catch (Exception ex) {
-				// // ignore
-				// }
-				// }
-				// }
+				IGeneratorConfiguration configuration = configurationComp
+						.getSelectedGeneratorConfiguration();
+				if (configuration != null) {
+					if (showWizard(configuration) != Window.CANCEL) {
+						try {
+							configurationComp.refresh(configuration);
+						} catch (Exception ex) {
+							// ignore
+						}
+					}
+				}
 			}
 		});
 
@@ -236,9 +238,11 @@ public class JM2TPropertyPage extends PropertyPage {
 		removeButton.setEnabled(false);
 		removeButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				// IRuntime runtime = runtimeComp.getSelectedRuntime();
-				// if (removeRuntime(runtime))
-				// runtimeComp.remove(runtime);
+				IGeneratorConfiguration configuration = configurationComp
+						.getSelectedGeneratorConfiguration();
+				if (configuration != null) {
+					configurationComp.remove(configuration);
+				}
 			}
 		});
 		Dialog.applyDialogFont(composite);
@@ -246,30 +250,45 @@ public class JM2TPropertyPage extends PropertyPage {
 		return composite;
 	}
 
-	private int showWizard(Object object) {
+	private int showWizard(IGeneratorConfiguration configuration) {
 		if (selectedGeneratorType == null) {
 			editButton.setEnabled(false);
 			return Window.CANCEL;
 		}
-		String title = "AA";
+		String title = null;
 		WizardFragment fragment = null;
 		TaskModel taskModel = new TaskModel();
-		
-		final WizardFragment fragment2 = JM2TUI
-				.getWizardFragment(selectedGeneratorType.getId());
-		if (fragment2 == null) {
-			editButton.setEnabled(false);
-			return Window.CANCEL;
-		}
-
-		// Object a = null;
-		// taskModel.putObject(TaskModel.TASK_RUNTIME, a);
-		fragment = new WizardFragment() {
-			protected void createChildFragments(List<WizardFragment> list) {
-				list.add(fragment2);
-				// list.add(WizardTaskUtil.SaveRuntimeFragment);
+		if (configuration == null) {
+			title = Messages.wizNewGeneratorConfigurationWizardTitle;
+			final WizardFragment fragment2 = JM2TUI
+					.getWizardFragment(selectedGeneratorType.getId());
+			if (fragment2 == null) {
+				editButton.setEnabled(false);
+				return Window.CANCEL;
 			}
-		};
+			fragment = new WizardFragment() {
+				protected void createChildFragments(List<WizardFragment> list) {
+					list.add(fragment2);
+					list.add(WizardTaskUtil.SaveGeneratorConfigurationFragment);
+				}
+			};
+		} else {
+			title = Messages.wizEditGeneratorConfigurationWizardTitle;
+			final WizardFragment fragment2 = JM2TUI
+					.getWizardFragment(selectedGeneratorType.getId());
+			if (fragment2 == null) {
+				editButton.setEnabled(false);
+				return Window.CANCEL;
+			}
+			taskModel.putObject(TaskModel.TASK_GENERATOR_CONFIGURATION,
+					configuration);
+			fragment = new WizardFragment() {
+				protected void createChildFragments(List<WizardFragment> list) {
+					list.add(fragment2);
+					list.add(WizardTaskUtil.SaveGeneratorConfigurationFragment);
+				}
+			};
+		}
 
 		TaskWizard wizard = new TaskWizard(title, fragment, taskModel);
 		wizard.setForcePreviousAndNextButtons(true);

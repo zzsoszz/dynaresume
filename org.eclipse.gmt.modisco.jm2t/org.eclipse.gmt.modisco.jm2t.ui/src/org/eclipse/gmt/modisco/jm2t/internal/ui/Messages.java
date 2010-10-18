@@ -26,7 +26,11 @@ public class Messages extends NLS {
 	public static String removeButton;
 	public static String editButton;
 	public static String addButton;
-	public static String errorDialogTitle;
+	public static String errorDialogTitle;	
+	public static String generatorConfigurationName;
+	
+	public static String wizNewGeneratorConfigurationWizardTitle;
+	public static String wizEditGeneratorConfigurationWizardTitle;
 
 	private static final String BUNDLE_NAME = "org.eclipse.gmt.modisco.jm2t.internal.ui.messages"; //$NON-NLS-1$
 

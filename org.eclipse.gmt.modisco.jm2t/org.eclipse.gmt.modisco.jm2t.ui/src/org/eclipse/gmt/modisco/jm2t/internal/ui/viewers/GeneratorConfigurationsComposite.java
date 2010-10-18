@@ -194,7 +194,7 @@ public class GeneratorConfigurationsComposite extends AbstractTableComposite {
 		tableViewer = new LockedTableViewer(table);
 	}
 
-	public IGeneratorConfiguration getSelectedGeneratorLaunchConfiguration() {
+	public IGeneratorConfiguration getSelectedGeneratorConfiguration() {
 		return selection;
 	}
 }
