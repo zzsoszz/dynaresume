@@ -29,6 +29,8 @@ import org.eclipse.gmt.modisco.jm2t.internal.ui.wizard.TaskWizard;
 import org.eclipse.gmt.modisco.jm2t.ui.wizard.WizardFragment;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
@@ -53,6 +55,8 @@ public class JM2TPropertyPage extends PropertyPage {
 	private Button editButton;
 	private Button removeButton;
 
+	private IGeneratorType selectedGeneratorType = null;
+	
 	/**
 	 * GeneratorConfigurationPreferencesPage constructor comment.
 	 */
@@ -94,27 +98,46 @@ public class JM2TPropertyPage extends PropertyPage {
 		label.setLayoutData(data);
 		label.setText(Messages.preferenceGeneratorConfigurationsDescription);
 
-		label = new Label(composite, SWT.WRAP);
+		Composite generatorTypesComposite = new Composite(composite, SWT.FILL);
+		layout = new GridLayout();
+		layout.horizontalSpacing = convertHorizontalDLUsToPixels(4);
+		layout.verticalSpacing = convertVerticalDLUsToPixels(3);
+		layout.marginWidth = 0;
+		layout.marginHeight = 0;
+		layout.numColumns = 2;
+		generatorTypesComposite.setLayout(layout);
+		data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+		data.horizontalSpan = 2;
+		generatorTypesComposite.setLayoutData(data);
+		label = new Label(generatorTypesComposite, SWT.WRAP);
 		// data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
 		// data.horizontalSpan = 2;
 		// label.setLayoutData(data);
-		label.setText(Messages.preferenceGeneratorConfigurationsDescription);
+		label.setText(Messages.preferenceGeneratorTypes);
 
 		// Combo with list of generator type.
 		IGeneratorType[] generatorTypes = JM2TCore.getGeneratorManager()
 				.getGeneratorTypes();
 		
-		Combo combo = new Combo(composite, SWT.READ_ONLY | SWT.DROP_DOWN);
+		Combo combo = new Combo(generatorTypesComposite, SWT.READ_ONLY | SWT.DROP_DOWN);
 		data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
 		// data.horizontalSpan = 2;
-		combo.setLayoutData(data);
-
-		ComboViewer comboViewer = new ComboViewer(combo);
+		combo.setLayoutData(data);		
+		
+		final ComboViewer comboViewer = new ComboViewer(combo);
 		comboViewer.setLabelProvider(new GeneratorTypeLabelProvider());
 		comboViewer.setContentProvider(new GeneratorTypeContentProvider(
 				generatorTypes));
 		comboViewer.setInput(generatorTypes);
 
+		combo.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				IStructuredSelection selection = (IStructuredSelection)comboViewer.getSelection();
+				selectedGeneratorType = (IGeneratorType)selection.getFirstElement();
+			}
+		});
+		
 		// Description label for list of generator configuration
 		label = new Label(composite, SWT.WRAP);
 		data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
@@ -224,12 +247,16 @@ public class JM2TPropertyPage extends PropertyPage {
 	}
 
 	private int showWizard(Object object) {
+		if (selectedGeneratorType == null) {
+			editButton.setEnabled(false);
+			return Window.CANCEL;
+		}
 		String title = "AA";
 		WizardFragment fragment = null;
 		TaskModel taskModel = new TaskModel();
-
+		
 		final WizardFragment fragment2 = JM2TUI
-				.getWizardFragment("org.eclipse.gmt.modisco.jm2t.generator.acceleo2");
+				.getWizardFragment(selectedGeneratorType.getId());
 		if (fragment2 == null) {
 			editButton.setEnabled(false);
 			return Window.CANCEL;
