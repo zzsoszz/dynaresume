@@ -22,6 +22,7 @@ public class Messages extends NLS {
 	public static String columnName;
 	public static String preferenceGeneratorConfigurationsDescription;
 	public static String preferenceGeneratorConfigurationsTable;
+	public static String preferenceGeneratorTypes;
 	public static String removeButton;
 	public static String editButton;
 	public static String addButton;

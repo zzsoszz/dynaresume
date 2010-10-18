@@ -10,8 +10,18 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.generator.acceleo2.internal.ui;
 
-import org.eclipse.gmt.modisco.jm2t.ui.wizard.WizardFragment;
+import org.eclipse.gmt.modisco.jm2t.ui.wizard.GeneratorConfigurationComposite;
+import org.eclipse.swt.widgets.Composite;
 
-public class Acceleo2GeneratorConfigurationWizardFragment extends WizardFragment {
+/**
+ * Composite to create Acceleo2 generator configuration.
+ * 
+ */
+public class Acceleo2GeneratorConfigurationComposite extends
+		GeneratorConfigurationComposite {
+
+	public Acceleo2GeneratorConfigurationComposite(Composite parent, int style) {
+		super(parent, style);
+	}
 
 }
