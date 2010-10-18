@@ -28,6 +28,17 @@ public interface IGeneratorManager {
 	IGeneratorType[] getGeneratorTypes();
 
 	/**
+	 * Returns an array of all known modelProvider types.
+	 * <p>
+	 * A new array is returned on each call, so clients may store or modify the
+	 * result.
+	 * </p>
+	 * 
+	 * @return the array of modelProvider types {@link IModelProviderType}
+	 */
+	IModelProviderType[] getModelProviderTypes();
+
+	/**
 	 * Generate .
 	 * 
 	 * @param model

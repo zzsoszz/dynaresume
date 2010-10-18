@@ -68,6 +68,13 @@
                </appInfo>
             </annotation>
          </attribute>
+         <attribute name="modelProviderTypeId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  specifies the model provider type identifier for this fragment
+               </documentation>
+            </annotation>
+         </attribute>         
          <attribute name="name" type="string">
             <annotation>
                <documentation>

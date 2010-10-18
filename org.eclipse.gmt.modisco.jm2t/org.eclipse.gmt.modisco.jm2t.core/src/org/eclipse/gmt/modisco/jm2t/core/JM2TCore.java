@@ -14,6 +14,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGenerator;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorManager;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IModelProvider;
 import org.eclipse.gmt.modisco.jm2t.internal.core.JM2TModel;
@@ -94,24 +95,13 @@ public class JM2TCore extends Plugin {
 				.getJM2TModel();
 		return jm2tModel.getJM2TProject(project);
 	}
-
-	public static void generate(final Object model,
-			final IModelProvider modelProvider, final IGenerator generator,
-			final IGeneratorConfiguration generatorConfiguration) {
-		GeneratorManager.getManager().generate(model, modelProvider, generator,
-				generatorConfiguration);
-	}
-
+	
 	/**
-	 * Returns an array of all known generator types.
-	 * <p>
-	 * A new array is returned on each call, so clients may store or modify the
-	 * result.
-	 * </p>
+	 * Returns the generator manager.
 	 * 
 	 * @return the array of generator types {@link IGeneratorType}
 	 */
-	public static IGeneratorType[] getGeneratorTypes() {
-		return GeneratorManager.getManager().getGeneratorTypes();
+	public static IGeneratorManager getGeneratorManager() {
+		return GeneratorManager.getManager();
 	}
 }
