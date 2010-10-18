@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.core.generator;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+
 /**
  * Generator configuration interface.
  * 
@@ -46,4 +50,7 @@ public interface IGeneratorConfiguration {
 	 */
 	String[] getRawPackages();
 
+	IStatus validate(IProgressMonitor monitor);
+
+	IGeneratorConfiguration save(boolean force, IProgressMonitor monitor) throws CoreException;
 }
