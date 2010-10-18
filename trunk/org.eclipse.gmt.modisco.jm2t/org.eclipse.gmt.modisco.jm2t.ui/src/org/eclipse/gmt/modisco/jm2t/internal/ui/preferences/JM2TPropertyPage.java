@@ -95,25 +95,25 @@ public class JM2TPropertyPage extends PropertyPage {
 		label.setText(Messages.preferenceGeneratorConfigurationsDescription);
 
 		label = new Label(composite, SWT.WRAP);
-		//data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+		// data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
 		// data.horizontalSpan = 2;
-//		label.setLayoutData(data);
+		// label.setLayoutData(data);
 		label.setText(Messages.preferenceGeneratorConfigurationsDescription);
 
 		// Combo with list of generator type.
-		IGeneratorType[] generatorTypes = JM2TCore.getGeneratorTypes();
-
+		IGeneratorType[] generatorTypes = JM2TCore.getGeneratorManager()
+				.getGeneratorTypes();
+		
 		Combo combo = new Combo(composite, SWT.READ_ONLY | SWT.DROP_DOWN);
 		data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
 		// data.horizontalSpan = 2;
 		combo.setLayoutData(data);
-		
+
 		ComboViewer comboViewer = new ComboViewer(combo);
 		comboViewer.setLabelProvider(new GeneratorTypeLabelProvider());
 		comboViewer.setContentProvider(new GeneratorTypeContentProvider(
 				generatorTypes));
 		comboViewer.setInput(generatorTypes);
-		
 
 		// Description label for list of generator configuration
 		label = new Label(composite, SWT.WRAP);
