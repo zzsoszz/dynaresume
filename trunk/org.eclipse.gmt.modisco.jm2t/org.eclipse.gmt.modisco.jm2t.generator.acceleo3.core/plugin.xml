@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+  
+  <extension point="org.eclipse.gmt.modisco.jm2t.core.generatorTypes">
+    <generatorType
+       id="org.eclipse.gmt.modisco.jm2t.generator.acceleo3"
+       name="%generatorTypeAcceleo3Label"
+       description="%generatorTypeAcceleo3Description"
+       class="org.eclipse.gmt.modisco.jm2t.generator.acceleo3.internal.core.Acceleo3Generator"
+       modelProviderTypeId="org.eclipse.gmt.modisco.jm2t.modelprovider.javamodisco" >
+    </generatorType>
+  </extension>
+  
+</plugin>
