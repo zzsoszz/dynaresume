@@ -56,14 +56,19 @@ public class GeneratorManager implements IGeneratorManager,
 	}
 
 	public void generate(final Object model,
-			final IModelProvider modelProvider, final IGenerator generator,
 			final IGeneratorConfiguration generatorConfiguration) {
+
+		IGenerator generator = generatorConfiguration.getGeneratorType()
+				.getGenerator();
+		IModelProvider modelProvider = generatorConfiguration
+				.getGeneratorType().getModelProviderType().getModelProvider();
+
 		Object m = model;
 		// Get model.
 		if (modelProvider != null) {
 			m = modelProvider.getModel(model);
 		}
-
+		System.out.println("Generate" + generatorConfiguration.getName());
 		generator.generate(m, generatorConfiguration);
 
 	}
@@ -83,8 +88,8 @@ public class GeneratorManager implements IGeneratorManager,
 		}
 	}
 
-	// --------------------- Generator types 
-	
+	// --------------------- Generator types
+
 	/**
 	 * Returns an array of all known generator types.
 	 * <p>
@@ -198,8 +203,8 @@ public class GeneratorManager implements IGeneratorManager,
 		generatorTypes = list;
 	}
 
-	// --------------------- ModelProvider types 
-	
+	// --------------------- ModelProvider types
+
 	/**
 	 * Returns an array of all known modelProvider types.
 	 * <p>
@@ -213,21 +218,23 @@ public class GeneratorManager implements IGeneratorManager,
 		if (modelProviderTypes == null)
 			loadModelProviderTypes();
 
-		IModelProviderType[] st = new IModelProviderType[modelProviderTypes.size()];
+		IModelProviderType[] st = new IModelProviderType[modelProviderTypes
+				.size()];
 		modelProviderTypes.toArray(st);
 		return st;
 	}
 
 	/**
 	 * Returns the modelProvider type with the given id, or <code>null</code> if
-	 * none. This convenience method searches the list of known modelProvider types
-	 * ({@link #getModelProviderTypes()}) for the one with a matching modelProvider type
-	 * id ({@link IModelProviderType#getId()}). The id may not be null.
+	 * none. This convenience method searches the list of known modelProvider
+	 * types ({@link #getModelProviderTypes()}) for the one with a matching
+	 * modelProvider type id ({@link IModelProviderType#getId()}). The id may
+	 * not be null.
 	 * 
 	 * @param id
 	 *            the modelProvider type id
-	 * @return the modelProvider type, or <code>null</code> if there is no modelProvider
-	 *         type with the given id
+	 * @return the modelProvider type, or <code>null</code> if there is no
+	 *         modelProvider type with the given id
 	 */
 	public IModelProviderType findModelProviderType(String id) {
 		if (id == null)
@@ -238,7 +245,8 @@ public class GeneratorManager implements IGeneratorManager,
 
 		Iterator<IModelProviderType> iterator = modelProviderTypes.iterator();
 		while (iterator.hasNext()) {
-			IModelProviderType modelProviderType = (IModelProviderType) iterator.next();
+			IModelProviderType modelProviderType = (IModelProviderType) iterator
+					.next();
 			if (id.equals(modelProviderType.getId()))
 				return modelProviderType;
 		}
@@ -258,7 +266,8 @@ public class GeneratorManager implements IGeneratorManager,
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		IConfigurationElement[] cf = registry.getConfigurationElementsFor(
 				JM2TCore.PLUGIN_ID, EXTENSION_MODEL_PROVIDER_TYPE);
-		List<IModelProviderType> list = new ArrayList<IModelProviderType>(cf.length);
+		List<IModelProviderType> list = new ArrayList<IModelProviderType>(
+				cf.length);
 		addModelProviderTypes(cf, list);
 		addRegistryListenerIfNeeded();
 		modelProviderTypes = list;
@@ -275,11 +284,13 @@ public class GeneratorManager implements IGeneratorManager,
 		for (IConfigurationElement ce : cf) {
 			try {
 				list.add(new ModelProviderType(ce));
-				Trace.trace(Trace.EXTENSION_POINT, "  Loaded modelProviderType: "
-						+ ce.getAttribute("id"));
+				Trace.trace(Trace.EXTENSION_POINT,
+						"  Loaded modelProviderType: " + ce.getAttribute("id"));
 			} catch (Throwable t) {
-				Trace.trace(Trace.SEVERE, "  Could not load modelProviderType: "
-						+ ce.getAttribute("id"), t);
+				Trace.trace(
+						Trace.SEVERE,
+						"  Could not load modelProviderType: "
+								+ ce.getAttribute("id"), t);
 			}
 		}
 	}
@@ -316,7 +327,7 @@ public class GeneratorManager implements IGeneratorManager,
 	private void addRegistryListenerIfNeeded() {
 		if (registryListenerIntialized)
 			return;
-		
+
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		registry.addRegistryChangeListener(this, JM2TCore.PLUGIN_ID);
 		registryListenerIntialized = true;

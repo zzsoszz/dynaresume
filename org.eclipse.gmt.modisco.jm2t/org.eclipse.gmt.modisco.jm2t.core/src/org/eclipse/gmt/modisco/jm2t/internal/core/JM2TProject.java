@@ -30,6 +30,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,6 +76,8 @@ public class JM2TProject implements IJM2TProject, IProjectNature {
 	 */
 	public static final Collection<IGeneratorConfiguration> INVALID_CONFIG = new ArrayList<IGeneratorConfiguration>();
 
+	private Collection<IGeneratorConfiguration> generatorConfigurationsCache = null;
+
 	private IProject project;
 
 	public IFile getJM2TSettingsFile() {
@@ -112,7 +115,13 @@ public class JM2TProject implements IJM2TProject, IProjectNature {
 	}
 
 	public Collection<IGeneratorConfiguration> getGeneratorConfigurations() {
-		return null;
+		if (generatorConfigurationsCache == null) {
+			generatorConfigurationsCache = readGeneratorConfigurations();
+		}
+		if (generatorConfigurationsCache == null) {
+			return Collections.emptyList();
+		}
+		return generatorConfigurationsCache;
 	}
 
 	public Collection<IGeneratorConfiguration> readGeneratorConfigurations() {
@@ -229,6 +238,7 @@ public class JM2TProject implements IJM2TProject, IProjectNature {
 				getJM2TSettingsFile(true).getProjectRelativePath().toString(),
 				encodeClasspath(newClasspath, newOutputLocation, true,
 						unknownElements));
+		generatorConfigurationsCache = newClasspath;
 		return true;
 		// } catch (CoreException e) {
 		// //throw new CoreException(e);

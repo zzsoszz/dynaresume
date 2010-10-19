@@ -23,7 +23,7 @@ import org.eclipse.gmt.modisco.jm2t.core.generator.IModelProviderType;
 public class GeneratorType implements IGeneratorType {
 
 	private IConfigurationElement element;
-	private IGenerator<?> generator;
+	private IGenerator generator;
 
 	/**
 	 * GeneratorType constructor comment.
@@ -65,21 +65,21 @@ public class GeneratorType implements IGeneratorType {
 		}
 	}
 
-	public IGenerator<?> getGenerator() {
+	public IGenerator getGenerator() {
 		if (generator == null) {
 			generator = createGenerator();
 		}
 		return generator;
 	}
 
-	private IGenerator<?> createGenerator() {
+	private IGenerator createGenerator() {
 		try {
-			return (IGenerator<?>) element.createExecutableExtension("class");
+			return (IGenerator) element.createExecutableExtension("class");
 		} catch (Exception e) {
 			return null;
 		}
 	}
-	
+
 	public IGeneratorConfiguration createGeneratorConfiguration() {
 		return new GeneratorConfiguration(this);
 	}
@@ -90,7 +90,7 @@ public class GeneratorType implements IGeneratorType {
 		return GeneratorManager.getManager().findModelProviderType(
 				modelProviderTypeId);
 	}
-	
+
 	public void dispose() {
 		element = null;
 		generator = null;

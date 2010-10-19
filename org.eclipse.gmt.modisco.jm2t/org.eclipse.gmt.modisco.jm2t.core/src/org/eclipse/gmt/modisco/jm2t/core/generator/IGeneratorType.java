@@ -50,7 +50,7 @@ public interface IGeneratorType {
 	 * 
 	 * @return
 	 */
-	IGenerator<?> getGenerator();
+	IGenerator getGenerator();
 	
 	/**
 	 * 

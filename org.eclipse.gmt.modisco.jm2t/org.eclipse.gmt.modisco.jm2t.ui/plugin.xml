@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 <plugin>
-
-  <extension-point id="wizardFragments" name="%extensionPointWizardFragments" schema="schema/wizardFragments.exsd"/>
-  
+ 
    <!-- PopupMenu : Add JM2T nature -->
    <extension
          id="org.eclipse.gmt.modisco.jm2t.PopupMenu"
@@ -84,5 +82,19 @@
        </enabledWhen>
      </page>         
    </extension>
+
+   <!-- PopupMenu : Generate Action -->
+   <extension
+         id="org.eclipse.gmt.modisco.jm2t.generatormanager.menu"
+         name="%GenerateAction.label"
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any">
+         <dynamic
+               class="org.eclipse.gmt.modisco.jm2t.internal.ui.actions.ContributionItemForJM2TMenu"
+               id="org.eclipse.gmt.modisco.jm2t.generatormanager.dynamic">
+         </dynamic>
+      </menuContribution>
+     </extension>
       
 </plugin>
