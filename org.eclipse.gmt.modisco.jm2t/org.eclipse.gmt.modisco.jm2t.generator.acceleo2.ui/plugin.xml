@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 <plugin>
-
-   <extension point="org.eclipse.gmt.modisco.jm2t.ui.wizardFragments">
-      <fragment
-         id="org.eclipse.gmt.modisco.jm2t.generator.acceleo2"
-         typeIds="org.eclipse.gmt.modisco.jm2t.generator.acceleo2"
-         class="org.eclipse.gmt.modisco.jm2t.generator.acceleo2.internal.ui.Acceleo2GeneratorConfigurationWizardFragment"/>
-   </extension>
         
 </plugin>     
