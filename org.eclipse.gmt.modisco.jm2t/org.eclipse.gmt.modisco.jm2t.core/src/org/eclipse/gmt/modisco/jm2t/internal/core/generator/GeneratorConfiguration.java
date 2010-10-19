@@ -10,10 +10,15 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.internal.core.generator;
 
-import org.eclipse.core.runtime.CoreException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
+import org.eclipse.gmt.modisco.jm2t.internal.core.xml.XMLWriter;
 
 /**
  * Implementation for Generator launcher configurationS {@link IGeneratorConfiguration}.
@@ -21,21 +26,25 @@ import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
  */
 public class GeneratorConfiguration implements IGeneratorConfiguration {
 
+	public static final String TAG_JM2T = "jm2t";
+	public static final String TAG_GENCONFIGURATION = "generator-configuration";
+
+	public static final String TAG_NAME = "name";
+	public static final String TAG_GENERATOR_TYPE = "generatorType";
+	
 	private String name;
 	private String description;
-	private String engine;
-
+	
+	private IGeneratorType generatorType;
+	
+	public GeneratorConfiguration(IGeneratorType generatorType) {
+		this.generatorType = generatorType;
+	}
+	
 	public String getName() {
 		return name;
 	}
 
-	public String getEngine() {
-		return engine;
-	}
-
-	public void setEngine(String engine) {
-		this.engine = engine;
-	}
 
 	public void setName(String name) {
 		this.name = name;
@@ -57,10 +66,23 @@ public class GeneratorConfiguration implements IGeneratorConfiguration {
 		return null;
 	}
 	
-	public IGeneratorConfiguration save(boolean force, IProgressMonitor monitor)
-			throws CoreException {
-		// TODO Auto-generated method stub
-		return this;
+	public IGeneratorType getGeneratorType() {
+		return generatorType;
 	}
 
+	public void elementEncode(XMLWriter writer, IPath fullPath,
+			boolean indent, boolean newLine, Map unknownElements) {
+		Map parameters = new HashMap();
+
+		parameters.put(TAG_NAME,this.name);
+		parameters.put(TAG_GENERATOR_TYPE,getGeneratorType().getId());
+		writer.printTag(
+				TAG_GENCONFIGURATION,
+				parameters,
+				indent,
+				newLine,
+				true);
+
+		
+	}
 }

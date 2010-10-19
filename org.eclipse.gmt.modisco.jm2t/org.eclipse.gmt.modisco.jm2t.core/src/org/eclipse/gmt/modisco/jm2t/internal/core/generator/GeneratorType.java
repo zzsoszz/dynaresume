@@ -12,6 +12,7 @@ package org.eclipse.gmt.modisco.jm2t.internal.core.generator;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGenerator;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IModelProviderType;
 
@@ -78,6 +79,10 @@ public class GeneratorType implements IGeneratorType {
 			return null;
 		}
 	}
+	
+	public IGeneratorConfiguration createGeneratorConfiguration() {
+		return new GeneratorConfiguration(this);
+	}
 
 	public IModelProviderType getModelProviderType() {
 		String modelProviderTypeId = element
@@ -88,5 +93,6 @@ public class GeneratorType implements IGeneratorType {
 	
 	public void dispose() {
 		element = null;
+		generator = null;
 	}
 }

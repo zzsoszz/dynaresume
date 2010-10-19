@@ -10,9 +10,16 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.core.util;
 
+import java.io.File;
+import java.net.URI;
+
+import org.eclipse.core.filesystem.EFS;
+import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 
@@ -58,6 +65,21 @@ public class ResourcesUtils {
 		if (resource instanceof IFile)
 			return (IFile) resource;
 		return null;
+	}
+	
+	/**
+	 * Converts the given URI to a local file. Use the existing file if the uri
+	 * is on the local file system. Otherwise fetch it. Returns null if unable
+	 * to fetch it.
+	 */
+	public static File toLocalFile(URI uri, IProgressMonitor monitor)
+			throws CoreException {
+		IFileStore fileStore = EFS.getStore(uri);
+		File localFile = fileStore.toLocalFile(EFS.NONE, monitor);
+		if (localFile == null)
+			// non local file system
+			localFile = fileStore.toLocalFile(EFS.CACHE, monitor);
+		return localFile;
 	}
 
 }

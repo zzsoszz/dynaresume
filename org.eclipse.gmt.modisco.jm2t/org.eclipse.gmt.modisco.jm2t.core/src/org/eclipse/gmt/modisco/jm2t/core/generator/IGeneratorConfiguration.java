@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.core.generator;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 
@@ -23,25 +22,25 @@ public interface IGeneratorConfiguration {
 	public static final IGeneratorConfiguration[] EMPTY = new IGeneratorConfiguration[0];
 
 	/**
-	 * Returns the name of the generator entry.
+	 * Returns the name of the generator configuration.
 	 * 
 	 * @return
 	 */
 	String getName();
 
 	/**
+	 * Set the name of the generator configuration
+	 * 
+	 * @param name
+	 */
+	void setName(String name);
+	
+	/**
 	 * Returns the description of the generator entry.
 	 * 
 	 * @return
 	 */
 	String getDescription();
-
-	/**
-	 * Returns the engine to use to generate code of the generator entry.
-	 * 
-	 * @return
-	 */
-	String getEngine();
 
 	/**
 	 * Returns the list of packages name of Java files which can generate code.
@@ -52,5 +51,7 @@ public interface IGeneratorConfiguration {
 
 	IStatus validate(IProgressMonitor monitor);
 
-	IGeneratorConfiguration save(boolean force, IProgressMonitor monitor) throws CoreException;
+	IGeneratorType getGeneratorType();
+
+
 }

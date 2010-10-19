@@ -57,4 +57,10 @@ public interface IGeneratorType {
 	 * @return
 	 */
 	IModelProviderType getModelProviderType();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	IGeneratorConfiguration createGeneratorConfiguration();
 }
