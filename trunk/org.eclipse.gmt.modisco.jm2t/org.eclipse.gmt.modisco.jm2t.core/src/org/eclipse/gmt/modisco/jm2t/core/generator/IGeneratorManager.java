@@ -59,7 +59,6 @@ public interface IGeneratorManager {
 	 * @param generator
 	 * @param generatorConfiguration
 	 */
-	void generate(final Object model, final IModelProvider modelProvider,
-			final IGenerator<?> generator,
+	void generate(final Object model,
 			final IGeneratorConfiguration generatorConfiguration);
 }

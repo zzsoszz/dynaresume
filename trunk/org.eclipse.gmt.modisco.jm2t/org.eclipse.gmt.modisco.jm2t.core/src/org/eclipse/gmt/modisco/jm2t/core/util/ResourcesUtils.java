@@ -16,6 +16,7 @@ import java.net.URI;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
@@ -66,7 +67,7 @@ public class ResourcesUtils {
 			return (IFile) resource;
 		return null;
 	}
-	
+
 	/**
 	 * Converts the given URI to a local file. Use the existing file if the uri
 	 * is on the local file system. Otherwise fetch it. Returns null if unable
@@ -80,6 +81,39 @@ public class ResourcesUtils {
 			// non local file system
 			localFile = fileStore.toLocalFile(EFS.CACHE, monitor);
 		return localFile;
+	}
+
+	/**
+	 * Returns the active project.
+	 * 
+	 * @return
+	 */
+	public static IProject getActiveProject(ISelection selection) {
+		IResource resource = extractSelection(selection);
+		return resource == null ? null : resource.getProject();
+	}
+
+	/**
+	 * Extract an {@link IResource} from the {@link ISelection}.
+	 * 
+	 * @param selection
+	 * @return
+	 */
+	public static IResource extractSelection(ISelection selection) {
+		if (selection == null || !(selection instanceof IStructuredSelection))
+			return null;
+		IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+		Object element = structuredSelection.getFirstElement();
+		if (element instanceof IResource)
+			return (IResource) element;
+		if (!(element instanceof IAdaptable)) {
+			return null;
+		} else {
+			IAdaptable adaptable = (IAdaptable) element;
+			Object adapter = adaptable
+					.getAdapter(org.eclipse.core.resources.IResource.class);
+			return (IResource) adapter;
+		}
 	}
 
 }

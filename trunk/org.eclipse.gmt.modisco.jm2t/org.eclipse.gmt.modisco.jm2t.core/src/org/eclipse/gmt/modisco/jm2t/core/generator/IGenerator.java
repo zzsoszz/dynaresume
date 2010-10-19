@@ -15,7 +15,7 @@ package org.eclipse.gmt.modisco.jm2t.core.generator;
  * Generator interface.
  * 
  */
-public interface IGenerator<T extends Object> {
+public interface IGenerator{
 
-	void generate(T model, IGeneratorConfiguration configuration);
+	void generate(Object model, IGeneratorConfiguration configuration);
 }
