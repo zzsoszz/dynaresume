@@ -1,14 +1,16 @@
 /*******************************************************************************
- * Copyright (c) 2000, 2008 IBM Corporation and others.
+/*******************************************************************************
+ * Copyright (c) 2010 Angelo ZERR.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     IBM Corporation - initial API and implementation
+ * 
+ * Contributors:      
+ *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.internal.core.xml;
+
 import java.io.Writer;
 
 import org.eclipse.gmt.modisco.jm2t.core.IJM2TProject;
@@ -19,7 +21,9 @@ import org.eclipse.gmt.modisco.jm2t.internal.core.util.Util;
  */
 public class XMLWriter extends GenericXMLWriter {
 
-	public XMLWriter(Writer writer, IJM2TProject project, boolean printXmlVersion) {
-		super(writer, Util.getLineSeparator((String) null, project), printXmlVersion);
+	public XMLWriter(Writer writer, IJM2TProject project,
+			boolean printXmlVersion) {
+		super(writer, Util.getLineSeparator((String) null, project),
+				printXmlVersion);
 	}
 }
