@@ -10,21 +10,8 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.internal.ui;
 
-import static org.eclipse.gmt.modisco.jm2t.core.util.StringUtils.tokenize;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionDelta;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.IRegistryChangeEvent;
-import org.eclipse.core.runtime.IRegistryChangeListener;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.gmt.modisco.jm2t.ui.wizard.WizardFragment;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -36,42 +23,8 @@ public class JM2TUI extends AbstractUIPlugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.eclipse.gmt.modisco.jm2t.ui"; //$NON-NLS-1$
 
-	private static final String EXTENSION_WIZARD_FRAGMENTS = "wizardFragments";
-
 	// The shared instance
 	private static JM2TUI plugin;
-
-	// cached copy of all generator configurations wizards
-	private static Map<String, WizardFragmentData> wizardFragments;
-
-	private static RegistryChangeListener registryListener;
-
-	static class WizardFragmentData {
-		String id;
-		IConfigurationElement ce;
-		WizardFragment fragment;
-
-		public WizardFragmentData(String id, IConfigurationElement ce) {
-			this.id = id;
-			this.ce = ce;
-		}
-	}
-
-	protected static class RegistryChangeListener implements
-			IRegistryChangeListener {
-
-		public void registryChanged(IRegistryChangeEvent event) {
-			IExtensionDelta[] deltas = event.getExtensionDeltas(
-					JM2TUI.PLUGIN_ID, EXTENSION_WIZARD_FRAGMENTS);
-			if (deltas != null) {
-				for (int i = 0; i < deltas.length; i++) {
-					handleWizardFragmentDelta(deltas[i]);
-				}
-			}
-
-		}
-
-	}
 
 	/**
 	 * The constructor
@@ -112,142 +65,13 @@ public class JM2TUI extends AbstractUIPlugin {
 		return plugin;
 	}
 
-	public static Object[] adaptLabelChangeObjects(Object[] obj) {
-		if (obj == null)
-			return obj;
-
-		List<Object> list = new ArrayList<Object>();
-		int size = obj.length;
-		for (int i = 0; i < size; i++) {
-			// if (obj[i] instanceof IModule) {
-			// list.add(obj[i]);
-			// } else if (obj[i] instanceof IServer) {
-			// list.add(obj[i]);
-			// } else if (obj[i] instanceof ModuleServer) {
-			// list.add(obj[i]);
-			// } else if (obj[i] instanceof IProject) {
-			// IProject proj = (IProject) obj[i];
-			// IModule[] m = ServerUtil.getModules(proj);
-			// int size2 = m.length;
-			// for (int j = 0; j < size2; j++)
-			// list.add(m[j]);
-			// }
-		}
-
-		Object[] o = new Object[list.size()];
-		list.toArray(o);
-		return o;
-	}
-
 	/**
-	 * Returns the wizard fragment with the given id.
+	 * Create error status with exception.
 	 * 
-	 * @param typeId
-	 *            the server or runtime type id
-	 * @return a wizard fragment, or <code>null</code> if none could be found
+	 * @param e
+	 * @return
 	 */
-	public static WizardFragment getWizardFragment(String typeId) {
-		if (typeId == null)
-			return null;
-
-		if (wizardFragments == null)
-			loadWizardFragments();
-
-		Iterator<String> iterator = wizardFragments.keySet().iterator();
-		while (iterator.hasNext()) {
-			String key = iterator.next();
-			if (typeId.equals(key)) {
-				WizardFragmentData data = wizardFragments.get(key);
-				return getWizardFragment(data);
-			}
-		}
-		return null;
-	}
-
-	protected static WizardFragment getWizardFragment(
-			WizardFragmentData fragment) {
-		if (fragment == null)
-			return null;
-
-		if (fragment.fragment == null) {
-			try {
-				long time = System.currentTimeMillis();
-				fragment.fragment = (WizardFragment) fragment.ce
-						.createExecutableExtension("class");
-				Trace.trace(Trace.PERFORMANCE, "JM2TUI.getWizardFragment(): <"
-						+ (System.currentTimeMillis() - time) + "> "
-						+ fragment.ce.getAttribute("id"));
-			} catch (Throwable t) {
-				Trace.trace(Trace.SEVERE, "Could not create wizardFragment: "
-						+ fragment.ce.getAttribute("id"), t);
-			}
-		}
-		return fragment.fragment;
-	}
-
-	/**
-	 * Load the wizard fragments.
-	 */
-	private static synchronized void loadWizardFragments() {
-		if (wizardFragments != null)
-			return;
-		Trace.trace(Trace.CONFIG,
-				"->- Loading .wizardFragments extension point ->-");
-		IExtensionRegistry registry = Platform.getExtensionRegistry();
-		IConfigurationElement[] cf = registry.getConfigurationElementsFor(
-				JM2TUI.PLUGIN_ID, EXTENSION_WIZARD_FRAGMENTS);
-
-		Map<String, WizardFragmentData> map = new HashMap<String, WizardFragmentData>(
-				cf.length);
-		loadWizardFragments(cf, map);
-		addRegistryListener();
-		wizardFragments = map;
-
-		Trace.trace(Trace.CONFIG,
-				"-<- Done loading .wizardFragments extension point -<-");
-	}
-
-	public static synchronized void addRegistryListener() {
-		if (registryListener != null)
-			return;
-
-		registryListener = new RegistryChangeListener();
-		IExtensionRegistry registry = Platform.getExtensionRegistry();
-		registry.addRegistryChangeListener(registryListener, JM2TUI.PLUGIN_ID);
-	}
-
-	/**
-	 * Load wizard fragments.
-	 */
-	private static synchronized void loadWizardFragments(
-			IConfigurationElement[] cf, Map<String, WizardFragmentData> map) {
-		for (int i = 0; i < cf.length; i++) {
-			try {
-				String id = cf[i].getAttribute("typeIds");
-				String[] ids = tokenize(id, ",");
-				int size = ids.length;
-				for (int j = 0; j < size; j++)
-					map.put(ids[j], new WizardFragmentData(id, cf[i]));
-				Trace.trace(Trace.CONFIG, "  Loaded wizardFragment: " + id);
-			} catch (Throwable t) {
-				Trace.trace(Trace.SEVERE, "  Could not load wizardFragment: "
-						+ cf[i].getAttribute("id"), t);
-			}
-		}
-	}
-
-	protected static void handleWizardFragmentDelta(IExtensionDelta delta) {
-		if (wizardFragments == null) // not loaded yet
-			return;
-
-		IConfigurationElement[] cf = delta.getExtension()
-				.getConfigurationElements();
-
-		Map<String, WizardFragmentData> map = new HashMap<String, WizardFragmentData>(
-				wizardFragments);
-		if (delta.getKind() == IExtensionDelta.ADDED) {
-			loadWizardFragments(cf, map);
-		}
-		wizardFragments = map;
+	public static IStatus createStatus(Throwable e) {
+		return new Status(IStatus.ERROR, JM2TUI.PLUGIN_ID, e.getMessage(), e);
 	}
 }

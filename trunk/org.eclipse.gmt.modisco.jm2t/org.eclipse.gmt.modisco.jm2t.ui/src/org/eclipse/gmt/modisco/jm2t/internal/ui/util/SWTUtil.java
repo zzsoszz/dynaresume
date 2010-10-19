@@ -40,7 +40,9 @@ public class SWTUtil {
 	/**
 	 * Returns a width hint for a button control.
 	 */
-	protected static int getButtonWidthHint(Button button) {
+	public static int getButtonWidthHint(Button button) {
+		if (fontMetrics == null)
+			initializeDialogUnits(button.getParent());
 		int widthHint = Dialog.convertHorizontalDLUsToPixels(fontMetrics,
 				IDialogConstants.BUTTON_WIDTH);
 		return Math.max(widthHint,
