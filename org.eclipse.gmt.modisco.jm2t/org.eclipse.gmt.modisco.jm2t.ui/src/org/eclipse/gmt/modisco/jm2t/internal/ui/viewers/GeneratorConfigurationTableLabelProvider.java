@@ -11,6 +11,7 @@
 package org.eclipse.gmt.modisco.jm2t.internal.ui.viewers;
 
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
@@ -19,7 +20,7 @@ import org.eclipse.swt.graphics.Image;
  * Generator configuration table label provider.
  */
 public class GeneratorConfigurationTableLabelProvider extends BaseLabelProvider
-		implements ITableLabelProvider, ILockedLabelProvider {
+		implements ITableLabelProvider {
 
 	/**
 	 * GeneratorConfigurationTableLabelProvider constructor comment.
@@ -65,19 +66,13 @@ public class GeneratorConfigurationTableLabelProvider extends BaseLabelProvider
 	public String getColumnText(Object element, int columnIndex) {
 		IGeneratorConfiguration runtime = (IGeneratorConfiguration) element;
 		if (columnIndex == 0) {
-			String text = notNull(runtime.getName());
-			if (decorator != null) {
-				String dec = decorator.decorateText(text, element);
-				if (dec != null)
-					return dec;
-			}
-			return text;
+			return getDecoratedText(runtime.getName(), element);
 		} else if (columnIndex == 1) {
-			// IGeneratorLaunchConfigurationType runtimeType =
-			// runtime.getGeneratorLaunchConfigurationType();
-			// if (runtimeType != null)
-			// return notNull(runtimeType.getName());
-			return "";
+			IGeneratorType generatorType = runtime.getGeneratorType();
+			if (generatorType != null) {
+				return getDecoratedText(generatorType.getName(), element);	
+			}
+			return "Unknown";
 		} else
 			return "";
 	}

@@ -140,5 +140,15 @@ public abstract class BaseLabelProvider implements ILabelProvider {
 			return "";
 		return s;
 	}
+	
+	protected String getDecoratedText(String s, Object element) {
+		String text = notNull(s);
+		if (decorator != null) {
+			String dec = decorator.decorateText(text, element);
+			if (dec != null)
+				return dec;
+		}
+		return text;
+	}
 }
 
