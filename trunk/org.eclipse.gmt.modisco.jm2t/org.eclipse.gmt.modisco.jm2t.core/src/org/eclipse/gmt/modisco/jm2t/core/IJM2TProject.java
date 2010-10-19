@@ -10,7 +10,11 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.core;
 
+import java.util.Collection;
+
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
 
 /**
@@ -33,7 +37,18 @@ public interface IJM2TProject {
 	 * 
 	 * @return
 	 */
-	IGeneratorConfiguration[] getGeneratorConfigurations();
+	Collection<IGeneratorConfiguration> getGeneratorConfigurations();
+
+	/**
+	 * Read from XML configuration the generator configurations defined for the
+	 * Java M2T project.
+	 * 
+	 * @return
+	 */
+	Collection<IGeneratorConfiguration> readGeneratorConfigurations();
+
+	void setRawGeneratorConfiguration(Collection<IGeneratorConfiguration> entries,
+			IProgressMonitor monitor) throws CoreException;
 
 	/**
 	 * Fine the generator configuration by name.

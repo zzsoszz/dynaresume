@@ -28,6 +28,19 @@ public interface IGeneratorManager {
 	IGeneratorType[] getGeneratorTypes();
 
 	/**
+	 * Returns the generator type with the given id, or <code>null</code> if
+	 * none. This convenience method searches the list of known generator types
+	 * ({@link #getGeneratorTypes()}) for the one with a matching generator type
+	 * id ({@link IGeneratorType#getId()}). The id may not be null.
+	 * 
+	 * @param id
+	 *            the generator type id
+	 * @return the generator type, or <code>null</code> if there is no generator
+	 *         type with the given id
+	 */
+	IGeneratorType findGeneratorType(String id);
+
+	/**
 	 * Returns an array of all known modelProvider types.
 	 * <p>
 	 * A new array is returned on each call, so clients may store or modify the
