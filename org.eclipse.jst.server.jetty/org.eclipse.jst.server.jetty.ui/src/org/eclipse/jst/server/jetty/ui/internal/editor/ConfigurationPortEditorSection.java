@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    IBM Corporation - Initial API and implementation
+ *    Angelo Zerr <angelo.zerr@gmail.com> - Initial API and implementation 
  *******************************************************************************/
 package org.eclipse.jst.server.jetty.ui.internal.editor;
 

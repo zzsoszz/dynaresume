@@ -1,11 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2010 Angelo Zerr and others.
+ * Copyright (c) 2003, 2010 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
+ *     IBM Corporation - Initial API and implementation
  *     Angelo Zerr <angelo.zerr@gmail.com> - Initial API and implementation 
  *******************************************************************************/
 package org.eclipse.jst.server.jetty.ui.internal;
@@ -51,7 +52,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
-
 import org.eclipse.wst.server.core.IRuntimeWorkingCopy;
 import org.eclipse.wst.server.core.TaskModel;
 import org.eclipse.wst.server.core.internal.IInstallableRuntime;
@@ -60,15 +60,16 @@ import org.eclipse.wst.server.ui.internal.wizard.TaskWizard;
 import org.eclipse.wst.server.ui.internal.wizard.fragment.LicenseWizardFragment;
 import org.eclipse.wst.server.ui.wizard.IWizardHandle;
 import org.eclipse.wst.server.ui.wizard.WizardFragment;
+
 /**
  * Wizard page to set the server install directory.
  */
 public class JettyRuntimeComposite extends Composite {
 	protected IRuntimeWorkingCopy runtimeWC;
 	protected IJettyRuntimeWorkingCopy runtime;
-	
+
 	protected IWizardHandle wizard;
-	
+
 	protected Text installDir;
 	protected Text name;
 	protected Combo combo;
@@ -83,17 +84,20 @@ public class JettyRuntimeComposite extends Composite {
 	/**
 	 * JettyRuntimeWizardPage constructor comment.
 	 * 
-	 * @param parent the parent composite
-	 * @param wizard the wizard handle
+	 * @param parent
+	 *            the parent composite
+	 * @param wizard
+	 *            the wizard handle
 	 */
 	protected JettyRuntimeComposite(Composite parent, IWizardHandle wizard) {
 		super(parent, SWT.NONE);
 		this.wizard = wizard;
-		
+
 		wizard.setTitle(Messages.wizardTitle);
 		wizard.setDescription(Messages.wizardDescription);
-		wizard.setImageDescriptor(JettyUIPlugin.getImageDescriptor(JettyUIPlugin.IMG_WIZ_JETTY));
-		
+		wizard.setImageDescriptor(JettyUIPlugin
+				.getImageDescriptor(JettyUIPlugin.IMG_WIZ_JETTY));
+
 		createControl();
 	}
 
@@ -103,21 +107,23 @@ public class JettyRuntimeComposite extends Composite {
 			runtime = null;
 		} else {
 			runtimeWC = newRuntime;
-			runtime = (IJettyRuntimeWorkingCopy) newRuntime.loadAdapter(IJettyRuntimeWorkingCopy.class, null);
+			runtime = (IJettyRuntimeWorkingCopy) newRuntime.loadAdapter(
+					IJettyRuntimeWorkingCopy.class, null);
 		}
-		
+
 		if (runtimeWC == null) {
 			ir = null;
 			install.setEnabled(false);
 			installLabel.setText("");
 		} else {
-			ir = ServerPlugin.findInstallableRuntime(runtimeWC.getRuntimeType().getId());
+			ir = ServerPlugin.findInstallableRuntime(runtimeWC.getRuntimeType()
+					.getId());
 			if (ir != null) {
 				install.setEnabled(true);
 				installLabel.setText(ir.getName());
 			}
 		}
-		
+
 		init();
 		validate();
 	}
@@ -137,14 +143,15 @@ public class JettyRuntimeComposite extends Composite {
 		layout.numColumns = 2;
 		setLayout(layout);
 		setLayoutData(new GridData(GridData.FILL_BOTH));
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(this, ContextIds.RUNTIME_COMPOSITE);
-		
+		PlatformUI.getWorkbench().getHelpSystem()
+				.setHelp(this, ContextIds.RUNTIME_COMPOSITE);
+
 		Label label = new Label(this, SWT.NONE);
 		label.setText(Messages.runtimeName);
 		GridData data = new GridData();
 		data.horizontalSpan = 2;
 		label.setLayoutData(data);
-		
+
 		name = new Text(this, SWT.BORDER);
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		name.setLayoutData(data);
@@ -154,13 +161,13 @@ public class JettyRuntimeComposite extends Composite {
 				validate();
 			}
 		});
-	
+
 		label = new Label(this, SWT.NONE);
 		label.setText(Messages.installDir);
 		data = new GridData();
 		data.horizontalSpan = 2;
 		label.setLayoutData(data);
-	
+
 		installDir = new Text(this, SWT.BORDER);
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		installDir.setLayoutData(data);
@@ -170,11 +177,12 @@ public class JettyRuntimeComposite extends Composite {
 				validate();
 			}
 		});
-		
+
 		Button browse = SWTUtil.createButton(this, Messages.browse);
 		browse.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent se) {
-				DirectoryDialog dialog = new DirectoryDialog(JettyRuntimeComposite.this.getShell());
+				DirectoryDialog dialog = new DirectoryDialog(
+						JettyRuntimeComposite.this.getShell());
 				dialog.setMessage(Messages.selectInstallDir);
 				dialog.setFilterPath(installDir.getText());
 				String selectedDirectory = dialog.open();
@@ -182,12 +190,12 @@ public class JettyRuntimeComposite extends Composite {
 					installDir.setText(selectedDirectory);
 			}
 		});
-		
+
 		installLabel = new Label(this, SWT.RIGHT);
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		data.horizontalIndent = 10;
 		installLabel.setLayoutData(data);
-		
+
 		install = SWTUtil.createButton(this, Messages.install);
 		install.setEnabled(false);
 		install.addSelectionListener(new SelectionAdapter() {
@@ -200,39 +208,42 @@ public class JettyRuntimeComposite extends Composite {
 				}
 				TaskModel taskModel = new TaskModel();
 				taskModel.putObject(LicenseWizardFragment.LICENSE, license);
-				TaskWizard wizard2 = new TaskWizard(Messages.installDialogTitle, new WizardFragment() {
-					protected void createChildFragments(List list) {
-						list.add(new LicenseWizardFragment());
-					}
-				}, taskModel);
-				
+				TaskWizard wizard2 = new TaskWizard(
+						Messages.installDialogTitle, new WizardFragment() {
+							protected void createChildFragments(List list) {
+								list.add(new LicenseWizardFragment());
+							}
+						}, taskModel);
+
 				WizardDialog dialog2 = new WizardDialog(getShell(), wizard2);
 				if (dialog2.open() == Window.CANCEL)
 					return;
-				
-				DirectoryDialog dialog = new DirectoryDialog(JettyRuntimeComposite.this.getShell());
+
+				DirectoryDialog dialog = new DirectoryDialog(
+						JettyRuntimeComposite.this.getShell());
 				dialog.setMessage(Messages.selectInstallDir);
 				dialog.setFilterPath(installDir.getText());
 				String selectedDirectory = dialog.open();
 				if (selectedDirectory != null) {
-//					ir.install(new Path(selectedDirectory));
+					// ir.install(new Path(selectedDirectory));
 					final IPath installPath = new Path(selectedDirectory);
-					installRuntimeJob = new Job("Installing server runtime environment") {
+					installRuntimeJob = new Job(
+							"Installing server runtime environment") {
 						public boolean belongsTo(Object family) {
 							return ServerPlugin.PLUGIN_ID.equals(family);
 						}
-						
+
 						protected IStatus run(IProgressMonitor monitor) {
 							try {
 								ir.install(installPath, monitor);
 							} catch (CoreException ce) {
 								return ce.getStatus();
 							}
-							
+
 							return Status.OK_STATUS;
 						}
 					};
-					
+
 					installDir.setText(selectedDirectory);
 					jobListener = new JobChangeAdapter() {
 						public void done(IJobChangeEvent event) {
@@ -244,7 +255,7 @@ public class JettyRuntimeComposite extends Composite {
 										validate();
 									}
 								}
-					        });
+							});
 						}
 					};
 					installRuntimeJob.addJobChangeListener(jobListener);
@@ -252,28 +263,28 @@ public class JettyRuntimeComposite extends Composite {
 				}
 			}
 		});
-		
+
 		updateJREs();
-		
+
 		// JDK location
 		label = new Label(this, SWT.NONE);
 		label.setText(Messages.installedJRE);
 		data = new GridData();
 		data.horizontalSpan = 2;
 		label.setLayoutData(data);
-		
+
 		combo = new Combo(this, SWT.DROP_DOWN | SWT.READ_ONLY);
 		combo.setItems(jreNames);
 		data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
 		combo.setLayoutData(data);
-		
+
 		combo.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				int sel = combo.getSelectionIndex();
 				IVMInstall vmInstall = null;
 				if (sel > 0)
 					vmInstall = (IVMInstall) installedJREs.get(sel - 1);
-				
+
 				runtime.setVMInstall(vmInstall);
 				validate();
 			}
@@ -282,7 +293,7 @@ public class JettyRuntimeComposite extends Composite {
 				widgetSelected(e);
 			}
 		});
-		
+
 		Button button = SWTUtil.createButton(this, Messages.installedJREs);
 		button.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -297,12 +308,12 @@ public class JettyRuntimeComposite extends Composite {
 				}
 			}
 		});
-		
+
 		init();
 		validate();
-		
+
 		Dialog.applyDialogFont(this);
-		
+
 		name.forceFocus();
 	}
 
@@ -318,27 +329,33 @@ public class JettyRuntimeComposite extends Composite {
 				installedJREs.add(vmInstalls[j]);
 			}
 		}
-		
+
 		// get names
 		size = installedJREs.size();
-		jreNames = new String[size+1];
+		jreNames = new String[size + 1];
 		jreNames[0] = Messages.runtimeDefaultJRE;
 		for (int i = 0; i < size; i++) {
 			IVMInstall vmInstall = (IVMInstall) installedJREs.get(i);
-			jreNames[i+1] = vmInstall.getName();
+			jreNames[i + 1] = vmInstall.getName();
 		}
 	}
 
 	protected boolean showPreferencePage() {
 		String id = "org.eclipse.jdt.debug.ui.preferences.VMPreferencePage";
-		
-		// should be using the following API, but it only allows a single preference page instance.
+
+		// should be using the following API, but it only allows a single
+		// preference page instance.
 		// see bug 168211 for details
-		//PreferenceDialog dialog = PreferencesUtil.createPreferenceDialogOn(getShell(), id, new String[] { id }, null);
-		//return (dialog.open() == Window.OK);		
-		
-		PreferenceManager manager = PlatformUI.getWorkbench().getPreferenceManager();
-		IPreferenceNode node = manager.find("org.eclipse.jdt.ui.preferences.JavaBasePreferencePage").findSubNode(id);
+		// PreferenceDialog dialog =
+		// PreferencesUtil.createPreferenceDialogOn(getShell(), id, new String[]
+		// { id }, null);
+		// return (dialog.open() == Window.OK);
+
+		PreferenceManager manager = PlatformUI.getWorkbench()
+				.getPreferenceManager();
+		IPreferenceNode node = manager.find(
+				"org.eclipse.jdt.ui.preferences.JavaBasePreferencePage")
+				.findSubNode(id);
 		PreferenceManager manager2 = new PreferenceManager();
 		manager2.addToRoot(node);
 		PreferenceDialog dialog = new PreferenceDialog(getShell(), manager2);
@@ -349,17 +366,17 @@ public class JettyRuntimeComposite extends Composite {
 	protected void init() {
 		if (name == null || runtime == null)
 			return;
-		
+
 		if (runtimeWC.getName() != null)
 			name.setText(runtimeWC.getName());
 		else
 			name.setText("");
-		
+
 		if (runtimeWC.getLocation() != null)
 			installDir.setText(runtimeWC.getLocation().toOSString());
 		else
 			installDir.setText("");
-		
+
 		// set selection
 		if (runtime.isUsingDefaultJRE())
 			combo.select(0);
@@ -383,7 +400,7 @@ public class JettyRuntimeComposite extends Composite {
 			wizard.setMessage("", IMessageProvider.ERROR);
 			return;
 		}
-		
+
 		IStatus status = runtimeWC.validate(null);
 		if (status == null || status.isOK())
 			wizard.setMessage(null, IMessageProvider.NONE);
