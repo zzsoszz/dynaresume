@@ -23,16 +23,19 @@ public class Messages extends NLS {
 	public static String preferenceGeneratorConfigurationsDescription;
 	public static String preferenceGeneratorConfigurationsTable;
 	public static String preferenceGeneratorTypes;
-	public static String errorDialogTitle;	
+	public static String errorDialogTitle;
 
 	// Buttons label
 	public static String addButton;
 	public static String removeButton;
 	public static String editButton;
 	public static String browseButton;
-	public static String createNewFolderButton;	
-	
+	public static String createNewFolderButton;
+
+	// Wizard
 	public static String wizNewGeneratorConfigurationWizardTitle;
+	public static String wizNewGeneratorConfigurationTitle;
+	public static String wizNewGeneratorConfigurationDescription;
 	public static String wizEditGeneratorConfigurationWizardTitle;
 
 	public static String GeneratorConfigurationDialog_name;
@@ -40,10 +43,12 @@ public class Messages extends NLS {
 	public static String GeneratorConfigurationDialog_templateFile;
 	public static String GeneratorConfigurationDialog_targetContainer;
 
+	public static String GeneratorTypeComposite_title;
+
 	public static String savingSettingsError;
 	public static String ContributionItemForJM2TMenu_0;
 	public static String MenuListenerHandler_0;
-	
+
 	private static final String BUNDLE_NAME = "org.eclipse.gmt.modisco.jm2t.internal.ui.messages"; //$NON-NLS-1$
 
 	static {

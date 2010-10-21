@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.gmt.modisco.jm2t.core.IJM2TProject;
 import org.eclipse.gmt.modisco.jm2t.core.JM2TCore;
+import org.eclipse.gmt.modisco.jm2t.core.TaskModel;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.JM2TUI;
@@ -31,11 +32,16 @@ import org.eclipse.gmt.modisco.jm2t.internal.ui.util.EclipseUtil;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.viewers.GeneratorConfigurationTableLabelProvider;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.viewers.GeneratorTypeContentProvider;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.viewers.GeneratorTypeLabelProvider;
+import org.eclipse.gmt.modisco.jm2t.internal.ui.wizard.TaskWizard;
+import org.eclipse.gmt.modisco.jm2t.internal.ui.wizard.WizardTaskUtil;
+import org.eclipse.gmt.modisco.jm2t.internal.ui.wizard.fragment.NewGeneratorConfigurationWizardFragment;
+import org.eclipse.gmt.modisco.jm2t.ui.wizard.WizardFragment;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -303,15 +309,17 @@ public class JM2TPropertyPage extends PropertyPage implements
 	}
 
 	private void doAddButton() {
-		// Add Generator configuration
-		if (selectedGeneratorType == null)
-			return;
-		GeneratorConfigurationDialog dialog = new GeneratorConfigurationDialog(
-				getShell(), JM2TCore.create(getProject()),
-				selectedGeneratorType, generatorConfigurationList.getElements());
-		if (dialog.open() == Window.OK) {
-			generatorConfigurationList.addElement(dialog.getResult());
+		if (showWizard(null) == Window.OK) {
+
 		}
+
+		// GeneratorConfigurationDialog dialog = new
+		// GeneratorConfigurationDialog(
+		// getShell(), JM2TCore.create(getProject()),
+		// selectedGeneratorType, generatorConfigurationList.getElements());
+		// if (dialog.open() == Window.OK) {
+		// generatorConfigurationList.addElement(dialog.getResult());
+		// }
 	}
 
 	private void doEditButton() {
@@ -355,5 +363,44 @@ public class JM2TPropertyPage extends PropertyPage implements
 					Messages.savingSettingsError, JM2TUI.createStatus(e));
 		}
 		return true;
+	}
+
+	protected int showWizard(
+			final IGeneratorConfiguration generatorConfiguration) {
+		String title = null;
+		WizardFragment fragment = null;
+		TaskModel taskModel = new TaskModel();
+		if (generatorConfiguration == null) {
+			// Add New generator configuration
+			title = Messages.wizNewGeneratorConfigurationWizardTitle;
+			fragment = new WizardFragment() {
+				protected void createChildFragments(List<WizardFragment> list) {
+					list.add(new NewGeneratorConfigurationWizardFragment());
+					list.add(WizardTaskUtil.SaveRuntimeFragment);
+				}
+			};
+		} else {
+			// Edit selected generator configuration
+			title = Messages.wizEditGeneratorConfigurationWizardTitle;
+			final WizardFragment fragment2 = JM2TUI
+					.getWizardFragment(generatorConfiguration
+							.getGeneratorType().getId());
+			if (fragment2 == null) {
+				generatorConfigurationList.enableButton(IDX_EDIT, false);
+				return Window.CANCEL;
+			}
+			taskModel.putObject(TaskModel.TASK_GENERATOR_CONFIGURATION,
+					generatorConfiguration);
+			fragment = new WizardFragment() {
+				protected void createChildFragments(List<WizardFragment> list) {
+					list.add(fragment2);
+					list.add(WizardTaskUtil.SaveRuntimeFragment);
+				}
+			};
+		}
+		TaskWizard wizard = new TaskWizard(title, fragment, taskModel);
+		wizard.setForcePreviousAndNextButtons(true);
+		WizardDialog dialog = new WizardDialog(getShell(), wizard);
+		return dialog.open();
 	}
 }
