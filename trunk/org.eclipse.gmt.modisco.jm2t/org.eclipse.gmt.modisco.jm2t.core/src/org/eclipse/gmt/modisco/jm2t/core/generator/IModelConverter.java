@@ -25,6 +25,7 @@ public interface IModelConverter {
 	 * @param configuration
 	 * @return
 	 */
-	Object convert(Object model, IGeneratorConfiguration configuration);
+	Object convert(Object model, IGeneratorConfiguration configuration)
+			throws ModelConverterException;
 
 }
