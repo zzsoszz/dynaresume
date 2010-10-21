@@ -8,25 +8,22 @@
  * Contributors:      
  *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gmt.modisco.jm2t.modelconverter.internal.javamodisco;
-
-import org.eclipse.osgi.util.NLS;
+package org.eclipse.gmt.modisco.jm2t.core.generator;
 
 /**
- * Messages used in the Plug-In JM2TCore.
+ * Model converter exception.
  * 
  */
-public class Messages extends NLS {
+public class ModelConverterException extends RuntimeException {
 
-	public static String CannotConvertToJavaELement;
-	
-	public static String DiscoverJavaModelFromCompilationUnit_title;
-	public static String DiscoverJavaModelFromCompilationUnit_jobLabel;	
+	private static final long serialVersionUID = 1L;
 
-	private static final String BUNDLE_NAME = "org.eclipse.gmt.modisco.jm2t.modelconverter.internal.javamodisco.messages"; //$NON-NLS-1$
+	public ModelConverterException(String message) {
+		super(message);
+	}
 
-	static {
-		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	public ModelConverterException(Throwable e) {
+		super(e);
 	}
 
 }

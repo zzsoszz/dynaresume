@@ -10,31 +10,54 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.modelconverter.internal.javamodisco;
 
-import org.osgi.framework.BundleActivator;
+import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-public class JavaModiscoPlugin implements BundleActivator {
+public class JavaModiscoPlugin extends Plugin {
 
-	private static BundleContext context;
+	// The plug-in ID
+	public static final String PLUGIN_ID = " org.eclipse.gmt.modisco.jm2t.modelconverter.javamodisco"; //$NON-NLS-1$
 
-	static BundleContext getContext() {
-		return context;
+	// The shared instance
+	private static JavaModiscoPlugin plugin;
+
+	/**
+	 * The constructor
+	 */
+	public JavaModiscoPlugin() {
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
+	 * )
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
-		JavaModiscoPlugin.context = bundleContext;
+	public void start(BundleContext context) throws Exception {
+		plugin = this;
+		super.start(context);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
+	 * )
 	 */
-	public void stop(BundleContext bundleContext) throws Exception {
-		JavaModiscoPlugin.context = null;
+	public void stop(BundleContext context) throws Exception {
+		plugin = null;
+		super.stop(context);
+	}
+
+	/**
+	 * Returns the shared instance
+	 * 
+	 * @return the shared instance
+	 */
+	public static JavaModiscoPlugin getDefault() {
+		return plugin;
 	}
 
 }

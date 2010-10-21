@@ -37,7 +37,12 @@ public class JavaModiscoModelConverter extends AbstractModelConverter {
 
 	public Object convert(Object model, IGeneratorConfiguration configuration)
 			throws ModelConverterException {
+		// Get the JDT Java Element from the selected object model
 		IJavaElement element = getJavaElement(model);
+		if (element == null) {
+			throw new ModelConverterException(
+					Messages.CannotConvertToJavaELement);
+		}
 
 		// Get Modisco Discover switch the JDT JavaElement (IJavaProject,
 		// ICompilationUnit)

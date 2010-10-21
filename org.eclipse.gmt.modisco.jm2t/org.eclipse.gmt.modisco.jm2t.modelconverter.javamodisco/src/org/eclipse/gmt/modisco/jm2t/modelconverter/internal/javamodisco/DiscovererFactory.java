@@ -10,8 +10,12 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.modelconverter.internal.javamodisco;
 
+import org.eclipse.jdt.core.IClassFile;
+import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragment;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
 
 public class DiscovererFactory {
 
@@ -27,7 +31,22 @@ public class DiscovererFactory {
 		case IJavaElement.JAVA_PROJECT:
 			return new ExtendedDiscoverJavaModelFromJavaProject(
 					(IJavaProject) element);
-		}
+		case IJavaElement.COMPILATION_UNIT:
+			return new ExtendedDiscoverJavaModelFromCompilationUnit(
+					(ICompilationUnit) element);
+		case IJavaElement.CLASS_FILE:
+			return new ExtendedDiscoverJavaModelFromClassFile(
+					(IClassFile) element);
+		case IJavaElement.TYPE:
+			return createDiscoverer(element.getParent());
+		case IJavaElement.PACKAGE_FRAGMENT:
+			IPackageFragment packageFragment = (IPackageFragment) element;
+			break;
+		case IJavaElement.PACKAGE_FRAGMENT_ROOT:
+			// src folder is selected
+			IPackageFragmentRoot packageFragmentRoot = (IPackageFragmentRoot) element;
+			return createDiscoverer(packageFragmentRoot.getParent());
+		}		 		
 		return null;
 	}
 }
