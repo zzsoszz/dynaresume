@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+  
+  <extension point="org.eclipse.gmt.modisco.jm2t.core.modelConverterTypes">
+    <modelConverterType
+       id="org.eclipse.gmt.modisco.jm2t.modelconverter.javamodisco"
+       name="%modelConverterTypeJavaModiscoLabel"
+       description="%modelConverterTypeJavaModiscoDescription"
+       category="M2EMF"
+       class="org.eclipse.gmt.modisco.jm2t.modelconverter.internal.javamodisco.JavaModiscoModelConverter">
+    </modelConverterType>
+  </extension>
+  
+</plugin>
