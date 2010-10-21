@@ -68,4 +68,8 @@ public interface IGeneratorType {
 	 */
 	IGeneratorConfiguration createGeneratorConfiguration(
 			IModelConverterType converterType, IJM2TProject project);
+
+	String getVendor();
+
+	
 }

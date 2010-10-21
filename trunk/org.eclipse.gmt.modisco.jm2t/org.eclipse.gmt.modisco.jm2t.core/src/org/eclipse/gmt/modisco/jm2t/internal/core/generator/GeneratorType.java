@@ -79,6 +79,15 @@ public class GeneratorType implements IGeneratorType {
 		}
 	}
 
+	
+	public String getVendor() {
+		try {
+			return element.getAttribute("vendor");
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 	public IGenerator getGenerator() {
 		if (generator == null) {
 			generator = createGenerator();

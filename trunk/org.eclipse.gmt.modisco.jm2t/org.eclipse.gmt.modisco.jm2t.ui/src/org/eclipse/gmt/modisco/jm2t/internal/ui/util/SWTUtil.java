@@ -69,5 +69,31 @@ public class SWTUtil {
 		b.setLayoutData(data);
 		return b;
 	}
+	
+	/**
+	 * Convert DLUs to pixels.
+	 * 
+	 * @param comp a component
+	 * @param x pixels
+	 * @return dlus
+	 */
+	public static int convertHorizontalDLUsToPixels(Composite comp, int x) {
+		if (fontMetrics == null)
+			initializeDialogUnits(comp);
+		return Dialog.convertHorizontalDLUsToPixels(fontMetrics, x);
+	}
+
+	/**
+	 * Convert DLUs to pixels.
+	 * 
+	 * @param comp a component
+	 * @param y pixels
+	 * @return dlus
+	 */
+	public static int convertVerticalDLUsToPixels(Composite comp, int y) {
+		if (fontMetrics == null)
+			initializeDialogUnits(comp);
+		return Dialog.convertVerticalDLUsToPixels(fontMetrics, y);
+	}
 
 }

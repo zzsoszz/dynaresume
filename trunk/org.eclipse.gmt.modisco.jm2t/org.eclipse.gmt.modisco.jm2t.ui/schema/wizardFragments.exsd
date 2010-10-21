@@ -1,24 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.eclipse.gmt.modisco.jm2t.core" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.eclipse.gmt.modisco.jm2t.ui">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.eclipse.gmt.modisco.jm2t.core" id="generatorTypes" name="Generator Types"/>
+         <meta.schema plugin="org.eclipse.gmt.modisco.jm2t.ui" id="wizardFragments" name="Wizard Fragments"/>
       </appInfo>
       <documentation>
-         This extension point is used to provide support for a new generator type.
+         This extension point provides a way to add pages or logic into wizards for a specific generator configuration.
       </documentation>
    </annotation>
 
    <element name="extension">
-      <annotation>
-         <appInfo>
-            <meta.element />
-         </appInfo>
-      </annotation>
       <complexType>
          <sequence>
-            <element ref="generatorType" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="fragment" minOccurs="1" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -44,7 +39,7 @@
       </complexType>
    </element>
 
-   <element name="generatorType">
+   <element name="fragment">
       <annotation>
          <appInfo>
             <meta.element labelAttribute="id"/>
@@ -61,41 +56,20 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  specifies the fully qualified name of the Java class that implements &lt;samp&gt;org.eclipse.gmt.modisco.jm2t.core.generator.IGenerator&lt;/samp&gt;
+                  specifies the fully qualified name of the Java class that implements &lt;samp&gt;org.eclipse.gmt.modisco.jm2t.ui.wizard.WizardFragment&lt;/samp&gt;
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.gmt.modisco.jm2t.core.generator.IGenerator"/>
+                  <meta.attribute kind="java" basedOn="org.eclipse.gmt.modisco.jm2t.ui.wizard.WizardFragment"/>
                </appInfo>
             </annotation>
          </attribute>
-         <attribute name="modelConverterCategories" type="string">
+         <attribute name="typeIds" type="string" use="required">
             <annotation>
                <documentation>
-                  specifies the model converter categories (use &apos;,&apos; token to define several category) for this fragment
+                  a comma separated list of runtime or server type ids that this fragment applies to
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="name" type="string">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="description" type="string">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="vendor" type="string">
-            <annotation>
-               <documentation>
-                  a translatable vendor name
-               </documentation>
-            </annotation>
-         </attribute>         
       </complexType>
    </element>
 
@@ -117,10 +91,10 @@
 
 &lt;pre&gt;
    &lt;extension 
-         point=&quot;org.eclipse.gmt.modisco.jm2t.core.wizardFragments&quot;&gt;
+         point=&quot;org.eclipse.gmt.modisco.jm2t.ui.wizardFragments&quot;&gt;
       &lt;fragment
             id=&quot;com.example&quot;
-            typeIds=&quot;com.example.generator&quot;
+            typeIds=&quot;com.example.runtime&quot;
             class=&quot;com.example.ExampleWizardFragment&quot;/&gt;
    &lt;/extension&gt;
 &lt;/pre&gt;
@@ -132,17 +106,25 @@
          <meta.section type="apiInfo"/>
       </appInfo>
       <documentation>
-         Value of the attribute &lt;b&gt;class&lt;/b&gt; must be a fully qualified name of a Java class that implements the interface &lt;code&gt;org.eclipse.gmt.modisco.jm2t.core.wizard.WizardFragment&lt;/code&gt;.
+         Value of the attribute &lt;b&gt;class&lt;/b&gt; must be a fully qualified name of a Java class that implements the interface &lt;code&gt;org.eclipse.gmt.modisco.jm2t.ui.wizard.WizardFragment&lt;/code&gt;.
       </documentation>
    </annotation>
 
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         
+      </documentation>
+   </annotation>
 
    <annotation>
       <appInfo>
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         Copyright (c) 2010 Angelo ZERR.&lt;br&gt;
+         Copyright (c) 2000, 2005 IBM Corporation and others.&lt;br&gt;
 All rights reserved. This program and the accompanying materials are made 
 available under the terms of the Eclipse Public License v1.0 which accompanies 
 this distribution, and is available at 
