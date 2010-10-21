@@ -19,6 +19,15 @@ package org.eclipse.gmt.modisco.jm2t.core.generator;
 public interface IModelConverter {
 
 	/**
+	 * Returns the object used to convert it. For instance if IFile is selected,
+	 * this method should returns the JDT IJavaElement.
+	 * 
+	 * @param model
+	 * @return
+	 */
+	Object getModelToConvert(Object model);
+
+	/**
 	 * Convert model to another model.
 	 * 
 	 * @param model
