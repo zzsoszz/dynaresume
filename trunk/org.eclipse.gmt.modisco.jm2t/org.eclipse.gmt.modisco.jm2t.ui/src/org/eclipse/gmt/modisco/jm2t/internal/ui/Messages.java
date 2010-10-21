@@ -23,16 +23,23 @@ public class Messages extends NLS {
 	public static String preferenceGeneratorConfigurationsDescription;
 	public static String preferenceGeneratorConfigurationsTable;
 	public static String preferenceGeneratorTypes;
+	public static String errorDialogTitle;	
+
+	// Buttons label
+	public static String addButton;
 	public static String removeButton;
 	public static String editButton;
-	public static String addButton;
-	public static String errorDialogTitle;	
+	public static String browseButton;
+	public static String createNewFolderButton;	
 	
 	public static String wizNewGeneratorConfigurationWizardTitle;
 	public static String wizEditGeneratorConfigurationWizardTitle;
 
 	public static String GeneratorConfigurationDialog_name;
 	public static String GeneratorConfigurationDialog_error_enterName;
+	public static String GeneratorConfigurationDialog_templateFile;
+	public static String GeneratorConfigurationDialog_targetContainer;
+
 	public static String savingSettingsError;
 	public static String ContributionItemForJM2TMenu_0;
 	public static String MenuListenerHandler_0;

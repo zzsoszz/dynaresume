@@ -17,16 +17,18 @@ import java.util.List;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionDelta;
 import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IRegistryChangeEvent;
 import org.eclipse.core.runtime.IRegistryChangeListener;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.gmt.modisco.jm2t.core.JM2TCore;
+import org.eclipse.gmt.modisco.jm2t.core.generator.GeneratorException;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGenerator;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorManager;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
-import org.eclipse.gmt.modisco.jm2t.core.generator.IModelProvider;
-import org.eclipse.gmt.modisco.jm2t.core.generator.IModelProviderType;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverter;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterType;
 import org.eclipse.gmt.modisco.jm2t.internal.core.Trace;
 
 /**
@@ -37,14 +39,14 @@ public class GeneratorManager implements IGeneratorManager,
 		IRegistryChangeListener {
 
 	private static final String EXTENSION_GENERATOR_TYPE = "generatorTypes";
-	private static final String EXTENSION_MODEL_PROVIDER_TYPE = "modelProviderTypes";
+	private static final String EXTENSION_MODEL_CONVERTER_TYPE = "modelConverterTypes";
 
 	public static GeneratorManager INSTANCE = new GeneratorManager();
 
 	// cached copy of all generator and configuration types
 	private List<IGeneratorType> generatorTypes;
 	// cached copy of all generator and configuration types
-	private List<IModelProviderType> modelProviderTypes;
+	private List<IModelConverterType> modelConverterTypes;
 	private boolean registryListenerIntialized;
 
 	protected GeneratorManager() {
@@ -55,21 +57,39 @@ public class GeneratorManager implements IGeneratorManager,
 		return INSTANCE;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorManager#generate
+	 * (java.lang.Object,
+	 * org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration)
+	 */
 	public void generate(final Object model,
-			final IGeneratorConfiguration generatorConfiguration) {
+			final IGeneratorConfiguration configuration)
+			throws GeneratorException {
 
-		IGenerator generator = generatorConfiguration.getGeneratorType()
-				.getGenerator();
-		IModelProvider modelProvider = generatorConfiguration
-				.getGeneratorType().getModelProviderType().getModelProvider();
+		IGenerator generator = configuration.getGeneratorType().getGenerator();
+		IModelConverter modelConverter = configuration.getModelConverterType()
+				.getModelConverter();
 
-		Object m = model;
+		Object convertedModel = model;
 		// Get model.
-		if (modelProvider != null) {
-			m = modelProvider.getModel(model);
+		if (modelConverter != null) {
+			convertedModel = modelConverter.convert(model, configuration);
 		}
-		System.out.println("Generate" + generatorConfiguration.getName());
-		generator.generate(m, generatorConfiguration);
+		if (model == null) {
+			// throw ex;
+		}
+		IPath templatePath = configuration.getTemplatePath();
+		if (templatePath == null) {
+			// throw ex;
+		}
+		IPath targetContainerPath = configuration.getTargetContainerPath();
+		if (targetContainerPath == null) {
+			// throw ex;
+		}
+		generator.generate(convertedModel, configuration);
 
 	}
 
@@ -81,10 +101,10 @@ public class GeneratorManager implements IGeneratorManager,
 				handleGeneratorTypeDelta(delta);
 		}
 		deltas = event.getExtensionDeltas(JM2TCore.PLUGIN_ID,
-				EXTENSION_MODEL_PROVIDER_TYPE);
+				EXTENSION_MODEL_CONVERTER_TYPE);
 		if (deltas != null) {
 			for (IExtensionDelta delta : deltas)
-				handleModelProviderTypeDelta(delta);
+				handleModelConverterTypeDelta(delta);
 		}
 	}
 
@@ -203,112 +223,129 @@ public class GeneratorManager implements IGeneratorManager,
 		generatorTypes = list;
 	}
 
-	// --------------------- ModelProvider types
+	// --------------------- ModelConverter types
 
 	/**
-	 * Returns an array of all known modelProvider types.
+	 * Returns an array of all known modelConverter types.
 	 * <p>
 	 * A new array is returned on each call, so clients may store or modify the
 	 * result.
 	 * </p>
 	 * 
-	 * @return the array of modelProvider types {@link IModelProviderType}
+	 * @return the array of modelConverter types {@link IModelConverterType}
 	 */
-	public IModelProviderType[] getModelProviderTypes() {
-		if (modelProviderTypes == null)
-			loadModelProviderTypes();
+	public IModelConverterType[] getModelConverterTypes() {
+		if (modelConverterTypes == null)
+			loadModelConverterTypes();
 
-		IModelProviderType[] st = new IModelProviderType[modelProviderTypes
+		IModelConverterType[] st = new IModelConverterType[modelConverterTypes
 				.size()];
-		modelProviderTypes.toArray(st);
+		modelConverterTypes.toArray(st);
 		return st;
 	}
 
 	/**
-	 * Returns the modelProvider type with the given id, or <code>null</code> if
-	 * none. This convenience method searches the list of known modelProvider
-	 * types ({@link #getModelProviderTypes()}) for the one with a matching
-	 * modelProvider type id ({@link IModelProviderType#getId()}). The id may
-	 * not be null.
+	 * Returns the modelConverter type with the given id, or <code>null</code>
+	 * if none. This convenience method searches the list of known
+	 * modelConverter types ({@link #getModelConverterTypes()}) for the one with
+	 * a matching modelConverter type id ({@link IModelConverterType#getId()}).
+	 * The id may not be null.
 	 * 
 	 * @param id
-	 *            the modelProvider type id
-	 * @return the modelProvider type, or <code>null</code> if there is no
-	 *         modelProvider type with the given id
+	 *            the modelConverter type id
+	 * @return the modelConverter type, or <code>null</code> if there is no
+	 *         modelConverter type with the given id
 	 */
-	public IModelProviderType findModelProviderType(String id) {
+	public IModelConverterType findModelConverterType(String id) {
 		if (id == null)
 			throw new IllegalArgumentException();
 
-		if (modelProviderTypes == null)
-			loadModelProviderTypes();
+		if (modelConverterTypes == null)
+			loadModelConverterTypes();
 
-		Iterator<IModelProviderType> iterator = modelProviderTypes.iterator();
+		Iterator<IModelConverterType> iterator = modelConverterTypes.iterator();
 		while (iterator.hasNext()) {
-			IModelProviderType modelProviderType = (IModelProviderType) iterator
+			IModelConverterType modelConverterType = (IModelConverterType) iterator
 					.next();
-			if (id.equals(modelProviderType.getId()))
-				return modelProviderType;
+			if (id.equals(modelConverterType.getId()))
+				return modelConverterType;
 		}
 		return null;
 	}
 
-	/**
-	 * Load the modelProvider types.
-	 */
-	private synchronized void loadModelProviderTypes() {
-		if (modelProviderTypes != null)
-			return;
+	public void findModelConverterTypesByCategory(String category,
+			List<IModelConverterType> filteredModelConverterTypes) {
+		if (category == null)
+			throw new IllegalArgumentException();
 
-		Trace.trace(Trace.EXTENSION_POINT,
-				"->- Loading .modelProviderTypes extension point ->-");
-
-		IExtensionRegistry registry = Platform.getExtensionRegistry();
-		IConfigurationElement[] cf = registry.getConfigurationElementsFor(
-				JM2TCore.PLUGIN_ID, EXTENSION_MODEL_PROVIDER_TYPE);
-		List<IModelProviderType> list = new ArrayList<IModelProviderType>(
-				cf.length);
-		addModelProviderTypes(cf, list);
-		addRegistryListenerIfNeeded();
-		modelProviderTypes = list;
-
-		Trace.trace(Trace.EXTENSION_POINT,
-				"-<- Done loading .modelProviderTypes extension point -<-");
+		if (modelConverterTypes == null)
+			loadModelConverterTypes();
+		Iterator<IModelConverterType> iterator = modelConverterTypes.iterator();
+		while (iterator.hasNext()) {
+			IModelConverterType modelConverterType = (IModelConverterType) iterator
+					.next();
+			if (category.equals(modelConverterType.getCategory())) {
+				filteredModelConverterTypes.add(modelConverterType);
+			}
+		}
 	}
 
 	/**
-	 * Load the modelProvider types.
+	 * Load the modelConverter types.
 	 */
-	private synchronized void addModelProviderTypes(IConfigurationElement[] cf,
-			List<IModelProviderType> list) {
+	private synchronized void loadModelConverterTypes() {
+		if (modelConverterTypes != null)
+			return;
+
+		Trace.trace(Trace.EXTENSION_POINT,
+				"->- Loading .modelConverterTypes extension point ->-");
+
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		IConfigurationElement[] cf = registry.getConfigurationElementsFor(
+				JM2TCore.PLUGIN_ID, EXTENSION_MODEL_CONVERTER_TYPE);
+		List<IModelConverterType> list = new ArrayList<IModelConverterType>(
+				cf.length);
+		addModelConverterTypes(cf, list);
+		addRegistryListenerIfNeeded();
+		modelConverterTypes = list;
+
+		Trace.trace(Trace.EXTENSION_POINT,
+				"-<- Done loading .modelConverterTypes extension point -<-");
+	}
+
+	/**
+	 * Load the modelConverter types.
+	 */
+	private synchronized void addModelConverterTypes(
+			IConfigurationElement[] cf, List<IModelConverterType> list) {
 		for (IConfigurationElement ce : cf) {
 			try {
-				list.add(new ModelProviderType(ce));
+				list.add(new ModelConverterType(ce));
 				Trace.trace(Trace.EXTENSION_POINT,
-						"  Loaded modelProviderType: " + ce.getAttribute("id"));
+						"  Loaded modelConverterType: " + ce.getAttribute("id"));
 			} catch (Throwable t) {
 				Trace.trace(
 						Trace.SEVERE,
-						"  Could not load modelProviderType: "
+						"  Could not load modelConverterType: "
 								+ ce.getAttribute("id"), t);
 			}
 		}
 	}
 
-	protected void handleModelProviderTypeDelta(IExtensionDelta delta) {
-		if (modelProviderTypes == null) // not loaded yet
+	protected void handleModelConverterTypeDelta(IExtensionDelta delta) {
+		if (modelConverterTypes == null) // not loaded yet
 			return;
 
 		IConfigurationElement[] cf = delta.getExtension()
 				.getConfigurationElements();
 
-		List<IModelProviderType> list = new ArrayList<IModelProviderType>(
-				modelProviderTypes);
+		List<IModelConverterType> list = new ArrayList<IModelConverterType>(
+				modelConverterTypes);
 		if (delta.getKind() == IExtensionDelta.ADDED) {
-			addModelProviderTypes(cf, list);
+			addModelConverterTypes(cf, list);
 		} else {
 			int size = list.size();
-			ModelProviderType[] st = new ModelProviderType[size];
+			ModelConverterType[] st = new ModelConverterType[size];
 			list.toArray(st);
 			int size2 = cf.length;
 
@@ -321,7 +358,7 @@ public class GeneratorManager implements IGeneratorManager,
 				}
 			}
 		}
-		modelProviderTypes = list;
+		modelConverterTypes = list;
 	}
 
 	private void addRegistryListenerIfNeeded() {

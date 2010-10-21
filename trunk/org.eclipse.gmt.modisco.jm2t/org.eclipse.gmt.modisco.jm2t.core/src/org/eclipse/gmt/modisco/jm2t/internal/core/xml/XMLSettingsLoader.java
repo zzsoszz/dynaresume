@@ -24,10 +24,14 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.gmt.modisco.jm2t.core.IJM2TProject;
 import org.eclipse.gmt.modisco.jm2t.core.JM2TCore;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterType;
+import org.eclipse.gmt.modisco.jm2t.core.util.StringUtils;
 import org.eclipse.gmt.modisco.jm2t.internal.core.Trace;
 import org.eclipse.gmt.modisco.jm2t.internal.core.generator.GeneratorConfiguration;
 import org.xml.sax.Attributes;
@@ -37,6 +41,12 @@ import org.xml.sax.helpers.DefaultHandler;
 public class XMLSettingsLoader extends DefaultHandler {
 
 	private List<IGeneratorConfiguration> generatorConfigurations = new ArrayList<IGeneratorConfiguration>();
+
+	private IJM2TProject project;
+
+	public XMLSettingsLoader(IJM2TProject project) {
+		this.project = project;
+	}
 
 	/**
 	 * Load XML config from file.
@@ -91,16 +101,42 @@ public class XMLSettingsLoader extends DefaultHandler {
 	}
 
 	private IGeneratorConfiguration createGeneratorConfiguration(Attributes atts) {
-		GeneratorConfiguration configuration = null;
+		IGeneratorConfiguration configuration = null;
 		String type = atts.getValue(GeneratorConfiguration.TAG_GENERATOR_TYPE);
 		IGeneratorType generatorType = JM2TCore.getGeneratorManager()
 				.findGeneratorType(type);
 		if (generatorType != null) {
-			configuration = new GeneratorConfiguration(generatorType);
+
+			IModelConverterType modelConverterType = getModelConverterType(generatorType, atts);
+			configuration = generatorType.createGeneratorConfiguration(
+					modelConverterType, project);
 			configuration.setName(atts
 					.getValue(GeneratorConfiguration.TAG_NAME));
+			configuration.setTemplatePath(new Path(atts
+					.getValue(GeneratorConfiguration.TAG_TEMPLATE_PATH)));
+			configuration.setTargetContainerPath(new Path(atts
+					.getValue(GeneratorConfiguration.TAG_TARGET_PATH)));
 		}
 		return configuration;
+	}
+
+	private IModelConverterType getModelConverterType(
+			IGeneratorType generatorType, Attributes atts) {
+		IModelConverterType modelConverterType = null;
+		String converterType = atts
+				.getValue(GeneratorConfiguration.TAG_MODEL_CONVERTER_TYPE);
+		if (!StringUtils.isEmpty(converterType)) {
+			modelConverterType = JM2TCore.getGeneratorManager()
+					.findModelConverterType(converterType);
+		}
+		if (modelConverterType == null) {
+			IModelConverterType[] supportedModelConverterTypes = generatorType
+					.getSupportedModelConverterTypes();
+			if (supportedModelConverterTypes.length > 0) {
+				modelConverterType = supportedModelConverterTypes[0];
+			}
+		}
+		return modelConverterType;
 	}
 
 	public Collection<IGeneratorConfiguration> getGeneratorConfigurations() {

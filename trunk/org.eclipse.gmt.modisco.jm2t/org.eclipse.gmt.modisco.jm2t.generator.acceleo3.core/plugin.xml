@@ -9,7 +9,7 @@
        name="%generatorTypeAcceleo3Label"
        description="%generatorTypeAcceleo3Description"
        class="org.eclipse.gmt.modisco.jm2t.generator.acceleo3.internal.core.Acceleo3Generator"
-       modelProviderTypeId="org.eclipse.gmt.modisco.jm2t.modelprovider.javamodisco" >
+       modelConverterCategories="M2EMF" >
     </generatorType>
   </extension>
   

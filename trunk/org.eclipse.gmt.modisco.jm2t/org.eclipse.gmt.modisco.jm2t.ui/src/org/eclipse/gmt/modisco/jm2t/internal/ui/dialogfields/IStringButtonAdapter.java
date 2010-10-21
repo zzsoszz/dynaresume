@@ -8,13 +8,13 @@
  * Contributors:      
  *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gmt.modisco.jm2t.core.generator;
+package org.eclipse.gmt.modisco.jm2t.internal.ui.dialogfields;
 
 /**
- * 
- * Abstract base class for model provider.
- * 
+ * Change listener used by <code>StringButtonDialogField</code>
  */
-public abstract class AbstractModelProvider implements IModelProvider {
+public interface IStringButtonAdapter {
+	
+	void changeControlPressed(DialogField field);
 
 }

@@ -16,7 +16,7 @@ import org.eclipse.gmt.modisco.jm2t.core.generator.IGenerator;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorManager;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
-import org.eclipse.gmt.modisco.jm2t.core.generator.IModelProvider;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverter;
 import org.eclipse.gmt.modisco.jm2t.internal.core.JM2TModel;
 import org.eclipse.gmt.modisco.jm2t.internal.core.JM2TModelManager;
 import org.eclipse.gmt.modisco.jm2t.internal.core.Trace;

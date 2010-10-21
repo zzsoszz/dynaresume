@@ -68,13 +68,13 @@
                </appInfo>
             </annotation>
          </attribute>
-         <attribute name="modelProviderTypeId" type="string" use="required">
+         <attribute name="modelConverterCategories" type="string">
             <annotation>
                <documentation>
-                  specifies the model provider type identifier for this fragment
+                  specifies the model converter categories (use &apos;,&apos; token to define several category) for this fragment
                </documentation>
             </annotation>
-         </attribute>         
+         </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>

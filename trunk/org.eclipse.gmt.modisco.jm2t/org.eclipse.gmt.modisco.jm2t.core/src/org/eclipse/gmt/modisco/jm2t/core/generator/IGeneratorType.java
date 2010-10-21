@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.core.generator;
 
+import org.eclipse.gmt.modisco.jm2t.core.IJM2TProject;
+
 /**
  * Generator type interface.
  * 
@@ -46,21 +48,24 @@ public interface IGeneratorType {
 	String getDescription();
 
 	/**
-	 * Return the generator instance.
+	 * Returns the generator instance.
 	 * 
 	 * @return
 	 */
 	IGenerator getGenerator();
-	
+
 	/**
+	 * Returns supported model converters.
 	 * 
 	 * @return
 	 */
-	IModelProviderType getModelProviderType();
-	
+	IModelConverterType[] getSupportedModelConverterTypes();
+
 	/**
+	 * Returns an instance of generator configuration.
 	 * 
 	 * @return
 	 */
-	IGeneratorConfiguration createGeneratorConfiguration();
+	IGeneratorConfiguration createGeneratorConfiguration(
+			IModelConverterType converterType, IJM2TProject project);
 }
