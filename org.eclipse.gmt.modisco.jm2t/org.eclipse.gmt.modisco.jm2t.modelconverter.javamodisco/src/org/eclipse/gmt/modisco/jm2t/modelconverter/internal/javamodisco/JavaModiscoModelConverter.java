@@ -35,14 +35,15 @@ import org.eclipse.jdt.core.JavaCore;
  */
 public class JavaModiscoModelConverter extends AbstractModelConverter {
 
+	public Object getModelToConvert(Object model) {
+		// Get the JDT Java Element from the selected object model
+		return getJavaElement(model);
+	}
+	
 	public Object convert(Object model, IGeneratorConfiguration configuration)
 			throws ModelConverterException {
 		// Get the JDT Java Element from the selected object model
-		IJavaElement element = getJavaElement(model);
-		if (element == null) {
-			throw new ModelConverterException(
-					Messages.CannotConvertToJavaELement);
-		}
+		IJavaElement element = (IJavaElement)model;
 
 		// Get Modisco Discover switch the JDT JavaElement (IJavaProject,
 		// ICompilationUnit)

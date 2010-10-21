@@ -1,11 +1,15 @@
 package org.eclipse.gmt.modisco.jm2t.internal.ui.actions;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.gmt.modisco.jm2t.core.IJM2TProject;
 import org.eclipse.gmt.modisco.jm2t.core.JM2TCore;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverter;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterType;
 import org.eclipse.gmt.modisco.jm2t.core.util.ResourcesUtils;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.Messages;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.Trace;
@@ -90,6 +94,36 @@ public class ContributionItemForJM2TMenu extends ContributionItem {
 	protected void createMenuForGeneratorConfiguration(
 			IGeneratorConfiguration configuration, Menu jm2tmenu,
 			final Object[] selectedObjects) {
+
+		// Loop for each selected objects to get the real object to convert (ex
+		// : IFile is selected and the real object to convert is a
+		// IJavaElement).
+		IModelConverter modelConverter = null;
+		IModelConverterType modelConverterType = configuration
+				.getModelConverterType();
+		if (modelConverterType != null) {
+			modelConverter = modelConverterType.getModelConverter();
+		}
+		List<Object> selectedObjectToConverts = new ArrayList<Object>();
+		Object selectedObjectToConvert = null;
+		for (final Object selectedObject : selectedObjects) {
+			selectedObjectToConvert = modelConverter
+					.getModelToConvert(selectedObject);
+			if (selectedObjectToConvert != null) {
+				selectedObjectToConverts.add(selectedObjectToConvert);
+			}
+		}
+
+		if (selectedObjectToConverts.size() < 1) {
+			// None selected object can be used as model for this Generator
+			// configuration
+			// None menu item must be created
+			return;
+		}
+
+		// There is one or more of selected object which can be used as model
+		// for this Generator
+		// configuration, create a menu item for this configuration.
 		Menu parentMenu = jm2tmenu;
 
 		// final menu
@@ -98,8 +132,9 @@ public class ContributionItemForJM2TMenu extends ContributionItem {
 		// if (discoverer.getImageIcon() != null) {
 		// discovererMenu.setImage(discoverer.getImageIcon());
 		// }
+
 		MenuListenerHandler handler = new MenuListenerHandler(configuration,
-				selectedObjects);
+				selectedObjectToConverts.toArray());
 		discovererMenu.addSelectionListener(handler);
 
 	}
