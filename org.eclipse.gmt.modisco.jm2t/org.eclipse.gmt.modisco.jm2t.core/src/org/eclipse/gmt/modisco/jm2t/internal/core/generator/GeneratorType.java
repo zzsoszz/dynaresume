@@ -10,11 +10,16 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.internal.core.generator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.gmt.modisco.jm2t.core.IJM2TProject;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGenerator;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
-import org.eclipse.gmt.modisco.jm2t.core.generator.IModelProviderType;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterType;
+import org.eclipse.gmt.modisco.jm2t.core.util.StringUtils;
 
 /**
  * Generator type implementation which use Extension Point generatorTypes.
@@ -24,6 +29,7 @@ public class GeneratorType implements IGeneratorType {
 
 	private IConfigurationElement element;
 	private IGenerator generator;
+	private IModelConverterType[] supportedModelConverterTypes;
 
 	/**
 	 * GeneratorType constructor comment.
@@ -65,6 +71,14 @@ public class GeneratorType implements IGeneratorType {
 		}
 	}
 
+	public String getModelConverterCategories() {
+		try {
+			return element.getAttribute("modelConverterCategories");
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 	public IGenerator getGenerator() {
 		if (generator == null) {
 			generator = createGenerator();
@@ -80,19 +94,38 @@ public class GeneratorType implements IGeneratorType {
 		}
 	}
 
-	public IGeneratorConfiguration createGeneratorConfiguration() {
-		return new GeneratorConfiguration(this);
+	public IGeneratorConfiguration createGeneratorConfiguration(
+			IModelConverterType converterType, IJM2TProject project) {
+		return new GeneratorConfiguration(this, converterType, project);
 	}
 
-	public IModelProviderType getModelProviderType() {
-		String modelProviderTypeId = element
-				.getAttribute("modelProviderTypeId");
-		return GeneratorManager.getManager().findModelProviderType(
-				modelProviderTypeId);
+	public IModelConverterType[] getSupportedModelConverterTypes() {
+		if (supportedModelConverterTypes == null) {
+			String categories = getModelConverterCategories();
+			if (StringUtils.isEmpty(categories)) {
+				supportedModelConverterTypes = GeneratorManager.getManager()
+						.getModelConverterTypes();
+			} else {
+				List<IModelConverterType> filteredModelConverterTypes = new ArrayList<IModelConverterType>();
+				String category = null;
+				String[] tokenizedCategories = StringUtils.tokenize(categories,
+						",");
+				for (int i = 0; i < tokenizedCategories.length; i++) {
+					category = tokenizedCategories[i];
+					GeneratorManager.getManager()
+							.findModelConverterTypesByCategory(category,
+									filteredModelConverterTypes);
+				}
+				supportedModelConverterTypes = filteredModelConverterTypes
+						.toArray(IModelConverterType.EMPTY);
+			}
+		}
+		return supportedModelConverterTypes;
 	}
 
 	public void dispose() {
 		element = null;
 		generator = null;
+		supportedModelConverterTypes = null;
 	}
 }

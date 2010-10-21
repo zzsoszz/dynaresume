@@ -3,7 +3,7 @@
 <plugin>
 
 	<extension-point id="generatorTypes" name="%extensionPointGeneratorTypes" schema="schema/generatorTypes.exsd"/>
-	<extension-point id="modelProviderTypes" name="%extensionPointModelProviders" schema="schema/modelProviderTypes.exsd"/>
+	<extension-point id="modelConverterTypes" name="%extensionPointModelProviders" schema="schema/modelConverterTypes.exsd"/>
   
 	<extension id="nature"
          point="org.eclipse.core.resources.natures"

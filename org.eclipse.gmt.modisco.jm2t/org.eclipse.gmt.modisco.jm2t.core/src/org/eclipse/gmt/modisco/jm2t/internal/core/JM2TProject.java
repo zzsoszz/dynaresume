@@ -160,7 +160,7 @@ public class JM2TProject implements IJM2TProject, IProjectNature {
 															 */);
 		if (file == null)
 			throw new IOException("Unable to fetch file from " + location); //$NON-NLS-1$
-		XMLSettingsLoader settingsLoader = new XMLSettingsLoader();
+		XMLSettingsLoader settingsLoader = new XMLSettingsLoader(this);
 		settingsLoader.load(file);
 		return settingsLoader.getGeneratorConfigurations();
 	}

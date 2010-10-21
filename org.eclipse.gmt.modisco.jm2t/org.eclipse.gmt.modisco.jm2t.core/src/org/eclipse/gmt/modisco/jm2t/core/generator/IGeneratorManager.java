@@ -47,9 +47,23 @@ public interface IGeneratorManager {
 	 * result.
 	 * </p>
 	 * 
-	 * @return the array of modelProvider types {@link IModelProviderType}
+	 * @return the array of modelProvider types {@link IModelConverterType}
 	 */
-	IModelProviderType[] getModelProviderTypes();
+	IModelConverterType[] getModelConverterTypes();
+
+	/**
+	 * Returns the model converter type with the given id, or <code>null</code>
+	 * if none. This convenience method searches the list of known model
+	 * converter types ({@link #getModelConverterTypes()}) for the one with a
+	 * matching model converter type id ({@link IModelConverterType#getId()}).
+	 * The id may not be null.
+	 * 
+	 * @param id
+	 *            the model converter type id
+	 * @return the model converter type, or <code>null</code> if there is no
+	 *         model converter type with the given id
+	 */
+	IModelConverterType findModelConverterType(String id);
 
 	/**
 	 * Generate .
@@ -60,5 +74,7 @@ public interface IGeneratorManager {
 	 * @param generatorConfiguration
 	 */
 	void generate(final Object model,
-			final IGeneratorConfiguration generatorConfiguration);
+			final IGeneratorConfiguration generatorConfiguration)
+			throws GeneratorException;
+
 }

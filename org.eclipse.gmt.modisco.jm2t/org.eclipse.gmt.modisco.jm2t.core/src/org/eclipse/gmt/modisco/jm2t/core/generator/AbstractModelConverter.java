@@ -11,11 +11,10 @@
 package org.eclipse.gmt.modisco.jm2t.core.generator;
 
 /**
- * Model provider interface.
+ * 
+ * Abstract base class for model converter.
  * 
  */
-public interface IModelProvider {
-
-	Object getModel(Object model);
+public abstract class AbstractModelConverter implements IModelConverter {
 
 }

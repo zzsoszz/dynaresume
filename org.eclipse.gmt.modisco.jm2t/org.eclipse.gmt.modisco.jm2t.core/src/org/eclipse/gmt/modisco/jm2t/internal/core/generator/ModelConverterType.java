@@ -11,25 +11,25 @@
 package org.eclipse.gmt.modisco.jm2t.internal.core.generator;
 
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.gmt.modisco.jm2t.core.generator.IModelProvider;
-import org.eclipse.gmt.modisco.jm2t.core.generator.IModelProviderType;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverter;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterType;
 
 /**
- * Model provider type implementation which use Extension Point modelProviderTypes.
+ * Model converter type implementation which use Extension Point modelConverterTypes.
  * 
  */
-public class ModelProviderType implements IModelProviderType {
+public class ModelConverterType implements IModelConverterType {
 
 	private IConfigurationElement element;
-	private IModelProvider modelProvider;
+	private IModelConverter modelConverter;
 
 	/**
-	 * ModelProviderType constructor comment.
+	 * ModelConverterType constructor comment.
 	 * 
 	 * @param element
 	 *            a configuration element
 	 */
-	public ModelProviderType(IConfigurationElement element) {
+	public ModelConverterType(IConfigurationElement element) {
 		super();
 		this.element = element;
 	}
@@ -47,16 +47,29 @@ public class ModelProviderType implements IModelProviderType {
 		}
 	}
 
-	public IModelProvider getModelProvider() {
-		if (modelProvider == null) {
-			modelProvider = createModelProvider();
+	/**
+	 * Returns the category of this factory.
+	 * 
+	 * @return java.lang.String
+	 */
+	public String getCategory() {
+		try {
+			return element.getAttribute("category");
+		} catch (Exception e) {
+			return null;
 		}
-		return modelProvider;
+	}
+	
+	public IModelConverter getModelConverter() {
+		if (modelConverter == null) {
+			modelConverter = createModelConverter();
+		}
+		return modelConverter;
 	}
 
-	private IModelProvider createModelProvider() {
+	private IModelConverter createModelConverter() {
 		try {
-			return (IModelProvider) element.createExecutableExtension("class");
+			return (IModelConverter) element.createExecutableExtension("class");
 		} catch (Exception e) {
 			return null;
 		}
@@ -64,6 +77,7 @@ public class ModelProviderType implements IModelProviderType {
 
 	public void dispose() {
 		element = null;
+		modelConverter = null;
 	}
 
 }

@@ -48,4 +48,18 @@ public class StringUtils {
 		list.toArray(s);
 		return s;
 	}
+
+	/**
+	 * <p>
+	 * Checks if a String is empty ("") or null.
+	 * </p>
+	 * 
+	 * @param str
+	 *            the String to check, may be null
+	 * @return <code>true</code> if the String is empty or null
+	 */
+	public static boolean isEmpty(String str) {
+		return (str == null || str.length() == 0);
+	}
+
 }

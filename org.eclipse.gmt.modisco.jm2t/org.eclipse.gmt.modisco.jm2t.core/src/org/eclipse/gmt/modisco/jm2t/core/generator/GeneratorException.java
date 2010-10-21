@@ -11,25 +11,15 @@
 package org.eclipse.gmt.modisco.jm2t.core.generator;
 
 /**
- * 
- * Model provider type interface.
+ * Generator exception.
  * 
  */
-public interface IModelProviderType {
+public class GeneratorException extends RuntimeException {
 
-	/**
-	 * Returns the id of this modelprovider type. Each known modelprovider type
-	 * has a distinct id. Ids are intended to be used internally as keys; they
-	 * are not intended to be shown to end users.
-	 * 
-	 * @return the modelprovider type id
-	 */
-	String getId();
+	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Return the model provider instance.
-	 * 
-	 * @return
-	 */
-	IModelProvider getModelProvider();
+	public GeneratorException(Throwable e) {
+		super(e);
+	}
+
 }

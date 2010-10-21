@@ -307,8 +307,8 @@ public class JM2TPropertyPage extends PropertyPage implements
 		if (selectedGeneratorType == null)
 			return;
 		GeneratorConfigurationDialog dialog = new GeneratorConfigurationDialog(
-				getShell(), selectedGeneratorType,
-				generatorConfigurationList.getElements());
+				getShell(), JM2TCore.create(getProject()),
+				selectedGeneratorType, generatorConfigurationList.getElements());
 		if (dialog.open() == Window.OK) {
 			generatorConfigurationList.addElement(dialog.getResult());
 		}
@@ -319,7 +319,8 @@ public class JM2TPropertyPage extends PropertyPage implements
 				.getSelectedElements().get(0);
 
 		GeneratorConfigurationDialog dialog = new GeneratorConfigurationDialog(
-				getShell(), selectedGeneratorConfiguration,
+				getShell(), JM2TCore.create(getProject()),
+				selectedGeneratorConfiguration,
 				generatorConfigurationList.getElements());
 		if (dialog.open() == Window.OK) {
 			generatorConfigurationList.replaceElement(

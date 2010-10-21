@@ -3,10 +3,10 @@
 <schema targetNamespace="org.eclipse.gmt.modisco.jm2t.core" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.eclipse.gmt.modisco.jm2t.core" id="modelProviderTypes" name="Model provider types"/>
+         <meta.schema plugin="org.eclipse.gmt.modisco.jm2t.core" id="modelConverterTypes" name="Model converter types"/>
       </appInfo>
       <documentation>
-         This extension point is used to provide support for a new model provider type.
+         This extension point is used to provide support for a new model converter type.
       </documentation>
    </annotation>
 
@@ -18,7 +18,7 @@
       </annotation>
       <complexType>
          <sequence>
-            <element ref="modelProviderType" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="modelConverterType" minOccurs="1" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -44,7 +44,7 @@
       </complexType>
    </element>
 
-   <element name="modelProviderType">
+   <element name="modelConverterType">
       <annotation>
          <appInfo>
             <meta.element labelAttribute="id"/>
@@ -61,10 +61,10 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  specifies the fully qualified name of the Java class that implements &lt;samp&gt;org.eclipse.gmt.modisco.jm2t.core.generator.IModelProviderType&lt;/samp&gt;
+                  specifies the fully qualified name of the Java class that implements &lt;samp&gt;org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterType&lt;/samp&gt;
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.gmt.modisco.jm2t.core.generator.IModelProviderType"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterType"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -79,6 +79,13 @@
             <annotation>
                <documentation>
                   
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="category" type="string" use="required">
+            <annotation>
+               <documentation>
+                  specifies the category for this fragment
                </documentation>
             </annotation>
          </attribute>
