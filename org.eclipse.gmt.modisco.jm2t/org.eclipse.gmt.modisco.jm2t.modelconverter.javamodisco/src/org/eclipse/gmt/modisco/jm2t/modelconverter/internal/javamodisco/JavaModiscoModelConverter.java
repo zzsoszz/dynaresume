@@ -13,13 +13,20 @@ package org.eclipse.gmt.modisco.jm2t.modelconverter.internal.javamodisco;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.gmt.modisco.infra.discoverymanager.DiscoveryParameter;
 import org.eclipse.gmt.modisco.java.actions.DefaultDiscoverer;
 import org.eclipse.gmt.modisco.jm2t.core.generator.AbstractModelConverter;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
+import org.eclipse.gmt.modisco.jm2t.core.generator.ModelConverterException;
 import org.eclipse.jdt.core.IJavaElement;
+import org.eclipse.jdt.core.JavaCore;
 
 /**
  * JM2T Model converter to convert JDT JavaElement as EMF model with Java
@@ -28,8 +35,9 @@ import org.eclipse.jdt.core.IJavaElement;
  */
 public class JavaModiscoModelConverter extends AbstractModelConverter {
 
-	public Object convert(Object model, IGeneratorConfiguration configuration) {
-		IJavaElement element = (IJavaElement) model;
+	public Object convert(Object model, IGeneratorConfiguration configuration)
+			throws ModelConverterException {
+		IJavaElement element = getJavaElement(model);
 
 		// Get Modisco Discover switch the JDT JavaElement (IJavaProject,
 		// ICompilationUnit)
@@ -49,6 +57,41 @@ public class JavaModiscoModelConverter extends AbstractModelConverter {
 				.get(DefaultDiscoverer.PARAMETER_TARGET_RESOURCE);
 		EObject emfObject = javaModel.getContents().get(0);
 		return emfObject;
+	}
+
+	/**
+	 * Retrieve {@link IJavaElement} from the selected object model.
+	 * 
+	 * @param model
+	 * @return
+	 * @throws ModelConverterException
+	 */
+	private IJavaElement getJavaElement(Object model)
+			throws ModelConverterException {
+		if (model instanceof IJavaElement) {
+			return (IJavaElement) model;
+		}
+		try {
+			if (model instanceof IProject) {
+				return JavaCore.create((IProject) model);
+			}
+			if (model instanceof IFile) {
+				return JavaCore.create((IFile) model);
+			}
+			if (model instanceof IFolder) {
+				return JavaCore.create((IFolder) model);
+			}
+			if (model instanceof IResource) {
+				return JavaCore.create((IResource) model);
+			}
+			if (model instanceof IWorkspaceRoot) {
+				return JavaCore.create((IWorkspaceRoot) model);
+			}
+		} catch (Throwable e) {
+			throw new ModelConverterException(e);
+		}
+		throw new ModelConverterException(
+				Messages.CannotConvertToJavaELement);
 	}
 
 }
