@@ -44,11 +44,13 @@ public class Messages extends NLS {
 	public static String GeneratorConfigurationDialog_targetContainer;
 
 	public static String GeneratorTypeComposite_title;
+	public static String ModelConverterTypeComposite_title;
 
 	public static String savingSettingsError;
 	public static String ContributionItemForJM2TMenu_0;
 	public static String MenuListenerHandler_0;
-
+	
+	
 	private static final String BUNDLE_NAME = "org.eclipse.gmt.modisco.jm2t.internal.ui.messages"; //$NON-NLS-1$
 
 	static {

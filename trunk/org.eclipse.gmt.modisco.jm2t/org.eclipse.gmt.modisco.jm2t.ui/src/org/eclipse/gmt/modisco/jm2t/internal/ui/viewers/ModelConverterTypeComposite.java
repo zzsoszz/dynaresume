@@ -11,6 +11,7 @@
 package org.eclipse.gmt.modisco.jm2t.internal.ui.viewers;
 
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterType;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.Messages;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -21,33 +22,32 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * Display a tree which display generator type available.
+ * Display a tree which display modelConverter type available for a generator
+ * type.
  * 
  */
-public class GeneratorTypeComposite extends AbstractTreeComposite {
+public class ModelConverterTypeComposite extends AbstractTreeComposite {
 
-	protected IGeneratorType selection;
-	protected GeneratorTypeSelectionListener listener;
-	protected boolean creation;
-	protected String type;
-	protected String version;
+	protected IModelConverterType selection;
+	protected ModelConverterTypeSelectionListener listener;
 
-	protected GeneratorTypeTreeContentProvider contentProvider;
+	protected ModelConverterTypeTreeContentProvider contentProvider;
 	protected boolean initialSelection = true;
 
-	public interface GeneratorTypeSelectionListener {
-		public void generatorTypeSelected(IGeneratorType generatorType);
+	public interface ModelConverterTypeSelectionListener {
+		public void modelConverterTypeSelected(
+				IModelConverterType modelConverterType);
 	}
 
-	public GeneratorTypeComposite(final Composite parent,
-			final GeneratorTypeSelectionListener listener) {
+	public ModelConverterTypeComposite(Composite parent,
+			final ModelConverterTypeSelectionListener listener) {
 		super(parent);
 		this.listener = listener;
 
-		contentProvider = new GeneratorTypeTreeContentProvider();
+		contentProvider = new ModelConverterTypeTreeContentProvider(null);
 		treeViewer.setContentProvider(contentProvider);
 
-		ILabelProvider labelProvider = new GeneratorTypeTreeLabelProvider();
+		ILabelProvider labelProvider = new ModelConverterTypeTreeLabelProvider();
 		labelProvider.addListener(new ILabelProviderListener() {
 			public void labelProviderChanged(LabelProviderChangedEvent event) {
 				Object[] obj = event.getElements();
@@ -66,14 +66,14 @@ public class GeneratorTypeComposite extends AbstractTreeComposite {
 		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			public void selectionChanged(SelectionChangedEvent event) {
 				Object obj = getSelection(event.getSelection());
-				if (obj instanceof IGeneratorType) {
-					selection = (IGeneratorType) obj;
+				if (obj instanceof IModelConverterType) {
+					selection = (IModelConverterType) obj;
 					setDescription(selection.getDescription());
 				} else {
 					selection = null;
 					setDescription("");
 				}
-				listener.generatorTypeSelected(selection);
+				listener.modelConverterTypeSelected(selection);
 			}
 		});
 
@@ -93,15 +93,20 @@ public class GeneratorTypeComposite extends AbstractTreeComposite {
 	}
 
 	protected String getTitleLabel() {
-		return Messages.GeneratorTypeComposite_title;
+		return Messages.ModelConverterTypeComposite_title;
 	}
 
-	public IGeneratorType getSelectedGeneratorType() {
+	protected String getDescriptionLabel() {
+		return null;
+	}
+
+	public IModelConverterType getSelectedModelConverterType() {
 		return selection;
 	}
 
-	@Override
-	protected String getDescriptionLabel() {
-		return null;
+	public void setGeneratorType(IGeneratorType generatorType) {
+		contentProvider.setGeneratorType(generatorType);
+		treeViewer.refresh();
+		treeViewer.expandAll();
 	}
 }

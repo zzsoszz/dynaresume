@@ -27,12 +27,8 @@ import java.util.Map;
  */
 public class TaskModel {
 
-	/**
-	 * Task model id for an IGeneratorConfiguration.
-	 * 
-	 * @see #getObject(String)
-	 * @see #putObject(String, Object)
-	 */
+	public static final String TASK_GENERATOR_TYPE = "generatorType";
+	public static final String TASK_MODEL_CONVERTER_TYPE = "modelConverterType";
 	public static final String TASK_GENERATOR_CONFIGURATION = "generatorConfiguration";
 
 	private Map<String, Object> map = new HashMap<String, Object>();

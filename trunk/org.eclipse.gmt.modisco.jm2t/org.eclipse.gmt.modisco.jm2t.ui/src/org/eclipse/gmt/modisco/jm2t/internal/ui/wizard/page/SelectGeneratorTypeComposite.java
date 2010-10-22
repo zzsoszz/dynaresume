@@ -26,13 +26,13 @@ import org.eclipse.swt.widgets.Composite;
  * Generator type to select.
  * 
  */
-public class NewGeneratorConfigurationComposite extends Composite {
+public class SelectGeneratorTypeComposite extends Composite {
 
 	protected TaskModel taskModel;
 	protected IWizardHandle wizard;
 
-	public NewGeneratorConfigurationComposite(Composite parent,
-			IWizardHandle wizard, TaskModel tm) {
+	public SelectGeneratorTypeComposite(Composite parent, IWizardHandle wizard,
+			TaskModel tm) {
 		super(parent, SWT.NONE);
 
 		this.wizard = wizard;
@@ -45,14 +45,7 @@ public class NewGeneratorConfigurationComposite extends Composite {
 		// wizard.setImageDescriptor(ImageResource.getImageDescriptor(ImageResource.IMG_WIZBAN_NEW_RUNTIME));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets
-	 * .Composite)
-	 */
-	public void createControl() {
+	private void createControl() {
 		// initializeDialogUnits(parent);
 		GridLayout layout = new GridLayout();
 		layout.horizontalSpacing = SWTUtil.convertHorizontalDLUsToPixels(this,
@@ -64,7 +57,6 @@ public class NewGeneratorConfigurationComposite extends Composite {
 		// whs.setHelp(this, ContextIds.NEW_RUNTIME_WIZARD);
 
 		final GeneratorTypeComposite comp = new GeneratorTypeComposite(this,
-				true,
 				new GeneratorTypeComposite.GeneratorTypeSelectionListener() {
 					public void generatorTypeSelected(
 							IGeneratorType generatorType) {
@@ -75,12 +67,14 @@ public class NewGeneratorConfigurationComposite extends Composite {
 		data.heightHint = 300;
 		comp.setLayoutData(data);
 
-		//
-
 	}
 
 	protected void handleSelection(IGeneratorType generatorType) {
-
+		// Tree node is selected, generator type is null or not
+		// put it into the Map TaskModel
+		taskModel.putObject(TaskModel.TASK_GENERATOR_TYPE, generatorType);
+		// refresh wizard to manage buttons and next page.
+		wizard.update();
 	}
 
 }

@@ -34,7 +34,8 @@ import org.eclipse.gmt.modisco.jm2t.internal.ui.viewers.GeneratorTypeContentProv
 import org.eclipse.gmt.modisco.jm2t.internal.ui.viewers.GeneratorTypeLabelProvider;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.wizard.TaskWizard;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.wizard.WizardTaskUtil;
-import org.eclipse.gmt.modisco.jm2t.internal.ui.wizard.fragment.NewGeneratorConfigurationWizardFragment;
+import org.eclipse.gmt.modisco.jm2t.internal.ui.wizard.fragment.SelectGeneratorTypeWizardFragment;
+import org.eclipse.gmt.modisco.jm2t.internal.ui.wizard.fragment.SelectModelConverterTypeWizardFragment;
 import org.eclipse.gmt.modisco.jm2t.ui.wizard.WizardFragment;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -375,7 +376,8 @@ public class JM2TPropertyPage extends PropertyPage implements
 			title = Messages.wizNewGeneratorConfigurationWizardTitle;
 			fragment = new WizardFragment() {
 				protected void createChildFragments(List<WizardFragment> list) {
-					list.add(new NewGeneratorConfigurationWizardFragment());
+					list.add(new SelectGeneratorTypeWizardFragment());
+					list.add(new SelectModelConverterTypeWizardFragment());
 					list.add(WizardTaskUtil.SaveRuntimeFragment);
 				}
 			};
