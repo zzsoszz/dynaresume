@@ -42,8 +42,8 @@ public class SelectModelConverterTypeComposite extends Composite {
 
 		createControl();
 
-		wizard.setTitle(Messages.wizNewGeneratorConfigurationTitle);
-		wizard.setDescription(Messages.wizNewGeneratorConfigurationDescription);
+		wizard.setTitle(Messages.wizSelectModelConverterTypeTitle);
+		wizard.setDescription(Messages.wizSelectModelConverterTypeDescription);
 		// wizard.setImageDescriptor(ImageResource.getImageDescriptor(ImageResource.IMG_WIZBAN_NEW_RUNTIME));
 	}
 
