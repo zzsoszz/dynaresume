@@ -107,15 +107,22 @@ public class XMLSettingsLoader extends DefaultHandler {
 				.findGeneratorType(type);
 		if (generatorType != null) {
 
-			IModelConverterType modelConverterType = getModelConverterType(generatorType, atts);
+			IModelConverterType modelConverterType = getModelConverterType(
+					generatorType, atts);
 			configuration = generatorType.createGeneratorConfiguration(
 					modelConverterType, project);
 			configuration.setName(atts
 					.getValue(GeneratorConfiguration.TAG_NAME));
-			configuration.setTemplatePath(new Path(atts
-					.getValue(GeneratorConfiguration.TAG_TEMPLATE_PATH)));
-			configuration.setTargetContainerPath(new Path(atts
-					.getValue(GeneratorConfiguration.TAG_TARGET_PATH)));
+			String templatePath = atts
+					.getValue(GeneratorConfiguration.TAG_TEMPLATE_PATH);
+			if (templatePath != null) {
+				configuration.setTemplatePath(new Path(templatePath));
+			}
+			String targetPath = atts
+					.getValue(GeneratorConfiguration.TAG_TARGET_PATH);
+			if (targetPath != null) {
+				configuration.setTargetContainerPath(new Path(targetPath));
+			}
 		}
 		return configuration;
 	}

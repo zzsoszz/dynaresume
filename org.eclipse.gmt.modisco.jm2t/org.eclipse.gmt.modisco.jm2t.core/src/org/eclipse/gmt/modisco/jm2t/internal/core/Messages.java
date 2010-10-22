@@ -22,6 +22,8 @@ public class Messages extends NLS {
 
 	private static final String BUNDLE_NAME = "org.eclipse.gmt.modisco.jm2t.internal.core.messages"; //$NON-NLS-1$
 
+	public static String DefaultGeneratorConfigurationValidator_nameRequired;
+
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
 	}
