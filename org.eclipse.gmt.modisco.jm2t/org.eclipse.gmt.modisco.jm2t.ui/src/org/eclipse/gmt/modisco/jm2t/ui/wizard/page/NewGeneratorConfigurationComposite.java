@@ -11,21 +11,27 @@
 package org.eclipse.gmt.modisco.jm2t.ui.wizard.page;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.gmt.modisco.jm2t.core.IJM2TProject;
 import org.eclipse.gmt.modisco.jm2t.core.TaskModel;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterType;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.Messages;
+import org.eclipse.gmt.modisco.jm2t.internal.ui.util.SWTUtil;
 import org.eclipse.gmt.modisco.jm2t.ui.wizard.IWizardHandle;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -40,6 +46,8 @@ public class NewGeneratorConfigurationComposite extends Composite {
 	private TaskModel taskModel;
 	private Text name;
 	private IGeneratorConfiguration generatorConfiguration;
+	private Text templatePath;
+	private Text targetPath;
 
 	public NewGeneratorConfigurationComposite(Composite parent,
 			IWizardHandle wizard, TaskModel tm) {
@@ -63,13 +71,14 @@ public class NewGeneratorConfigurationComposite extends Composite {
 		// PlatformUI.getWorkbench().getHelpSystem().setHelp(this,
 		// ContextIds.RUNTIME_COMPOSITE);
 
-		Label label = new Label(this, SWT.NONE);
-		label.setText(Messages.NewGeneratorConfigurationComposite_name);
+		final Label nameLabel = new Label(this, SWT.NONE);
+		nameLabel.setText(Messages.NewGeneratorConfigurationComposite_name);
 		GridData data = new GridData();
-		label.setLayoutData(data);
+		nameLabel.setLayoutData(data);
 
 		name = new Text(this, SWT.BORDER);
 		data = new GridData(GridData.FILL_HORIZONTAL);
+		data.horizontalSpan =2;
 		name.setLayoutData(data);
 		name.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -77,6 +86,49 @@ public class NewGeneratorConfigurationComposite extends Composite {
 				validate();
 			}
 		});
+		
+		final Label templatePathLabel = new Label(this, SWT.NONE);
+		templatePathLabel.setText(Messages.NewGeneratorConfigurationComposite_templatePath);
+		data = new GridData();
+		templatePathLabel.setLayoutData(data);
+
+		templatePath = new Text(this, SWT.BORDER);
+		data = new GridData(GridData.FILL_HORIZONTAL);
+		templatePath.setLayoutData(data);
+		templatePath.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				generatorConfiguration.setTemplatePath(new Path(templatePath.getText()));
+				validate();
+			}
+		});
+		Button templateBrowseButton = SWTUtil.createButton(this, Messages.browseButton);
+		templateBrowseButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent se) {
+				
+			}
+		});
+		
+		final Label targetPathLabel = new Label(this, SWT.NONE);
+		targetPathLabel.setText(Messages.NewGeneratorConfigurationComposite_targetPath);
+		data = new GridData();
+		targetPathLabel.setLayoutData(data);
+
+		targetPath = new Text(this, SWT.BORDER);
+		data = new GridData(GridData.FILL_HORIZONTAL);
+		targetPath.setLayoutData(data);
+		targetPath.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				generatorConfiguration.setTargetContainerPath(new Path(targetPath.getText()));
+				validate();
+			}
+		});
+		Button targetBrowseButton = SWTUtil.createButton(this, Messages.browseButton);
+		targetBrowseButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent se) {
+				
+			}
+		});
+		
 		init();
 		validate();
 
@@ -93,6 +145,16 @@ public class NewGeneratorConfigurationComposite extends Composite {
 			name.setText(generatorConfiguration.getName());
 		else
 			name.setText("");
+		
+		if (generatorConfiguration.getTemplatePath() != null)
+			templatePath.setText(generatorConfiguration.getTemplatePath().toString());
+		else
+			templatePath.setText("");
+		
+		if (generatorConfiguration.getTargetContainerPath() != null)
+			targetPath.setText(generatorConfiguration.getTargetContainerPath().toString());
+		else
+			targetPath.setText("");
 	}
 
 	/**

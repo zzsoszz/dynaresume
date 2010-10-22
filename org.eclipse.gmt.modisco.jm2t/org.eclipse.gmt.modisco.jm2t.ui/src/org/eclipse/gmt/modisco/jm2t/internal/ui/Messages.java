@@ -44,6 +44,8 @@ public class Messages extends NLS {
 	
 	// Fields of the NewGeneratorConfigurationComposite
 	public static String NewGeneratorConfigurationComposite_name;
+	public static String NewGeneratorConfigurationComposite_templatePath;
+	public static String NewGeneratorConfigurationComposite_targetPath;
 	
 	public static String GeneratorConfigurationDialog_name;
 	public static String GeneratorConfigurationDialog_error_enterName;
@@ -59,6 +61,7 @@ public class Messages extends NLS {
 	
 	
 	private static final String BUNDLE_NAME = "org.eclipse.gmt.modisco.jm2t.internal.ui.messages"; //$NON-NLS-1$
+	
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
