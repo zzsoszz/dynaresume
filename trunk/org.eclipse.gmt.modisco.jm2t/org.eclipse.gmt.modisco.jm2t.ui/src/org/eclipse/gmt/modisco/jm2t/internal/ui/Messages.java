@@ -34,8 +34,14 @@ public class Messages extends NLS {
 
 	// Wizard
 	public static String wizNewGeneratorConfigurationWizardTitle;
+		
+	public static String wizSelectGeneratorTypeTitle;
+	public static String wizSelectGeneratorTypeDescription;
+	public static String wizSelectModelConverterTypeTitle;
+	public static String wizSelectModelConverterTypeDescription;
 	public static String wizNewGeneratorConfigurationTitle;
 	public static String wizNewGeneratorConfigurationDescription;
+	
 	public static String wizEditGeneratorConfigurationWizardTitle;
 
 	public static String GeneratorConfigurationDialog_name;
