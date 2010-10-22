@@ -69,7 +69,18 @@ public interface IGeneratorType {
 	IGeneratorConfiguration createGeneratorConfiguration(
 			IModelConverterType converterType, IJM2TProject project);
 
+	/**
+	 * Returns the vendor of the generator type.
+	 * 
+	 * @return
+	 */
 	String getVendor();
 
-	
+	/**
+	 * Returns the validator to use to validate generator configuration.
+	 * 
+	 * @return
+	 */
+	IGeneratorConfigurationValidator getValidator();
+
 }

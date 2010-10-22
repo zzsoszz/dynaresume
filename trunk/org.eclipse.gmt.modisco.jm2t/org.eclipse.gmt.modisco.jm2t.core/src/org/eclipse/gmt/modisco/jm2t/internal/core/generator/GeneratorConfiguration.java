@@ -15,7 +15,6 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.gmt.modisco.jm2t.core.IJM2TProject;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
@@ -74,8 +73,8 @@ public class GeneratorConfiguration implements IGeneratorConfiguration {
 		return null;
 	}
 
-	public IStatus validate(IProgressMonitor monitor) {
-		return null;
+	public IStatus validate() {
+		return getGeneratorType().getValidator().validate(this, project);
 	}
 
 	public IGeneratorType getGeneratorType() {
@@ -96,7 +95,8 @@ public class GeneratorConfiguration implements IGeneratorConfiguration {
 		}
 		IModelConverterType modelConverterType = getModelConverterType();
 		if (modelConverterType != null) {
-			parameters.put(TAG_MODEL_CONVERTER_TYPE, modelConverterType.getId());
+			parameters
+					.put(TAG_MODEL_CONVERTER_TYPE, modelConverterType.getId());
 		}
 		if (templatePath != null) {
 			parameters.put(TAG_TEMPLATE_PATH, String.valueOf(templatePath));

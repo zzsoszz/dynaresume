@@ -11,6 +11,7 @@
 package org.eclipse.gmt.modisco.jm2t.ui.wizard.fragment;
 
 import org.eclipse.gmt.modisco.jm2t.core.TaskModel;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterType;
 import org.eclipse.gmt.modisco.jm2t.ui.wizard.IWizardHandle;
@@ -41,12 +42,17 @@ public class NewGeneratorConfigurationWizardFragment extends WizardFragment {
 	@Override
 	public void enter() {
 		if (comp != null) {
-			IGeneratorType generatorType = (IGeneratorType) getTaskModel()
-					.getObject(TaskModel.TASK_GENERATOR_TYPE);
-			comp.setGeneratorType(generatorType);
-			IModelConverterType modelConverterType = (IModelConverterType) getTaskModel()
-					.getObject(TaskModel.TASK_MODEL_CONVERTER_TYPE);
-			comp.setModelConverterType(modelConverterType);
+			IGeneratorConfiguration generatorConfiguration = (IGeneratorConfiguration) getTaskModel()
+					.getObject(TaskModel.TASK_GENERATOR_CONFIGURATION);
+			if (generatorConfiguration != null) {
+				comp.init(generatorConfiguration);
+			} else {
+				IGeneratorType generatorType = (IGeneratorType) getTaskModel()
+						.getObject(TaskModel.TASK_GENERATOR_TYPE);
+				IModelConverterType modelConverterType = (IModelConverterType) getTaskModel()
+						.getObject(TaskModel.TASK_MODEL_CONVERTER_TYPE);
+				comp.init(generatorType, modelConverterType);
+			}
 		}
 	}
 }

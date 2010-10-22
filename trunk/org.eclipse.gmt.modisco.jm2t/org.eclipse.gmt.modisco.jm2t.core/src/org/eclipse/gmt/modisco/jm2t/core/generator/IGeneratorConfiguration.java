@@ -11,6 +11,7 @@
 package org.eclipse.gmt.modisco.jm2t.core.generator;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 
 /**
  * Generator configuration interface.
@@ -95,6 +96,6 @@ public interface IGeneratorConfiguration {
 	 */
 	// String[] getRawPackages();
 
-	// IStatus validate(IProgressMonitor monitor);
+	IStatus validate();
 
 }

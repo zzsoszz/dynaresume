@@ -33,17 +33,18 @@ public class Messages extends NLS {
 	public static String createNewFolderButton;
 
 	// Wizard
-	public static String wizNewGeneratorConfigurationWizardTitle;
-		
+	public static String wizNewGeneratorConfigurationWizardTitle;		
 	public static String wizSelectGeneratorTypeTitle;
 	public static String wizSelectGeneratorTypeDescription;
 	public static String wizSelectModelConverterTypeTitle;
 	public static String wizSelectModelConverterTypeDescription;
 	public static String wizNewGeneratorConfigurationTitle;
-	public static String wizNewGeneratorConfigurationDescription;
-	
+	public static String wizNewGeneratorConfigurationDescription;	
 	public static String wizEditGeneratorConfigurationWizardTitle;
-
+	
+	// Fields of the NewGeneratorConfigurationComposite
+	public static String NewGeneratorConfigurationComposite_name;
+	
 	public static String GeneratorConfigurationDialog_name;
 	public static String GeneratorConfigurationDialog_error_enterName;
 	public static String GeneratorConfigurationDialog_templateFile;

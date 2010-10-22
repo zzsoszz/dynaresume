@@ -14,9 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.gmt.modisco.jm2t.core.IJM2TProject;
+import org.eclipse.gmt.modisco.jm2t.core.generator.DefaultGeneratorConfigurationValidator;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGenerator;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfigurationValidator;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterType;
 import org.eclipse.gmt.modisco.jm2t.core.util.StringUtils;
@@ -29,6 +32,7 @@ public class GeneratorType implements IGeneratorType {
 
 	private IConfigurationElement element;
 	private IGenerator generator;
+	private IGeneratorConfigurationValidator validator;
 	private IModelConverterType[] supportedModelConverterTypes;
 
 	/**
@@ -79,7 +83,6 @@ public class GeneratorType implements IGeneratorType {
 		}
 	}
 
-	
 	public String getVendor() {
 		try {
 			return element.getAttribute("vendor");
@@ -98,6 +101,25 @@ public class GeneratorType implements IGeneratorType {
 	private IGenerator createGenerator() {
 		try {
 			return (IGenerator) element.createExecutableExtension("class");
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public IGeneratorConfigurationValidator getValidator() {
+		if (validator == null) {
+			validator = createValidator();
+			if (validator == null) {
+				validator = DefaultGeneratorConfigurationValidator.INSTANCE;
+			}
+		}
+		return validator;
+	}
+
+	private IGeneratorConfigurationValidator createValidator() {
+		try {
+			return (IGeneratorConfigurationValidator) element
+					.createExecutableExtension("validatorClass");
 		} catch (Exception e) {
 			return null;
 		}
@@ -132,9 +154,15 @@ public class GeneratorType implements IGeneratorType {
 		return supportedModelConverterTypes;
 	}
 
+	public IStatus validate(IGeneratorConfiguration generatorConfiguration,
+			IJM2TProject project) {
+		return getValidator().validate(generatorConfiguration, project);
+	}
+
 	public void dispose() {
 		element = null;
 		generator = null;
+		validator = null;
 		supportedModelConverterTypes = null;
 	}
 }
