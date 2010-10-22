@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.ui.wizard.fragment;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.gmt.modisco.jm2t.core.TaskModel;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
@@ -54,5 +55,16 @@ public class NewGeneratorConfigurationWizardFragment extends WizardFragment {
 				comp.init(generatorType, modelConverterType);
 			}
 		}
+	}
+
+	@Override
+	public boolean isComplete() {
+		IGeneratorConfiguration generatorConfiguration = (IGeneratorConfiguration) getTaskModel()
+				.getObject(TaskModel.TASK_GENERATOR_CONFIGURATION);
+
+		if (generatorConfiguration == null)
+			return false;
+		IStatus status = generatorConfiguration.validate();
+		return (status == null || status.getSeverity() != IStatus.ERROR);
 	}
 }
