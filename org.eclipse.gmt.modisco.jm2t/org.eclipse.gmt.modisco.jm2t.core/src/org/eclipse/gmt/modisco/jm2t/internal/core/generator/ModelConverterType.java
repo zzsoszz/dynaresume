@@ -46,6 +46,22 @@ public class ModelConverterType implements IModelConverterType {
 			return null;
 		}
 	}
+	
+	public String getName() {
+		try {
+			return element.getAttribute("name");
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public String getDescription() {
+		try {
+			return element.getAttribute("description");
+		} catch (Exception e) {
+			return null;
+		}
+	}
 
 	/**
 	 * Returns the category of this factory.

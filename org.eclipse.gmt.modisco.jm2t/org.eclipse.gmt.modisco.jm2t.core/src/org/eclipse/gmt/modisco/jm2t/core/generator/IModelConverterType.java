@@ -29,6 +29,26 @@ public interface IModelConverterType {
 	String getId();
 
 	/**
+	 * Returns the displayable name for this modelconverter type.
+	 * <p>
+	 * Note that this name is appropriate for the current locale.
+	 * </p>
+	 * 
+	 * @return a displayable name for this modelconverter type
+	 */
+	String getName();
+
+	/**
+	 * Returns the displayable description for this modelconverter type.
+	 * <p>
+	 * Note that this description is appropriate for the current locale.
+	 * </p>
+	 * 
+	 * @return a displayable description for this modelconverter type
+	 */
+	String getDescription();
+
+	/**
 	 * Returns the category of this modelconverter type.
 	 * 
 	 * @return the modelconverter type category

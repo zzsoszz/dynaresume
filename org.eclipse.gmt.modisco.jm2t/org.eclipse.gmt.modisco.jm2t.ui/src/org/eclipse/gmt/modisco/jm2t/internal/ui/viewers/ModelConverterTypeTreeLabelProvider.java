@@ -10,27 +10,30 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.internal.ui.viewers;
 
-import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterType;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.ImageResource;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.swt.graphics.Image;
+
 /**
- * Generator type label provider.
+ * ModelConverter type label provider.
  */
-public class GeneratorTypeTreeLabelProvider extends AbstractTreeLabelProvider {
+public class ModelConverterTypeTreeLabelProvider extends
+		AbstractTreeLabelProvider {
 	/**
-	 * GeneratorTypeTreeLabelProvider constructor comment.
+	 * ModelConverterTypeTreeLabelProvider constructor comment.
 	 */
-	public GeneratorTypeTreeLabelProvider() {
+	public ModelConverterTypeTreeLabelProvider() {
 		super();
 	}
 
 	/**
-	 * GeneratorTypeTreeLabelProvider constructor comment.
+	 * ModelConverterTypeTreeLabelProvider constructor comment.
 	 * 
-	 * @param decorator a label decorator, or null if no decorator is required
+	 * @param decorator
+	 *            a label decorator, or null if no decorator is required
 	 */
-	public GeneratorTypeTreeLabelProvider(ILabelDecorator decorator) {
+	public ModelConverterTypeTreeLabelProvider(ILabelDecorator decorator) {
 		super(decorator);
 	}
 
@@ -38,15 +41,15 @@ public class GeneratorTypeTreeLabelProvider extends AbstractTreeLabelProvider {
 	 * 
 	 */
 	protected Image getImageImpl(Object element) {
-		IGeneratorType generatorType = (IGeneratorType) element;
-		return ImageResource.getImage(generatorType.getId());
+		IModelConverterType modelConverterType = (IModelConverterType) element;
+		return ImageResource.getImage(modelConverterType.getId());
 	}
 
 	/**
 	 * 
 	 */
 	protected String getTextImpl(Object element) {
-		IGeneratorType generatorType = (IGeneratorType) element;
-		return notNull(generatorType.getName());
+		IModelConverterType modelConverterType = (IModelConverterType) element;
+		return notNull(modelConverterType.getName());
 	}
 }
