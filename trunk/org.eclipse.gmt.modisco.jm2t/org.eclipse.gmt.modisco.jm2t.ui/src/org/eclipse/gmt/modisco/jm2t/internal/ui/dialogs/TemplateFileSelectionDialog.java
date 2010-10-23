@@ -1,7 +1,7 @@
 package org.eclipse.gmt.modisco.jm2t.internal.ui.dialogs;
 
-import java.io.File;
-
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.JM2TUI;
@@ -51,11 +51,13 @@ public class TemplateFileSelectionDialog extends ElementTreeSelectionDialog {
 			}
 			for (int i = 0; i < selection.length; i++) {
 				Object curr = selection[i];
-				if (curr instanceof File) {
-					File file = (File) curr;
-					if (!fAcceptFolders && !file.isFile()) {
-						return JM2TUI.createErrorStatus("", null);
+				if (!(curr instanceof IFile)) {
+					if (curr instanceof IFolder) {
+						if (!fAcceptFolders) {
+							return JM2TUI.createErrorStatus("", null);
+						}
 					}
+					return JM2TUI.createErrorStatus("", null);
 				}
 			}
 			return Status.OK_STATUS;
