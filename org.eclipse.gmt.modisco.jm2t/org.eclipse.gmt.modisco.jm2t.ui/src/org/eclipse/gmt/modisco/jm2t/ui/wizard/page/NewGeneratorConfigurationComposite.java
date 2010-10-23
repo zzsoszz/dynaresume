@@ -184,7 +184,9 @@ public class NewGeneratorConfigurationComposite extends Composite {
 	 * @param generatorConfiguration
 	 */
 	public void init(IGeneratorConfiguration generatorConfiguration) {
-		this.generatorConfiguration = generatorConfiguration;
+		this.generatorConfiguration = generatorConfiguration.copy();
+		taskModel.putObject(TaskModel.TASK_GENERATOR_CONFIGURATION,
+				this.generatorConfiguration);
 		init();
 		validate();
 	}

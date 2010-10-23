@@ -98,4 +98,5 @@ public interface IGeneratorConfiguration {
 
 	IStatus validate();
 
+	IGeneratorConfiguration copy();
 }

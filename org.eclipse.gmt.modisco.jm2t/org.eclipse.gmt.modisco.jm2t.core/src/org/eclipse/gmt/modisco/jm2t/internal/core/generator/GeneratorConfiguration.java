@@ -129,4 +129,13 @@ public class GeneratorConfiguration implements IGeneratorConfiguration {
 		this.targetContainerPath = targetContainerPath;
 	}
 
+	public IGeneratorConfiguration copy() {
+		IGeneratorConfiguration configuration = getGeneratorType()
+				.createGeneratorConfiguration(getModelConverterType(), project);
+		configuration.setDescription(description);
+		configuration.setName(name);
+		configuration.setTargetContainerPath(targetContainerPath);
+		configuration.setTemplatePath(templatePath);
+		return configuration;
+	}
 }
