@@ -33,7 +33,10 @@ public class DefaultGeneratorConfigurationValidator implements
 			IGeneratorConfiguration generatorConfiguration) {
 		String name = generatorConfiguration.getName();
 		if (StringUtils.isEmpty(name)) {
-			return createErrorStatus(Messages.DefaultGeneratorConfigurationValidator_nameRequired, null);
+			return JM2TCore
+					.createErrorStatus(
+							Messages.DefaultGeneratorConfigurationValidator_nameRequired,
+							null);
 		}
 		return Status.OK_STATUS;
 	}
@@ -41,15 +44,6 @@ public class DefaultGeneratorConfigurationValidator implements
 	protected IStatus validateNameUnique(
 			IGeneratorConfiguration generatorConfiguration, IJM2TProject project) {
 		return Status.OK_STATUS;
-	}
-
-	protected IStatus createErrorStatus(String message, Throwable exception) {
-		return createStatus(IStatus.ERROR, 0, message, exception);
-	}
-
-	protected IStatus createStatus(int severity, int code, String message,
-			Throwable exception) {
-		return new Status(severity, JM2TCore.PLUGIN_ID, 0, message, exception);
 	}
 
 }
