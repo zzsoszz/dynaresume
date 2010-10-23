@@ -11,12 +11,11 @@
 package org.eclipse.gmt.modisco.jm2t.core;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.gmt.modisco.jm2t.core.generator.IGenerator;
-import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorManager;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
-import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverter;
 import org.eclipse.gmt.modisco.jm2t.internal.core.JM2TModel;
 import org.eclipse.gmt.modisco.jm2t.internal.core.JM2TModelManager;
 import org.eclipse.gmt.modisco.jm2t.internal.core.Trace;
@@ -95,7 +94,7 @@ public class JM2TCore extends Plugin {
 				.getJM2TModel();
 		return jm2tModel.getJM2TProject(project);
 	}
-	
+
 	/**
 	 * Returns the generator manager.
 	 * 
@@ -104,4 +103,14 @@ public class JM2TCore extends Plugin {
 	public static IGeneratorManager getGeneratorManager() {
 		return GeneratorManager.getManager();
 	}
+
+	public static IStatus createErrorStatus(String message, Throwable exception) {
+		return createStatus(IStatus.ERROR, 0, message, exception);
+	}
+
+	public static IStatus createStatus(int severity, int code, String message,
+			Throwable exception) {
+		return new Status(severity, JM2TCore.PLUGIN_ID, 0, message, exception);
+	}
+
 }

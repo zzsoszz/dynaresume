@@ -234,4 +234,13 @@ public class JM2TUI extends AbstractUIPlugin {
 		}
 		wizardFragments = map;
 	}
+
+	public static IStatus createErrorStatus(String message, Throwable exception) {
+		return createStatus(IStatus.ERROR, 0, message, exception);
+	}
+
+	public static IStatus createStatus(int severity, int code, String message,
+			Throwable exception) {
+		return new Status(severity, JM2TUI.PLUGIN_ID, 0, message, exception);
+	}
 }

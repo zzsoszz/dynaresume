@@ -39,7 +39,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -86,7 +85,7 @@ public class NewGeneratorConfigurationComposite extends Composite {
 
 		name = new Text(this, SWT.BORDER);
 		data = new GridData(GridData.FILL_HORIZONTAL);
-		data.horizontalSpan =2;
+		data.horizontalSpan = 2;
 		name.setLayoutData(data);
 		name.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -94,9 +93,10 @@ public class NewGeneratorConfigurationComposite extends Composite {
 				validate();
 			}
 		});
-		
+
 		final Label templatePathLabel = new Label(this, SWT.NONE);
-		templatePathLabel.setText(Messages.NewGeneratorConfigurationComposite_templatePath);
+		templatePathLabel
+				.setText(Messages.NewGeneratorConfigurationComposite_templatePath);
 		data = new GridData();
 		templatePathLabel.setLayoutData(data);
 
@@ -105,11 +105,13 @@ public class NewGeneratorConfigurationComposite extends Composite {
 		templatePath.setLayoutData(data);
 		templatePath.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
-				generatorConfiguration.setTemplatePath(new Path(templatePath.getText()));
+				generatorConfiguration.setTemplatePath(new Path(templatePath
+						.getText()));
 				validate();
 			}
 		});
-		Button templateBrowseButton = SWTUtil.createButton(this, Messages.browseButton);
+		Button templateBrowseButton = SWTUtil.createButton(this,
+				Messages.browseButton);
 		templateBrowseButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent se) {
 				IPath templateFilePath = selectTemplateFile();
@@ -118,9 +120,10 @@ public class NewGeneratorConfigurationComposite extends Composite {
 				}
 			}
 		});
-		
+
 		final Label targetPathLabel = new Label(this, SWT.NONE);
-		targetPathLabel.setText(Messages.NewGeneratorConfigurationComposite_targetPath);
+		targetPathLabel
+				.setText(Messages.NewGeneratorConfigurationComposite_targetPath);
 		data = new GridData();
 		targetPathLabel.setLayoutData(data);
 
@@ -129,21 +132,22 @@ public class NewGeneratorConfigurationComposite extends Composite {
 		targetPath.setLayoutData(data);
 		targetPath.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
-				generatorConfiguration.setTargetContainerPath(new Path(targetPath.getText()));
+				generatorConfiguration.setTargetContainerPath(new Path(
+						targetPath.getText()));
 				validate();
 			}
 		});
-		Button targetBrowseButton = SWTUtil.createButton(this, Messages.browseButton);
+		Button targetBrowseButton = SWTUtil.createButton(this,
+				Messages.browseButton);
 		targetBrowseButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent se) {
 				IPath targetContainerPath = selectTargetContainer();
 				if (targetContainerPath != null) {
-					targetPath
-							.setText(targetContainerPath.toString());
+					targetPath.setText(targetContainerPath.toString());
 				}
 			}
 		});
-		
+
 		init();
 		validate();
 
@@ -160,14 +164,16 @@ public class NewGeneratorConfigurationComposite extends Composite {
 			name.setText(generatorConfiguration.getName());
 		else
 			name.setText("");
-		
+
 		if (generatorConfiguration.getTemplatePath() != null)
-			templatePath.setText(generatorConfiguration.getTemplatePath().toString());
+			templatePath.setText(generatorConfiguration.getTemplatePath()
+					.toString());
 		else
 			templatePath.setText("");
-		
+
 		if (generatorConfiguration.getTargetContainerPath() != null)
-			targetPath.setText(generatorConfiguration.getTargetContainerPath().toString());
+			targetPath.setText(generatorConfiguration.getTargetContainerPath()
+					.toString());
 		else
 			targetPath.setText("");
 	}
@@ -224,7 +230,7 @@ public class NewGeneratorConfigurationComposite extends Composite {
 	protected IJM2TProject getJM2TProject() {
 		return (IJM2TProject) taskModel.getObject(TaskModel.TASK_JM2T_PROJECT);
 	}
-	
+
 	/**
 	 * Opens a dialog to choose a template file.
 	 */
@@ -284,6 +290,5 @@ public class NewGeneratorConfigurationComposite extends Composite {
 		}
 		return null;
 	}
-
 
 }
