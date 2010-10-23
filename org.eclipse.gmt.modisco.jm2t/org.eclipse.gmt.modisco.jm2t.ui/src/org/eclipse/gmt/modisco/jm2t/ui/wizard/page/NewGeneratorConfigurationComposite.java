@@ -10,6 +10,10 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.ui.wizard.page;
 
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.gmt.modisco.jm2t.core.IJM2TProject;
@@ -18,10 +22,14 @@ import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterType;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.Messages;
+import org.eclipse.gmt.modisco.jm2t.internal.ui.dialogs.FolderSelectionDialog;
+import org.eclipse.gmt.modisco.jm2t.internal.ui.dialogs.TemplateFileSelectionDialog;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.util.SWTUtil;
 import org.eclipse.gmt.modisco.jm2t.ui.wizard.IWizardHandle;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
+import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -104,7 +112,10 @@ public class NewGeneratorConfigurationComposite extends Composite {
 		Button templateBrowseButton = SWTUtil.createButton(this, Messages.browseButton);
 		templateBrowseButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent se) {
-				
+				IPath templateFilePath = selectTemplateFile();
+				if (templateFilePath != null) {
+					templatePath.setText(templateFilePath.toString());
+				}
 			}
 		});
 		
@@ -125,7 +136,11 @@ public class NewGeneratorConfigurationComposite extends Composite {
 		Button targetBrowseButton = SWTUtil.createButton(this, Messages.browseButton);
 		targetBrowseButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent se) {
-				
+				IPath targetContainerPath = selectTargetContainer();
+				if (targetContainerPath != null) {
+					targetPath
+							.setText(targetContainerPath.toString());
+				}
 			}
 		});
 		
@@ -209,5 +224,66 @@ public class NewGeneratorConfigurationComposite extends Composite {
 	protected IJM2TProject getJM2TProject() {
 		return (IJM2TProject) taskModel.getObject(TaskModel.TASK_JM2T_PROJECT);
 	}
+	
+	/**
+	 * Opens a dialog to choose a template file.
+	 */
+	private IPath selectTemplateFile() {
+		String initSelection = templatePath.getText();
+
+		ViewerFilter filter = null;// new ArchiveFileFilter((List) null, false);
+
+		IResource initSel = null;
+		IContainer fWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+		if (initSelection.length() > 0) {
+			initSel = fWorkspaceRoot.findMember(new Path(initSelection));
+		}
+		if (initSel == null) {
+			// initSel= fWorkspaceRoot.findMember(fEntry.getPath());
+		}
+
+		TemplateFileSelectionDialog dialog = new TemplateFileSelectionDialog(
+				getShell(), false, false);
+		dialog.setTitle(Messages.TemplateFileSelectionDialog_title);
+		dialog.setMessage(Messages.TemplateFileSelectionDialog_message);
+		dialog.setInput(fWorkspaceRoot);
+		dialog.setInitialSelection(initSel);
+		if (dialog.open() == Window.OK) {
+			IResource res = (IResource) dialog.getFirstResult();
+			return res.getFullPath();
+		}
+		return null;
+	}
+
+	/**
+	 * Opens a dialog to choose a target container where files must be
+	 * generated.
+	 */
+	private IPath selectTargetContainer() {
+		String initSelection = targetPath.getText();
+
+		ViewerFilter filter = null;// new ArchiveFileFilter((List) null, false);
+
+		IResource initSel = null;
+		IContainer fWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+		if (initSelection.length() > 0) {
+			initSel = fWorkspaceRoot.findMember(new Path(initSelection));
+		}
+		if (initSel == null) {
+			// initSel= fWorkspaceRoot.findMember(fEntry.getPath());
+		}
+
+		FolderSelectionDialog dialog = new FolderSelectionDialog(getShell());
+		dialog.setTitle(Messages.FolderSelectionDialog_title);
+		dialog.setMessage(Messages.FolderSelectionDialog_message);
+		dialog.setInput(fWorkspaceRoot);
+		dialog.setInitialSelection(initSel);
+		if (dialog.open() == Window.OK) {
+			IResource res = (IResource) dialog.getFirstResult();
+			return res.getFullPath();
+		}
+		return null;
+	}
+
 
 }
