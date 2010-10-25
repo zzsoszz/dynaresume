@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+    <extension point="org.eclipse.gmt.modisco.jm2t.ui.generatorImages">
+      <image
+         id="org.eclipse.gmt.modisco.jm2t.javamodisco"
+         icon="icons/obj16/javamodisco.gif"
+         typeIds="org.eclipse.gmt.modisco.jm2t.modelconverter.javamodisco"/>
+    </extension>                  
+</plugin>     
