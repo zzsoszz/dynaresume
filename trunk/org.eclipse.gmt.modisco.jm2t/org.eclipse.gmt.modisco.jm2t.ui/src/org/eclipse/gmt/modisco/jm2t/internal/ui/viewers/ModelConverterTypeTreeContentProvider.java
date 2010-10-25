@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterCategoryType;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterType;
 
 /**
@@ -36,11 +37,19 @@ public class ModelConverterTypeTreeContentProvider extends
 			IModelConverterType[] modelConverterTypes = generatorType
 					.getSupportedModelConverterTypes();
 			if (modelConverterTypes != null) {
+				TreeElement ele = null;
 				int size = modelConverterTypes.length;
 				for (int i = 0; i < size; i++) {
 					IModelConverterType modelConverterType = modelConverterTypes[i];
-					TreeElement ele = getOrCreate(list,
-							modelConverterType.getCategory());
+					IModelConverterCategoryType categoryType = modelConverterType
+							.getCategoryType();
+					if (categoryType != null) {
+						ele = getOrCreate(list, categoryType.getName());
+						ele.source = categoryType;
+					} else {
+						ele = getOrCreate(list,
+								modelConverterType.getCategoryId());
+					}
 					ele.contents.add(modelConverterType);
 					elementToParentMap.put(modelConverterType, ele);
 				}

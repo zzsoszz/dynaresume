@@ -10,7 +10,7 @@
        description="%generatorTypeDescription"
        vendor="%generatorTypeVendor"
        class="org.eclipse.gmt.modisco.jm2t.generator.acceleo2.internal.core.Acceleo2Generator"
-       modelConverterCategories="M2EMF" >
+       modelConverterCategories="org.eclipse.gmt.modisco.jm2t.modelconverter.category.m2emf" >
     </generatorType>
   </extension>
   

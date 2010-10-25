@@ -53,7 +53,14 @@ public interface IModelConverterType {
 	 * 
 	 * @return the modelconverter type category
 	 */
-	String getCategory();
+	String getCategoryId();
+	
+	/**
+	 * Returns the category type of this modelconverter type.
+	 * 
+	 * @return
+	 */
+	IModelConverterCategoryType getCategoryType();
 
 	/**
 	 * Return the model converter instance.

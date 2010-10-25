@@ -94,7 +94,7 @@
          point=&quot;org.eclipse.gmt.modisco.jm2t.ui.wizardFragments&quot;&gt;
       &lt;fragment
             id=&quot;com.example&quot;
-            typeIds=&quot;com.example.runtime&quot;
+            typeIds=&quot;com.example.generator&quot;
             class=&quot;com.example.ExampleWizardFragment&quot;/&gt;
    &lt;/extension&gt;
 &lt;/pre&gt;
@@ -124,7 +124,7 @@
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         Copyright (c) 2000, 2005 IBM Corporation and others.&lt;br&gt;
+         Copyright (c) 2010 Angelo ZERR.&lt;br&gt;
 All rights reserved. This program and the accompanying materials are made 
 available under the terms of the Eclipse Public License v1.0 which accompanies 
 this distribution, and is available at 

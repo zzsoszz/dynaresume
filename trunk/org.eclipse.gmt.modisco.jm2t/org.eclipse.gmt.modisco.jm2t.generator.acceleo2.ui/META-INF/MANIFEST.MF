@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-Vendor: %pluginProvider
 Bundle-Localization: plugin
-Bundle-SymbolicName: org.eclipse.gmt.modisco.jm2t.accelo2x.ui;singleton:=true
+Bundle-SymbolicName: org.eclipse.gmt.modisco.jm2t.generator.accelo2.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eclipse.gmt.modisco.jm2t.generator.acceleo2.internal.ui.JM2TAcceleo2UI
 Require-Bundle: org.eclipse.ui,

@@ -54,48 +54,48 @@
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  specifies a unique identifier for this fragment
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="class" type="string" use="required">
-            <annotation>
-               <documentation>
-                  specifies the fully qualified name of the Java class that implements &lt;samp&gt;org.eclipse.gmt.modisco.jm2t.core.generator.IGenerator&lt;/samp&gt;
-               </documentation>
-               <appInfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.gmt.modisco.jm2t.core.generator.IGenerator"/>
-               </appInfo>
-            </annotation>
-         </attribute>
-         <attribute name="modelConverterCategories" type="string">
-            <annotation>
-               <documentation>
-                  specifies the model converter categories (use &apos;,&apos; token to define several category) for this fragment
+                  unique identifier for this generator type.
                </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  
+                  a translatable name used to identify this generator type.
                </documentation>
             </annotation>
          </attribute>
          <attribute name="description" type="string">
             <annotation>
                <documentation>
-                  
+                  a translatable description used to identify this generator type.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="modelConverterCategories" type="string">
+            <annotation>
+               <documentation>
+                  specifies the model converter categories (use &apos;,&apos; token to define several category) supported by the generator. Model converter categories id coming from the Extension Point &lt;samp&gt;org.eclipse.gmt.modisco.jm2t.core.modelConverterCategoryTypes&lt;/samp&gt;.
                </documentation>
             </annotation>
          </attribute>
          <attribute name="vendor" type="string">
             <annotation>
                <documentation>
-                  a translatable vendor name
+                  a translatable vendor name.
                </documentation>
             </annotation>
-         </attribute>         
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  specifies the fully qualified name of the generator Java class that implements &lt;samp&gt;org.eclipse.gmt.modisco.jm2t.core.generator.IGenerator&lt;/samp&gt;
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.gmt.modisco.jm2t.core.generator.IGenerator"/>
+               </appInfo>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

@@ -108,7 +108,7 @@ public class ContributionItemForJM2TMenu extends ContributionItem {
 		Object selectedObjectToConvert = null;
 		for (final Object selectedObject : selectedObjects) {
 			selectedObjectToConvert = modelConverter
-					.getModelToConvert(selectedObject);
+					.selectModel(selectedObject);
 			if (selectedObjectToConvert != null) {
 				selectedObjectToConverts.add(selectedObjectToConvert);
 			}

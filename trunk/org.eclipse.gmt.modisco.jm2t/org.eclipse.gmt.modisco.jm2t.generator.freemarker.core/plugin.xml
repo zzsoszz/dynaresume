@@ -9,8 +9,7 @@
        name="%generatorTypeLabel"
        description="%generatorTypeDescription"
        vendor="%generatorTypeVendor"
-       class="org.eclipse.gmt.modisco.jm2t.generator.freemarker.internal.core.FreemarkerGenerator"
-       modelConverterCategories="M2EMF" >
+       class="org.eclipse.gmt.modisco.jm2t.generator.freemarker.internal.core.FreemarkerGenerator" >
     </generatorType>
   </extension>
   

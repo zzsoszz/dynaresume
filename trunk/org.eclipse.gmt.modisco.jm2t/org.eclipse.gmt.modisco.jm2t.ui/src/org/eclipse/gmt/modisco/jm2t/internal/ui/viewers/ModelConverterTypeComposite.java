@@ -11,8 +11,10 @@
 package org.eclipse.gmt.modisco.jm2t.internal.ui.viewers;
 
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterCategoryType;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterType;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.Messages;
+import org.eclipse.gmt.modisco.jm2t.internal.ui.viewers.AbstractTreeContentProvider.TreeElement;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -70,8 +72,17 @@ public class ModelConverterTypeComposite extends AbstractTreeComposite {
 					selection = (IModelConverterType) obj;
 					setDescription(selection.getDescription());
 				} else {
-					selection = null;
-					setDescription("");
+					if (obj instanceof TreeElement) {
+						TreeElement treeElement = ((TreeElement) obj);
+						if (treeElement.source instanceof IModelConverterCategoryType) {
+							IModelConverterCategoryType categoryType = (IModelConverterCategoryType) treeElement.source;
+							selection = null;
+							setDescription(categoryType.getDescription());
+						}
+					} else {
+						selection = null;
+						setDescription("");
+					}
 				}
 				listener.modelConverterTypeSelected(selection);
 			}

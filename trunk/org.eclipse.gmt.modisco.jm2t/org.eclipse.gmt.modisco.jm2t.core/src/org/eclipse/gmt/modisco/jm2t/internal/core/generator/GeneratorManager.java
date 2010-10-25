@@ -28,6 +28,7 @@ import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorConfiguration;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorManager;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverter;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterCategoryType;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterType;
 import org.eclipse.gmt.modisco.jm2t.internal.core.Trace;
 
@@ -40,13 +41,17 @@ public class GeneratorManager implements IGeneratorManager,
 
 	private static final String EXTENSION_GENERATOR_TYPE = "generatorTypes";
 	private static final String EXTENSION_MODEL_CONVERTER_TYPE = "modelConverterTypes";
+	private static final String EXTENSION_MODEL_CONVERTER_CATEGORY_TYPE = "modelConverterCategoryTypes";
 
 	public static GeneratorManager INSTANCE = new GeneratorManager();
 
 	// cached copy of all generator and configuration types
 	private List<IGeneratorType> generatorTypes;
-	// cached copy of all generator and configuration types
+	// cached copy of all model converter
 	private List<IModelConverterType> modelConverterTypes;
+	// cached copy of all model converter category types
+	private List<IModelConverterCategoryType> modelConverterCategoryTypes;
+
 	private boolean registryListenerIntialized;
 
 	protected GeneratorManager() {
@@ -76,7 +81,7 @@ public class GeneratorManager implements IGeneratorManager,
 		Object convertedModel = model;
 		// Get model.
 		if (modelConverter != null) {
-			convertedModel = modelConverter.convert(model, configuration);
+			convertedModel = modelConverter.convertModel(model, configuration);
 		}
 		if (model == null) {
 			// throw ex;
@@ -106,6 +111,13 @@ public class GeneratorManager implements IGeneratorManager,
 			for (IExtensionDelta delta : deltas)
 				handleModelConverterTypeDelta(delta);
 		}
+		deltas = event.getExtensionDeltas(JM2TCore.PLUGIN_ID,
+				EXTENSION_MODEL_CONVERTER_CATEGORY_TYPE);
+		if (deltas != null) {
+			for (IExtensionDelta delta : deltas)
+				handleModelConverterCategoryTypeDelta(delta);
+		}
+
 	}
 
 	// --------------------- Generator types
@@ -284,7 +296,7 @@ public class GeneratorManager implements IGeneratorManager,
 		while (iterator.hasNext()) {
 			IModelConverterType modelConverterType = (IModelConverterType) iterator
 					.next();
-			if (category.equals(modelConverterType.getCategory())) {
+			if (category.equals(modelConverterType.getCategoryId())) {
 				filteredModelConverterTypes.add(modelConverterType);
 			}
 		}
@@ -359,6 +371,132 @@ public class GeneratorManager implements IGeneratorManager,
 			}
 		}
 		modelConverterTypes = list;
+	}
+
+	// --------------------- ModelConverterCategory types
+
+	/**
+	 * Returns an array of all known modelConverterCategory types.
+	 * <p>
+	 * A new array is returned on each call, so clients may store or modify the
+	 * result.
+	 * </p>
+	 * 
+	 * @return the array of modelConverterCategory types
+	 *         {@link IModelConverterCategoryType}
+	 */
+	public IModelConverterCategoryType[] getModelConverterCategoryTypes() {
+		if (modelConverterCategoryTypes == null)
+			loadModelConverterCategoryTypes();
+
+		IModelConverterCategoryType[] st = new IModelConverterCategoryType[modelConverterCategoryTypes
+				.size()];
+		modelConverterCategoryTypes.toArray(st);
+		return st;
+	}
+
+	/**
+	 * Returns the modelConverterCategory type with the given id, or
+	 * <code>null</code> if none. This convenience method searches the list of
+	 * known modelConverterCategory types (
+	 * {@link #getModelConverterCategoryTypes()}) for the one with a matching
+	 * modelConverterCategory type id (
+	 * {@link IModelConverterCategoryType#getId()}). The id may not be null.
+	 * 
+	 * @param id
+	 *            the modelConverterCategory type id
+	 * @return the modelConverterCategory type, or <code>null</code> if there is
+	 *         no modelConverterCategory type with the given id
+	 */
+	public IModelConverterCategoryType findModelConverterCategoryType(String id) {
+		if (id == null)
+			throw new IllegalArgumentException();
+
+		if (modelConverterCategoryTypes == null)
+			loadModelConverterCategoryTypes();
+
+		Iterator<IModelConverterCategoryType> iterator = modelConverterCategoryTypes
+				.iterator();
+		while (iterator.hasNext()) {
+			IModelConverterCategoryType modelConverterCategoryType = (IModelConverterCategoryType) iterator
+					.next();
+			if (id.equals(modelConverterCategoryType.getId()))
+				return modelConverterCategoryType;
+		}
+		return null;
+	}
+
+	/**
+	 * Load the modelConverterCategory types.
+	 */
+	private synchronized void loadModelConverterCategoryTypes() {
+		if (modelConverterCategoryTypes != null)
+			return;
+
+		Trace.trace(Trace.EXTENSION_POINT,
+				"->- Loading .modelConverterCategoryTypes extension point ->-");
+
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		IConfigurationElement[] cf = registry.getConfigurationElementsFor(
+				JM2TCore.PLUGIN_ID, EXTENSION_MODEL_CONVERTER_CATEGORY_TYPE);
+		List<IModelConverterCategoryType> list = new ArrayList<IModelConverterCategoryType>(
+				cf.length);
+		addModelConverterCategoryTypes(cf, list);
+		addRegistryListenerIfNeeded();
+		modelConverterCategoryTypes = list;
+
+		Trace.trace(Trace.EXTENSION_POINT,
+				"-<- Done loading .modelConverterCategoryTypes extension point -<-");
+	}
+
+	/**
+	 * Load the modelConverterCategory types.
+	 */
+	private synchronized void addModelConverterCategoryTypes(
+			IConfigurationElement[] cf, List<IModelConverterCategoryType> list) {
+		for (IConfigurationElement ce : cf) {
+			try {
+				list.add(new ModelConverterCategoryType(ce));
+				Trace.trace(
+						Trace.EXTENSION_POINT,
+						"  Loaded modelConverterCategoryType: "
+								+ ce.getAttribute("id"));
+			} catch (Throwable t) {
+				Trace.trace(
+						Trace.SEVERE,
+						"  Could not load modelConverterCategoryType: "
+								+ ce.getAttribute("id"), t);
+			}
+		}
+	}
+
+	protected void handleModelConverterCategoryTypeDelta(IExtensionDelta delta) {
+		if (modelConverterTypes == null) // not loaded yet
+			return;
+
+		IConfigurationElement[] cf = delta.getExtension()
+				.getConfigurationElements();
+
+		List<IModelConverterCategoryType> list = new ArrayList<IModelConverterCategoryType>(
+				modelConverterCategoryTypes);
+		if (delta.getKind() == IExtensionDelta.ADDED) {
+			addModelConverterCategoryTypes(cf, list);
+		} else {
+			int size = list.size();
+			ModelConverterCategoryType[] st = new ModelConverterCategoryType[size];
+			list.toArray(st);
+			int size2 = cf.length;
+
+			for (int i = 0; i < size; i++) {
+				for (int j = 0; j < size2; j++) {
+					if (st[i].getId().equals(cf[j].getAttribute("id"))) {
+						st[i].dispose();
+						list.remove(st[i]);
+					}
+				}
+			}
+		}
+		modelConverterCategoryTypes = list;
 	}
 
 	private void addRegistryListenerIfNeeded() {

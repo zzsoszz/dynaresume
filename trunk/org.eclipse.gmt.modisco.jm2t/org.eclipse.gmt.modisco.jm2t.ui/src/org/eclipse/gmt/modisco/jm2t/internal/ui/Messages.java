@@ -43,6 +43,8 @@ public class Messages extends NLS {
 	public static String wizEditGeneratorConfigurationWizardTitle;
 	
 	// Fields of the NewGeneratorConfigurationComposite
+	public static String NewGeneratorConfigurationComposite_generatorType;
+	public static String NewGeneratorConfigurationComposite_modelConverterType;
 	public static String NewGeneratorConfigurationComposite_name;
 	public static String NewGeneratorConfigurationComposite_templatePath;
 	public static String NewGeneratorConfigurationComposite_targetPath;

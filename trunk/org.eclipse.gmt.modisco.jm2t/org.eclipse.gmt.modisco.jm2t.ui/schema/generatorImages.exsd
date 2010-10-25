@@ -1,24 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.eclipse.gmt.modisco.jm2t.core" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.eclipse.gmt.modisco.jm2t.ui">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.eclipse.gmt.modisco.jm2t.core" id="modelConverterTypes" name="Model converter types"/>
+         <meta.schema plugin="org.eclipse.gmt.modisco.jm2t.ui" id="generatorImages" name="Generator Images"/>
       </appInfo>
       <documentation>
-         This extension point is used to provide support for a new model converter type.
+         This extension point provides a way to provide an image for a generator type, model converter.
       </documentation>
    </annotation>
 
    <element name="extension">
-      <annotation>
-         <appInfo>
-            <meta.element />
-         </appInfo>
-      </annotation>
       <complexType>
          <sequence>
-            <element ref="modelConverterType" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="image" minOccurs="1" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -44,7 +39,7 @@
       </complexType>
    </element>
 
-   <element name="modelConverterType">
+   <element name="image">
       <annotation>
          <appInfo>
             <meta.element labelAttribute="id"/>
@@ -54,39 +49,25 @@
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  unique identifier for this model converter type.
+                  specifies a unique identifier for this image
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="name" type="string">
+         <attribute name="icon" type="string" use="required">
             <annotation>
                <documentation>
-                  a translatable name used to identify this model converter type.
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="description" type="string">
-            <annotation>
-               <documentation>
-                  a translatable description of this model converter type.
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="categoryId" type="string" use="required">
-            <annotation>
-               <documentation>
-                  specifies the category for this model converter type. This value is an id coming from the Extension Point &lt;samp&gt;org.eclipse.gmt.modisco.jm2t.core.modelConverterCategoryTypes&lt;/samp&gt;.
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="class" type="string" use="required">
-            <annotation>
-               <documentation>
-                  specifies the fully qualified name of the Java class generator that implements &lt;samp&gt;org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverter&lt;/samp&gt;
+                  a bundle-relative path to the icon image
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverter"/>
+                  <meta.attribute kind="resource"/>
                </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="typeIds" type="string" use="required">
+            <annotation>
+               <documentation>
+                  a comma separated list of runtime, generator, or module type ids
+               </documentation>
             </annotation>
          </attribute>
       </complexType>
@@ -106,17 +87,15 @@
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         The following is an example of a model converter type extension point:
+         The following is an example of a generator image extension point:
 
 &lt;pre&gt;
    &lt;extension 
-         point=&quot;org.eclipse.gmt.modisco.jm2t.core.modelConverterTypes&quot;&gt;
-      &lt;modelConverterType
-            id=&quot;org.eclipse.gmt.modisco.jm2t.modelconverter.javamodisco&quot;
-            name=&quot;Java JDT 2 EMF Java Modisco converter&quot;
-            description=&quot;Convert selected Java (project, class, package...) JDT 2 EMF Java Model with Modisco.&quot;
-            category=&quot;org.eclipse.gmt.modisco.jm2t.modelconverter.category.m2emf&quot;
-            class=&quot;org.eclipse.gmt.modisco.jm2t.modelconverter.javamodisco.internal.core.JavaModiscoModelConverter&quot;/&gt;
+         point=&quot;org.eclipse.gmt.modisco.jm2t.ui.generatorImages&quot;&gt;
+      &lt;image
+            id=&quot;com.example&quot;
+            icon=&quot;icons/obj16/generator.gif&quot;
+            typeIds=&quot;com.example.generator&quot;/&gt;
    &lt;/extension&gt;
 &lt;/pre&gt;
       </documentation>
@@ -127,10 +106,18 @@
          <meta.section type="apiInfo"/>
       </appInfo>
       <documentation>
-         Value of the attribute &lt;b&gt;class&lt;/b&gt; must be a fully qualified name of a Java class that implements the interface &lt;code&gt;org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverter&lt;/code&gt;.
+         
       </documentation>
    </annotation>
 
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         
+      </documentation>
+   </annotation>
 
    <annotation>
       <appInfo>

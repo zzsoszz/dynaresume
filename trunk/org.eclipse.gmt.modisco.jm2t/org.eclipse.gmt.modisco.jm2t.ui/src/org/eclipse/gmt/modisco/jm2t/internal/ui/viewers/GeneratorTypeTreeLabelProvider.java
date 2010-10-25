@@ -14,6 +14,7 @@ import org.eclipse.gmt.modisco.jm2t.core.generator.IGeneratorType;
 import org.eclipse.gmt.modisco.jm2t.internal.ui.ImageResource;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.swt.graphics.Image;
+
 /**
  * Generator type label provider.
  */
@@ -28,7 +29,8 @@ public class GeneratorTypeTreeLabelProvider extends AbstractTreeLabelProvider {
 	/**
 	 * GeneratorTypeTreeLabelProvider constructor comment.
 	 * 
-	 * @param decorator a label decorator, or null if no decorator is required
+	 * @param decorator
+	 *            a label decorator, or null if no decorator is required
 	 */
 	public GeneratorTypeTreeLabelProvider(ILabelDecorator decorator) {
 		super(decorator);
@@ -39,7 +41,8 @@ public class GeneratorTypeTreeLabelProvider extends AbstractTreeLabelProvider {
 	 */
 	protected Image getImageImpl(Object element) {
 		IGeneratorType generatorType = (IGeneratorType) element;
-		return ImageResource.getImage(generatorType.getId());
+		return ImageResource.getImage(generatorType.getId(),
+				ImageResource.IMG_GENERATOR);
 	}
 
 	/**

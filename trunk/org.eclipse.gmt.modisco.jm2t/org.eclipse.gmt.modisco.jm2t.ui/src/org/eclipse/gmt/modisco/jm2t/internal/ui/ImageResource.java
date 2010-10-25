@@ -38,6 +38,12 @@ public class ImageResource {
 	// base urls for images
 	private static URL ICON_BASE_URL;
 
+	private static final String URL_OBJ = "obj16/";
+
+	// General Object Images
+	public static final String IMG_GENERATOR = "generator";
+	public static final String IMG_MODEL_CONVERTER = "modelConverter";	
+
 	static {
 		try {
 			String pathSuffix = "icons/";
@@ -70,10 +76,24 @@ public class ImageResource {
 	 * @return org.eclipse.swt.graphics.Image
 	 */
 	public static Image getImage(String key) {
+		return getImage(key, null);
+	}
+
+	/**
+	 * Return the image with the given key.
+	 * 
+	 * @param key
+	 *            java.lang.String
+	 * @return org.eclipse.swt.graphics.Image
+	 */
+	public static Image getImage(String key, String keyIfImageNull) {
 		if (imageRegistry == null)
 			initializeImageRegistry();
 		Image image = imageRegistry.get(key);
 		if (image == null) {
+			if (keyIfImageNull != null) {
+				return getImage(keyIfImageNull, null);
+			}
 			imageRegistry.put(key, ImageDescriptor.getMissingImageDescriptor());
 			image = imageRegistry.get(key);
 		}
@@ -104,13 +124,17 @@ public class ImageResource {
 		imageRegistry = new ImageRegistry();
 		imageDescriptors = new HashMap<String, ImageDescriptor>();
 
-		loadServerImages();
+		// load general object images
+		registerImage(IMG_GENERATOR, URL_OBJ + "generator.gif");
+		registerImage(IMG_MODEL_CONVERTER, URL_OBJ + "modelConverter.gif");
+		
+		loadGeneratorImages();
 
 		// PlatformUI
 		// .getWorkbench()
 		// .getProgressService()
 		// .registerIconForFamily(getImageDescriptor(IMG_SERVER),
-		// ServerUtil.SERVER_JOB_FAMILY);
+		// GeneratorUtil.SERVER_JOB_FAMILY);
 	}
 
 	/**
@@ -134,23 +158,23 @@ public class ImageResource {
 	}
 
 	/**
-	 * Load the server images.
+	 * Load the generator images.
 	 */
-	private static void loadServerImages() {
+	private static void loadGeneratorImages() {
 		Trace.trace(Trace.CONFIG,
-				"->- Loading .serverImages extension point ->-");
+				"->- Loading .generatorImages extension point ->-");
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
-		loadServerImages(registry.getConfigurationElementsFor(JM2TUI.PLUGIN_ID,
-				JM2TUI.EXTENSION_JM2T_IMAGES));
+		loadGeneratorImages(registry.getConfigurationElementsFor(
+				JM2TUI.PLUGIN_ID, JM2TUI.EXTENSION_GENERATOR_IMAGES));
 		JM2TUI.addRegistryListener();
 		Trace.trace(Trace.CONFIG,
-				"-<- Done loading .serverImages extension point -<-");
+				"-<- Done loading .generatorImages extension point -<-");
 	}
 
 	/**
-	 * Load the server images.
+	 * Load the generator images.
 	 */
-	private static void loadServerImages(IConfigurationElement[] cf) {
+	private static void loadGeneratorImages(IConfigurationElement[] cf) {
 		int size = cf.length;
 		for (int i = 0; i < size; i++) {
 			try {
@@ -174,15 +198,15 @@ public class ImageResource {
 					}
 				}
 				Trace.trace(Trace.CONFIG,
-						"  Loaded serverImage: " + cf[i].getAttribute("id"));
+						"  Loaded generatorImage: " + cf[i].getAttribute("id"));
 			} catch (Throwable t) {
-				Trace.trace(Trace.SEVERE, "  Could not load serverImage: "
+				Trace.trace(Trace.SEVERE, "  Could not load generatorImage: "
 						+ cf[i].getAttribute("id"), t);
 			}
 		}
 	}
 
-	protected static void handleServerImageDelta(IExtensionDelta delta) {
+	protected static void handleGeneratorImageDelta(IExtensionDelta delta) {
 		if (imageRegistry == null) // not loaded yet
 			return;
 
@@ -190,7 +214,7 @@ public class ImageResource {
 				.getConfigurationElements();
 
 		if (delta.getKind() == IExtensionDelta.ADDED)
-			loadServerImages(cf);
+			loadGeneratorImages(cf);
 		else {
 			int size = cf.length;
 			for (int i = 0; i < size; i++) {

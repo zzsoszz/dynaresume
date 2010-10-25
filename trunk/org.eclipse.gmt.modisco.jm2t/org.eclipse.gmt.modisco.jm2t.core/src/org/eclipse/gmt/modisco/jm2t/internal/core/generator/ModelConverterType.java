@@ -11,11 +11,15 @@
 package org.eclipse.gmt.modisco.jm2t.internal.core.generator;
 
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.gmt.modisco.jm2t.core.JM2TCore;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverter;
+import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterCategoryType;
 import org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverterType;
+import org.eclipse.gmt.modisco.jm2t.core.util.StringUtils;
 
 /**
- * Model converter type implementation which use Extension Point modelConverterTypes.
+ * Model converter type implementation which use Extension Point
+ * modelConverterTypes.
  * 
  */
 public class ModelConverterType implements IModelConverterType {
@@ -46,7 +50,7 @@ public class ModelConverterType implements IModelConverterType {
 			return null;
 		}
 	}
-	
+
 	public String getName() {
 		try {
 			return element.getAttribute("name");
@@ -68,14 +72,14 @@ public class ModelConverterType implements IModelConverterType {
 	 * 
 	 * @return java.lang.String
 	 */
-	public String getCategory() {
+	public String getCategoryId() {
 		try {
-			return element.getAttribute("category");
+			return element.getAttribute("categoryId");
 		} catch (Exception e) {
 			return null;
 		}
 	}
-	
+
 	public IModelConverter getModelConverter() {
 		if (modelConverter == null) {
 			modelConverter = createModelConverter();
@@ -89,6 +93,15 @@ public class ModelConverterType implements IModelConverterType {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	public IModelConverterCategoryType getCategoryType() {
+		String categoryId = getCategoryId();
+		if (!StringUtils.isEmpty(categoryId)) {
+			return JM2TCore.getGeneratorManager()
+					.findModelConverterCategoryType(categoryId);
+		}
+		return null;
 	}
 
 	public void dispose() {
