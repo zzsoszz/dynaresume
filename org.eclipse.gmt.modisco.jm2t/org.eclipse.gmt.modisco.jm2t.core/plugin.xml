@@ -3,8 +3,10 @@
 <plugin>
 
 	<extension-point id="generatorTypes" name="%extensionPointGeneratorTypes" schema="schema/generatorTypes.exsd"/>
-	<extension-point id="modelConverterTypes" name="%extensionPointModelProviders" schema="schema/modelConverterTypes.exsd"/>
+	<extension-point id="modelConverterTypes" name="%extensionPointModelConverterTypes" schema="schema/modelConverterTypes.exsd"/>
+	<extension-point id="modelConverterCategoryTypes" name="%extensionPointModelConverterCategoryTypes" schema="schema/modelConverterCategoryTypes.exsd"/>
   
+  	<!-- Define JM2T Nature -->
 	<extension id="nature"
          point="org.eclipse.core.resources.natures"
          name="%JM2TProject">
@@ -12,5 +14,15 @@
          <run class="org.eclipse.gmt.modisco.jm2t.internal.core.JM2TProject"/>
       </runtime>
    </extension>
+   
+   <!-- Define M2EMF (Model 2 EMF) model converter category type -->
+   <extension point="org.eclipse.gmt.modisco.jm2t.core.modelConverterCategoryTypes">
+    <modelConverterCategoryType
+       id="org.eclipse.gmt.modisco.jm2t.modelconverter.category.m2emf"
+       name="%modelConverterCategoryTypeM2EMFLabel"
+       description="%modelConverterCategoryTypeM2EMFDescription" >
+    </modelConverterCategoryType>
+  </extension>
+   
     
 </plugin>   

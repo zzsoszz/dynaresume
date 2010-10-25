@@ -3,10 +3,10 @@
 <schema targetNamespace="org.eclipse.gmt.modisco.jm2t.core" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.eclipse.gmt.modisco.jm2t.core" id="modelConverterTypes" name="Model converter types"/>
+         <meta.schema plugin="org.eclipse.gmt.modisco.jm2t.core" id="modelConverterCategoryTypes" name="Model converter category types"/>
       </appInfo>
       <documentation>
-         This extension point is used to provide support for a new model converter type.
+         This extension point is used to provide support for a new model converter category type.
       </documentation>
    </annotation>
 
@@ -18,7 +18,7 @@
       </annotation>
       <complexType>
          <sequence>
-            <element ref="modelConverterType" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="modelConverterCategoryType" minOccurs="1" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -44,7 +44,7 @@
       </complexType>
    </element>
 
-   <element name="modelConverterType">
+   <element name="modelConverterCategoryType">
       <annotation>
          <appInfo>
             <meta.element labelAttribute="id"/>
@@ -54,39 +54,22 @@
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  unique identifier for this model converter type.
+                  unique identifier for this model converter category type.
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="name" type="string">
+         <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
-                  a translatable name used to identify this model converter type.
+                  a translatable name used to identify this model converter category type.
                </documentation>
             </annotation>
          </attribute>
          <attribute name="description" type="string">
             <annotation>
                <documentation>
-                  a translatable description of this model converter type.
+                  a translatable description of this model converter category type.
                </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="categoryId" type="string" use="required">
-            <annotation>
-               <documentation>
-                  specifies the category for this model converter type. This value is an id coming from the Extension Point &lt;samp&gt;org.eclipse.gmt.modisco.jm2t.core.modelConverterCategoryTypes&lt;/samp&gt;.
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="class" type="string" use="required">
-            <annotation>
-               <documentation>
-                  specifies the fully qualified name of the Java class generator that implements &lt;samp&gt;org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverter&lt;/samp&gt;
-               </documentation>
-               <appInfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverter"/>
-               </appInfo>
             </annotation>
          </attribute>
       </complexType>
@@ -106,30 +89,20 @@
          <meta.section type="examples"/>
       </appInfo>
       <documentation>
-         The following is an example of a model converter type extension point:
+         The following is an example of a model converter category type extension point:
 
 &lt;pre&gt;
    &lt;extension 
-         point=&quot;org.eclipse.gmt.modisco.jm2t.core.modelConverterTypes&quot;&gt;
-      &lt;modelConverterType
-            id=&quot;org.eclipse.gmt.modisco.jm2t.modelconverter.javamodisco&quot;
-            name=&quot;Java JDT 2 EMF Java Modisco converter&quot;
-            description=&quot;Convert selected Java (project, class, package...) JDT 2 EMF Java Model with Modisco.&quot;
-            category=&quot;org.eclipse.gmt.modisco.jm2t.modelconverter.category.m2emf&quot;
-            class=&quot;org.eclipse.gmt.modisco.jm2t.modelconverter.javamodisco.internal.core.JavaModiscoModelConverter&quot;/&gt;
+         point=&quot;org.eclipse.gmt.modisco.jm2t.core.modelConverterCategoryTypes&quot;&gt;
+      &lt;modelConverterCategoryType
+            id=&quot;org.eclipse.gmt.modisco.jm2t.modelconverter.category.m2emf&quot;
+            name=&quot;Model 2 EMF&quot;
+            description=&quot;Convert selected model 2 EMF model.&quot;/&gt;
    &lt;/extension&gt;
 &lt;/pre&gt;
       </documentation>
    </annotation>
 
-   <annotation>
-      <appInfo>
-         <meta.section type="apiInfo"/>
-      </appInfo>
-      <documentation>
-         Value of the attribute &lt;b&gt;class&lt;/b&gt; must be a fully qualified name of a Java class that implements the interface &lt;code&gt;org.eclipse.gmt.modisco.jm2t.core.generator.IModelConverter&lt;/code&gt;.
-      </documentation>
-   </annotation>
 
 
    <annotation>

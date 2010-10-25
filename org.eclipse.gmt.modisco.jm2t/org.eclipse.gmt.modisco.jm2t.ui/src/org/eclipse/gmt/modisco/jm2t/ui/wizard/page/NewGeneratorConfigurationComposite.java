@@ -51,6 +51,8 @@ public class NewGeneratorConfigurationComposite extends Composite {
 
 	private IWizardHandle wizard;
 	private TaskModel taskModel;
+	private Text generatorType;
+	private Text modelConverterType;
 	private Text name;
 	private IGeneratorConfiguration generatorConfiguration;
 	private Text templatePath;
@@ -78,9 +80,34 @@ public class NewGeneratorConfigurationComposite extends Composite {
 		// PlatformUI.getWorkbench().getHelpSystem().setHelp(this,
 		// ContextIds.RUNTIME_COMPOSITE);
 
+		// Generator type
+		final Label generatorTypeLabel = new Label(this, SWT.NONE);
+		generatorTypeLabel
+				.setText(Messages.NewGeneratorConfigurationComposite_generatorType);
+		GridData data = new GridData();
+		generatorTypeLabel.setLayoutData(data);
+
+		generatorType = new Text(this, SWT.BORDER | SWT.READ_ONLY);
+		data = new GridData(GridData.FILL_HORIZONTAL);
+		data.horizontalSpan = 2;
+		generatorType.setLayoutData(data);
+
+		// Model converter type
+		final Label modelConverterTypeLabel = new Label(this, SWT.NONE);
+		modelConverterTypeLabel
+				.setText(Messages.NewGeneratorConfigurationComposite_modelConverterType);
+		data = new GridData();
+		modelConverterTypeLabel.setLayoutData(data);
+
+		modelConverterType = new Text(this, SWT.BORDER | SWT.READ_ONLY);
+		data = new GridData(GridData.FILL_HORIZONTAL);
+		data.horizontalSpan = 2;
+		modelConverterType.setLayoutData(data);
+
+		// Name
 		final Label nameLabel = new Label(this, SWT.NONE);
 		nameLabel.setText(Messages.NewGeneratorConfigurationComposite_name);
-		GridData data = new GridData();
+		data = new GridData();
 		nameLabel.setLayoutData(data);
 
 		name = new Text(this, SWT.BORDER);
@@ -159,6 +186,20 @@ public class NewGeneratorConfigurationComposite extends Composite {
 	protected void init() {
 		if (name == null || generatorConfiguration == null)
 			return;
+
+		IGeneratorType gt = generatorConfiguration.getGeneratorType();
+		if (gt != null && gt.getName() != null) {
+			generatorType.setText(gt.getName());
+		} else {
+			modelConverterType.setText("");
+		}
+
+		IModelConverterType mt = generatorConfiguration.getModelConverterType();
+		if (mt != null && mt.getName() != null) {
+			modelConverterType.setText(mt.getName());
+		} else {
+			modelConverterType.setText("");
+		}
 
 		if (generatorConfiguration.getName() != null)
 			name.setText(generatorConfiguration.getName());

@@ -10,31 +10,53 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.generator.freemarker.internal.core;
 
-import org.osgi.framework.BundleActivator;
+import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-public class JM2TFreemarkerCore implements BundleActivator {
+public class JM2TFreemarkerCore extends Plugin {
 
-	private static BundleContext context;
+	// The plug-in ID
+	public static final String PLUGIN_ID = "org.eclipse.gmt.modisco.jm2t.generator.freemarker.core"; //$NON-NLS-1$
 
-	static BundleContext getContext() {
-		return context;
+	// The shared instance
+	private static JM2TFreemarkerCore plugin;
+
+	/**
+	 * The constructor
+	 */
+	public JM2TFreemarkerCore() {
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext
+	 * )
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
-		JM2TFreemarkerCore.context = bundleContext;
+		plugin = this;
+		super.start(bundleContext);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
-		JM2TFreemarkerCore.context = null;
+		plugin = null;
+		super.stop(bundleContext);
+	}
+
+	/**
+	 * Returns the shared instance
+	 * 
+	 * @return the shared instance
+	 */
+	public static JM2TFreemarkerCore getDefault() {
+		return plugin;
 	}
 
 }

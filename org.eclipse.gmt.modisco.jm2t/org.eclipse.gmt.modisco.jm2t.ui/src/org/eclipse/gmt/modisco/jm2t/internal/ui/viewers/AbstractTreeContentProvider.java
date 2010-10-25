@@ -27,6 +27,7 @@ public abstract class AbstractTreeContentProvider implements ITreeContentProvide
 	protected Object initialSelection;
 
 	public class TreeElement {
+		public Object source;
 		public String text;
 		public List<Object> contents;
 	}

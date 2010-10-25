@@ -66,6 +66,33 @@ public interface IGeneratorManager {
 	IModelConverterType findModelConverterType(String id);
 
 	/**
+	 * Returns an array of all known modelConverterCategory types.
+	 * <p>
+	 * A new array is returned on each call, so clients may store or modify the
+	 * result.
+	 * </p>
+	 * 
+	 * @return the array of modelConverterCategory types
+	 *         {@link IModelConverterCategoryType}
+	 */
+	IModelConverterCategoryType[] getModelConverterCategoryTypes();
+	
+	/**
+	 * Returns the modelConverterCategory type with the given id, or
+	 * <code>null</code> if none. This convenience method searches the list of
+	 * known modelConverterCategory types (
+	 * {@link #getModelConverterCategoryTypes()}) for the one with a matching
+	 * modelConverterCategory type id (
+	 * {@link IModelConverterCategoryType#getId()}). The id may not be null.
+	 * 
+	 * @param id
+	 *            the modelConverterCategory type id
+	 * @return the modelConverterCategory type, or <code>null</code> if there is
+	 *         no modelConverterCategory type with the given id
+	 */
+	IModelConverterCategoryType findModelConverterCategoryType(String id);
+	
+	/**
 	 * Generate .
 	 * 
 	 * @param model

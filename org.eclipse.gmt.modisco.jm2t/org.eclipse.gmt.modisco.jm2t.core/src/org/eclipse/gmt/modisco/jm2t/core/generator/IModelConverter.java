@@ -13,7 +13,7 @@ package org.eclipse.gmt.modisco.jm2t.core.generator;
 /**
  * Model converter interface used to convert before launching generation the
  * selected Model from the Eclispe Package Explorer (ex : JDT ICompilationUnit)
- * to an another model (ex : Java Modisco EMF).
+ * to an another model (ex : Java Modisco EMF CompilationUnit).
  * 
  */
 public interface IModelConverter {
@@ -25,7 +25,7 @@ public interface IModelConverter {
 	 * @param model
 	 * @return
 	 */
-	Object getModelToConvert(Object model);
+	Object selectModel(Object model);
 
 	/**
 	 * Convert model to another model.
@@ -34,7 +34,7 @@ public interface IModelConverter {
 	 * @param configuration
 	 * @return
 	 */
-	Object convert(Object model, IGeneratorConfiguration configuration)
+	Object convertModel(Object model, IGeneratorConfiguration configuration)
 			throws ModelConverterException;
 
 }

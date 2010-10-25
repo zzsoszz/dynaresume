@@ -10,31 +10,53 @@
  *******************************************************************************/
 package org.eclipse.gmt.modisco.jm2t.generator.acceleo3.internal.core;
 
-import org.osgi.framework.BundleActivator;
+import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-public class JM2TAcceleo3Core implements BundleActivator {
+public class JM2TAcceleo3Core extends Plugin {
 
-	private static BundleContext context;
+	// The plug-in ID
+	public static final String PLUGIN_ID = "org.eclipse.gmt.modisco.jm2t.generator.acceleo3.core"; //$NON-NLS-1$
 
-	static BundleContext getContext() {
-		return context;
+	// The shared instance
+	private static JM2TAcceleo3Core plugin;
+
+	/**
+	 * The constructor
+	 */
+	public JM2TAcceleo3Core() {
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext
+	 * )
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
-		JM2TAcceleo3Core.context = bundleContext;
+		plugin = this;
+		super.start(bundleContext);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	 * 
+	 * @see
+	 * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
-		JM2TAcceleo3Core.context = null;
+		plugin = null;
+		super.stop(bundleContext);
+	}
+
+	/**
+	 * Returns the shared instance
+	 * 
+	 * @return the shared instance
+	 */
+	public static JM2TAcceleo3Core getDefault() {
+		return plugin;
 	}
 
 }

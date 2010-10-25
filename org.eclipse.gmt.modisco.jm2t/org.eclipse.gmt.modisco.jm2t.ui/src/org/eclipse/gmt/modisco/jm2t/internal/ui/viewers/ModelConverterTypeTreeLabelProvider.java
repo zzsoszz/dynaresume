@@ -42,7 +42,7 @@ public class ModelConverterTypeTreeLabelProvider extends
 	 */
 	protected Image getImageImpl(Object element) {
 		IModelConverterType modelConverterType = (IModelConverterType) element;
-		return ImageResource.getImage(modelConverterType.getId());
+		return ImageResource.getImage(modelConverterType.getId(), ImageResource.IMG_MODEL_CONVERTER);
 	}
 
 	/**

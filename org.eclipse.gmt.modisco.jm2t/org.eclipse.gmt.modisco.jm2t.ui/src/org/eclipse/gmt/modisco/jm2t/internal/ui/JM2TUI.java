@@ -37,7 +37,7 @@ public class JM2TUI extends AbstractUIPlugin {
 
 	private static final String EXTENSION_WIZARD_FRAGMENTS = "wizardFragments";
 
-	public static final String EXTENSION_JM2T_IMAGES = "images";
+	public static final String EXTENSION_GENERATOR_IMAGES = "generatorImages";
 
 	// The shared instance
 	private static JM2TUI plugin;
