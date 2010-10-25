@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+  
+  <extension point="org.eclipse.gmt.modisco.jm2t.core.generatorTypes">
+    <generatorType
+       id="org.eclipse.gmt.modisco.jm2t.generator.jet"
+       name="%generatorTypeLabel"
+       description="%generatorTypeDescription"
+       vendor="%generatorTypeVendor"
+       class="org.eclipse.gmt.modisco.jm2t.generator.jet.internal.core.JETGenerator" >
+    </generatorType>
+  </extension>
+  
+</plugin>
