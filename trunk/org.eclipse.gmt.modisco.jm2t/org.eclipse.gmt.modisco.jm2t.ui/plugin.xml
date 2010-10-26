@@ -11,7 +11,7 @@
          name="PopupMenu"
          point="org.eclipse.ui.popupMenus">
       <objectContribution
-            objectClass=" org.eclipse.jdt.core.IJavaProject"
+            objectClass=" org.eclipse.core.resources.IProject"
             adaptable="true"
             id="org.eclipse.gmt.modisco.jm2t.PopupMenuObject">
          <visibility>
@@ -45,7 +45,7 @@
          name="PopupMenu"
          point="org.eclipse.ui.popupMenus">
       <objectContribution
-            objectClass="org.eclipse.jdt.core.IJavaProject"
+            objectClass="org.eclipse.core.resources.IProject"
             adaptable="true"
             id="org.eclipse.gmt.modisco.jm2t.PopupMenuObject">
          <visibility>           
