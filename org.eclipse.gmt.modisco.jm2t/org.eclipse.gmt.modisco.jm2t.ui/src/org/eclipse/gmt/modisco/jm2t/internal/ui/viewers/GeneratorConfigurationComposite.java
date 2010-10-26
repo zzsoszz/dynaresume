@@ -173,7 +173,7 @@ public class GeneratorConfigurationComposite extends
 
 	protected void createTable() {
 		table = new Table(this, SWT.BORDER | SWT.FULL_SELECTION | SWT.V_SCROLL
-				| SWT.H_SCROLL | SWT.SINGLE);
+				| SWT.H_SCROLL | SWT.MULTI);
 	}
 
 	protected void createTableViewer() {
