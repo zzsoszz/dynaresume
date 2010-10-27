@@ -8,23 +8,23 @@
  * Contributors:      
  *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gmt.modisco.jm2t.modelconverter.javamodisco.internal.ui;
+package org.eclipse.gmt.modisco.jm2t.modelconverter.jdt.internal.ui;
 
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-public class JavaModiscoUI extends Plugin {
+public class JM2TJDTUI extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.gmt.modisco.jm2t.modelconverter.javamodisco.ui"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.eclipse.gmt.modisco.jm2t.modelconverter.jdt.ui"; //$NON-NLS-1$
 
 	// The shared instance
-	private static JavaModiscoUI plugin;
+	private static JM2TJDTUI plugin;
 
 	/**
 	 * The constructor
 	 */
-	public JavaModiscoUI() {
+	public JM2TJDTUI() {
 	}
 
 	/*
@@ -55,7 +55,7 @@ public class JavaModiscoUI extends Plugin {
 	 * 
 	 * @return the shared instance
 	 */
-	public static JavaModiscoUI getDefault() {
+	public static JM2TJDTUI getDefault() {
 		return plugin;
 	}
 }

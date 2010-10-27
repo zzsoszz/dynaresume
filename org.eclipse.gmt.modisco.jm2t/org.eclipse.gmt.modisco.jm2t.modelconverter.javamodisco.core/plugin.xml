@@ -3,6 +3,7 @@
 
 <plugin>
   
+  <!-- Declare Java JDT 2 EMF Java Modisco converter -->
   <extension point="org.eclipse.gmt.modisco.jm2t.core.modelConverterTypes">
     <modelConverterType
        id="org.eclipse.gmt.modisco.jm2t.modelconverter.javamodisco"
