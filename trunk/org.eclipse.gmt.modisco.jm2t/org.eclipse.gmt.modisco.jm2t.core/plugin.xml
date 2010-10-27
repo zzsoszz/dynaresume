@@ -23,6 +23,14 @@
        description="%modelConverterCategoryTypeM2EMFDescription" >
     </modelConverterCategoryType>
   </extension>
-   
+
+   <!-- Define Simple model converter category type -->
+   <extension point="org.eclipse.gmt.modisco.jm2t.core.modelConverterCategoryTypes">
+    <modelConverterCategoryType
+       id="org.eclipse.gmt.modisco.jm2t.modelconverter.category.simple"
+       name="%modelConverterCategoryTypeSimpleLabel"
+       description="%modelConverterCategoryTypeSimpleDescription" >
+    </modelConverterCategoryType>
+  </extension>   
     
 </plugin>   

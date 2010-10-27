@@ -8,7 +8,7 @@
  * Contributors:      
  *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gmt.modisco.jm2t.modelconverter.javamodisco.internal.core;
+package org.eclipse.gmt.modisco.jm2t.modelconverter.jdt.internal.core;
 
 import org.eclipse.osgi.util.NLS;
 
@@ -18,10 +18,9 @@ import org.eclipse.osgi.util.NLS;
  */
 public class Messages extends NLS {
 
-	public static String DiscoverJavaModelFromCompilationUnit_title;
-	public static String DiscoverJavaModelFromCompilationUnit_jobLabel;	
+	public static String CannotConvertToJavaELement;
 
-	private static final String BUNDLE_NAME = "org.eclipse.gmt.modisco.jm2t.modelconverter.internal.javamodisco.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.eclipse.gmt.modisco.jm2t.commons.internal.jdt.messages"; //$NON-NLS-1$
 
 	static {
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

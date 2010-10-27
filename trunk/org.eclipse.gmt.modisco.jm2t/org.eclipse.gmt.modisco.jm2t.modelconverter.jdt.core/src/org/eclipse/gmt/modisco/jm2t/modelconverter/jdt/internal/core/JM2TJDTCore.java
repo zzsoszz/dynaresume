@@ -8,54 +8,53 @@
  * Contributors:      
  *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
-package org.eclipse.gmt.modisco.jm2t.modelconverter.javamodisco.internal.ui;
+package org.eclipse.gmt.modisco.jm2t.modelconverter.jdt.internal.core;
 
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-public class JavaModiscoUI extends Plugin {
+/**
+ * The activator class controls the plug-in life cycle
+ */
+public class JM2TJDTCore extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.gmt.modisco.jm2t.modelconverter.javamodisco.ui"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.eclipse.gmt.modisco.jm2t.modelconverter.jdt.core"; //$NON-NLS-1$
 
 	// The shared instance
-	private static JavaModiscoUI plugin;
-
+	private static JM2TJDTCore plugin;
+	
 	/**
 	 * The constructor
 	 */
-	public JavaModiscoUI() {
+	public JM2TJDTCore() {
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext
-	 * )
+	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
+	public void start(BundleContext context) throws Exception {
+		super.start(context);
 		plugin = this;
-		super.start(bundleContext);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
-	public void stop(BundleContext bundleContext) throws Exception {
+	public void stop(BundleContext context) throws Exception {
 		plugin = null;
-		super.stop(bundleContext);
+		super.stop(context);
 	}
 
 	/**
 	 * Returns the shared instance
-	 * 
+	 *
 	 * @return the shared instance
 	 */
-	public static JavaModiscoUI getDefault() {
+	public static JM2TJDTCore getDefault() {
 		return plugin;
 	}
+
 }
