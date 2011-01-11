@@ -151,9 +151,9 @@
 
 			</dependencies>
 		</profile>
-		<!-- <profile> <id>mysql</id> <activation> <property> <name>mysql</name>
-			</property> </activation> <dependencies> <dependency> <groupId>com.mysql.jdbc</groupId>
-			<artifactId>com.springsource.com.mysql.jdbc</artifactId> <version>5.1.6</version>
+		<!-- <profile> <id>mysql</id> <activation> <property> <name>mysql</name> 
+			</property> </activation> <dependencies> <dependency> <groupId>com.mysql.jdbc</groupId> 
+			<artifactId>com.springsource.com.mysql.jdbc</artifactId> <version>5.1.6</version> 
 			</dependency> </dependencies> </profile> -->
 		<profile>
 			<id>derby</id>
@@ -170,7 +170,7 @@
 					<version>10.5.1000001.764942</version>
 				</dependency>
 				<!---->
-				<!-- <dependency> <groupId>org.apache.derby</groupId> <version>10.5.3.0</version>
+				<!-- <dependency> <groupId>org.apache.derby</groupId> <version>10.5.3.0</version> 
 					<artifactId>derby</artifactId> </dependency> -->
 			</dependencies>
 		</profile>
@@ -228,9 +228,6 @@
 			<url>http://repository.springsource.com/maven/libraries/release</url>
 		</repository>
 
-		<!-- <repository> <id>spring-maven-milestone</id> <name>Springframework
-			Maven Repository</name> <url>http://s3.amazonaws.com/maven.springframework.org/milestone</url>
-			</repository> -->
 		<repository>
 			<id>com.springsource.repository.libraries.external</id>
 			<name>SpringSource Enterprise Bundle Repository - External Library
@@ -238,12 +235,20 @@
 			<url>http://repository.springsource.com/maven/libraries/external
 			</url>
 		</repository>
-		<!--<repository> <id>atomikos</id> <name>Atmikos</name> <url>http://localhost:8081/nexus/content/repositories/atomikos/</url>
-			</repository> -->
+		<repository>
+			<id>atomikos</id>
+			<name>Atmikos</name>
+			<url>https://oss.sonatype.org/content/repositories/comatomikos-083</url>
+		</repository>
 	</repositories>
 
 
 	<dependencies>
+		<dependency>
+			<groupId>com.atomikos</groupId>
+			<artifactId>transactions-jdbc</artifactId>
+			<version>3.7.0M5</version>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.annotation</groupId>
@@ -273,9 +278,6 @@
 			<artifactId>com.springsource.javax.transaction</artifactId>
 			<version>1.1.0</version>
 		</dependency>
-
-		<!-- <dependency> <groupId>org.apache.commons</groupId> <artifactId>com.springsource.org.apache.commons.dbcp</artifactId>
-			<version>1.2.2.osgi</version> </dependency> -->
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
