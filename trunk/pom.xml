@@ -7,7 +7,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho.version>0.9.0</tycho.version>
+		<tycho.version>0.10.0</tycho.version>
 	</properties>
 
 	<scm>
@@ -102,7 +102,11 @@
 				Releases</name>
 			<url>http://repository.springsource.com/maven/bundles/external</url>
 		</repository>
-
+<repository>
+			<id>atomikos</id>
+			<name>Atmikos</name>
+			<url>https://oss.sonatype.org/content/repositories/comatomikos-083</url>
+		</repository>
 	</repositories>
 	<distributionManagement>
 		<repository>
@@ -211,23 +215,12 @@
 			</dependency>
 
 
-			<!--<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>com.springsource.org.hibernate.annotations.common
-				</artifactId>
-				<version>3.3.0.ga</version>
-			</dependency>-->
 			<dependency>
 				<groupId>javax.transaction</groupId>
 				<artifactId>com.springsource.javax.transaction</artifactId>
 				<version>1.1.0</version>
 			</dependency>
-			<!--<dependency>
-
-				<groupId>com.atomikos</groupId>
-				<artifactId>transactions-hibernate3</artifactId>
-				<version>3.6.3</version>
-			</dependency>-->
+			
 		</dependencies>
 	</dependencyManagement>
 
