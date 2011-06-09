@@ -18,7 +18,7 @@
 			<property name="hibernate.current_session_context_class"
 				value="jta" />
 			<property name="hibernate.transaction.manager_lookup_class"
-				value="com.atomikos.icatch.jta.hibernate3.dynaresume.TransactionManagerLookup" />
+				value="org.hibernate.transaction.OSGiTransactionManagerLookup" />
 
 			<property name="hibernate.jndi.class"
 				value="org.apache.xbean.spring.jndi.SpringInitialContextFactory" />
