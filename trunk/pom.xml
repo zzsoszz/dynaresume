@@ -18,9 +18,9 @@
 	<modules>
 		<module>third-parties</module>
 		<module>infrastructure</module>
-		 <module>bundles-api</module>
-		 <module>bundles-impl</module>
-		 <!-- <module>bundles-ui</module> -->
+		<module>bundles-api</module>
+		<module>bundles-impl</module>
+		<module>bundles-ui</module>
 	</modules>
 
 
@@ -39,7 +39,7 @@
 				<configuration>
 					<resolver>p2</resolver>
 					<pomDependencies>consider</pomDependencies>
-					<!--
+					<!---->
 					<environments>
 						<environment>
 							<os>linux</os>
@@ -57,7 +57,7 @@
 							<arch>x86</arch>
 						</environment>
 					</environments>
--->
+
 				</configuration>
 			</plugin>
 		</plugins>
@@ -70,7 +70,7 @@
 		<repository>
 			<id>helios</id>
 			<layout>p2</layout>
-			 <url>http://download.eclipse.org/releases/helios</url>
+			<url>http://download.eclipse.org/releases/helios</url> 
 			<!-- <url>file:/Users/pascalleclercq/devs/helios/org.eclipse.platform-3.6.2</url> -->
 		</repository>
 
@@ -151,16 +151,16 @@
 			<artifactId>com.springsource.javassist</artifactId>
 			<version>3.3.0.ga</version>
 		</dependency>
-<dependency>
-    <groupId>javax.annotation</groupId>
-    <artifactId>javax.annotation</artifactId>
-    <version>1.1.0.v201105051105</version>
-</dependency>
-<dependency>
-    <groupId>org.springframework.osgi</groupId>
-    <artifactId>org.springframework.osgi.core</artifactId>
-    <version>1.2.1</version>
-</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation</artifactId>
+			<version>1.1.0.v201105051105</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.osgi</groupId>
+			<artifactId>org.springframework.osgi.core</artifactId>
+			<version>1.2.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>org.springframework.context</artifactId>
@@ -219,10 +219,15 @@
 			<artifactId>com.springsource.org.apache.commons.logging</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-	<dependency>
+		<dependency>
 			<groupId>javax.persistence</groupId>
 			<artifactId>com.springsource.javax.persistence</artifactId>
 			<version>1.99.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.osgi</groupId>
+			<artifactId>org.springframework.osgi.web</artifactId>
+			<version>1.2.1</version>
 		</dependency>
 	</dependencies>
 </project>
