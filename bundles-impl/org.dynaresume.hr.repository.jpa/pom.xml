@@ -11,37 +11,6 @@
 	<artifactId>org.dynaresume.hr.repository.jpa</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
-
-
-
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.orm</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.context</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.xbean</groupId>
-			<artifactId>com.springsource.org.apache.xbean.spring</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>com.springsource.org.hibernate</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>com.springsource.slf4j.log4j</artifactId>
-		</dependency>
-		<!--<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>com.springsource.org.hibernate.annotations.common</artifactId>
-		</dependency>-->
-	</dependencies>
-
 	<profiles>
 		<profile>
 			<id>generate-ddl</id>
