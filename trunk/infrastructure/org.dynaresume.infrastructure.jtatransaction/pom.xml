@@ -41,6 +41,10 @@
 			<artifactId>com.springsource.slf4j.log4j</artifactId>
 			<version>1.5.6</version>
 		</dependency>
-
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>com.springsource.org.apache.commons.logging</artifactId>
+    <version>1.1.1</version>
+</dependency>
 	</dependencies>
 </project>

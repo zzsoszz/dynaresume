@@ -12,6 +12,12 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 
-	
+	<dependencies>
+	<dependency>
+    <groupId>javax.persistence</groupId>
+    <artifactId>com.springsource.javax.persistence</artifactId>
+    <version>1.0.0</version>
+</dependency>
+	</dependencies>
 	
 </project>
