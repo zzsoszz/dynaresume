@@ -11,15 +11,5 @@
 	<artifactId>org.dynaresume.hr.repository</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
-	<dependencies>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>com.springsource.slf4j.log4j</artifactId>
-		</dependency>
-	</dependencies>
-
-
-
 
 </project>
