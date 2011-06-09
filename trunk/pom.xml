@@ -39,7 +39,7 @@
 				<configuration>
 					<resolver>p2</resolver>
 					<pomDependencies>consider</pomDependencies>
-					<!--
+					<!---->
 					<environments>
 						<environment>
 							<os>linux</os>
@@ -57,7 +57,7 @@
 							<arch>x86</arch>
 						</environment>
 					</environments>
--->
+
 				</configuration>
 			</plugin>
 		</plugins>
@@ -70,7 +70,7 @@
 		<repository>
 			<id>helios</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/helios</url> 
+			<url>http://download.eclipse.org/releases/helios/</url> 
 <!-- url>file:/Users/pascalleclercq/devs/helios/org.eclipse.platform-3.6.2</url> -->
 		</repository>
 	
