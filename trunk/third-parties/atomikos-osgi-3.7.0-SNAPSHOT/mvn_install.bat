@@ -1,1 +1,0 @@
-mvn install:install-file -Dfile=transactions-osgi-3.7.0-SNAPSHOT.jar -DpomFile=transactions-osgi-3.7.0-SNAPSHOT.pom
