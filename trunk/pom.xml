@@ -71,7 +71,7 @@
 			<id>helios</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/releases/helios</url> 
-<<!-- url>file:/Users/pascalleclercq/devs/helios/org.eclipse.platform-3.6.2</url> -->
+<!-- url>file:/Users/pascalleclercq/devs/helios/org.eclipse.platform-3.6.2</url> -->
 		</repository>
 	
 		<repository>
