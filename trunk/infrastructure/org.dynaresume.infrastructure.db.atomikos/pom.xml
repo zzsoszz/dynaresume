@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>com.atomikos</groupId>
 			<artifactId>transactions-osgi</artifactId>
-			<version>3.7.0M5</version>
+			<version>3.7.0</version>
 		</dependency>
 
 		<dependency>
