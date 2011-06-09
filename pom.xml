@@ -72,23 +72,7 @@
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/releases/helios</url>
 		</repository>
-		<!--<repository>
-			<id>update35</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/eclipse/updates/3.5</url>
-		</repository>-->
-		<!--
-			use with Nexus repository manager <repository> <id>atomikos</id>
-			<name>Atomikos</name>
-			<url>http://localhost:8081/nexus/content/repositories/atomikos/</url>
-			</repository>
-		-->
-
-		<!--<repository>
-			<id>atomikos</id>
-			<name>Atomikos</name>
-			<url>http://repo.atomikos.com/</url>
-		</repository>-->
+	
 		<repository>
 			<id>com.springsource.repository.bundles.release</id>
 			<name>SpringSource Enterprise Bundle Repository - SpringSource Bundle
@@ -101,11 +85,6 @@
 			<name>SpringSource Enterprise Bundle Repository - External Bundle
 				Releases</name>
 			<url>http://repository.springsource.com/maven/bundles/external</url>
-		</repository>
-<repository>
-			<id>atomikos</id>
-			<name>Atmikos</name>
-			<url>https://oss.sonatype.org/content/repositories/comatomikos-083</url>
 		</repository>
 	</repositories>
 	<distributionManagement>
@@ -187,11 +166,6 @@
 				<artifactId>org.springframework.web</artifactId>
 				<version>3.0.3.RELEASE</version>
 			</dependency>
-			<!--<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>org.springframework.aop</artifactId>
-				<version>3.0.0.RELEASE</version>
-			</dependency>-->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>org.springframework.web.servlet</artifactId>
