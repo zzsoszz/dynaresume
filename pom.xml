@@ -7,7 +7,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho.version>0.10.0</tycho.version>
+		<tycho.version>0.12.0</tycho.version>
 	</properties>
 
 	<scm>
@@ -18,28 +18,28 @@
 	<modules>
 		<module>third-parties</module>
 		<module>infrastructure</module>
-		<module>bundles-api</module>
+		<!-- <module>bundles-api</module>
 		<module>bundles-impl</module>
-		<module>bundles-ui</module>
+		<module>bundles-ui</module> -->
 	</modules>
 
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.sonatype.tycho</groupId>
+				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<extensions>true</extensions>
 			</plugin>
 			<plugin>
-				<groupId>org.sonatype.tycho</groupId>
+				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
 					<resolver>p2</resolver>
 					<pomDependencies>consider</pomDependencies>
-					<!---->
+					<!--
 					<environments>
 						<environment>
 							<os>linux</os>
@@ -57,7 +57,7 @@
 							<arch>x86</arch>
 						</environment>
 					</environments>
-
+-->
 				</configuration>
 			</plugin>
 		</plugins>
@@ -70,7 +70,8 @@
 		<repository>
 			<id>helios</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/helios</url>
+			<url>http://download.eclipse.org/releases/helios</url> 
+<<!-- url>file:/Users/pascalleclercq/devs/helios/org.eclipse.platform-3.6.2</url> -->
 		</repository>
 	
 		<repository>
@@ -198,4 +199,100 @@
 		</dependencies>
 	</dependencyManagement>
 
+
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.aop</artifactId>
+				<version>3.0.3.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.core</artifactId>
+				<version>3.0.3.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.orm</artifactId>
+				<version>3.0.3.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.transaction</artifactId>
+				<version>3.0.3.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>com.thoughtworks.xstream</groupId>
+				<artifactId>com.springsource.com.thoughtworks.xstream</artifactId>
+				<version>1.3.1</version>
+			</dependency>
+			<dependency>
+				<groupId>net.jcip</groupId>
+				<artifactId>com.springsource.net.jcip.annotations</artifactId>
+				<version>1.0.0</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sourceforge.cglib</groupId>
+				<artifactId>com.springsource.net.sf.cglib</artifactId>
+				<version>2.1.3</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>com.springsource.org.apache.commons.lang</artifactId>
+				<version>2.4.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>com.springsource.org.hibernate</artifactId>
+				<version>3.2.6.ga</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.javassist</groupId>
+				<artifactId>com.springsource.javassist</artifactId>
+				<version>3.3.0.ga</version>
+			</dependency>
+
+
+
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.context</artifactId>
+				<version>3.0.3.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.web</artifactId>
+				<version>3.0.3.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.web.servlet</artifactId>
+				<version>3.0.3.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.context.support</artifactId>
+				<version>3.0.3.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.xbean</groupId>
+				<artifactId>com.springsource.org.apache.xbean.spring</artifactId>
+				<version>3.6.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>com.springsource.slf4j.log4j</artifactId>
+				<version>1.5.6</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>javax.transaction</groupId>
+				<artifactId>com.springsource.javax.transaction</artifactId>
+				<version>1.1.0</version>
+			</dependency>
+			
+		</dependencies>
 </project>
