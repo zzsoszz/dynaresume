@@ -12,6 +12,7 @@ import org.osgi.framework.ServiceReference;
 
 public class OSGiTransactionManagerLookup implements TransactionManagerLookup {
 
+	
 	public TransactionManager getTransactionManager(Properties props) throws HibernateException {
 		Bundle hostBundle = FrameworkUtil.getBundle(TransactionManager.class);
 		ServiceReference ref = hostBundle.getBundleContext().getServiceReference(TransactionManager.class.getName());
