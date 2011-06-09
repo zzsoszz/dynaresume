@@ -18,4 +18,3 @@ Export-Package: net.sf.beanlib,
  net.sf.beanlib.spi,
  net.sf.beanlib.spi.replicator,
  net.sf.beanlib.utils
-Require-Bundle: com.springsource.org.apache.commons.lang;bundle-version="2.4.0"
