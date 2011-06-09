@@ -1,5 +1,4 @@
 
-              
 /*
  * Copyright 2000-2008, Atomikos (http://www.atomikos.com) 
  *
@@ -25,7 +24,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  
  */
- 
+
 package com.atomikos.icatch.jta.hibernate3.dynaresume;
 
 import java.util.Properties;
@@ -42,72 +41,28 @@ import org.osgi.framework.ServiceReference;
  * 
  * 
  * 
- * This class is provided for Hibernate3 integration.
- * To use Atomikos as the Hibernate JTA transaction manager,
- * specify this class as the value of the 
- * <b>hibernate.transaction.manager_lookup_class</b> of the
- * hibernate configuration properties.
+ * This class is provided for Hibernate3 integration. To use Atomikos as the
+ * Hibernate JTA transaction manager, specify this class as the value of the
+ * <b>hibernate.transaction.manager_lookup_class</b> of the hibernate
+ * configuration properties.
  * 
  */
-public class TransactionManagerLookup implements org.hibernate.transaction.TransactionManagerLookup
-{
+public class TransactionManagerLookup implements org.hibernate.transaction.TransactionManagerLookup {
 
-//	private UserTransactionManager utm;
-	
-	public TransactionManagerLookup()
-	{
-		
-		
-	//	utm = new UserTransactionManager();
-		
-		
+	public TransactionManager getTransactionManager(Properties props) throws HibernateException {
+		Bundle hostBundle = FrameworkUtil.getBundle(TransactionManager.class);
+		ServiceReference ref = hostBundle.getBundleContext().getServiceReference(TransactionManager.class.getName());
+		return (TransactionManager) hostBundle.getBundleContext().getService(ref);
+
 	}
-	
 
+	public String getUserTransactionName() {
+		return TransactionManager.class.getName();
+	}
 
-    public TransactionManager getTransactionManager(Properties props) throws HibernateException
-    {
-    	
-    	Bundle hostBundle = FrameworkUtil.getBundle(TransactionManager.class);
-  	TransactionManager tm=null;
-//    try {
-//		InitialContext	context = NamingHelper.getInitialContext(props);
-//		
-//		 tm = (TransactionManager)context.lookup("java:comp/TransactionManager");
-//	} catch (NamingException e) {
-//		// TODO Auto-generated catch block
-//		e.printStackTrace();
-//	}
-  	ServiceReference ref= hostBundle.getBundleContext().getServiceReference(TransactionManager.class.getName());
-  	tm = (TransactionManager) 	hostBundle.getBundleContext().getService(ref);
-//  	
-//    	ServiceTracker 	tracker = new ServiceTracker(hostBundle.getBundleContext(), TransactionManager.class.getName(), null);
-//		tracker.open();
-//		try {
-//			tracker.waitForService(6000);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		tm = (TransactionManager) tracker.getService();
-        return tm;
-        
-    	//return utm;
-    }
-
-    
-    public String getUserTransactionName()
-    {
-        return TransactionManager.class.getName();
-    }
-
-
-    // new in Hibernate 3.3
-	public Object getTransactionIdentifier(Transaction transaction)
-	{
+	// new in Hibernate 3.3
+	public Object getTransactionIdentifier(Transaction transaction) {
 		return transaction;
 	}
-	
 
 }
