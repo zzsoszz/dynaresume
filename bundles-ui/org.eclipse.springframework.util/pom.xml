@@ -5,7 +5,6 @@
 		<groupId>org.dynaresume</groupId>
 		<artifactId>bundles-ui</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-
 	</parent>
 	<groupId>org.dynaresume</groupId>
 	<artifactId>org.eclipse.springframework.util</artifactId>
